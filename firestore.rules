@@ -1,0 +1,138 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Global Safety Net (Default Deny Catch-all)
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // --- REUSABLE SECURITY UTILITIES ---
+    
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function getUser(uid) {
+      return get(/databases/$(database)/documents/users/$(uid)).data;
+    }
+
+    function isAdmin() {
+      return isSignedIn() 
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid)) 
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.get("role", "patient") == "admin";
+    }
+
+    // --- SCHEMATIC VALIDATION BLUEPRINTS ---
+
+    function isValidUser(data) {
+      return data.id is string && data.id.size() <= 128
+        && data.email is string && data.email.size() <= 128
+        && data.name is string && data.name.size() <= 128
+        && data.role is string && (data.role == "patient" || data.role == "therapist" || data.role == "admin" || data.role == "especialista")
+        && data.createdAt is string && data.createdAt.size() <= 64
+        && data.isApproved is bool
+        && (!("bio" in data) || (data.bio is string && data.bio.size() <= 1000))
+        && (!("credentials" in data) || (data.credentials is string && data.credentials.size() <= 200))
+        && (!("holisticApproach" in data) || (data.holisticApproach is string && data.holisticApproach.size() <= 500))
+        && (!("specialties" in data) || (data.specialties is list && data.specialties.size() <= 20))
+        && (!("habits" in data) || (data.habits is list && data.habits.size() <= 50))
+        && (!("therapistModality" in data) || (data.therapistModality is string && (data.therapistModality == "espacio" || data.therapistModality == "trafico")));
+    }
+
+    function isValidEvent(data) {
+      return data.title is string && data.title.size() <= 128
+        && data.description is string && data.description.size() <= 1000
+        && data.type is string && (data.type == "taller" || data.type == "masterclass" || data.type == "retiro" || data.type == "sesion_grupal" || data.type == "terapia_individual")
+        && data.date is string && data.date.size() <= 32
+        && data.time is string && data.time.size() <= 16
+        && data.modality is string && (data.modality == "online" || data.modality == "presencial")
+        && data.location is string && data.location.size() <= 256
+        && (data.capacity is int || data.capacity is float)
+        && (data.price is int || data.price is float)
+        && data.createdBy is string && data.createdBy.size() <= 128
+        && data.createdByName is string && data.createdByName.size() <= 128
+        && data.registeredUsers is list && data.registeredUsers.size() <= 1000
+        && (!("creatorModality" in data) || (data.creatorModality is string && (data.creatorModality == "espacio" || data.creatorModality == "trafico")));
+    }
+
+    function isValidAssessment(data) {
+      return data.id is string && data.id.size() <= 64
+        && data.userId is string && data.userId.size() <= 128
+        && data.date is string && data.date.size() <= 64
+        && data.sleep is string && data.sleep.size() <= 128
+        && data.nutrition is string && data.nutrition.size() <= 128
+        && (data.anxiety is int || data.anxiety is float)
+        && data.symptoms is list && data.symptoms.size() <= 50
+        && data.state is string && (data.state == "simpatico" || data.state == "parasimpatico" || data.state == "mixto")
+        && (data.score is int || data.score is float)
+        && data.diagnosis is string && data.diagnosis.size() <= 2000
+        && data.recommendations is list && data.recommendations.size() <= 50
+        && (!("createdAt" in data) || (data.createdAt is string && data.createdAt.size() <= 64));
+    }
+
+    function isValidReservation(data) {
+      return data.id is string && data.id.size() <= 64
+        && data.eventId is string && data.eventId.size() <= 128
+        && data.userId is string && data.userId.size() <= 128
+        && data.status is string && (data.status == "confirmed" || data.status == "pending" || data.status == "cancelled")
+        && data.bookingCode is string && data.bookingCode.size() <= 64
+        && data.createdAt is string && data.createdAt.size() <= 64
+        && (!("reminderEnabled" in data) || data.reminderEnabled is bool)
+        && (!("feedback" in data) || (data.feedback is map && 
+             (data.feedback.utilityRating is int || data.feedback.utilityRating is float) && 
+             (data.feedback.somaticImprovement is int || data.feedback.somaticImprovement is float) && 
+             data.feedback.comments is string && data.feedback.comments.size() <= 500));
+    }
+
+    // --- COLLECTION RULES ---
+
+    // 1. Users profiles
+    match /users/{userId} {
+      allow read: if true;
+      allow create: if isSignedIn() && request.auth.uid == userId && isValidUser(request.resource.data);
+      allow update: if isSignedIn() && (
+        (request.auth.uid == userId && isValidUser(request.resource.data))
+        || isAdmin()
+      );
+      allow delete: if isAdmin();
+    }
+
+    // 2. Events catalog
+    match /events/{eventId} {
+      allow read, get, list: if true;
+      allow create: if isSignedIn() && isValidEvent(request.resource.data) && request.resource.data.createdBy == request.auth.uid;
+      allow update: if isSignedIn() && (
+        // Creator or Admin can update full details
+        ((resource.data.createdBy == request.auth.uid || isAdmin()) && isValidEvent(request.resource.data))
+        ||
+        // Tiered patient update: only appending their own userId to registeredUsers list
+        (
+          request.resource.data.diff(resource.data).affectedKeys().hasOnly(['registeredUsers'])
+          && request.resource.data.registeredUsers.size() == resource.data.registeredUsers.size() + 1
+          && request.resource.data.registeredUsers.hasAll(resource.data.registeredUsers)
+          && (request.resource.data.registeredUsers[request.resource.data.registeredUsers.size() - 1] == request.auth.uid)
+        )
+      );
+      allow delete: if isSignedIn() && (resource.data.createdBy == request.auth.uid || isAdmin());
+    }
+
+    // 3. Clinical evaluations
+    match /assessments/{assessmentId} {
+      allow read, get, list: if true;
+      allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid && isValidAssessment(request.resource.data);
+      allow update, delete: if isSignedIn() && (resource.data.userId == request.auth.uid || isAdmin()) && isValidAssessment(request.resource.data);
+    }
+
+    // 4. Booking reservations
+    match /reservations/{reservationId} {
+      allow read, get, list: if true;
+      allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid && isValidReservation(request.resource.data);
+      allow update, delete: if isSignedIn() && (resource.data.userId == request.auth.uid || isAdmin()) && isValidReservation(request.resource.data);
+    }
+  }
+}

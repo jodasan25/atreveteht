@@ -1,0 +1,8 @@
+{
+  "name": "Remix: Remix: Remix: Remix: Remix: Atrévete HealthTech",
+  "description": "Ecosistema clínico integrativo y regulador del sistema nervioso con diagnóstico somático potenciado por IA.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

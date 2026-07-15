@@ -1,0 +1,95 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profiles for patients, therapists, or admins.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique user ID matching Firebase Auth UID." },
+        "email": { "type": "string" },
+        "name": { "type": "string" },
+        "role": { "type": "string", "enum": ["patient", "therapist", "admin"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "bio": { "type": "string" },
+        "specialties": { "type": "array" },
+        "credentials": { "type": "string" },
+        "holisticApproach": { "type": "string" },
+        "isApproved": { "type": "boolean" },
+        "habits": { "type": "array" }
+      },
+      "required": ["id", "email", "name", "role", "createdAt"]
+    },
+    "Event": {
+      "title": "Event",
+      "description": "Workshops, masterclasses, or individual therapy sessions.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "type": { "type": "string", "enum": ["taller", "masterclass", "retiro", "sesion_grupal", "terapia_individual"] },
+        "date": { "type": "string" },
+        "time": { "type": "string" },
+        "modality": { "type": "string", "enum": ["online", "presencial"] },
+        "location": { "type": "string" },
+        "capacity": { "type": "integer" },
+        "price": { "type": "number" },
+        "createdBy": { "type": "string" },
+        "createdByName": { "type": "string" },
+        "registeredUsers": { "type": "array" }
+      },
+      "required": ["id", "title", "type", "date", "time", "modality", "capacity", "price", "createdBy"]
+    },
+    "Assessment": {
+      "title": "Assessment",
+      "description": "User's nervous system state evaluation.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "date": { "type": "string" },
+        "sleep": { "type": "string" },
+        "nutrition": { "type": "string" },
+        "anxiety": { "type": "integer" },
+        "symptoms": { "type": "array" },
+        "state": { "type": "string", "enum": ["simpatico", "parasimpatico", "mixto"] },
+        "score": { "type": "integer" },
+        "diagnosis": { "type": "string" },
+        "recommendations": { "type": "array" }
+      },
+      "required": ["id", "userId", "date", "state", "diagnosis"]
+    },
+    "Reservation": {
+      "title": "Reservation",
+      "description": "Event booking records.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "eventId": { "type": "string" },
+        "userId": { "type": "string" },
+        "status": { "type": "string", "enum": ["confirmed", "pending", "cancelled"] },
+        "bookingCode": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "eventId", "userId", "status", "bookingCode"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile collection."
+    },
+    "/events/{eventId}": {
+      "schema": "Event",
+      "description": "Workshops and sessions catalog."
+    },
+    "/assessments/{assessmentId}": {
+      "schema": "Assessment",
+      "description": "Nervous system assessment results."
+    },
+    "/reservations/{reservationId}": {
+      "schema": "Reservation",
+      "description": "Booked tickets for events."
+    }
+  }
+}

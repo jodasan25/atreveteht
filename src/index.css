@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Montserrat", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Custom Clean Minimalism Theme Colors mapped to Verde Oliva (#8EA393) and secondary variants */
+  --color-teal-50: #F4F7F5;
+  --color-teal-100: #E6EBE7;
+  --color-teal-200: #CBD7CE;
+  --color-teal-300: #AEC2B3;
+  --color-teal-400: #93AE9A;
+  --color-teal-500: #8EA393; /* Principal Accent: Verde Oliva */
+  --color-teal-600: #748A79;
+  --color-teal-700: #5C6E61;
+  --color-teal-800: #445147;
+  --color-teal-900: #2C352E;
+  --color-teal-950: #151A17;
+
+  --color-emerald-50: #F4F7F5;
+  --color-emerald-100: #E6EBE7;
+  --color-emerald-200: #CBD7CE;
+  --color-emerald-300: #AEC2B3;
+  --color-emerald-400: #93AE9A;
+  --color-emerald-500: #8EA393; /* Secondary Accent: Verde Oliva */
+  --color-emerald-600: #748A79;
+  --color-emerald-700: #5C6E61;
+  --color-emerald-800: #445147;
+  --color-emerald-900: #2C352E;
+  --color-emerald-950: #151A17;
+
+  /* Background (Crema suave #FDFBF7) and slate values for text (#2D2D2D) and contrast */
+  --color-slate-50: #FDFBF7; /* Crema suave global */
+  --color-slate-100: #EAEAEA; /* Gris claro para fondos secundarios / bordes */
+  --color-slate-200: #F3F3F3; /* Gris claro alternativo */
+  --color-slate-300: #D0D0D0;
+  --color-slate-400: #9A9A9A;
+  --color-slate-500: #707070;
+  --color-slate-600: #505050;
+  --color-slate-700: #3D3D3D;
+  --color-slate-800: #2D2D2D; /* Gris Carbón */
+  --color-slate-900: #1E1E1E; 
+  --color-slate-950: #121212;
+
+  /* Subtle minimalist shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.01);
+  --shadow-md: 0 6px 18px 0 rgba(142, 163, 147, 0.04), 0 1px 3px 0 rgba(0, 0, 0, 0.01);
+  --shadow-lg: 0 12px 30px -5px rgba(142, 163, 147, 0.06), 0 8px 12px -6px rgba(0, 0, 0, 0.01);
+}
+
+/* Base style tweaks for ultimate minimalism and comfort */
+body {
+  background-color: #FDFBF7; /* Crema suave global */
+  color: #2D2D2D; /* Gris Carbón */
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+/* Smooth active focus state and beautiful image rendering */
+img {
+  transition: opacity 0.3s ease;
+}
+
+/* Custom interactive active scaling for high precision touchpoints */
+button, a {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+button:hover:not(:disabled), a:hover {
+  transform: translateY(-0.5px);
+}
+button:active:not(:disabled) {
+  transform: translateY(0.5px);
+}
+
+/* Animated custom pulse dot */
+.pulse-dot {
+  position: relative;
+}
+.pulse-dot::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: inherit;
+  border-radius: inherit;
+  animation: pulse-ring 1.5s cubic-bezier(0.215, 0.610, 0.355, 1) infinite;
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(.33); opacity: 1; }
+  80%, 100% { transform: scale(1.8); opacity: 0; }
+}
+
