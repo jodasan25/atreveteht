@@ -7,6 +7,11 @@
     <!-- Cargamos Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        /* --- RESPALDO DE EMERGENCIA (Si falla Tailwind, esto salva la app) --- */
+        .hidden {
+            display: none !important;
+        }
+
         /* --- ESTILOS EXCLUSIVOS CLAYMORFISMO --- */
         body {
             background-color: #F4F1ED; /* Tono arcilla/crema muy suave */
@@ -76,7 +81,7 @@
 </head>
 <body class="pb-28">
 
-    <!-- === CABECERA (Logo en código SVG) === -->
+    <!-- === CABECERA === -->
     <header class="py-6 text-center">
         <svg class="mx-auto h-12 w-12 text-[#7A8A7C]" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M50 20C35 20 25 35 25 50C25 65 35 80 50 80C65 80 75 65 75 50C75 35 65 20 50 20ZM50 68C40 68 34 58 34 50C34 42 40 32 50 32C60 32 66 42 66 50C66 58 60 68 50 68Z" fill="currentColor"/>
@@ -89,30 +94,26 @@
     <!-- ================= PANTALLA 1: HOME (PRINCIPAL) ================= -->
     <main id="view-home" class="app-view max-w-md mx-auto px-5 space-y-8">
         
-        <!-- Mensaje de Entrada -->
         <div class="text-center space-y-2">
             <h2 class="text-3xl font-extrabold text-[#7A8A7C] leading-tight">Atrévete a Habitar Tu Cuerpo</h2>
             <p class="text-sm text-[#7A8A7C] px-4">Tu espacio digital de regulación somática y bienestar para calibrar tu sistema nervioso.</p>
         </div>
 
-        <!-- Hero Image -->
         <div class="relative rounded-[32px] overflow-hidden shadow-lg h-64 bg-cover bg-center clay-card" style="background-image: url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=800&q=80');">
             <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex items-end p-6">
                 <span class="text-white font-semibold text-lg drop-shadow-md">Conecta con tu calma interior</span>
             </div>
         </div>
 
-        <!-- Botones de Acción Inmediata -->
         <div class="flex flex-col gap-4">
-            <button onclick="switchView('view-regulacion')" class="clay-btn-primary py-4 text-center font-bold text-base w-full">
+            <button onclick="window.switchView('view-regulacion')" class="clay-btn-primary py-4 text-center font-bold text-base w-full">
                 Empezar Regulación Somática
             </button>
-            <button onclick="switchView('view-citas')" class="clay-btn-secondary py-4 text-center font-bold text-base w-full">
+            <button onclick="window.switchView('view-citas')" class="clay-btn-secondary py-4 text-center font-bold text-base w-full">
                 Explorar Citas Somáticas
             </button>
         </div>
 
-        <!-- Bloques Informativos -->
         <div class="space-y-4">
             <div class="clay-card-oliva p-6 text-[#FDFBF7] flex items-start gap-4">
                 <div class="bg-white/20 p-3 rounded-2xl">💝</div>
@@ -121,7 +122,6 @@
                     <p class="text-xs text-white/90">Si buscas liberar estrés acumulado, regular tu sistema somático y conectar con tu calma.</p>
                 </div>
             </div>
-
             <div class="clay-card-oliva p-6 text-[#FDFBF7] flex items-start gap-4">
                 <div class="bg-white/20 p-3 rounded-2xl">🧠</div>
                 <div>
@@ -131,19 +131,19 @@
             </div>
         </div>
 
-        <!-- Gimnasio Emocional Accesos Rápidos -->
+        <!-- Gimnasio Emocional Accesos -->
         <section class="space-y-4">
             <h3 class="text-xl font-bold text-[#7A8A7C] border-b border-[#7A8A7C]/20 pb-2">Tu Gimnasio Emocional</h3>
             <div class="grid grid-cols-2 gap-4">
                 <div class="clay-card p-4 flex flex-col justify-between h-40">
                     <span class="text-2xl">🫁</span>
                     <h4 class="font-bold text-sm text-[#7A8A7C]">Respiración 5m</h4>
-                    <button onclick="switchView('view-regulacion')" class="text-xs font-bold text-white bg-[#E27D60] py-2 px-3 rounded-full mt-2 self-start">Iniciar</button>
+                    <button onclick="window.switchView('view-regulacion')" class="text-xs font-bold text-white bg-[#E27D60] py-2 px-3 rounded-full mt-2 self-start">Iniciar</button>
                 </div>
                 <div class="clay-card p-4 flex flex-col justify-between h-40">
                     <span class="text-2xl">🌊</span>
                     <h4 class="font-bold text-sm text-[#7A8A7C]">Soma Coherente</h4>
-                    <button onclick="switchView('view-regulacion')" class="text-xs font-bold text-white bg-[#E27D60] py-2 px-3 rounded-full mt-2 self-start">Calibrar</button>
+                    <button onclick="window.switchView('view-regulacion')" class="text-xs font-bold text-white bg-[#E27D60] py-2 px-3 rounded-full mt-2 self-start">Calibrar</button>
                 </div>
             </div>
         </section>
@@ -156,7 +156,7 @@
                 <div class="flex-1">
                     <h4 class="font-bold text-[#7A8A7C]">Dra. Carla Rodríguez</h4>
                     <p class="text-xs text-[#7A8A7C]/80 mb-2">Mentora de Regulación Somática</p>
-                    <button onclick="switchView('view-citas')" class="text-xs font-bold text-white bg-[#E27D60] py-1.5 px-3 rounded-full">Agendar Cita</button>
+                    <button onclick="window.switchView('view-citas')" class="text-xs font-bold text-white bg-[#E27D60] py-1.5 px-3 rounded-full">Agendar Cita</button>
                 </div>
             </div>
         </section>
@@ -172,8 +172,7 @@
                     <span>📍 Maracay, Venezuela</span>
                     <span>📅 26 de Septiembre, 2026</span>
                 </div>
-                <!-- BOTÓN DE INSCRIPCIÓN DIRECTA -->
-                <button onclick="inscribirCampamento()" class="clay-btn-primary w-full py-3 font-bold">Asegurar Mi Cupo</button>
+                <button onclick="window.inscribirCampamento()" class="clay-btn-primary w-full py-3 font-bold">Asegurar Mi Cupo</button>
             </div>
         </section>
 
@@ -193,7 +192,7 @@
             <p class="text-sm text-[#7A8A7C] mt-6 font-semibold">Calibrando tu sistema somático...</p>
         </div>
 
-        <button onclick="switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold">Volver al Inicio</button>
+        <button onclick="window.switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold">Volver al Inicio</button>
     </main>
 
     <!-- ================= PANTALLA 3: AGENDAMIENTO DE CITAS ================= -->
@@ -210,10 +209,9 @@
             <label class="block text-sm font-bold text-[#7A8A7C] mt-4">Elige una Fecha:</label>
             <input id="input-fecha" type="date" class="w-full p-3 rounded-xl border border-[#7A8A7C]/20 bg-white text-sm text-[#7A8A7C] focus:outline-none" value="2026-09-28">
 
-            <!-- BOTÓN QUE DISPARA EL REGISTRO REAL -->
-            <button onclick="procesarCitaWhatsApp()" class="clay-btn-primary w-full py-3 mt-4 font-bold">Confirmar Cita vía WhatsApp</button>
+            <button onclick="window.procesarCitaWhatsApp()" class="clay-btn-primary w-full py-3 mt-4 font-bold">Confirmar Cita vía WhatsApp</button>
         </div>
-        <button onclick="switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold">Volver al Inicio</button>
+        <button onclick="window.switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold">Volver al Inicio</button>
     </main>
 
     <!-- ================= PANTALLA 4: PROGRESO ================= -->
@@ -227,7 +225,7 @@
             </div>
             <p class="text-xs text-[#7A8A7C]/70">Has completado 3 sesiones de respiración esta semana. ¡Sigue así!</p>
         </div>
-        <button onclick="switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold">Volver al Inicio</button>
+        <button onclick="window.switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold">Volver al Inicio</button>
     </main>
 
     <!-- ================= PANTALLA 5: PERFIL ================= -->
@@ -240,24 +238,24 @@
                 <p class="text-xs text-[#7A8A7C]/60">Miembro de Atrévete</p>
             </div>
         </div>
-        <button onclick="switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold">Volver al Inicio</button>
+        <button onclick="window.switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold">Volver al Inicio</button>
     </main>
 
-    <!-- === BARRA DE NAVEGACIÓN INFERIOR (Mobile Bottom Navigation) === -->
+    <!-- === BARRA DE NAVEGACIÓN INFERIOR === -->
     <nav class="clay-nav fixed bottom-0 left-0 right-0 py-3 px-6 flex justify-around items-center max-w-md mx-auto z-40">
-        <button onclick="switchView('view-home')" class="flex flex-col items-center text-[#7A8A7C] hover:text-[#E27D60]">
+        <button onclick="window.switchView('view-home')" class="flex flex-col items-center text-[#7A8A7C] hover:text-[#E27D60]">
             <span class="text-xl">🏠</span>
             <span class="text-[10px] font-medium mt-1">Home</span>
         </button>
-        <button onclick="switchView('view-progreso')" class="flex flex-col items-center text-[#7A8A7C] hover:text-[#E27D60]">
+        <button onclick="window.switchView('view-progreso')" class="flex flex-col items-center text-[#7A8A7C] hover:text-[#E27D60]">
             <span class="text-xl">📊</span>
             <span class="text-[10px] font-medium mt-1">Progreso</span>
         </button>
-        <button onclick="switchView('view-citas')" class="flex flex-col items-center text-[#7A8A7C] hover:text-[#E27D60]">
+        <button onclick="window.switchView('view-citas')" class="flex flex-col items-center text-[#7A8A7C] hover:text-[#E27D60]">
             <span class="text-xl">📅</span>
             <span class="text-[10px] font-medium mt-1">Citas</span>
         </button>
-        <button onclick="switchView('view-perfil')" class="flex flex-col items-center text-[#7A8A7C] hover:text-[#E27D60]">
+        <button onclick="window.switchView('view-perfil')" class="flex flex-col items-center text-[#7A8A7C] hover:text-[#E27D60]">
             <span class="text-xl">👤</span>
             <span class="text-[10px] font-medium mt-1">Perfil</span>
         </button>
@@ -268,28 +266,29 @@
         <p>© 2026 Atrévete HealthTech S.L. - Ecosistema Clínico Integrativo para la Regulación del Sistema Nervioso.</p>
     </footer>
 
-    <!-- === JAVASCRIPT DE INTERACTIVIDAD === -->
+    <!-- === JAVASCRIPT BLINDADO === -->
     <script>
-        // CONFIGURACIÓN: Pon tu número real aquí con código de país (Ej: 58412XXXXXXX para Venezuela)
+        // CONFIGURACIÓN: Reemplaza con tu número real de WhatsApp con código de país
         const MI_WHATSAPP = "584220372614"; 
 
-        // Sistema de navegación por pantallas (Mockup funcional)
-        function switchView(viewId) {
+        // Obligamos a que las funciones existan globalmente en la ventana del navegador
+        window.switchView = function(viewId) {
             document.querySelectorAll('.app-view').forEach(view => {
                 view.classList.add('hidden');
             });
-            document.getElementById(viewId).classList.remove('hidden');
+            const target = document.getElementById(viewId);
+            if (target) {
+                target.classList.remove('hidden');
+            }
             window.scrollTo(0, 0);
-        }
+        };
 
-        // Acción real: Registro para el Campamento "Adultas en Fuga"
-        function inscribirCampamento() {
+        window.inscribirCampamento = function() {
             const mensaje = encodeURIComponent("¡Hola Carla! Vengo desde la aplicación de Atrévete y quiero asegurar mi cupo para el Campamento 'Adultas en Fuga' del sábado 26 de septiembre en Maracay. ¿Cuáles son los métodos de pago?");
             window.open(https://wa.me/${MI_WHATSAPP}?text=${mensaje}, '_blank');
-        }
+        };
 
-        // Acción real: Agendamiento de citas desde el formulario
-        function procesarCitaWhatsApp() {
+        window.procesarCitaWhatsApp = function() {
             const terapeuta = document.getElementById('select-terapeuta').value;
             const fecha = document.getElementById('input-fecha').value;
             
@@ -300,25 +299,29 @@
 
             const mensaje = encodeURIComponent(¡Hola! Quisiera solicitar una cita a través de la aplicación Atrévete.\n\n🧑‍⚕️ Especialista: ${terapeuta}\n📅 Fecha deseada: ${fecha}\n\n¿Me confirman si tienen disponibilidad para este día?);
             window.open(https://wa.me/${MI_WHATSAPP}?text=${mensaje}, '_blank');
-        }
+        };
 
-        // Animación de respiración interactiva (Inhala 4s, Mantén 4s, Exhala 4s)
-        let status = 0;
-        const breathCircle = document.getElementById('breath-circle');
-        setInterval(() => {
-            if (status === 0) {
-                breathCircle.innerText = "Inhala...";
-                breathCircle.style.transform = "scale(1.15)";
-                status = 1;
-            } else if (status === 1) {
-                breathCircle.innerText = "Mantén...";
-                status = 2;
-            } else {
-                breathCircle.innerText = "Exhala...";
-                breathCircle.style.transform = "scale(1.0)";
-                status = 0;
+        // Esperamos a que cargue la interfaz para iniciar la animación de respiración sin bloquear nada
+        document.addEventListener("DOMContentLoaded", () => {
+            let status = 0;
+            const breathCircle = document.getElementById('breath-circle');
+            if (breathCircle) {
+                setInterval(() => {
+                    if (status === 0) {
+                        breathCircle.innerText = "Inhala...";
+                        breathCircle.style.transform = "scale(1.15)";
+                        status = 1;
+                    } else if (status === 1) {
+                        breathCircle.innerText = "Mantén...";
+                        status = 2;
+                    } else {
+                        breathCircle.innerText = "Exhala...";
+                        breathCircle.style.transform = "scale(1.0)";
+                        status = 0;
+                    }
+                }, 4000);
             }
-        }, 4000);
+        });
     </script>
 </body>
 </html>
