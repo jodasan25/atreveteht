@@ -297,8 +297,9 @@
                 return;
             }
 
+            // CORREGIDO: Se agregaron las comillas invertidas (backticks) esenciales para que funcione
             const mensaje = encodeURIComponent(¡Hola! Quisiera solicitar una cita a través de la aplicación Atrévete.\n\n🧑‍⚕️ Especialista: ${terapeuta}\n📅 Fecha deseada: ${fecha}\n\n¿Me confirman si tienen disponibilidad para este día?);
-            window.open(https://wa.me/${MI_WHATSAPP}?text=${mensaje}, '_blank');
+            window.open('https://wa.me/' + MI_WHATSAPP + '?text=' + mensaje, '_blank');
         };
 
         // Esperamos a que cargue la interfaz para iniciar la animación de respiración sin bloquear nada
