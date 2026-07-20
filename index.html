@@ -266,17 +266,18 @@
         <p>© 2026 Atrévete HealthTech S.L. - Ecosistema Clínico Integrativo para la Regulación del Sistema Nervioso.</p>
     </footer>
 
-    <!-- === JAVASCRIPT BLINDADO === -->
+    <!-- === JAVASCRIPT COMPLETAMENTE BLINDADO === -->
     <script>
-        // CONFIGURACIÓN: Reemplaza con tu número real de WhatsApp con código de país
-        const MI_WHATSAPP = "584220372614"; 
+        // CONFIGURACIÓN: Tu número real de WhatsApp con código de país
+        var MI_WHATSAPP = "584220372614"; 
 
-        // Obligamos a que las funciones existan globalmente en la ventana del navegador
+        // Registro de funciones globales limpias sin caracteres especiales
         window.switchView = function(viewId) {
-            document.querySelectorAll('.app-view').forEach(view => {
-                view.classList.add('hidden');
-            });
-            const target = document.getElementById(viewId);
+            var views = document.querySelectorAll('.app-view');
+            for (var i = 0; i < views.length; i++) {
+                views[i].classList.add('hidden');
+            }
+            var target = document.getElementById(viewId);
             if (target) {
                 target.classList.remove('hidden');
             }
@@ -284,30 +285,36 @@
         };
 
         window.inscribirCampamento = function() {
-            const mensaje = encodeURIComponent("¡Hola Carla! Vengo desde la aplicación de Atrévete y quiero asegurar mi cupo para el Campamento 'Adultas en Fuga' del sábado 26 de septiembre en Maracay. ¿Cuáles son los métodos de pago?");
+            var texto = "¡Hola Carla! Vengo desde la aplicación de Atrévete y quiero asegurar mi cupo para el Campamento 'Adultas en Fuga' del sábado 26 de septiembre en Maracay. ¿Cuáles son los métodos de pago?";
+            var mensaje = encodeURIComponent(texto);
             window.open('https://wa.me/' + MI_WHATSAPP + '?text=' + mensaje, '_blank');
         };
 
         window.procesarCitaWhatsApp = function() {
-            const terapeuta = document.getElementById('select-terapeuta').value;
-            const fecha = document.getElementById('input-fecha').value;
+            var terapeuta = document.getElementById('select-terapeuta').value;
+            var fecha = document.getElementById('input-fecha').value;
             
             if(!fecha) {
                 alert("Por favor, selecciona una fecha primero.");
                 return;
             }
 
-            // CORREGIDO: Se agregaron las comillas invertidas (backticks) esenciales para que funcione
-            const mensaje = encodeURIComponent(¡Hola! Quisiera solicitar una cita a través de la aplicación Atrévete.\n\n🧑‍⚕️ Especialista: ${terapeuta}\n📅 Fecha deseada: ${fecha}\n\n¿Me confirman si tienen disponibilidad para este día?);
+            // REESCRITO SIN BACKTICKS: Totalmente inmune a errores de codificación o copiado
+            var textoCita = "¡Hola! Quisiera solicitar una cita a través de la aplicación Atrévete.\n\n" +
+                             "🧑‍⚕️ Especialista: " + terapeuta + "\n" +
+                             "📅 Fecha deseada: " + fecha + "\n\n" +
+                             "¿Me confirman si tienen disponibilidad para este día?";
+
+            var mensaje = encodeURIComponent(textoCita);
             window.open('https://wa.me/' + MI_WHATSAPP + '?text=' + mensaje, '_blank');
         };
 
-        // Esperamos a que cargue la interfaz para iniciar la animación de respiración sin bloquear nada
-        document.addEventListener("DOMContentLoaded", () => {
-            let status = 0;
-            const breathCircle = document.getElementById('breath-circle');
+        // Animación de respiración aislada
+        document.addEventListener("DOMContentLoaded", function() {
+            var status = 0;
+            var breathCircle = document.getElementById('breath-circle');
             if (breathCircle) {
-                setInterval(() => {
+                setInterval(function() {
                     if (status === 0) {
                         breathCircle.innerText = "Inhala...";
                         breathCircle.style.transform = "scale(1.15)";
