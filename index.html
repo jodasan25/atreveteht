@@ -137,22 +137,20 @@
 <body class="pb-28">
 
   <!-- CABECERA PRINCIPAL -->
-<header class="py-5 px-6 relative flex justify-center items-center max-w-md mx-auto">
-  
-  <!-- LOGO CENTRADO Y MÁS GRANDE -->
-  <div class="cursor-pointer" onclick="window.switchView('view-home')">
-    <img src="atrevetehtlogo.png" alt="Atrévete HealthTech" class="h-40 w-auto object-contain">
-  </div>
+  <header class="py-5 px-6 relative flex justify-center items-center max-w-md mx-auto">
+    <!-- LOGO CENTRADO Y MÁS GRANDE -->
+    <div class="cursor-pointer" onclick="window.switchView('view-home')">
+      <img src="atrevetehtlogo.png" alt="Atrévete HealthTech" class="h-40 w-auto object-contain">
+    </div>
 
-  <!-- BOTÓN INGRESAR (Flotante a la derecha) -->
-  <button onclick="window.switchView('view-auth')" class="absolute right-6 px-5 py-2 text-xs font-bold text-[#E27D60] bg-[#E27D60]/10 rounded-full hover:bg-[#E27D60]/20 transition-colors">
-    Ingresar
-  </button>
-  
-</header>
+    <!-- BOTÓN INGRESAR (Flotante a la derecha) -->
+    <button onclick="window.switchView('view-auth')" class="absolute right-6 px-5 py-2 text-xs font-bold text-[#E27D60] bg-[#E27D60]/10 rounded-full hover:bg-[#E27D60]/20 transition-colors">
+      Ingresar
+    </button>
+  </header>
+
     <!-- ================= 1. HOME (PANTALLA INICIAL) ================= -->
     <main id="view-home" class="app-view max-w-md mx-auto px-5 space-y-7">
-        
         <div class="text-center space-y-2">
             <h2 class="text-3xl font-extrabold text-[#7A8A7C] leading-tight">Habita Tu Cuerpo</h2>
             <p class="text-xs text-[#7A8A7C]/80 px-2">Ecosistema somático integrativo para la regulación del sistema nervioso y acompañamiento clínico.</p>
@@ -207,7 +205,6 @@
                 </div>
             </div>
         </section>
-
     </main>
 
     <!-- ================= 2. REGISTRO Y LOGIN ================= -->
@@ -331,7 +328,6 @@
     <main id="view-pagos" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
         <h2 class="text-2xl font-bold text-[#7A8A7C] text-center">Pasarela de Pago</h2>
 
-        <!-- Resumen de Pedido -->
         <div class="clay-card p-4 bg-orange-50/30 border border-[#E27D60]/20 flex justify-between items-center">
             <div>
                 <h4 class="font-bold text-xs text-[#7A8A7C]">Reserva Campamento Adultas en Fuga</h4>
@@ -340,7 +336,6 @@
             <span class="text-base font-extrabold text-[#E27D60]">$120.00</span>
         </div>
 
-        <!-- Opciones de Pago Animadas (3 Botones) -->
         <div class="clay-card p-5 space-y-4">
             <label class="block text-xs font-bold text-[#7A8A7C]">Selecciona Método de Pago:</label>
             
@@ -361,7 +356,6 @@
                 </button>
             </div>
 
-            <!-- Caja Dinámica con Datos Reales -->
             <div id="datos-pago-box" class="bg-stone-100/90 p-4 rounded-2xl border border-stone-200/80 space-y-2 text-xs text-[#7A8A7C]">
                 <!-- Se llena por JavaScript -->
             </div>
@@ -427,14 +421,13 @@
         <button onclick="window.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold">Salir del Panel Admin</button>
     </main>
 
-    <!-- ================= 7. REGULACIÓN SOMÁTICA (CON PREGUNTAS E INTERACTIVIDAD) ================= -->
+    <!-- ================= 7. REGULACIÓN SOMÁTICA ================= -->
     <main id="view-regulacion" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
         <div class="text-center space-y-1">
             <h2 class="text-2xl font-bold text-[#7A8A7C]">Gimnasio Emocional</h2>
             <p class="text-xs text-[#7A8A7C]/80">Diagnóstico Somático & Técnicas de Regulación</p>
         </div>
 
-        <!-- CUESTIONARIO / CHECK-IN SOMÁTICO EN PASOS -->
         <div class="clay-card p-5 space-y-4 border border-[#E27D60]/20">
             <div class="flex justify-between items-center border-b border-stone-200 pb-2">
                 <span class="text-xs font-bold text-[#E27D60] uppercase tracking-wider">🔍 Chequeo Corporal</span>
@@ -495,55 +488,23 @@
                     <p id="quiz-diagnosis-title" class="font-bold text-[#E27D60] text-sm mb-1"></p>
                     <p id="quiz-diagnosis-desc"></p>
                 </div>
-
                 <div id="recommended-technique-card" class="p-4 rounded-2xl bg-white border border-[#E27D60]/30 shadow-sm space-y-2">
-                    <!-- Se llena dinámicamente -->
+                    <!-- Dinámico -->
                 </div>
-
                 <button onclick="window.resetQuiz()" class="text-xs font-bold text-[#E27D60] underline text-center w-full block">
                     🔄 Repetir Evaluación
                 </button>
             </div>
         </div>
 
-        <!-- SECCIÓN DE CALIBRACIÓN Y CIRCULO DE RESPIRACIÓN -->
+        <!-- Círculo de Respiración -->
         <div class="clay-card p-6 text-center space-y-4">
             <h3 class="font-bold text-sm text-[#7A8A7C]">Práctica Guiada: Calibrador de Respiración</h3>
             <p class="text-[11px] text-[#7A8A7C]/80">Acompasa tu ritmo respiratorio con el círculo para activar el nervio vago ventral.</p>
-            
             <div class="flex flex-col items-center justify-center py-4">
                 <div id="breath-circle" class="w-40 h-40 rounded-full bg-[#F0B7A1] flex items-center justify-center text-white font-bold text-base shadow-lg border-4 border-white transition-all duration-1000">
                     Inhala...
                 </div>
-            </div>
-        </div>
-
-        <!-- CATÁLOGO DE TÉCNICAS SOMÁTICAS DE REGULACIÓN -->
-        <div class="space-y-3">
-            <h3 class="text-sm font-bold text-[#7A8A7C]">Biblioteca de Técnicas Somáticas</h3>
-
-            <div class="clay-card p-4 space-y-2">
-                <div class="flex items-center gap-2">
-                    <span class="text-xl">👁️</span>
-                    <h4 class="font-bold text-xs text-[#7A8A7C]">Estimulación Vagal (Movimiento Ocular)</h4>
-                </div>
-                <p class="text-[11px] text-[#7A8A7C]/80">Entrelaza tus manos detrás de la cabeza. Mira hacia la derecha sin mover la cabeza durante 30 segundos hasta suspirar o tragar saliva. Repite al lado izquierdo.</p>
-            </div>
-
-            <div class="clay-card p-4 space-y-2">
-                <div class="flex items-center gap-2">
-                    <span class="text-xl">💆</span>
-                    <h4 class="font-bold text-xs text-[#7A8A7C]">Tapping Somático (EFT)</h4>
-                </div>
-                <p class="text-[11px] text-[#7A8A7C]/80">Da golpecitos suaves con las yemas de los dedos en la coronilla, entrecejo, lateral del ojo y clavícula mientras repites: "Aunque siento esta tensión, elijo estar a salvo en mi cuerpo".</p>
-            </div>
-
-            <div class="clay-card p-4 space-y-2">
-                <div class="flex items-center gap-2">
-                    <span class="text-xl">🫨</span>
-                    <h4 class="font-bold text-xs text-[#7A8A7C]">Somatic Shaking (Sacudida Terapéutica)</h4>
-                </div>
-                <p class="text-[11px] text-[#7A8A7C]/80">Ponte de pie con las rodillas semiflexionadas. Comienza a sacudir tus brazos y piernas rítmicamente durante 2 minutos para soltar el exceso de adrenalina acumulada.</p>
             </div>
         </div>
 
@@ -566,7 +527,7 @@
 
             <button onclick="window.procesarCitaWhatsApp()" class="clay-btn-primary w-full py-3.5 font-bold text-xs">Confirmar Cita vía WhatsApp</button>
         </div>
-        <button onclick="window.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold">Volver al Inicio</button>
+        <button onclick="window.switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold text-xs">Volver al Inicio</button>
     </main>
 
     <!-- ================= 9. PROGRESO SOMÁTICO ================= -->
@@ -578,124 +539,141 @@
             <div class="w-full bg-gray-200 h-4 rounded-full overflow-hidden">
                 <div class="bg-[#7A8A7C] h-full" style="width: 80%"></div>
             </div>
-            <p class="text-xs text-[#7A8A7C]/70">Has completado 4 ejercicios somáticos esta semana. Tu sistema nervioso se encuentra regulado.</p>
+            <p class="text-xs text-[#7A8A7C]/70">Has completado 4 ejercicios somáticos esta semana.</p>
         </div>
-        <button onclick="window.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold">Volver al Inicio</button>
+        <button onclick="window.switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold text-xs">Volver al Inicio</button>
     </main>
 
-    <!-- BARRA DE NAVEGACIÓN INFERIOR -->
-    <nav class="clay-nav fixed bottom-0 left-0 right-0 py-3 px-4 flex justify-around items-center max-w-md mx-auto z-50">
-        <button onclick="window.switchView('view-home')" class="flex flex-col items-center text-[#7A8A7C] hover:text-[#E27D60] transition hover:scale-110">
-            <span class="text-lg">🏠</span>
-            <span class="text-[9px] font-bold mt-0.5">Inicio</span>
-        </button>
-        <button onclick="window.switchView('view-citas')" class="flex flex-col items-center text-[#7A8A7C] hover:text-[#E27D60] transition hover:scale-110">
-            <span class="text-lg">📅</span>
-            <span class="text-[9px] font-bold mt-0.5">Citas</span>
-        </button>
-        <button onclick="window.switchView('view-pagos')" class="flex flex-col items-center text-[#7A8A7C] hover:text-[#E27D60] transition hover:scale-110">
-            <span class="text-lg">💳</span>
-            <span class="text-[9px] font-bold mt-0.5">Pagos</span>
-        </button>
-        <button onclick="window.switchView('view-admin')" class="flex flex-col items-center text-[#7A8A7C] hover:text-[#E27D60] transition hover:scale-110">
-            <span class="text-lg">⚙️</span>
-            <span class="text-[9px] font-bold mt-0.5">Admin</span>
-        </button>
-        <button onclick="window.switchView('view-perfil-usuario')" class="flex flex-col items-center text-[#7A8A7C] hover:text-[#E27D60] transition hover:scale-110">
-            <span class="text-lg">👤</span>
-            <span class="text-[9px] font-bold mt-0.5">Perfil</span>
-        </button>
+
+    <!-- ================= BARRA DE NAVEGACIÓN INFERIOR (FIJA) ================= -->
+    <nav class="clay-nav fixed bottom-0 inset-x-0 py-3 px-6 max-w-md mx-auto flex justify-between items-center z-50">
+        <div onclick="window.switchView('view-home')" class="cursor-pointer flex flex-col items-center text-[10px] text-[#7A8A7C] font-bold hover:text-[#E27D60] transition">
+            <span class="text-lg">🏠</span> Inicio
+        </div>
+        <div onclick="window.switchView('view-regulacion')" class="cursor-pointer flex flex-col items-center text-[10px] text-[#7A8A7C] font-bold hover:text-[#E27D60] transition">
+            <span class="text-lg">🫁</span> Gimnasio
+        </div>
+        <div onclick="window.switchView('view-citas')" class="cursor-pointer flex flex-col items-center text-[10px] text-[#7A8A7C] font-bold hover:text-[#E27D60] transition">
+            <span class="text-lg">📅</span> Citas
+        </div>
+        <div onclick="window.switchView('view-pagos')" class="cursor-pointer flex flex-col items-center text-[10px] text-[#7A8A7C] font-bold hover:text-[#E27D60] transition">
+            <span class="text-lg">💳</span> Pagos
+        </div>
+        <div onclick="window.switchView('view-perfil-usuario')" class="cursor-pointer flex flex-col items-center text-[10px] text-[#7A8A7C] font-bold hover:text-[#E27D60] transition">
+            <span class="text-lg">👤</span> Perfil
+        </div>
+        <div onclick="window.switchView('view-admin')" class="cursor-pointer flex flex-col items-center text-[10px] text-[#7A8A7C] font-bold hover:text-[#E27D60] transition">
+            <span class="text-lg">⚙️</span> Admin
+        </div>
     </nav>
 
-    <!-- JAVASCRIPT CON LÓGICA DE REGULACIÓN Y CUESTIONARIO -->
-    <script>
-        var MI_WHATSAPP = "584220372614";
-        var quizAnswers = {};
 
+    <!-- ================= JAVASCRIPT DE LA APLICACIÓN ================= -->
+    <script>
+        // Control de Vistas
         window.switchView = function(viewId) {
-            var views = document.querySelectorAll('.app-view');
-            for (var i = 0; i < views.length; i++) {
-                views[i].classList.add('hidden');
-            }
-            var target = document.getElementById(viewId);
+            const views = document.querySelectorAll('.app-view');
+            views.forEach(v => v.classList.add('hidden'));
+            
+            const target = document.getElementById(viewId);
             if (target) {
                 target.classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
-            window.scrollTo(0, 0);
         };
 
+        // Selector de rol en Registro
         window.setAuthRole = function(role) {
-            var btnUser = document.getElementById('btn-role-user');
-            var btnSpec = document.getElementById('btn-role-spec');
-            var fieldsSpec = document.getElementById('fields-especialista');
+            const btnUser = document.getElementById('btn-role-user');
+            const btnSpec = document.getElementById('btn-role-spec');
+            const fieldsSpec = document.getElementById('fields-especialista');
 
-            if (role === 'spec') {
-                btnSpec.className = "flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[#7A8A7C] shadow-sm transition";
-                btnUser.className = "flex-1 py-2.5 text-xs font-bold rounded-xl text-[#7A8A7C] transition";
-                fieldsSpec.classList.remove('hidden');
-            } else {
-                btnUser.className = "flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[#7A8A7C] shadow-sm transition";
-                btnSpec.className = "flex-1 py-2.5 text-xs font-bold rounded-xl text-[#7A8A7C] transition";
+            if (role === 'user') {
+                btnUser.classList.add('bg-white', 'shadow-sm');
+                btnSpec.classList.remove('bg-white', 'shadow-sm');
                 fieldsSpec.classList.add('hidden');
+            } else {
+                btnSpec.classList.add('bg-white', 'shadow-sm');
+                btnUser.classList.remove('bg-white', 'shadow-sm');
+                fieldsSpec.classList.remove('hidden');
             }
         };
 
         window.simularRegistro = function() {
-            alert("¡Registro exitoso! Bienvenido a la plataforma Atrévete HealthTech.");
+            alert('¡Cuenta creada con éxito! Bienvenido a Atrévete HealthTech.');
             window.switchView('view-perfil-usuario');
         };
 
-        // LÓGICA DEL CUESTIONARIO DE REGULACIÓN SOMÁTICA
-        window.answerQuiz = function(step, val) {
-            quizAnswers[step] = val;
-            
-            if (step === 1) {
-                document.getElementById('quiz-step-1').classList.add('hidden');
-                document.getElementById('quiz-step-2').classList.remove('hidden');
-                document.getElementById('quiz-step-indicator').innerText = "Paso 2 de 3";
-            } else if (step === 2) {
-                document.getElementById('quiz-step-2').classList.add('hidden');
-                document.getElementById('quiz-step-3').classList.remove('hidden');
-                document.getElementById('quiz-step-indicator').innerText = "Paso 3 de 3";
-            } else if (step === 3) {
-                document.getElementById('quiz-step-3').classList.add('hidden');
-                document.getElementById('quiz-result').classList.remove('hidden');
-                document.getElementById('quiz-step-indicator').innerText = "Resultado";
-                window.mostrarResultadoSomatico();
+        // Métodos de Pago
+        let metodoPagoActual = 'pm_bdv';
+        window.selectPaymentMethod = function(method) {
+            metodoPagoActual = method;
+            document.querySelectorAll('.clay-btn-pay').forEach(btn => btn.classList.remove('active-pay'));
+            document.getElementById(method === 'binance' ? 'pay-binance' : (method === 'pm_bnc' ? 'pay-bnc' : 'pay-bdv')).classList.add('active-pay');
+
+            const box = document.getElementById('datos-pago-box');
+            if (method === 'pm_bdv') {
+                box.innerHTML = `
+                    <p class="font-bold">🇻🇪 Pago Móvil - Banco de Venezuela (0102)</p>
+                    <p>Teléfono: <strong>0414-0000000</strong></p>
+                    <p>C.I: <strong>V-12.345.678</strong></p>
+                    <p class="text-[10px] text-gray-500 mt-1">Monto: <strong>Bs. Tasa BCV</strong> equivalente a $120.00</p>
+                `;
+            } else if (method === 'pm_bnc') {
+                box.innerHTML = `
+                    <p class="font-bold">🇻🇪 Pago Móvil - Banco Nacional de Crédito (0191)</p>
+                    <p>Teléfono: <strong>0412-0000000</strong></p>
+                    <p>C.I: <strong>V-12.345.678</strong></p>
+                    <p class="text-[10px] text-gray-500 mt-1">Monto: <strong>Bs. Tasa BCV</strong> equivalente a $120.00</p>
+                `;
+            } else {
+                box.innerHTML = `
+                    <p class="font-bold">🟡 Binance Pay (USDT)</p>
+                    <p>Binance Pay ID: <strong>123456789</strong></p>
+                    <p>Correo Binance: <strong>pagos@atreveteht.app</strong></p>
+                    <p class="text-[10px] text-gray-500 mt-1">Monto Exacto: <strong>$120.00 USDT</strong></p>
+                `;
             }
         };
+        // Inicializar caja de pago por defecto
+        window.selectPaymentMethod('pm_bdv');
 
-        window.mostrarResultadoSomatico = function() {
-            var estado = quizAnswers[1];
-            var zona = quizAnswers[2];
-            var obj = quizAnswers[3];
+        window.confirmarPagoMock = function() {
+            const ref = document.getElementById('input-ref-pago').value;
+            if (!ref) {
+                alert('Por favor ingresa el número de referencia o hash de la transacción.');
+                return;
+            }
+            alert('¡Comprobante enviado con éxito! Tu pago está en revisión por el equipo de administración.');
+            window.switchView('view-perfil-usuario');
+        };
 
-            var titleEl = document.getElementById('quiz-diagnosis-title');
-            var descEl = document.getElementById('quiz-diagnosis-desc');
-            var cardEl = document.getElementById('recommended-technique-card');
-
-            if (estado === 'ansiedad') {
-                titleEl.innerText = "Estado Detectado: Sistema Simpático Activado (Lucha / Huida)";
-                descEl.innerText = "Tu cuerpo tiene un exceso de cortisol y adrenalina. Necesitamos enviar señales de seguridad profunda a tu cerebro.";
-                cardEl.innerHTML = 
-                    '<h4 class="font-bold text-xs text-[#E27D60]">💡 Técnica Recomendada: Estimulación del Nervio Vago Vagal</h4>' +
-                    '<p class="text-[11px] text-[#7A8A7C]">1. Siéntate cómodo y entrelaza las manos detrás de la nuca.</p>' +
-                    '<p class="text-[11px] text-[#7A8A7C]">2. Sin girar la cabeza, lleva tus ojos totalmente a la derecha por 30s.</p>' +
-                    '<p class="text-[11px] text-[#7A8A7C]">3. Espera el suspiro espontáneo o trago de saliva. Luego repite a la izquierda.</p>';
-            } else if (estado === 'bloqueo') {
-                titleEl.innerText = "Estado Detectado: Respuestas Vagales Dorsales (Congelamiento)";
-                descEl.innerText = "Tu energía se encuentra colapsada o estancada. Necesitamos una reactivación somática gradual y segura.";
-                cardEl.innerHTML = 
-                    '<h4 class="font-bold text-xs text-[#E27D60]">💡 Técnica Recomendada: Somatic Shaking (Sacudida Ligera)</h4>' +
-                    '<p class="text-[11px] text-[#7A8A7C]">1. Ponte de pie y comienza a sacudir tus muñecas suavemente.</p>' +
-                    '<p class="text-[11px] text-[#7A8A7C]">2. Inhala por la nariz y exhala por la boca con sonido de alivio ("ahhh").</p>' +
-                    '<p class="text-[11px] text-[#7A8A7C]">3. Sacude tus hombros durante 90 segundos para descongelar el flujo energético.</p>';
+        // Cuestionario de Regulación Somática
+        let quizAnswers = {};
+        window.answerQuiz = function(step, choice) {
+            quizAnswers[`step${step}`] = choice;
+            
+            if (step < 3) {
+                document.getElementById(`quiz-step-${step}`).classList.add('hidden');
+                document.getElementById(`quiz-step-${step + 1}`).classList.remove('hidden');
+                document.getElementById('quiz-step-indicator').innerText = `Paso ${step + 1} de 3`;
             } else {
-                titleEl.innerText = "Estado Detectado: Ventral Vagal (Balance Somático)";
-                descEl.innerText = "Tu sistema nervioso se encuentra en una zona de seguridad. Ideal para profundizar en calibración respiratoria.";
-                cardEl.innerHTML = 
-                    '<h4 class="font-bold text-xs text-[#E27D60]">💡 Práctica Recomendada: Respiración en Caja o Tapping Corto</h4>' +
-                    '<p class="text-[11px] text-[#7A8A7C]">Sigue la animación del círculo inferior para realizar 3 minutos de calibración consciente.</p>';
+                document.getElementById('quiz-step-3').classList.add('hidden');
+                document.getElementById('quiz-result').classList.remove('hidden');
+                document.getElementById('quiz-step-indicator').innerText = `Completado ✅`;
+
+                // Mostrar resultado dinámico
+                const title = document.getElementById('quiz-diagnosis-title');
+                const desc = document.getElementById('quiz-diagnosis-desc');
+                const card = document.getElementById('recommended-technique-card');
+
+                title.innerText = "Diagnóstico Somático Detectado";
+                desc.innerText = "Tu sistema nervioso muestra acumulación de tensión corporal. Te recomendamos la siguiente técnica de descarga:";
+                
+                card.innerHTML = `
+                    <h5 class="font-bold text-xs text-[#7A8A7C]">🌟 Técnica Recomendada: Co-regulación y Descarga Vagal</h5>
+                    <p class="text-[11px] text-gray-600">Realiza 3 ciclos de respiración profunda con exhalación prolongada y sacudida corporal para liberar el exceso de activación simpática.</p>
+                `;
             }
         };
 
@@ -703,104 +681,36 @@
             quizAnswers = {};
             document.getElementById('quiz-result').classList.add('hidden');
             document.getElementById('quiz-step-1').classList.remove('hidden');
-            document.getElementById('quiz-step-2').classList.add('hidden');
-            document.getElementById('quiz-step-3').classList.add('hidden');
-            document.getElementById('quiz-step-indicator').innerText = "Paso 1 de 3";
+            document.getElementById('quiz-step-indicator').innerText = 'Paso 1 de 3';
         };
 
-        // SELECCIÓN Y DATOS REALES DE PAGO
-        window.selectPaymentMethod = function(method) {
-            var btnBdv = document.getElementById('pay-bdv');
-            var btnBnc = document.getElementById('pay-bnc');
-            var btnBinance = document.getElementById('pay-binance');
-            var box = document.getElementById('datos-pago-box');
-
-            if (!btnBdv) return;
-
-            btnBdv.className = "clay-btn-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1";
-            btnBnc.className = "clay-btn-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1";
-            btnBinance.className = "clay-btn-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1";
-
-            if (method === 'pm_bdv') {
-                btnBdv.className += " active-pay";
-                box.innerHTML = 
-                    '<div class="flex justify-between items-center mb-1"><p class="font-bold text-xs text-[#E27D60]">🇻🇪 Pago Móvil BDV (0102)</p><button onclick="window.copiarTexto(\'0102 18478170 04144031678\')" class="bg-stone-200 hover:bg-stone-300 text-[10px] font-bold px-2 py-0.5 rounded text-[#7A8A7C] transition">📋 Copiar Datos</button></div>' +
-                    '<p><strong>Banco:</strong> Banco de Venezuela (0102)</p>' +
-                    '<p><strong>Cédula:</strong> V-18.478.170</p>' +
-                    '<p><strong>Teléfono:</strong> 0414-4031678</p>';
-            } else if (method === 'pm_bnc') {
-                btnBnc.className += " active-pay";
-                box.innerHTML = 
-                    '<div class="flex justify-between items-center mb-1"><p class="font-bold text-xs text-[#E27D60]">🇻🇪 Pago Móvil BNC (0191)</p><button onclick="window.copiarTexto(\'0191 13518664 04144187215\')" class="bg-stone-200 hover:bg-stone-300 text-[10px] font-bold px-2 py-0.5 rounded text-[#7A8A7C] transition">📋 Copiar Datos</button></div>' +
-                    '<p><strong>Banco:</strong> Banco Nacional de Crédito (0191)</p>' +
-                    '<p><strong>Cédula:</strong> V-13.518.664</p>' +
-                    '<p><strong>Teléfono:</strong> 0414-4187215</p>';
-            } else if (method === 'binance') {
-                btnBinance.className += " active-pay";
-                box.innerHTML = 
-                    '<div class="flex justify-between items-center mb-1"><p class="font-bold text-xs text-[#E27D60]">🟡 Binance Pay (USDT)</p><button onclick="window.copiarTexto(\'163305332\')" class="bg-stone-200 hover:bg-stone-300 text-[10px] font-bold px-2 py-0.5 rounded text-[#7A8A7C] transition">📋 Copiar ID</button></div>' +
-                    '<p><strong>Binance ID:</strong> 163305332</p>' +
-                    '<p><strong>Moneda:</strong> USDT / Crypto</p>' +
-                    '<p class="text-[10px] text-stone-500 mt-1">Transfiere mediante Binance Pay sin comisiones adicionales.</p>';
-            }
-        };
-
-        window.copiarTexto = function(texto) {
-            navigator.clipboard.writeText(texto).then(function() {
-                alert("¡Copiado al portapapeles!: " + texto);
-            });
-        };
-
-        window.confirmarPagoMock = function() {
-            var ref = document.getElementById('input-ref-pago').value;
-            if(!ref) {
-                alert("Por favor ingresa el número de referencia de tu pago.");
-                return;
-            }
-            alert("¡Comprobante #" + ref + " enviado con éxito! Verificaremos tu pago en breve.");
-            window.switchView('view-perfil-usuario');
-        };
-
+        // Agendamiento WhatsApp
         window.procesarCitaWhatsApp = function() {
-            var terapeuta = document.getElementById('select-terapeuta').value;
-            var fecha = document.getElementById('input-fecha').value;
-            
-            if(!fecha) {
-                alert("Por favor, selecciona una fecha primero.");
-                return;
-            }
-
-            var textoCita = "¡Hola! Quisiera agendar una cita somática en Atrévete.\n\n" +
-                             "🧑‍⚕️ Especialista: " + terapeuta + "\n" +
-                             "📅 Fecha: " + fecha + "\n\n" +
-                             "¿Me confirman la disponibilidad?";
-
-            window.open('https://wa.me/' + MI_WHATSAPP + '?text=' + encodeURIComponent(textoCita), '_blank');
+            const terapeuta = document.getElementById('select-terapeuta').value;
+            const fecha = document.getElementById('input-fecha').value;
+            const mensaje = encodeURIComponent(`Hola, deseo confirmar mi cita somática con ${terapeuta} para la fecha ${fecha}.`);
+            window.open(`https://wa.me/584140000000?text=${mensaje}`, '_blank');
         };
 
-        // ANIMACIÓN DE RESPIRACIÓN
-        document.addEventListener("DOMContentLoaded", function() {
-            window.selectPaymentMethod('pm_bdv');
-
-            var status = 0;
-            var breathCircle = document.getElementById('breath-circle');
-            if (breathCircle) {
-                setInterval(function() {
-                    if (status === 0) {
-                        breathCircle.innerText = "Inhala...";
-                        breathCircle.style.transform = "scale(1.15)";
-                        status = 1;
-                    } else if (status === 1) {
-                        breathCircle.innerText = "Mantén...";
-                        status = 2;
-                    } else {
-                        breathCircle.innerText = "Exhala...";
-                        breathCircle.style.transform = "scale(1.0)";
-                        status = 0;
-                    }
-                }, 4000);
+        // Animación del Círculo de Respiración
+        const circle = document.getElementById('breath-circle');
+        let breathState = 0; // 0: Inhala, 1: Sostén, 2: Exhala
+        setInterval(() => {
+            if (!circle) return;
+            if (breathState === 0) {
+                circle.innerText = "Sostén...";
+                circle.style.transform = "scale(1.2)";
+                breathState = 1;
+            } else if (breathState === 1) {
+                circle.innerText = "Exhala...";
+                circle.style.transform = "scale(0.9)";
+                breathState = 2;
+            } else {
+                circle.innerText = "Inhala...";
+                circle.style.transform = "scale(1.0)";
+                breathState = 0;
             }
-        });
+        }, 4000);
     </script>
 </body>
 </html>
