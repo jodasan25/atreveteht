@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atrévete HealthTech</title>
-    <!-- Asegúrate de incluir Tailwind CSS si usas CDN -->
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-[#F6EDE9]/30 min-h-screen pb-20">
+<body class="bg-[#F6EDE9]/30 min-h-screen pb-28">
 
   <!-- CABECERA PRINCIPAL -->
   <header class="py-5 px-6 relative flex justify-center items-center max-w-md mx-auto">
@@ -23,109 +23,112 @@
   </header>
 
 
-  <!-- ================= VISTA 1: INICIO ================= -->
-  <main id="view-home" class="max-w-md mx-auto px-6">
-    
-    <div class="text-center my-6">
-      <h1 class="text-3xl font-extrabold text-[#5A7366]">Atrévete a Habitar Tu Cuerpo</h1>
-      <p class="text-sm text-gray-600 mt-2">Ecosistema somático integrativo para la regulación del sistema nervioso y acompañamiento clínico.</p>
+  <!-- ================= CONTENEDOR DE VISTAS ================= -->
+  <main class="max-w-md mx-auto px-6">
+
+    <!-- VISTA 1: INICIO -->
+    <div id="view-home" class="space-y-6">
+      <div class="text-center my-6">
+        <h1 class="text-3xl font-extrabold text-[#5A7366]">Atrévete a Habitar Tu Cuerpo</h1>
+        <p class="text-sm text-gray-600 mt-2">Ecosistema somático integrativo para la regulación del sistema nervioso y acompañamiento clínico.</p>
+      </div>
+
+      <!-- Tarjeta de Yoga / Imagen Principal -->
+      <div class="relative rounded-3xl overflow-hidden shadow-lg">
+        <img src="tu-imagen-yoga.jpg" alt="Calma somática" class="w-full h-72 object-cover">
+        <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/70 to-transparent p-5">
+          <p class="text-white font-semibold text-lg">Calibrar tu calma somática hoy</p>
+        </div>
+      </div>
     </div>
 
-    <!-- Tarjeta de Yoga / Imagen Principal -->
-    <div class="relative rounded-3xl overflow-hidden shadow-lg mt-6">
-      <!-- Reemplaza con la ruta de tu imagen de yoga -->
-      <img src="tu-imagen-yoga.jpg" alt="Calma somática" class="w-full h-72 object-cover">
-      <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/70 to-transparent p-5">
-        <p class="text-white font-semibold text-lg">Calibrar tu calma somática hoy</p>
+
+    <!-- VISTA 2: AUTENTICACIÓN (Oculta por defecto) -->
+    <div id="view-auth" class="hidden space-y-6">
+      <div class="text-center mb-6">
+        <h2 class="text-3xl font-extrabold text-gray-800">Crea tu cuenta</h2>
+        <p class="text-sm text-gray-500 mt-2">Únete a Atrévete HealthTech hoy mismo.</p>
       </div>
+
+      <!-- Botón de Registro con Google -->
+      <button class="w-full flex items-center justify-center gap-3 bg-white border border-gray-300 text-gray-700 font-semibold py-3 px-4 rounded-full hover:bg-gray-50 shadow-sm transition-all">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+          <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+          <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+          <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+        </svg>
+        Continuar con Google
+      </button>
+
+      <!-- Separador -->
+      <div class="relative flex items-center py-4">
+        <div class="flex-grow border-t border-gray-300"></div>
+        <span class="flex-shrink-0 mx-4 text-gray-400 text-sm">o con tu correo</span>
+        <div class="flex-grow border-t border-gray-300"></div>
+      </div>
+
+      <!-- Formulario de Correo -->
+      <form onsubmit="event.preventDefault();" class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Correo electrónico</label>
+          <input type="email" class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#E27D60]" placeholder="ejemplo@correo.com" required>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
+          <input type="password" class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#E27D60]" placeholder="••••••••" required>
+        </div>
+
+        <button type="submit" class="w-full bg-[#E27D60] text-white font-bold py-3 px-4 rounded-full hover:bg-[#c96a4f] shadow-md transition-all mt-4">
+          Registrarse
+        </button>
+      </form>
+
+      <p class="text-center text-sm text-gray-500 mt-6">
+        ¿Ya tienes una cuenta? 
+        <a href="#" onclick="switchView('view-home')" class="text-[#E27D60] font-bold hover:underline">Inicia sesión</a>
+      </p>
     </div>
 
   </main>
 
 
-  <!-- ================= VISTA 2: AUTENTICACIÓN (Oculta por defecto con "hidden") ================= -->
-  <div id="view-auth" class="hidden max-w-md mx-auto px-6">
-    
-    <div class="text-center mb-8">
-      <h2 class="text-3xl font-extrabold text-gray-800">Crea tu cuenta</h2>
-      <p class="text-sm text-gray-500 mt-2">Únete a Atrévete HealthTech hoy mismo.</p>
+  <!-- ================= BARRA DE NAVEGACIÓN INFERIOR (Independiente y Fija) ================= -->
+  <nav class="fixed bottom-0 inset-x-0 bg-white border-t border-gray-200 py-3 px-6 max-w-md mx-auto flex justify-between items-center shadow-lg rounded-t-2xl z-50">
+    <div onclick="switchView('view-home')" class="cursor-pointer flex flex-col items-center text-xs text-[#E27D60] font-semibold">
+      🏠 <span class="mt-1">Inicio</span>
     </div>
-
-    <!-- Botón de Registro con Google -->
-    <button class="w-full flex items-center justify-center gap-3 bg-white border border-gray-300 text-gray-700 font-semibold py-3 px-4 rounded-full hover:bg-gray-50 shadow-sm transition-all">
-      <svg class="w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-      </svg>
-      Continuar con Google
-    </button>
-
-    <!-- Separador -->
-    <div class="relative flex items-center py-6">
-      <div class="flex-grow border-t border-gray-300"></div>
-      <span class="flex-shrink-0 mx-4 text-gray-400 text-sm">o con tu correo</span>
-      <div class="flex-grow border-t border-gray-300"></div>
+    <div onclick="alert('Sección de Citas en desarrollo')" class="cursor-pointer flex flex-col items-center text-xs text-gray-400 hover:text-[#E27D60] transition-colors">
+      📅 <span class="mt-1">Citas</span>
     </div>
-
-    <!-- Formulario de Correo -->
-    <form onsubmit="event.preventDefault();" class="space-y-4">
-      <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Correo electrónico</label>
-        <input type="email" class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#E27D60]" placeholder="ejemplo@correo.com" required>
-      </div>
-
-      <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
-        <input type="password" class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#E27D60]" placeholder="••••••••" required>
-      </div>
-
-      <button type="submit" class="w-full bg-[#E27D60] text-white font-bold py-3 px-4 rounded-full hover:bg-[#c96a4f] shadow-md transition-all mt-4">
-        Registrarse
-      </button>
-    </form>
-
-    <p class="text-center text-sm text-gray-500 mt-8">
-      ¿Ya tienes una cuenta? 
-      <a href="#" onclick="switchView('view-auth')" class="text-[#E27D60] font-bold hover:underline">Inicia sesión</a>
-    </p>
-
-  </div>
-
-
-  <!-- BARRA DE NAVEGACIÓN INFERIOR -->
-  <nav class="fixed bottom-0 inset-x-0 bg-white border-t border-gray-200 py-3 px-6 max-w-md mx-auto flex justify-between items-center shadow-lg rounded-t-2xl">
-    <div onclick="switchView('view-home')" class="cursor-pointer flex flex-col items-center text-xs text-gray-600 hover:text-[#E27D60]">
-      🏠 <span>Inicio</span>
+    <div onclick="alert('Sección de Pagos en desarrollo')" class="cursor-pointer flex flex-col items-center text-xs text-gray-400 hover:text-[#E27D60] transition-colors">
+      💳 <span class="mt-1">Pagos</span>
     </div>
-    <div class="cursor-pointer flex flex-col items-center text-xs text-gray-400 hover:text-[#E27D60]">
-      📅 <span>Citas</span>
+    <div onclick="alert('Sección Admin en desarrollo')" class="cursor-pointer flex flex-col items-center text-xs text-gray-400 hover:text-[#E27D60] transition-colors">
+      ⚙️ <span class="mt-1">Admin</span>
     </div>
-    <div class="cursor-pointer flex flex-col items-center text-xs text-gray-400 hover:text-[#E27D60]">
-      💳 <span>Pagos</span>
-    </div>
-    <div class="cursor-pointer flex flex-col items-center text-xs text-gray-400 hover:text-[#E27D60]">
-      ⚙️ <span>Admin</span>
-    </div>
-    <div class="cursor-pointer flex flex-col items-center text-xs text-gray-400 hover:text-[#E27D60]">
-      👤 <span>Perfil</span>
+    <div onclick="alert('Sección de Perfil en desarrollo')" class="cursor-pointer flex flex-col items-center text-xs text-gray-400 hover:text-[#E27D60] transition-colors">
+      👤 <span class="mt-1">Perfil</span>
     </div>
   </nav>
 
 
-  <!-- SCRIPT DE CONTROL DE VISTAS -->
+  <!-- ================= SCRIPT DE CONTROL DE VISTAS ================= -->
   <script>
     function switchView(viewId) {
-      // Ocultar ambas vistas principales
+      // Ocultar todas las vistas administradas dentro del main
       document.getElementById('view-home').classList.add('hidden');
       document.getElementById('view-auth').classList.add('hidden');
       
-      // Mostrar únicamente la vista seleccionada
+      // Mostrar la vista que el usuario solicitó
       const target = document.getElementById(viewId);
       if (target) {
         target.classList.remove('hidden');
       }
+      
+      // Opcional: Subir el scroll al inicio al cambiar de vista
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   </script>
 
