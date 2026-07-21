@@ -24,16 +24,6 @@
                         inset -3px -3px 6px #e0deda;
         }
 
-        .clay-card-oliva {
-            background: #7A8A7C;
-            color: #FFFFFF;
-            border-radius: 28px;
-            box-shadow: 8px 8px 16px #d1cfcb, 
-                        -8px -8px 16px #ffffff, 
-                        inset 3px 3px 6px rgba(255, 255, 255, 0.25), 
-                        inset -3px -3px 6px rgba(0, 0, 0, 0.15);
-        }
-
         .clay-input {
             background: #F4F1ED;
             border-radius: 16px;
@@ -41,7 +31,6 @@
             border: 1px solid rgba(122, 138, 124, 0.2);
         }
 
-        /* BOTONES CON MOVIMIENTO Y CLAYMORFISMO */
         .clay-btn-primary {
             background: #E27D60;
             color: #FFFFFF;
@@ -58,7 +47,6 @@
         }
         .clay-btn-primary:active {
             transform: translateY(1px) scale(0.97);
-            box-shadow: inset 4px 4px 8px #c06a51, inset -4px -4px 8px #ff906e;
         }
 
         .clay-btn-secondary {
@@ -74,12 +62,7 @@
         .clay-btn-secondary:hover {
             transform: translateY(-2px);
         }
-        .clay-btn-secondary:active {
-            transform: translateY(1px) scale(0.97);
-            box-shadow: inset 4px 4px 8px #cc9b89, inset -4px -4px 8px #ffd3bd;
-        }
 
-        /* BOTONES DE SELECCIÓN DE OPCIONES */
         .clay-btn-option {
             background: #FFFFFF;
             color: #7A8A7C;
@@ -96,7 +79,6 @@
             border-color: rgba(226, 125, 96, 0.4);
         }
 
-        /* BOTONES DE MÉTODOS DE PAGO ANIMADOS */
         .clay-btn-pay {
             background: #FFFFFF;
             color: #7A8A7C;
@@ -108,13 +90,11 @@
         }
         .clay-btn-pay:hover {
             transform: translateY(-3px) scale(1.02);
-            box-shadow: 8px 8px 16px #d5d3ce, -8px -8px 16px #ffffff;
         }
         .clay-btn-pay.active-pay {
             border-color: #E27D60;
             background: #FFF8F6;
             color: #E27D60;
-            box-shadow: inset 3px 3px 6px rgba(226, 125, 96, 0.15), inset -3px -3px 6px #ffffff;
         }
 
         .clay-nav {
@@ -133,7 +113,7 @@
       <img src="atrevetehtlogo.png" alt="Atrévete HealthTech" class="h-40 w-auto object-contain">
     </div>
 
-    <button onclick="window.switchView('view-auth')" class="absolute right-6 px-5 py-2 text-xs font-bold text-[#E27D60] bg-[#E27D60]/10 rounded-full hover:bg-[#E27D60]/20 transition-colors">
+    <button onclick="window.switchView('view-auth')" class="absolute right-6 px-5 py-2 text-xs font-bold text-[#E27D60] bg-[#E27D60]/10 rounded-full hover:bg-[#E27D60]/25 transition-colors">
       Ingresar
     </button>
   </header>
@@ -151,7 +131,6 @@
             </div>
         </div>
 
-        <!-- Accesos Directos -->
         <div class="grid grid-cols-2 gap-3">
             <button onclick="window.switchView('view-regulacion')" class="clay-btn-primary py-3.5 text-center font-bold text-xs">
                 🫁 Regulación Somática
@@ -161,7 +140,6 @@
             </button>
         </div>
 
-        <!-- Campamento Destacado -->
         <section class="space-y-3">
             <div class="clay-card p-6 border-2 border-[#E27D60] bg-orange-50/20">
                 <span class="bg-[#E27D60] text-white text-[9px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">Preventa Exclusiva 🔥</span>
@@ -172,26 +150,6 @@
                     <span>📅 26 Sep, 2026</span>
                 </div>
                 <button onclick="window.switchView('view-pagos')" class="clay-btn-primary w-full py-3 font-bold text-sm">Reservar Mi Cupo ($120)</button>
-            </div>
-        </section>
-
-        <!-- Directorio de Especialistas -->
-        <section class="space-y-3">
-            <div class="flex justify-between items-center border-b border-[#7A8A7C]/20 pb-2">
-                <h3 class="text-lg font-bold text-[#7A8A7C]">Especialistas Somáticos</h3>
-                <button onclick="window.switchView('view-auth')" class="text-xs text-[#E27D60] font-bold">¿Eres Especialista?</button>
-            </div>
-
-            <div class="clay-card p-4 flex items-center gap-4">
-                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&q=80" alt="Dra. Carla Rodríguez" class="w-14 h-14 rounded-full object-cover border-2 border-[#E27D60]">
-                <div class="flex-1">
-                    <h4 class="font-bold text-sm text-[#7A8A7C]">Dra. Carla Rodríguez</h4>
-                    <p class="text-[11px] text-[#7A8A7C]/80">Mentora & Coach Somático</p>
-                    <div class="flex gap-2 mt-2">
-                        <button onclick="window.switchView('view-perfil-especialista')" class="text-[10px] font-bold text-[#7A8A7C] bg-stone-200/80 px-2.5 py-1 rounded-full transition hover:scale-105">Ver Perfil</button>
-                        <button onclick="window.switchView('view-citas')" class="text-[10px] font-bold text-white bg-[#E27D60] px-2.5 py-1 rounded-full transition hover:scale-105">Agendar</button>
-                    </div>
-                </div>
             </div>
         </section>
     </main>
@@ -213,7 +171,7 @@
             </button>
         </div>
 
-        <!-- Botón de Google OAuth -->
+        <!-- Botón de Google OAuth visible -->
         <button onclick="window.simularGoogleAuth()" class="w-full flex items-center justify-center gap-3 bg-white border border-gray-300 text-gray-700 font-semibold py-3 px-4 rounded-full hover:bg-gray-50 shadow-sm transition-all text-xs">
             <svg class="w-4 h-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -224,16 +182,15 @@
             Continuar con Google
         </button>
 
-        <div class="relative flex items-center py-2">
+        <div class="relative flex items-center py-1">
             <div class="flex-grow border-t border-stone-300"></div>
-            <span class="flex-shrink-0 mx-4 text-stone-400 text-[11px]">o con tu correo</span>
+            <span class="flex-shrink-0 mx-4 text-stone-400 text-[11px]">o con tu correo electrónico</span>
             <div class="flex-grow border-t border-stone-300"></div>
         </div>
 
-        <!-- Formulario de Correo / Contraseña -->
+        <!-- Formulario por correo -->
         <form onsubmit="event.preventDefault(); window.procesarAuthEmail();" class="clay-card p-6 space-y-4">
             
-            <!-- Campo Nombre (Solo visible en Registro) -->
             <div id="field-nombre" class="hidden">
                 <label class="block text-xs font-bold text-[#7A8A7C] mb-1">Nombre Completo</label>
                 <input type="text" id="input-nombre" placeholder="Ej. Ana Mendoza" class="w-full p-3 text-xs clay-input focus:outline-none">
@@ -249,7 +206,6 @@
                 <input type="password" id="input-password" placeholder="••••••••" class="w-full p-3 text-xs clay-input focus:outline-none" required>
             </div>
 
-            <!-- Selector de Rol (Solo en Registro) -->
             <div id="field-rol" class="hidden space-y-2 border-t border-[#7A8A7C]/20 pt-3">
                 <label class="block text-xs font-bold text-[#7A8A7C]">Tipo de Cuenta:</label>
                 <div class="flex gap-2">
@@ -262,7 +218,7 @@
                 </div>
             </div>
 
-            <!-- Enlace Recuperar Contraseña (Solo en Modo Login) -->
+            <!-- Enlace Recuperar Contraseña -->
             <div id="link-forgot-container" class="text-right">
                 <button type="button" onclick="window.switchView('view-recovery')" class="text-[11px] text-[#E27D60] font-semibold hover:underline">
                     ¿Olvidaste tu contraseña?
@@ -277,12 +233,11 @@
         <button onclick="window.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold">Volver al Inicio</button>
     </main>
 
-
     <!-- ================= 3. RECUPERACIÓN DE CONTRASEÑA ================= -->
     <main id="view-recovery" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
         <div class="text-center space-y-1">
             <h2 class="text-2xl font-bold text-[#7A8A7C]">Recuperar Contraseña</h2>
-            <p class="text-xs text-[#7A8A7C]/70">Ingresa tu correo electrónico registrado y te enviaremos las instrucciones de restablecimiento.</p>
+            <p class="text-xs text-[#7A8A7C]/70">Ingresa tu correo electrónico registrado y te enviaremos las instrucciones.</p>
         </div>
 
         <form onsubmit="event.preventDefault(); window.procesarRecuperacion();" class="clay-card p-6 space-y-4">
@@ -299,7 +254,6 @@
         <button onclick="window.switchView('view-auth')" class="clay-btn-secondary w-full py-3 text-xs font-bold">← Volver al Ingreso</button>
     </main>
 
-
     <!-- ================= 4. PERFIL DE USUARIO ================= -->
     <main id="view-perfil-usuario" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
         <div class="clay-card p-6 text-center space-y-3">
@@ -312,277 +266,76 @@
             </div>
             <span class="inline-block bg-emerald-100 text-emerald-800 text-[10px] font-bold px-3 py-1 rounded-full">Suscripción Activa</span>
         </div>
-
-        <div class="space-y-3">
-            <h4 class="text-sm font-bold text-[#7A8A7C]">Próximas Actividades</h4>
-            <div class="clay-card p-4 space-y-2">
-                <div class="flex justify-between items-center">
-                    <span class="text-xs font-bold text-[#7A8A7C]">🏕️ Campamento Adultas en Fuga</span>
-                    <span class="text-[10px] text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded">Confirmado</span>
-                </div>
-                <p class="text-[11px] text-[#7A8A7C]/80">Fecha: 26 de Septiembre, 2026 • Maracay</p>
-            </div>
-        </div>
-
-        <div class="clay-card p-5 space-y-3">
-            <h4 class="text-sm font-bold text-[#7A8A7C]">Acceso Rápido</h4>
-            <button onclick="window.switchView('view-progreso')" class="w-full text-left p-3 rounded-xl bg-stone-100 text-xs font-bold text-[#7A8A7C] flex justify-between items-center transition hover:bg-stone-200">
-                📊 Ver Mi Historial de Calma Somática <span>➔</span>
-            </button>
-            <button onclick="window.switchView('view-pagos')" class="w-full text-left p-3 rounded-xl bg-stone-100 text-xs font-bold text-[#7A8A7C] flex justify-between items-center transition hover:bg-stone-200">
-                💳 Historial de Pagos y Facturación <span>➔</span>
-            </button>
-        </div>
-
         <button onclick="window.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold">Cerrar Sesión</button>
     </main>
 
-
-    <!-- ================= 5. PERFIL DE ESPECIALISTA ================= -->
-    <main id="view-perfil-especialista" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
-        <div class="clay-card p-6 text-center space-y-3">
-            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80" class="w-24 h-24 rounded-full object-cover mx-auto border-4 border-[#E27D60] shadow">
-            <div>
-                <h3 class="text-xl font-bold text-[#7A8A7C]">Dra. Carla Rodríguez</h3>
-                <p class="text-xs text-[#E27D60] font-semibold">Mentora Somática & Especialista en Sistema Nervioso</p>
-            </div>
-            <p class="text-xs text-[#7A8A7C]/80 px-2">Especialista en regulación del nervio vago, liberación de estrés crónico y trauma corporizado con más de 10 años de práctica.</p>
-        </div>
-
-        <div class="clay-card p-5 space-y-3">
-            <h4 class="text-sm font-bold text-[#7A8A7C]">Detalles de Consulta</h4>
-            <div class="flex justify-between text-xs py-1 border-b border-stone-200">
-                <span class="text-[#7A8A7C]/70">Modalidad:</span>
-                <span class="font-bold text-[#7A8A7C]">Online & Presencial</span>
-            </div>
-            <div class="flex justify-between text-xs py-1 border-b border-stone-200">
-                <span class="text-[#7A8A7C]/70">Duración Sesión:</span>
-                <span class="font-bold text-[#7A8A7C]">60 minutos</span>
-            </div>
-            <div class="flex justify-between text-xs py-1 border-b border-stone-200">
-                <span class="text-[#7A8A7C]/70">Inversión:</span>
-                <span class="font-bold text-[#E27D60]">$60.00 / sesión</span>
-            </div>
-        </div>
-
-        <button onclick="window.switchView('view-citas')" class="clay-btn-primary w-full py-3.5 font-bold text-xs">Agendar Consulta con Dra. Carla</button>
-        <button onclick="window.switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold text-xs">Volver al Inicio</button>
-    </main>
-
-
-    <!-- ================= 6. MÉTODOS DE PAGO / FACTURACIÓN ================= -->
+    <!-- ================= 5. MÉTODOS DE PAGO ================= -->
     <main id="view-pagos" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
         <h2 class="text-2xl font-bold text-[#7A8A7C] text-center">Pasarela de Pago</h2>
-
-        <div class="clay-card p-4 bg-orange-50/30 border border-[#E27D60]/20 flex justify-between items-center">
-            <div>
-                <h4 class="font-bold text-xs text-[#7A8A7C]">Reserva Campamento Adultas en Fuga</h4>
-                <p class="text-[10px] text-[#7A8A7C]/70">26 de Septiembre, Maracay</p>
-            </div>
-            <span class="text-base font-extrabold text-[#E27D60]">$120.00</span>
-        </div>
-
         <div class="clay-card p-5 space-y-4">
             <label class="block text-xs font-bold text-[#7A8A7C]">Selecciona Método de Pago:</label>
-            
             <div class="grid grid-cols-3 gap-2">
                 <button type="button" id="pay-bdv" onclick="window.selectPaymentMethod('pm_bdv')" class="clay-btn-pay active-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1">
-                    <span class="text-base">🇻🇪</span>
-                    <span>Pago BDV</span>
+                    <span>🇻🇪 BDV</span>
                 </button>
-                
                 <button type="button" id="pay-bnc" onclick="window.selectPaymentMethod('pm_bnc')" class="clay-btn-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1">
-                    <span class="text-base">🇻🇪</span>
-                    <span>Pago BNC</span>
+                    <span>🇻🇪 BNC</span>
                 </button>
-                
                 <button type="button" id="pay-binance" onclick="window.selectPaymentMethod('binance')" class="clay-btn-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1">
-                    <span class="text-base">🟡</span>
-                    <span>Binance</span>
+                    <span>🟡 Binance</span>
                 </button>
             </div>
-
-            <div id="datos-pago-box" class="bg-stone-100/90 p-4 rounded-2xl border border-stone-200/80 space-y-2 text-xs text-[#7A8A7C]">
-                <!-- Se llena por JavaScript -->
-            </div>
-
+            <div id="datos-pago-box" class="bg-stone-100/90 p-4 rounded-2xl border border-stone-200 text-xs text-[#7A8A7C]"></div>
             <div>
-                <label class="block text-xs font-bold text-[#7A8A7C] mb-1">Número de Referencia / Comprobante</label>
-                <input id="input-ref-pago" type="text" placeholder="Ej. #849204 o Hash de Binance" class="w-full p-3 text-xs clay-input focus:outline-none">
+                <label class="block text-xs font-bold text-[#7A8A7C] mb-1">Referencia o Comprobante</label>
+                <input id="input-ref-pago" type="text" placeholder="Ej. #849204" class="w-full p-3 text-xs clay-input focus:outline-none">
             </div>
-
-            <button onclick="window.confirmarPagoMock()" class="clay-btn-primary w-full py-3.5 text-xs font-bold">
-                Enviar Comprobante de Pago
-            </button>
+            <button onclick="window.confirmarPagoMock()" class="clay-btn-primary w-full py-3.5 text-xs font-bold">Enviar Comprobante</button>
         </div>
-
         <button onclick="window.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold">Cancelar</button>
     </main>
 
-
-    <!-- ================= 7. PANEL DE ADMINISTRACIÓN (ADMIN) ================= -->
-    <main id="view-admin" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
-        <div class="flex justify-between items-center">
-            <h2 class="text-xl font-bold text-[#7A8A7C]">Panel de Control Admin</h2>
-            <span class="bg-[#E27D60] text-white text-[9px] font-extrabold px-2.5 py-1 rounded-full">Atrévete HQ</span>
-        </div>
-
-        <div class="grid grid-cols-2 gap-3">
-            <div class="clay-card p-4 text-center">
-                <span class="text-2xl font-extrabold text-[#7A8A7C]">148</span>
-                <p class="text-[10px] text-[#7A8A7C]/70 font-semibold uppercase mt-1">Usuarios Activos</p>
-            </div>
-            <div class="clay-card p-4 text-center">
-                <span class="text-2xl font-extrabold text-[#E27D60]">12</span>
-                <p class="text-[10px] text-[#7A8A7C]/70 font-semibold uppercase mt-1">Especialistas</p>
-            </div>
-        </div>
-
-        <div class="clay-card p-5 space-y-3">
-            <h3 class="text-sm font-bold text-[#7A8A7C] border-b border-stone-200 pb-2">Campamento "Adultas en Fuga"</h3>
-            <div class="flex justify-between text-xs">
-                <span>Fecha: <strong>26 de Septiembre, 2026</strong></span>
-                <span class="text-[#E27D60] font-bold">Cupos: 18 / 25</span>
-            </div>
-            <div class="w-full bg-stone-200 h-2.5 rounded-full overflow-hidden">
-                <div class="bg-[#E27D60] h-full" style="width: 72%"></div>
-            </div>
-        </div>
-
-        <button onclick="window.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold">Salir del Panel Admin</button>
-    </main>
-
-
-    <!-- ================= 8. REGULACIÓN SOMÁTICA ================= -->
+    <!-- ================= 6. REGULACIÓN SOMÁTICA ================= -->
     <main id="view-regulacion" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
         <div class="text-center space-y-1">
             <h2 class="text-2xl font-bold text-[#7A8A7C]">Gimnasio Emocional</h2>
-            <p class="text-xs text-[#7A8A7C]/80">Diagnóstico Somático & Técnicas de Regulación</p>
+            <p class="text-xs text-[#7A8A7C]/80">Diagnóstico y Regulación Somática</p>
         </div>
-
-        <div class="clay-card p-5 space-y-4 border border-[#E27D60]/20">
-            <div class="flex justify-between items-center border-b border-stone-200 pb-2">
-                <span class="text-xs font-bold text-[#E27D60] uppercase tracking-wider">🔍 Chequeo Corporal</span>
-                <span id="quiz-step-indicator" class="text-[10px] font-bold text-[#7A8A7C] bg-stone-100 px-2 py-0.5 rounded-full">Paso 1 de 3</span>
-            </div>
-
-            <!-- PASO 1 -->
-            <div id="quiz-step-1" class="space-y-3">
-                <p class="text-xs font-bold text-[#7A8A7C]">1. ¿Cómo sientes tu estado corporal / emocional en este momento?</p>
-                <div class="space-y-2">
-                    <button onclick="window.answerQuiz(1, 'ansiedad')" class="clay-btn-option w-full text-xs">
-                        🔴 <strong>Ansioso / Acelerado:</strong> Siento inquietud, taquicardia o mente saturada.
-                    </button>
-                    <button onclick="window.answerQuiz(1, 'bloqueo')" class="clay-btn-option w-full text-xs">
-                        🟡 <strong>Agotado / Desconectado:</strong> Siento pesadez, parálisis o desmotivación.
-                    </button>
-                    <button onclick="window.answerQuiz(1, 'calma')" class="clay-btn-option w-full text-xs">
-                        🟢 <strong>Estable / En Calma:</strong> Quiero mantener mi balance y centrar mi mente.
-                    </button>
-                </div>
-            </div>
-
-            <!-- PASO 2 -->
-            <div id="quiz-step-2" class="space-y-3 hidden">
-                <p class="text-xs font-bold text-[#7A8A7C]">2. ¿Dónde se concentra la mayor tensión física?</p>
-                <div class="space-y-2">
-                    <button onclick="window.answerQuiz(2, 'pecho')" class="clay-btn-option w-full text-xs">
-                        🫁 <strong>Pecho / Respiración:</strong> Siento opresión al inhalar o aire entrecortado.
-                    </button>
-                    <button onclick="window.answerQuiz(2, 'cuello')" class="clay-btn-option w-full text-xs">
-                        💆 <strong>Cuello / Mandíbula:</strong> Dientes apretados, hombros rígidos o cefalea.
-                    </button>
-                    <button onclick="window.answerQuiz(2, 'estomago')" class="clay-btn-option w-full text-xs">
-                        🫃 <strong>Estómago / Plexo:</strong> Sensación de nudo en el abdomen o digestión lenta.
-                    </button>
-                </div>
-            </div>
-
-            <!-- PASO 3 -->
-            <div id="quiz-step-3" class="space-y-3 hidden">
-                <p class="text-xs font-bold text-[#7A8A7C]">3. ¿Qué necesita tu cuerpo en este instante?</p>
-                <div class="space-y-2">
-                    <button onclick="window.answerQuiz(3, 'bajar')" class="clay-btn-option w-full text-xs">
-                        ⚓ <strong>Bajar revoluciones:</strong> Calmar la aceleración y soltar el control.
-                    </button>
-                    <button onclick="window.answerQuiz(3, 'activar')" class="clay-btn-option w-full text-xs">
-                        ⚡ <strong>Salir del aletargamiento:</strong> Movilizar la energía estancada.
-                    </button>
-                    <button onclick="window.answerQuiz(3, 'liberar')" class="clay-btn-option w-full text-xs">
-                        🕊️ <strong>Descargar tensión:</strong> Soltar cargas emocionales del día.
-                    </button>
-                </div>
-            </div>
-
-            <!-- RESULTADO Y TÉCNICA RECOMENDADA -->
-            <div id="quiz-result" class="space-y-4 hidden">
-                <div class="p-3 rounded-2xl bg-orange-100/50 text-xs text-[#7A8A7C]">
-                    <p id="quiz-diagnosis-title" class="font-bold text-[#E27D60] text-sm mb-1"></p>
-                    <p id="quiz-diagnosis-desc"></p>
-                </div>
-                <div id="recommended-technique-card" class="p-4 rounded-2xl bg-white border border-[#E27D60]/30 shadow-sm space-y-2">
-                    <!-- Dinámico -->
-                </div>
-                <button onclick="window.resetQuiz()" class="text-xs font-bold text-[#E27D60] underline text-center w-full block">
-                    🔄 Repetir Evaluación
-                </button>
-            </div>
+        <div class="clay-card p-5 space-y-4">
+            <p class="text-xs font-bold text-[#7A8A7C]">¿Cómo sientes tu estado corporal actual?</p>
+            <button onclick="window.switchView('view-home')" class="clay-btn-option w-full text-xs">🔴 Ansioso / Acelerado</button>
+            <button onclick="window.switchView('view-home')" class="clay-btn-option w-full text-xs">🟡 Agotado / Desconectado</button>
+            <button onclick="window.switchView('view-home')" class="clay-btn-option w-full text-xs">🟢 Estable / En Calma</button>
         </div>
-
         <button onclick="window.switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold text-xs">Volver al Inicio</button>
     </main>
 
-
-    <!-- ================= 9. AGENDAMIENTO DE CITAS ================= -->
+    <!-- ================= 7. AGENDAMIENTO DE CITAS ================= -->
     <main id="view-citas" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
         <h2 class="text-2xl font-bold text-[#7A8A7C] text-center">Agendar tu Sesión</h2>
-        
         <div class="clay-card p-5 space-y-4">
-            <label class="block text-xs font-bold text-[#7A8A7C]">Selecciona Especialista:</label>
-            <select id="select-terapeuta" class="w-full p-3 rounded-xl border border-[#7A8A7C]/20 bg-white text-xs text-[#7A8A7C] focus:outline-none">
-                <option value="Dra. Carla Rodríguez">Dra. Carla Rodríguez (Regulación Somática)</option>
-                <option value="Especialista Somático Integrativo">Especialista en Integración del Trauma</option>
+            <label class="block text-xs font-bold text-[#7A8A7C]">Especialista:</label>
+            <select id="select-terapeuta" class="w-full p-3 rounded-xl border border-[#7A8A7C]/20 bg-white text-xs text-[#7A8A7C]">
+                <option value="Dra. Carla Rodríguez">Dra. Carla Rodríguez</option>
             </select>
-
-            <label class="block text-xs font-bold text-[#7A8A7C]">Elige una Fecha:</label>
-            <input id="input-fecha" type="date" class="w-full p-3 rounded-xl border border-[#7A8A7C]/20 bg-white text-xs text-[#7A8A7C] focus:outline-none" value="2026-09-28">
-
-            <button onclick="window.procesarCitaWhatsApp()" class="clay-btn-primary w-full py-3.5 font-bold text-xs">Confirmar Cita vía WhatsApp</button>
+            <button onclick="window.switchView('view-home')" class="clay-btn-primary w-full py-3.5 font-bold text-xs">Confirmar Cita</button>
         </div>
-        <button onclick="window.switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold text-xs">Volver al Inicio</button>
+        <button onclick="window.switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold text-xs">Volver</button>
     </main>
-
 
     <!-- ================= BARRA DE NAVEGACIÓN INFERIOR (FIJA) ================= -->
     <nav class="clay-nav fixed bottom-0 inset-x-0 py-3 px-6 max-w-md mx-auto flex justify-between items-center z-50">
-        <div onclick="window.switchView('view-home')" class="cursor-pointer flex flex-col items-center text-[10px] text-[#7A8A7C] font-bold hover:text-[#E27D60] transition">
-            <span class="text-lg">🏠</span> Inicio
-        </div>
-        <div onclick="window.switchView('view-regulacion')" class="cursor-pointer flex flex-col items-center text-[10px] text-[#7A8A7C] font-bold hover:text-[#E27D60] transition">
-            <span class="text-lg">🫁</span> Gimnasio
-        </div>
-        <div onclick="window.switchView('view-citas')" class="cursor-pointer flex flex-col items-center text-[10px] text-[#7A8A7C] font-bold hover:text-[#E27D60] transition">
-            <span class="text-lg">📅</span> Citas
-        </div>
-        <div onclick="window.switchView('view-pagos')" class="cursor-pointer flex flex-col items-center text-[10px] text-[#7A8A7C] font-bold hover:text-[#E27D60] transition">
-            <span class="text-lg">💳</span> Pagos
-        </div>
-        <div onclick="window.switchView('view-perfil-usuario')" class="cursor-pointer flex flex-col items-center text-[10px] text-[#7A8A7C] font-bold hover:text-[#E27D60] transition">
-            <span class="text-lg">👤</span> Perfil
-        </div>
-        <div onclick="window.switchView('view-admin')" class="cursor-pointer flex flex-col items-center text-[10px] text-[#7A8A7C] font-bold hover:text-[#E27D60] transition">
-            <span class="text-lg">⚙️</span> Admin
-        </div>
+        <div onclick="window.switchView('view-home')" class="cursor-pointer flex flex-col items-center text-[10px] text-[#7A8A7C] font-bold"><span>🏠</span> Inicio</div>
+        <div onclick="window.switchView('view-regulacion')" class="cursor-pointer flex flex-col items-center text-[10px] text-[#7A8A7C] font-bold"><span>🫁</span> Gimnasio</div>
+        <div onclick="window.switchView('view-citas')" class="cursor-pointer flex flex-col items-center text-[10px] text-[#7A8A7C] font-bold"><span>📅</span> Citas</div>
+        <div onclick="window.switchView('view-pagos')" class="cursor-pointer flex flex-col items-center text-[10px] text-[#7A8A7C] font-bold"><span>💳</span> Pagos</div>
+        <div onclick="window.switchView('view-auth')" class="cursor-pointer flex flex-col items-center text-[10px] text-[#7A8A7C] font-bold"><span>👤</span> Ingresar</div>
     </nav>
 
-
-    <!-- ================= JAVASCRIPT DE LA APLICACIÓN ================= -->
+    <!-- ================= JAVASCRIPT ================= -->
     <script>
-        // Control de Vistas
         window.switchView = function(viewId) {
-            const views = document.querySelectorAll('.app-view');
-            views.forEach(v => v.classList.add('hidden'));
-            
+            document.querySelectorAll('.app-view').forEach(v => v.classList.add('hidden'));
             const target = document.getElementById(viewId);
             if (target) {
                 target.classList.remove('hidden');
@@ -590,7 +343,6 @@
             }
         };
 
-        // Estado de Autenticación (Login vs Registro)
         let authMode = 'login';
         window.switchAuthMode = function(mode) {
             authMode = mode;
@@ -604,8 +356,8 @@
             const subtitle = document.getElementById('auth-subtitle');
 
             if (mode === 'login') {
-                tabLogin.classList.add('bg-white', 'shadow-sm', 'text-[#7A8A7C]');
-                tabRegister.classList.remove('bg-white', 'shadow-sm', 'text-[#7A8A7C]');
+                tabLogin.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[#7A8A7C] shadow-sm transition';
+                tabRegister.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl text-[#7A8A7C] transition';
                 fieldNombre.classList.add('hidden');
                 fieldRol.classList.add('hidden');
                 linkForgot.classList.remove('hidden');
@@ -613,8 +365,8 @@
                 title.innerText = 'Iniciar Sesión';
                 subtitle.innerText = 'Accede a tu cuenta de Atrévete HealthTech';
             } else {
-                tabRegister.classList.add('bg-white', 'shadow-sm', 'text-[#7A8A7C]');
-                tabLogin.classList.remove('bg-white', 'shadow-sm', 'text-[#7A8A7C]');
+                tabRegister.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[#7A8A7C] shadow-sm transition';
+                tabLogin.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl text-[#7A8A7C] transition';
                 fieldNombre.classList.remove('hidden');
                 fieldRol.classList.remove('hidden');
                 linkForgot.classList.add('hidden');
@@ -624,13 +376,9 @@
             }
         };
 
-        // Selector de rol en Registro
-        let selectedRole = 'user';
         window.setAuthRole = function(role) {
-            selectedRole = role;
             const btnUser = document.getElementById('btn-role-user');
             const btnSpec = document.getElementById('btn-role-spec');
-
             if (role === 'user') {
                 btnUser.className = 'flex-1 py-2 text-xs font-bold rounded-xl bg-orange-100 text-[#E27D60] border border-[#E27D60]/30 transition';
                 btnSpec.className = 'flex-1 py-2 text-xs font-bold rounded-xl bg-stone-100 text-[#7A8A7C] transition';
@@ -642,11 +390,7 @@
 
         window.procesarAuthEmail = function() {
             const email = document.getElementById('input-email').value;
-            if (authMode === 'login') {
-                alert(`¡Bienvenido de vuelta, ${email}! Sesión iniciada con éxito.`);
-            } else {
-                alert(`¡Cuenta creada con éxito para ${email}! Bienvenido a Atrévete HealthTech.`);
-            }
+            alert(authMode === 'login' ? `Sesión iniciada con éxito para ${email}` : `Cuenta creada con éxito para ${email}`);
             window.switchView('view-perfil-usuario');
         };
 
@@ -661,88 +405,29 @@
                 alert('Por favor ingresa tu correo electrónico.');
                 return;
             }
-            alert(`Hemos enviado un enlace de recuperación a: ${email}. Revisa tu bandeja de entrada.`);
+            alert(`Instrucciones enviadas a: ${email}`);
             window.switchView('view-auth');
         };
 
-        // Métodos de Pago
-        let metodoPagoActual = 'pm_bdv';
         window.selectPaymentMethod = function(method) {
-            metodoPagoActual = method;
             document.querySelectorAll('.clay-btn-pay').forEach(btn => btn.classList.remove('active-pay'));
             document.getElementById(method === 'binance' ? 'pay-binance' : (method === 'pm_bnc' ? 'pay-bnc' : 'pay-bdv')).classList.add('active-pay');
-
             const box = document.getElementById('datos-pago-box');
-            if (method === 'pm_bdv') {
-                box.innerHTML = `
-                    <p class="font-bold">🇻🇪 Pago Móvil - Banco de Venezuela (0102)</p>
-                    <p>Teléfono: <strong>0414-0000000</strong></p>
-                    <p>C.I: <strong>V-12.345.678</strong></p>
-                    <p class="text-[10px] text-gray-500 mt-1">Monto: <strong>Bs. Tasa BCV</strong> equivalente al total</p>
-                `;
-            } else if (method === 'pm_bnc') {
-                box.innerHTML = `
-                    <p class="font-bold">🇻🇪 Pago Móvil - Banco Nacional de Crédito (0191)</p>
-                    <p>Teléfono: <strong>0412-0000000</strong></p>
-                    <p>C.I: <strong>V-12.345.678</strong></p>
-                    <p class="text-[10px] text-gray-500 mt-1">Monto: <strong>Bs. Tasa BCV</strong> equivalente al total</p>
-                `;
+            if (method === 'binance') {
+                box.innerHTML = `<p class="font-bold">🟡 Binance Pay (USDT)</p><p>ID: <strong>123456789</strong></p>`;
             } else {
-                box.innerHTML = `
-                    <p class="font-bold">🟡 Binance Pay (USDT)</p>
-                    <p>Binance Pay ID: <strong>123456789</strong></p>
-                    <p>Correo Binance: <strong>pagos@atreveteht.app</strong></p>
-                    <p class="text-[10px] text-gray-500 mt-1">Monto Exacto: <strong>USDT</strong> correspondiente</p>
-                `;
+                box.innerHTML = `<p class="font-bold">🇻🇪 Pago Móvil</p><p>Teléfono: <strong>0414-0000000</strong></p>`;
             }
         };
         window.selectPaymentMethod('pm_bdv');
 
         window.confirmarPagoMock = function() {
-            const ref = document.getElementById('input-ref-pago').value;
-            if (!ref) {
-                alert('Por favor ingresa el número de referencia o hash.');
+            if (!document.getElementById('input-ref-pago').value) {
+                alert('Ingresa la referencia.');
                 return;
             }
-            alert('¡Comprobante enviado con éxito! En revisión por administración.');
+            alert('Comprobante enviado con éxito.');
             window.switchView('view-perfil-usuario');
-        };
-
-        // Cuestionario de Regulación Somática
-        let quizAnswers = {};
-        window.answerQuiz = function(step, choice) {
-            quizAnswers[`step${step}`] = choice;
-            if (step < 3) {
-                document.getElementById(`quiz-step-${step}`).classList.add('hidden');
-                document.getElementById(`quiz-step-${step + 1}`).classList.remove('hidden');
-                document.getElementById('quiz-step-indicator').innerText = `Paso ${step + 1} de 3`;
-            } else {
-                document.getElementById('quiz-step-3').classList.add('hidden');
-                document.getElementById('quiz-result').classList.remove('hidden');
-                document.getElementById('quiz-step-indicator').innerText = `Completado ✅`;
-
-                document.getElementById('quiz-diagnosis-title').innerText = "Diagnóstico Somático Detectado";
-                document.getElementById('quiz-diagnosis-desc').innerText = "Tu sistema nervioso muestra acumulación de tensión corporal. Te recomendamos la siguiente técnica:";
-                
-                document.getElementById('recommended-technique-card').innerHTML = `
-                    <h5 class="font-bold text-xs text-[#7A8A7C]">🌟 Técnica Recomendada: Descarga Vagal</h5>
-                    <p class="text-[11px] text-gray-600">Realiza 3 ciclos de respiración profunda con exhalación prolongada y sacudida corporal.</p>
-                `;
-            }
-        };
-
-        window.resetQuiz = function() {
-            quizAnswers = {};
-            document.getElementById('quiz-result').classList.add('hidden');
-            document.getElementById('quiz-step-1').classList.remove('hidden');
-            document.getElementById('quiz-step-indicator').innerText = 'Paso 1 de 3';
-        };
-
-        window.procesarCitaWhatsApp = function() {
-            const terapeuta = document.getElementById('select-terapeuta').value;
-            const fecha = document.getElementById('input-fecha').value;
-            const mensaje = encodeURIComponent(`Hola, deseo confirmar mi cita con ${terapeuta} para el ${fecha}.`);
-            window.open(`https://wa.me/584140000000?text=${mensaje}`, '_blank');
         };
     </script>
 </body>
