@@ -26,6 +26,7 @@
 
         .clay-card-oliva {
             background: #7A8A7C;
+            color: #FFFFFF;
             border-radius: 28px;
             box-shadow: 8px 8px 16px #d1cfcb, 
                         -8px -8px 16px #ffffff, 
@@ -76,6 +77,29 @@
         .clay-btn-secondary:active {
             transform: translateY(1px) scale(0.97);
             box-shadow: inset 4px 4px 8px #cc9b89, inset -4px -4px 8px #ffd3bd;
+        }
+
+        /* BOTONES DE SELECCIÓN DE OPCIONES */
+        .clay-btn-option {
+            background: #FFFFFF;
+            color: #7A8A7C;
+            border-radius: 18px;
+            border: 2px solid transparent;
+            box-shadow: 4px 4px 10px #e0deda, -4px -4px 10px #ffffff;
+            transition: all 0.2s ease;
+            text-align: left;
+            padding: 12px 16px;
+            cursor: pointer;
+        }
+        .clay-btn-option:hover {
+            transform: translateY(-2px);
+            border-color: rgba(226, 125, 96, 0.4);
+        }
+        .clay-btn-option.selected {
+            border-color: #E27D60;
+            background: #FFF8F6;
+            color: #E27D60;
+            font-weight: bold;
         }
 
         /* BOTONES DE MÉTODOS DE PAGO ANIMADOS */
@@ -406,18 +430,124 @@
         <button onclick="window.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold">Salir del Panel Admin</button>
     </main>
 
-    <!-- ================= 7. REGULACIÓN SOMÁTICA ================= -->
-    <main id="view-regulacion" class="app-view max-w-md mx-auto px-5 space-y-8 hidden">
-        <div class="text-center space-y-2">
+    <!-- ================= 7. REGULACIÓN SOMÁTICA (CON PREGUNTAS E INTERACTIVIDAD) ================= -->
+    <main id="view-regulacion" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
+        <div class="text-center space-y-1">
             <h2 class="text-2xl font-bold text-[#7A8A7C]">Gimnasio Emocional</h2>
-            <p class="text-xs text-[#7A8A7C]/80">Toma una postura cómoda y sigue el ritmo del círculo.</p>
+            <p class="text-xs text-[#7A8A7C]/80">Diagnóstico Somático & Técnicas de Regulación</p>
         </div>
 
-        <div class="flex flex-col items-center justify-center py-10">
-            <div id="breath-circle" class="w-48 h-48 rounded-full bg-[#F0B7A1] flex items-center justify-center text-white font-bold text-lg shadow-lg border-4 border-white transition-all duration-1000">
-                Inhala...
+        <!-- CUESTIONARIO / CHECK-IN SOMÁTICO EN PASOS -->
+        <div class="clay-card p-5 space-y-4 border border-[#E27D60]/20">
+            <div class="flex justify-between items-center border-b border-stone-200 pb-2">
+                <span class="text-xs font-bold text-[#E27D60] uppercase tracking-wider">🔍 Chequeo Corporal</span>
+                <span id="quiz-step-indicator" class="text-[10px] font-bold text-[#7A8A7C] bg-stone-100 px-2 py-0.5 rounded-full">Paso 1 de 3</span>
             </div>
-            <p class="text-xs text-[#7A8A7C] mt-6 font-semibold">Calibrando tu sistema somático...</p>
+
+            <!-- PASO 1 -->
+            <div id="quiz-step-1" class="space-y-3">
+                <p class="text-xs font-bold text-[#7A8A7C]">1. ¿Cómo sientes tu estado corporal / emocional en este momento?</p>
+                <div class="space-y-2">
+                    <button onclick="window.answerQuiz(1, 'ansiedad')" class="clay-btn-option w-full text-xs">
+                        🔴 <strong>Ansioso / Acelerado:</strong> Siento inquietud, taquicardia o mente saturada.
+                    </button>
+                    <button onclick="window.answerQuiz(1, 'bloqueo')" class="clay-btn-option w-full text-xs">
+                        🟡 <strong>Agotado / Desconectado:</strong> Siento pesadez, parálisis o desmotivación.
+                    </button>
+                    <button onclick="window.answerQuiz(1, 'calma')" class="clay-btn-option w-full text-xs">
+                        🟢 <strong>Estable / En Calma:</strong> Quiero mantener mi balance y centrar mi mente.
+                    </button>
+                </div>
+            </div>
+
+            <!-- PASO 2 -->
+            <div id="quiz-step-2" class="space-y-3 hidden">
+                <p class="text-xs font-bold text-[#7A8A7C]">2. ¿Dónde se concentra la mayor tensión física?</p>
+                <div class="space-y-2">
+                    <button onclick="window.answerQuiz(2, 'pecho')" class="clay-btn-option w-full text-xs">
+                        🫁 <strong>Pecho / Respiración:</strong> Siento opresión al inhalar o aire entrecortado.
+                    </button>
+                    <button onclick="window.answerQuiz(2, 'cuello')" class="clay-btn-option w-full text-xs">
+                        💆 <strong>Cuello / Mandíbula:</strong> Dientes apretados, hombros rígidos o cefalea.
+                    </button>
+                    <button onclick="window.answerQuiz(2, 'estomago')" class="clay-btn-option w-full text-xs">
+                        🫃 <strong>Estómago / Plexo:</strong> Sensación de nudo en el abdomen o digestión lenta.
+                    </button>
+                </div>
+            </div>
+
+            <!-- PASO 3 -->
+            <div id="quiz-step-3" class="space-y-3 hidden">
+                <p class="text-xs font-bold text-[#7A8A7C]">3. ¿Qué necesita tu cuerpo en este instante?</p>
+                <div class="space-y-2">
+                    <button onclick="window.answerQuiz(3, 'bajar')" class="clay-btn-option w-full text-xs">
+                        ⚓ <strong>Bajar revoluciones:</strong> Calmar la aceleración y soltar el control.
+                    </button>
+                    <button onclick="window.answerQuiz(3, 'activar')" class="clay-btn-option w-full text-xs">
+                        ⚡ <strong>Salir del aletargamiento:</strong> Movilizar la energía estancada.
+                    </button>
+                    <button onclick="window.answerQuiz(3, 'liberar')" class="clay-btn-option w-full text-xs">
+                        🕊️ <strong>Descargar tensión:</strong> Soltar cargas emocionales del día.
+                    </button>
+                </div>
+            </div>
+
+            <!-- RESULTADO Y TÉCNICA RECOMENDADA -->
+            <div id="quiz-result" class="space-y-4 hidden">
+                <div class="p-3 rounded-2xl bg-orange-100/50 text-xs text-[#7A8A7C]">
+                    <p id="quiz-diagnosis-title" class="font-bold text-[#E27D60] text-sm mb-1"></p>
+                    <p id="quiz-diagnosis-desc"></p>
+                </div>
+
+                <div id="recommended-technique-card" class="p-4 rounded-2xl bg-white border border-[#E27D60]/30 shadow-sm space-y-2">
+                    <!-- Se llena dinámicamente -->
+                </div>
+
+                <button onclick="window.resetQuiz()" class="text-xs font-bold text-[#E27D60] underline text-center w-full block">
+                    🔄 Repetir Evaluación
+                </button>
+            </div>
+        </div>
+
+        <!-- SECCIÓN DE CALIBRACIÓN Y CIRCULO DE RESPIRACIÓN -->
+        <div class="clay-card p-6 text-center space-y-4">
+            <h3 class="font-bold text-sm text-[#7A8A7C]">Práctica Guiada: Calibrador de Respiración</h3>
+            <p class="text-[11px] text-[#7A8A7C]/80">Acompasa tu ritmo respiratorio con el círculo para activar el nervio vago ventral.</p>
+            
+            <div class="flex flex-col items-center justify-center py-4">
+                <div id="breath-circle" class="w-40 h-40 rounded-full bg-[#F0B7A1] flex items-center justify-center text-white font-bold text-base shadow-lg border-4 border-white transition-all duration-1000">
+                    Inhala...
+                </div>
+            </div>
+        </div>
+
+        <!-- CATÁLOGO DE TÉCNICAS SOMÁTICAS DE REGULACIÓN -->
+        <div class="space-y-3">
+            <h3 class="text-sm font-bold text-[#7A8A7C]">Biblioteca de Técnicas Somáticas</h3>
+
+            <div class="clay-card p-4 space-y-2">
+                <div class="flex items-center gap-2">
+                    <span class="text-xl">👁️</span>
+                    <h4 class="font-bold text-xs text-[#7A8A7C]">Estimulación Vagal (Movimiento Ocular)</h4>
+                </div>
+                <p class="text-[11px] text-[#7A8A7C]/80">Entrelaza tus manos detrás de la cabeza. Mira hacia la derecha sin mover la cabeza durante 30 segundos hasta suspirar o tragar saliva. Repite al lado izquierdo.</p>
+            </div>
+
+            <div class="clay-card p-4 space-y-2">
+                <div class="flex items-center gap-2">
+                    <span class="text-xl">💆</span>
+                    <h4 class="font-bold text-xs text-[#7A8A7C]">Tapping Somático (EFT)</h4>
+                </div>
+                <p class="text-[11px] text-[#7A8A7C]/80">Da golpecitos suaves con las yemas de los dedos en la coronilla, entrecejo, lateral del ojo y clavícula mientras repites: "Aunque siento esta tensión, elijo estar a salvo en mi cuerpo".</p>
+            </div>
+
+            <div class="clay-card p-4 space-y-2">
+                <div class="flex items-center gap-2">
+                    <span class="text-xl">🫨</span>
+                    <h4 class="font-bold text-xs text-[#7A8A7C]">Somatic Shaking (Sacudida Terapéutica)</h4>
+                </div>
+                <p class="text-[11px] text-[#7A8A7C]/80">Ponte de pie con las rodillas semiflexionadas. Comienza a sacudir tus brazos y piernas rítmicamente durante 2 minutos para soltar el exceso de adrenalina acumulada.</p>
+            </div>
         </div>
 
         <button onclick="window.switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold text-xs">Volver al Inicio</button>
@@ -480,9 +610,10 @@
         </button>
     </nav>
 
-    <!-- JAVASCRIPT CON DATOS REALES -->
+    <!-- JAVASCRIPT CON LÓGICA DE REGULACIÓN Y CUESTIONARIO -->
     <script>
         var MI_WHATSAPP = "584220372614";
+        var quizAnswers = {};
 
         window.switchView = function(viewId) {
             var views = document.querySelectorAll('.app-view');
@@ -517,6 +648,69 @@
             window.switchView('view-perfil-usuario');
         };
 
+        // LÓGICA DEL CUESTIONARIO DE REGULACIÓN SOMÁTICA
+        window.answerQuiz = function(step, val) {
+            quizAnswers[step] = val;
+            
+            if (step === 1) {
+                document.getElementById('quiz-step-1').classList.add('hidden');
+                document.getElementById('quiz-step-2').classList.remove('hidden');
+                document.getElementById('quiz-step-indicator').innerText = "Paso 2 de 3";
+            } else if (step === 2) {
+                document.getElementById('quiz-step-2').classList.add('hidden');
+                document.getElementById('quiz-step-3').classList.remove('hidden');
+                document.getElementById('quiz-step-indicator').innerText = "Paso 3 de 3";
+            } else if (step === 3) {
+                document.getElementById('quiz-step-3').classList.add('hidden');
+                document.getElementById('quiz-result').classList.remove('hidden');
+                document.getElementById('quiz-step-indicator').innerText = "Resultado";
+                window.mostrarResultadoSomatico();
+            }
+        };
+
+        window.mostrarResultadoSomatico = function() {
+            var estado = quizAnswers[1];
+            var zona = quizAnswers[2];
+            var obj = quizAnswers[3];
+
+            var titleEl = document.getElementById('quiz-diagnosis-title');
+            var descEl = document.getElementById('quiz-diagnosis-desc');
+            var cardEl = document.getElementById('recommended-technique-card');
+
+            if (estado === 'ansiedad') {
+                titleEl.innerText = "Estado Detectado: Sistema Simpático Activado (Lucha / Huida)";
+                descEl.innerText = "Tu cuerpo tiene un exceso de cortisol y adrenalina. Necesitamos enviar señales de seguridad profunda a tu cerebro.";
+                cardEl.innerHTML = 
+                    '<h4 class="font-bold text-xs text-[#E27D60]">💡 Técnica Recomendada: Estimulación del Nervio Vago Vagal</h4>' +
+                    '<p class="text-[11px] text-[#7A8A7C]">1. Siéntate cómodo y entrelaza las manos detrás de la nuca.</p>' +
+                    '<p class="text-[11px] text-[#7A8A7C]">2. Sin girar la cabeza, lleva tus ojos totalmente a la derecha por 30s.</p>' +
+                    '<p class="text-[11px] text-[#7A8A7C]">3. Espera el suspiro espontáneo o trago de saliva. Luego repite a la izquierda.</p>';
+            } else if (estado === 'bloqueo') {
+                titleEl.innerText = "Estado Detectado: Respuestas Vagales Dorsales (Congelamiento)";
+                descEl.innerText = "Tu energía se encuentra colapsada o estancada. Necesitamos una reactivación somática gradual y segura.";
+                cardEl.innerHTML = 
+                    '<h4 class="font-bold text-xs text-[#E27D60]">💡 Técnica Recomendada: Somatic Shaking (Sacudida Ligera)</h4>' +
+                    '<p class="text-[11px] text-[#7A8A7C]">1. Ponte de pie y comienza a sacudir tus muñecas suavemente.</p>' +
+                    '<p class="text-[11px] text-[#7A8A7C]">2. Inhala por la nariz y exhala por la boca con sonido de alivio ("ahhh").</p>' +
+                    '<p class="text-[11px] text-[#7A8A7C]">3. Sacude tus hombros durante 90 segundos para descongelar el flujo energético.</p>';
+            } else {
+                titleEl.innerText = "Estado Detectado: Ventral Vagal (Balance Somático)";
+                descEl.innerText = "Tu sistema nervioso se encuentra en una zona de seguridad. Ideal para profundizar en calibración respiratoria.";
+                cardEl.innerHTML = 
+                    '<h4 class="font-bold text-xs text-[#E27D60]">💡 Práctica Recomendada: Respiración en Caja o Tapping Corto</h4>' +
+                    '<p class="text-[11px] text-[#7A8A7C]">Sigue la animación del círculo inferior para realizar 3 minutos de calibración consciente.</p>';
+            }
+        };
+
+        window.resetQuiz = function() {
+            quizAnswers = {};
+            document.getElementById('quiz-result').classList.add('hidden');
+            document.getElementById('quiz-step-1').classList.remove('hidden');
+            document.getElementById('quiz-step-2').classList.add('hidden');
+            document.getElementById('quiz-step-3').classList.add('hidden');
+            document.getElementById('quiz-step-indicator').innerText = "Paso 1 de 3";
+        };
+
         // SELECCIÓN Y DATOS REALES DE PAGO
         window.selectPaymentMethod = function(method) {
             var btnBdv = document.getElementById('pay-bdv');
@@ -524,7 +718,8 @@
             var btnBinance = document.getElementById('pay-binance');
             var box = document.getElementById('datos-pago-box');
 
-            // Limpiamos estilos de selección previa
+            if (!btnBdv) return;
+
             btnBdv.className = "clay-btn-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1";
             btnBnc.className = "clay-btn-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1";
             btnBinance.className = "clay-btn-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1";
@@ -586,7 +781,7 @@
             window.open('https://wa.me/' + MI_WHATSAPP + '?text=' + encodeURIComponent(textoCita), '_blank');
         };
 
-        // Inicializamos la primera opción por defecto al cargar
+        // ANIMACIÓN DE RESPIRACIÓN
         document.addEventListener("DOMContentLoaded", function() {
             window.selectPaymentMethod('pm_bdv');
 
