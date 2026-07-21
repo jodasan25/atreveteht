@@ -40,6 +40,7 @@
             border: 1px solid rgba(122, 138, 124, 0.2);
         }
 
+        /* BOTONES CON MOVIMIENTO Y CLAYMORFISMO */
         .clay-btn-primary {
             background: #E27D60;
             color: #FFFFFF;
@@ -48,10 +49,14 @@
                         -6px -6px 12px #ffffff, 
                         inset 3px 3px 6px #ff906e, 
                         inset -3px -3px 6px #c06a51;
-            transition: all 0.15s ease-in-out;
+            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .clay-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 8px 8px 16px #c06a51, -8px -8px 16px #ffffff;
         }
         .clay-btn-primary:active {
-            transform: scale(0.96);
+            transform: translateY(1px) scale(0.97);
             box-shadow: inset 4px 4px 8px #c06a51, inset -4px -4px 8px #ff906e;
         }
 
@@ -63,11 +68,38 @@
                         -6px -6px 12px #ffffff, 
                         inset 3px 3px 6px #ffd3bd, 
                         inset -3px -3px 6px #cc9b89;
-            transition: all 0.15s ease-in-out;
+            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .clay-btn-secondary:hover {
+            transform: translateY(-2px);
         }
         .clay-btn-secondary:active {
-            transform: scale(0.96);
+            transform: translateY(1px) scale(0.97);
             box-shadow: inset 4px 4px 8px #cc9b89, inset -4px -4px 8px #ffd3bd;
+        }
+
+        /* BOTONES DE MÉTODOS DE PAGO ANIMADOS */
+        .clay-btn-pay {
+            background: #FFFFFF;
+            color: #7A8A7C;
+            border-radius: 20px;
+            border: 2px solid transparent;
+            box-shadow: 6px 6px 12px #e0deda, -6px -6px 12px #ffffff;
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+        }
+        .clay-btn-pay:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 8px 8px 16px #d5d3ce, -8px -8px 16px #ffffff;
+        }
+        .clay-btn-pay:active {
+            transform: translateY(1px) scale(0.96);
+        }
+        .clay-btn-pay.active-pay {
+            border-color: #E27D60;
+            background: #FFF8F6;
+            color: #E27D60;
+            box-shadow: inset 3px 3px 6px rgba(226, 125, 96, 0.15), inset -3px -3px 6px #ffffff;
         }
 
         .clay-nav {
@@ -92,7 +124,7 @@
                 <p class="text-[9px] text-[#7A8A7C] tracking-[0.25em] uppercase font-semibold">healthtech</p>
             </div>
         </div>
-        <button onclick="window.switchView('view-auth')" class="text-xs font-bold text-[#E27D60] bg-orange-100/60 px-3 py-1.5 rounded-full border border-[#E27D60]/30">
+        <button onclick="window.switchView('view-auth')" class="text-xs font-bold text-[#E27D60] bg-orange-100/60 px-3 py-1.5 rounded-full border border-[#E27D60]/30 transition hover:scale-105 active:scale-95">
             Ingresar
         </button>
     </header>
@@ -148,8 +180,8 @@
                     <h4 class="font-bold text-sm text-[#7A8A7C]">Dra. Carla Rodríguez</h4>
                     <p class="text-[11px] text-[#7A8A7C]/80">Mentora & Coach Somático</p>
                     <div class="flex gap-2 mt-2">
-                        <button onclick="window.switchView('view-perfil-especialista')" class="text-[10px] font-bold text-[#7A8A7C] bg-stone-200/80 px-2.5 py-1 rounded-full">Ver Perfil</button>
-                        <button onclick="window.switchView('view-citas')" class="text-[10px] font-bold text-white bg-[#E27D60] px-2.5 py-1 rounded-full">Agendar</button>
+                        <button onclick="window.switchView('view-perfil-especialista')" class="text-[10px] font-bold text-[#7A8A7C] bg-stone-200/80 px-2.5 py-1 rounded-full transition hover:scale-105">Ver Perfil</button>
+                        <button onclick="window.switchView('view-citas')" class="text-[10px] font-bold text-white bg-[#E27D60] px-2.5 py-1 rounded-full transition hover:scale-105">Agendar</button>
                     </div>
                 </div>
             </div>
@@ -164,17 +196,15 @@
             <p class="text-xs text-[#7A8A7C]/70">Selecciona tu perfil para comenzar</p>
         </div>
 
-        <!-- Selector de Rol -->
         <div class="flex p-1 bg-stone-200/60 rounded-2xl">
-            <button id="btn-role-user" onclick="window.setAuthRole('user')" class="flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[#7A8A7C] shadow-sm">
+            <button id="btn-role-user" onclick="window.setAuthRole('user')" class="flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[#7A8A7C] shadow-sm transition">
                 👤 Usuario / Paciente
             </button>
-            <button id="btn-role-spec" onclick="window.setAuthRole('spec')" class="flex-1 py-2.5 text-xs font-bold rounded-xl text-[#7A8A7C]">
+            <button id="btn-role-spec" onclick="window.setAuthRole('spec')" class="flex-1 py-2.5 text-xs font-bold rounded-xl text-[#7A8A7C] transition">
                 🧠 Especialista
             </button>
         </div>
 
-        <!-- Formulario -->
         <form onsubmit="event.preventDefault(); window.simularRegistro();" class="clay-card p-6 space-y-4">
             <div>
                 <label class="block text-xs font-bold text-[#7A8A7C] mb-1">Nombre Completo</label>
@@ -189,11 +219,10 @@
                 <input type="password" placeholder="••••••••" class="w-full p-3 text-xs clay-input focus:outline-none" required>
             </div>
 
-            <!-- Campos Dinámicos para Especialistas -->
             <div id="fields-especialista" class="space-y-4 hidden border-t border-[#7A8A7C]/20 pt-4">
                 <div>
                     <label class="block text-xs font-bold text-[#7A8A7C] mb-1">Especialidad Clínica / Somática</label>
-                    <input type="text" placeholder="Ej. Integración Somática, Psicología, Yoga Terapéutico" class="w-full p-3 text-xs clay-input focus:outline-none">
+                    <input type="text" placeholder="Ej. Integración Somática, Psicología" class="w-full p-3 text-xs clay-input focus:outline-none">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-[#7A8A7C] mb-1">Número de Licencia / Certificación</label>
@@ -235,10 +264,10 @@
 
         <div class="clay-card p-5 space-y-3">
             <h4 class="text-sm font-bold text-[#7A8A7C]">Acceso Rápido</h4>
-            <button onclick="window.switchView('view-progreso')" class="w-full text-left p-3 rounded-xl bg-stone-100 text-xs font-bold text-[#7A8A7C] flex justify-between items-center">
+            <button onclick="window.switchView('view-progreso')" class="w-full text-left p-3 rounded-xl bg-stone-100 text-xs font-bold text-[#7A8A7C] flex justify-between items-center transition hover:bg-stone-200">
                 📊 Ver Mi Historial de Calma Somática <span>➔</span>
             </button>
-            <button onclick="window.switchView('view-pagos')" class="w-full text-left p-3 rounded-xl bg-stone-100 text-xs font-bold text-[#7A8A7C] flex justify-between items-center">
+            <button onclick="window.switchView('view-pagos')" class="w-full text-left p-3 rounded-xl bg-stone-100 text-xs font-bold text-[#7A8A7C] flex justify-between items-center transition hover:bg-stone-200">
                 💳 Historial de Pagos y Facturación <span>➔</span>
             </button>
         </div>
@@ -290,35 +319,35 @@
             <span class="text-base font-extrabold text-[#E27D60]">$120.00</span>
         </div>
 
-        <!-- Opciones de Pago -->
+        <!-- Opciones de Pago Animadas (3 Botones) -->
         <div class="clay-card p-5 space-y-4">
             <label class="block text-xs font-bold text-[#7A8A7C]">Selecciona Método de Pago:</label>
-            <div class="grid grid-cols-2 gap-2">
-                <button type="button" onclick="window.selectPaymentMethod('pago_movil')" class="p-3 text-xs font-bold rounded-xl border-2 border-[#7A8A7C] bg-stone-100 text-[#7A8A7C] text-center">
-                    🇻🇪 Pago Móvil
+            
+            <div class="grid grid-cols-3 gap-2">
+                <button type="button" id="pay-bdv" onclick="window.selectPaymentMethod('pm_bdv')" class="clay-btn-pay active-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1">
+                    <span class="text-base">🇻🇪</span>
+                    <span>Pago BDV</span>
                 </button>
-                <button type="button" onclick="window.selectPaymentMethod('zelle')" class="p-3 text-xs font-bold rounded-xl border border-stone-300 text-[#7A8A7C] text-center">
-                    💵 Zelle
+                
+                <button type="button" id="pay-bnc" onclick="window.selectPaymentMethod('pm_bnc')" class="clay-btn-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1">
+                    <span class="text-base">🇻🇪</span>
+                    <span>Pago BNC</span>
                 </button>
-                <button type="button" onclick="window.selectPaymentMethod('tarjeta')" class="p-3 text-xs font-bold rounded-xl border border-stone-300 text-[#7A8A7C] text-center">
-                    💳 Tarjeta
-                </button>
-                <button type="button" onclick="window.selectPaymentMethod('transf')" class="p-3 text-xs font-bold rounded-xl border border-stone-300 text-[#7A8A7C] text-center">
-                    🏦 Transferencia
+                
+                <button type="button" id="pay-binance" onclick="window.selectPaymentMethod('binance')" class="clay-btn-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1">
+                    <span class="text-base">🟡</span>
+                    <span>Binance</span>
                 </button>
             </div>
 
-            <!-- Datos Bancarios Dinámicos -->
-            <div id="datos-pago-box" class="bg-stone-100 p-4 rounded-xl space-y-1 text-xs text-[#7A8A7C]">
-                <p class="font-bold text-xs text-[#E27D60]">Datos para Pago Móvil:</p>
-                <p><strong>Banco:</strong> Banesco (0134)</p>
-                <p><strong>Teléfono:</strong> 0422-0372614</p>
-                <p><strong>Cédula / RIF:</strong> J-501234567</p>
+            <!-- Caja Dinámica con Datos Reales -->
+            <div id="datos-pago-box" class="bg-stone-100/90 p-4 rounded-2xl border border-stone-200/80 space-y-2 text-xs text-[#7A8A7C]">
+                <!-- Se llena por JavaScript -->
             </div>
 
             <div>
                 <label class="block text-xs font-bold text-[#7A8A7C] mb-1">Número de Referencia / Comprobante</label>
-                <input type="text" placeholder="Ej. #849204" class="w-full p-3 text-xs clay-input focus:outline-none">
+                <input id="input-ref-pago" type="text" placeholder="Ej. #849204 o Hash de Binance" class="w-full p-3 text-xs clay-input focus:outline-none">
             </div>
 
             <button onclick="window.confirmarPagoMock()" class="clay-btn-primary w-full py-3.5 text-xs font-bold">
@@ -336,7 +365,6 @@
             <span class="bg-[#E27D60] text-white text-[9px] font-extrabold px-2.5 py-1 rounded-full">Atrévete HQ</span>
         </div>
 
-        <!-- Métricas Rápidas -->
         <div class="grid grid-cols-2 gap-3">
             <div class="clay-card p-4 text-center">
                 <span class="text-2xl font-extrabold text-[#7A8A7C]">148</span>
@@ -348,7 +376,6 @@
             </div>
         </div>
 
-        <!-- Módulo de Gestión del Campamento -->
         <div class="clay-card p-5 space-y-3">
             <h3 class="text-sm font-bold text-[#7A8A7C] border-b border-stone-200 pb-2">Campamento "Adultas en Fuga"</h3>
             <div class="flex justify-between text-xs">
@@ -360,7 +387,6 @@
             </div>
         </div>
 
-        <!-- Tabla / Lista de Pagos por Aprobar -->
         <div class="space-y-3">
             <h3 class="text-sm font-bold text-[#7A8A7C]">Pagos Pendientes de Verificación</h3>
             
@@ -369,10 +395,10 @@
                     <span class="font-bold text-[#7A8A7C]">María Fernández</span>
                     <span class="text-xs font-bold text-[#E27D60]">$120.00</span>
                 </div>
-                <p class="text-[10px] text-[#7A8A7C]/70">Pago Móvil Ref: #492019 • Campamento</p>
+                <p class="text-[10px] text-[#7A8A7C]/70">Pago Móvil BDV Ref: #492019 • Campamento</p>
                 <div class="flex gap-2 pt-1">
-                    <button onclick="alert('Pago Aprobado con Éxito')" class="flex-1 py-1.5 bg-emerald-600 text-white rounded-lg font-bold text-[10px]">Aprobar</button>
-                    <button onclick="alert('Pago Rechazado')" class="flex-1 py-1.5 bg-rose-500 text-white rounded-lg font-bold text-[10px]">Rechazar</button>
+                    <button onclick="alert('Pago Aprobado con Éxito')" class="flex-1 py-1.5 bg-emerald-600 text-white rounded-lg font-bold text-[10px] transition active:scale-95">Aprobar</button>
+                    <button onclick="alert('Pago Rechazado')" class="flex-1 py-1.5 bg-rose-500 text-white rounded-lg font-bold text-[10px] transition active:scale-95">Rechazar</button>
                 </div>
             </div>
         </div>
@@ -430,31 +456,31 @@
         <button onclick="window.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold">Volver al Inicio</button>
     </main>
 
-    <!-- BARRA DE NAVEGACIÓN INFERIOR (NAVEGACIÓN PRINCIPAL) -->
+    <!-- BARRA DE NAVEGACIÓN INFERIOR -->
     <nav class="clay-nav fixed bottom-0 left-0 right-0 py-3 px-4 flex justify-around items-center max-w-md mx-auto z-50">
-        <button onclick="window.switchView('view-home')" class="flex flex-col items-center text-[#7A8A7C] hover:text-[#E27D60]">
+        <button onclick="window.switchView('view-home')" class="flex flex-col items-center text-[#7A8A7C] hover:text-[#E27D60] transition hover:scale-110">
             <span class="text-lg">🏠</span>
             <span class="text-[9px] font-bold mt-0.5">Inicio</span>
         </button>
-        <button onclick="window.switchView('view-citas')" class="flex flex-col items-center text-[#7A8A7C] hover:text-[#E27D60]">
+        <button onclick="window.switchView('view-citas')" class="flex flex-col items-center text-[#7A8A7C] hover:text-[#E27D60] transition hover:scale-110">
             <span class="text-lg">📅</span>
             <span class="text-[9px] font-bold mt-0.5">Citas</span>
         </button>
-        <button onclick="window.switchView('view-pagos')" class="flex flex-col items-center text-[#7A8A7C] hover:text-[#E27D60]">
+        <button onclick="window.switchView('view-pagos')" class="flex flex-col items-center text-[#7A8A7C] hover:text-[#E27D60] transition hover:scale-110">
             <span class="text-lg">💳</span>
             <span class="text-[9px] font-bold mt-0.5">Pagos</span>
         </button>
-        <button onclick="window.switchView('view-admin')" class="flex flex-col items-center text-[#7A8A7C] hover:text-[#E27D60]">
+        <button onclick="window.switchView('view-admin')" class="flex flex-col items-center text-[#7A8A7C] hover:text-[#E27D60] transition hover:scale-110">
             <span class="text-lg">⚙️</span>
             <span class="text-[9px] font-bold mt-0.5">Admin</span>
         </button>
-        <button onclick="window.switchView('view-perfil-usuario')" class="flex flex-col items-center text-[#7A8A7C] hover:text-[#E27D60]">
+        <button onclick="window.switchView('view-perfil-usuario')" class="flex flex-col items-center text-[#7A8A7C] hover:text-[#E27D60] transition hover:scale-110">
             <span class="text-lg">👤</span>
             <span class="text-[9px] font-bold mt-0.5">Perfil</span>
         </button>
     </nav>
 
-    <!-- JAVASCRIPT SEGURO Y LIMPIO -->
+    <!-- JAVASCRIPT CON DATOS REALES -->
     <script>
         var MI_WHATSAPP = "584220372614";
 
@@ -476,12 +502,12 @@
             var fieldsSpec = document.getElementById('fields-especialista');
 
             if (role === 'spec') {
-                btnSpec.className = "flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[#7A8A7C] shadow-sm";
-                btnUser.className = "flex-1 py-2.5 text-xs font-bold rounded-xl text-[#7A8A7C]";
+                btnSpec.className = "flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[#7A8A7C] shadow-sm transition";
+                btnUser.className = "flex-1 py-2.5 text-xs font-bold rounded-xl text-[#7A8A7C] transition";
                 fieldsSpec.classList.remove('hidden');
             } else {
-                btnUser.className = "flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[#7A8A7C] shadow-sm";
-                btnSpec.className = "flex-1 py-2.5 text-xs font-bold rounded-xl text-[#7A8A7C]";
+                btnUser.className = "flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[#7A8A7C] shadow-sm transition";
+                btnSpec.className = "flex-1 py-2.5 text-xs font-bold rounded-xl text-[#7A8A7C] transition";
                 fieldsSpec.classList.add('hidden');
             }
         };
@@ -491,29 +517,55 @@
             window.switchView('view-perfil-usuario');
         };
 
+        // SELECCIÓN Y DATOS REALES DE PAGO
         window.selectPaymentMethod = function(method) {
+            var btnBdv = document.getElementById('pay-bdv');
+            var btnBnc = document.getElementById('pay-bnc');
+            var btnBinance = document.getElementById('pay-binance');
             var box = document.getElementById('datos-pago-box');
-            if (method === 'pago_movil') {
-                box.innerHTML = '<p class="font-bold text-xs text-[#E27D60]">Datos Pago Móvil:</p>' +
-                                '<p><strong>Banco:</strong> Banesco (0134)</p>' +
-                                '<p><strong>Teléfono:</strong> 0422-0372614</p>' +
-                                '<p><strong>Cédula:</strong> J-501234567</p>';
-            } else if (method === 'zelle') {
-                box.innerHTML = '<p class="font-bold text-xs text-[#E27D60]">Datos Zelle:</p>' +
-                                '<p><strong>Correo Zelle:</strong> pagos@atrevetehealth.tech</p>' +
-                                '<p><strong>Titular:</strong> Atrévete HealthTech LLC</p>';
-            } else if (method === 'tarjeta') {
-                box.innerHTML = '<p class="font-bold text-xs text-[#E27D60]">Procesamiento Internacional:</p>' +
-                                '<p>Se conectará con Stripe al confirmar.</p>';
-            } else {
-                box.innerHTML = '<p class="font-bold text-xs text-[#E27D60]">Transferencia Bancaria:</p>' +
-                                '<p><strong>Banco:</strong> Mercantil N° 0105-0000-00-0000000000</p>' +
-                                '<p><strong>Titular:</strong> Atrévete HealthTech C.A.</p>';
+
+            // Limpiamos estilos de selección previa
+            btnBdv.className = "clay-btn-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1";
+            btnBnc.className = "clay-btn-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1";
+            btnBinance.className = "clay-btn-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1";
+
+            if (method === 'pm_bdv') {
+                btnBdv.className += " active-pay";
+                box.innerHTML = 
+                    '<div class="flex justify-between items-center mb-1"><p class="font-bold text-xs text-[#E27D60]">🇻🇪 Pago Móvil BDV (0102)</p><button onclick="window.copiarTexto(\'0102 18478170 04144031678\')" class="bg-stone-200 hover:bg-stone-300 text-[10px] font-bold px-2 py-0.5 rounded text-[#7A8A7C] transition">📋 Copiar Datos</button></div>' +
+                    '<p><strong>Banco:</strong> Banco de Venezuela (0102)</p>' +
+                    '<p><strong>Cédula:</strong> V-18.478.170</p>' +
+                    '<p><strong>Teléfono:</strong> 0414-4031678</p>';
+            } else if (method === 'pm_bnc') {
+                btnBnc.className += " active-pay";
+                box.innerHTML = 
+                    '<div class="flex justify-between items-center mb-1"><p class="font-bold text-xs text-[#E27D60]">🇻🇪 Pago Móvil BNC (0191)</p><button onclick="window.copiarTexto(\'0191 13518664 04144187215\')" class="bg-stone-200 hover:bg-stone-300 text-[10px] font-bold px-2 py-0.5 rounded text-[#7A8A7C] transition">📋 Copiar Datos</button></div>' +
+                    '<p><strong>Banco:</strong> Banco Nacional de Crédito (0191)</p>' +
+                    '<p><strong>Cédula:</strong> V-13.518.664</p>' +
+                    '<p><strong>Teléfono:</strong> 0414-4187215</p>';
+            } else if (method === 'binance') {
+                btnBinance.className += " active-pay";
+                box.innerHTML = 
+                    '<div class="flex justify-between items-center mb-1"><p class="font-bold text-xs text-[#E27D60]">🟡 Binance Pay (USDT)</p><button onclick="window.copiarTexto(\'163305332\')" class="bg-stone-200 hover:bg-stone-300 text-[10px] font-bold px-2 py-0.5 rounded text-[#7A8A7C] transition">📋 Copiar ID</button></div>' +
+                    '<p><strong>Binance ID:</strong> 163305332</p>' +
+                    '<p><strong>Moneda:</strong> USDT / Crypto</p>' +
+                    '<p class="text-[10px] text-stone-500 mt-1">Transfiere mediante Binance Pay sin comisiones adicionales.</p>';
             }
         };
 
+        window.copiarTexto = function(texto) {
+            navigator.clipboard.writeText(texto).then(function() {
+                alert("¡Copiado al portapapeles!: " + texto);
+            });
+        };
+
         window.confirmarPagoMock = function() {
-            alert("Comprobante enviado con éxito. El equipo de administración revisará la transacción en breve.");
+            var ref = document.getElementById('input-ref-pago').value;
+            if(!ref) {
+                alert("Por favor ingresa el número de referencia de tu pago.");
+                return;
+            }
+            alert("¡Comprobante #" + ref + " enviado con éxito! Verificaremos tu pago en breve.");
             window.switchView('view-perfil-usuario');
         };
 
@@ -534,7 +586,10 @@
             window.open('https://wa.me/' + MI_WHATSAPP + '?text=' + encodeURIComponent(textoCita), '_blank');
         };
 
+        // Inicializamos la primera opción por defecto al cargar
         document.addEventListener("DOMContentLoaded", function() {
+            window.selectPaymentMethod('pm_bdv');
+
             var status = 0;
             var breathCircle = document.getElementById('breath-circle');
             if (breathCircle) {
