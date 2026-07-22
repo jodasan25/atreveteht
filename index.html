@@ -231,6 +231,13 @@
             </button>
         </form>
 
+        <p class="text-[10px] text-center text-[#7A8A7C]/70 mt-4">
+            Al registrarte o agendar, aceptas nuestras 
+            <button onclick="window.switchView('view-privacidad')" class="underline font-semibold text-[#E27D60]">
+                Políticas de Privacidad y Términos Legalmente Vinculantes
+            </button>.
+        </p>
+
         <button onclick="window.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold">Volver al Inicio</button>
     </main>
 
@@ -320,6 +327,13 @@
                 Reportar / Enviar Comprobante
             </button>
         </div>
+
+        <p class="text-[10px] text-center text-[#7A8A7C]/70 mt-2">
+            Al registrarte o agendar, aceptas nuestras 
+            <button onclick="window.switchView('view-privacidad')" class="underline font-semibold text-[#E27D60]">
+                Políticas de Privacidad y Términos Legalmente Vinculantes
+            </button>.
+        </p>
 
         <button onclick="window.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold">Cancelar</button>
     </main>
@@ -425,6 +439,38 @@
             <button onclick="window.procesarCitaWhatsApp()" class="clay-btn-primary w-full py-3.5 font-bold text-xs">Confirmar Cita vía WhatsApp</button>
         </div>
         <button onclick="window.switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold text-xs">Volver</button>
+    </main>
+
+    <!-- ================= 8. POLÍTICAS DE PRIVACIDAD Y TÉRMINOS ================= -->
+    <main id="view-privacidad" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
+        <div class="text-center space-y-1">
+            <h2 class="text-2xl font-bold text-[#7A8A7C]">Políticas de Privacidad</h2>
+            <p class="text-xs text-[#7A8A7C]/70">Términos Legalmente Vinculantes • Atrévete HealthTech</p>
+        </div>
+
+        <div class="clay-card p-5 space-y-4 text-xs text-[#7A8A7C] leading-relaxed max-h-[60vh] overflow-y-auto">
+            <section class="space-y-1.5">
+                <h3 class="font-extrabold text-[#E27D60] text-sm">1. Protección de Datos Personales</h3>
+                <p>En Atrévete HealthTech valoramos y resguardamos tu privacidad. Los datos personales, registros de pagos móviles o transacciones en criptomonedas (Binance Pay) recopilados son utilizados exclusivamente para la validación de membresías, gestión de cupos en eventos y acompañamiento clínico somático.</p>
+            </section>
+
+            <section class="space-y-1.5">
+                <h3 class="font-extrabold text-[#E27D60] text-sm">2. Confidencialidad Clínica y Somática</h3>
+                <p>Toda la información obtenida a través de nuestros test de regulación somática, interacciones y sesiones agendadas se rige bajo estricta confidencialidad profesional médico-paciente.</p>
+            </section>
+
+            <section class="space-y-1.5">
+                <h3 class="font-extrabold text-[#E27D60] text-sm">3. Condiciones de Reserva y Pagos</h3>
+                <p>Las reservas para campamentos, eventos presenciales o consultas quedan sujetas a la verificación exitosa de los comprobantes de pago reportados mediante nuestros canales oficiales (Pago Móvil BDV, BNC o Binance Pay).</p>
+            </section>
+
+            <section class="space-y-1.5">
+                <h3 class="font-extrabold text-[#E27D60] text-sm">4. Modificaciones y Aceptación</h3>
+                <p>El uso continuado de la plataforma implica la aceptación absoluta de estos términos legales. Nos reservamos el derecho de actualizar estas políticas para adaptarlas a normativas vigentes.</p>
+            </section>
+        </div>
+
+        <button onclick="window.switchView('view-auth')" class="clay-btn-primary w-full py-3.5 font-bold text-xs">Entendido / Volver</button>
     </main>
 
     <!-- ================= BARRA DE NAVEGACIÓN INFERIOR (FIJA) ================= -->
