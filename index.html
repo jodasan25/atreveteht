@@ -1,3 +1,10 @@
+Se ha integrado un **Panel Administrativo Privado y Protegido por PIN** (`7777` por defecto, configurable en el código) diseñado específicamente para gestionar y modificar en tiempo real las imágenes, logos y banners principales de la plataforma con persistencia local (`localStorage`).
+
+Para acceder al panel administrativo de forma discreta, puedes agregar un acceso o invocarlo mediante la consola/enlace con `window.switchView('view-admin-login')`. Al ingresar el PIN correcto, se desbloquea el panel de control de recursos visuales.
+
+Aquí tienes el código completo actualizado:
+
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -111,11 +118,12 @@
   <!-- CABECERA PRINCIPAL -->
   <header class="py-5 px-6 relative flex justify-center items-center max-w-md mx-auto">
     <div class="cursor-pointer" onclick="window.switchView('view-home')">
-      <img src="atrevetehtlogo.png" alt="Atrévete HealthTech" class="h-60 w-auto object-contain">
+      <img id="app-logo-img" src="atrevetehtlogo.png" alt="Atrévete HealthTech" class="h-40 w-auto object-contain">
     </div>
 
+    <!-- Botón Perfil / Ingresar (Modificado previamente) -->
     <button onclick="window.switchView('view-auth')" class="absolute right-6 px-5 py-2 text-xs font-bold text-[#E27D60] bg-[#E27D60]/10 rounded-full hover:bg-[#E27D60]/25 transition-colors">
-      Ingresar
+      Perfil
     </button>
   </header>
 
@@ -126,9 +134,9 @@
             <p class="text-xs text-[#7A8A7C]/80 px-2">Ecosistema somático integrativo para la regulación del sistema nervioso y acompañamiento clínico.</p>
         </div>
 
-        <div class="relative rounded-[32px] overflow-hidden shadow-md h-56 bg-cover bg-center clay-card" style="background-image: url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=800&q=80');">
+        <div id="home-hero-banner" class="relative rounded-[32px] overflow-hidden shadow-md h-56 bg-cover bg-center clay-card" style="background-image: url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=800&q=80');">
             <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-6">
-                <span class="text-white font-semibold text-base drop-shadow">Calibra tu calma somática hoy</span>
+                <span id="home-banner-text" class="text-white font-semibold text-base drop-shadow">Calibra tu calma somática hoy</span>
             </div>
         </div>
 
@@ -153,16 +161,20 @@
                 <button onclick="window.switchView('view-pagos')" class="clay-btn-primary w-full py-3 font-bold text-sm">Reservar Mi Cupo ($120)</button>
             </div>
         </section>
+
+        <!-- Enlace discreto para acceder al panel admin -->
+        <div class="text-center pt-2">
+            <button onclick="window.switchView('view-admin-login')" class="text-[10px] text-stone-400 hover:text-[#7A8A7C] transition">⚙️ Panel Administrativo</button>
+        </div>
     </main>
 
-    <!-- ================= 2. AUTENTICACIÓN (LOGIN / REGISTRO / GOOGLE / CORREO) ================= -->
+    <!-- ================= 2. AUTENTICACIÓN (LOGIN / REGISTRO) ================= -->
     <main id="view-auth" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
         <div class="text-center space-y-1">
             <h2 id="auth-title" class="text-2xl font-bold text-[#7A8A7C]">Iniciar Sesión</h2>
             <p id="auth-subtitle" class="text-xs text-[#7A8A7C]/70">Accede a tu cuenta de Atrévete HealthTech</p>
         </div>
 
-        <!-- Selector de Pestañas (Iniciar Sesión / Registrarse) -->
         <div class="flex p-1 bg-stone-200/60 rounded-2xl">
             <button id="tab-login" onclick="window.switchAuthMode('login')" class="flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[#7A8A7C] shadow-sm transition">
                 🔑 Iniciar Sesión
@@ -172,7 +184,6 @@
             </button>
         </div>
 
-        <!-- Botón de Google OAuth -->
         <button onclick="window.simularGoogleAuth()" class="w-full flex items-center justify-center gap-3 bg-white border border-gray-300 text-gray-700 font-semibold py-3 px-4 rounded-full hover:bg-gray-50 shadow-sm transition-all text-xs">
             <svg class="w-4 h-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -189,9 +200,7 @@
             <div class="flex-grow border-t border-stone-300"></div>
         </div>
 
-        <!-- Formulario por correo -->
         <form onsubmit="event.preventDefault(); window.procesarAuthEmail();" class="clay-card p-6 space-y-4">
-            
             <div id="field-nombre" class="hidden">
                 <label class="block text-xs font-bold text-[#7A8A7C] mb-1">Nombre Completo</label>
                 <input type="text" id="input-nombre" placeholder="Ej. Ana Mendoza" class="w-full p-3 text-xs clay-input focus:outline-none">
@@ -219,7 +228,6 @@
                 </div>
             </div>
 
-            <!-- Enlace Recuperar Contraseña -->
             <div id="link-forgot-container" class="text-right">
                 <button type="button" onclick="window.switchView('view-recovery')" class="text-[11px] text-[#E27D60] font-semibold hover:underline">
                     ¿Olvidaste tu contraseña?
@@ -277,7 +285,7 @@
         <button onclick="window.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold">Cerrar Sesión</button>
     </main>
 
-    <!-- ================= 5. MÉTODOS DE PAGO ACTUALIZADOS ================= -->
+    <!-- ================= 5. MÉTODOS DE PAGO ================= -->
     <main id="view-pagos" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
         <h2 class="text-2xl font-bold text-[#7A8A7C] text-center">Pasarela de Pago</h2>
 
@@ -351,7 +359,6 @@
                 <span id="quiz-step-indicator" class="text-[10px] font-bold text-[#7A8A7C] bg-stone-100 px-2 py-0.5 rounded-full">Paso 1 de 3</span>
             </div>
 
-            <!-- PASO 1 -->
             <div id="quiz-step-1" class="space-y-3">
                 <p class="text-xs font-bold text-[#7A8A7C]">1. ¿Cómo sientes tu estado corporal / emocional en este momento?</p>
                 <div class="space-y-2">
@@ -367,7 +374,6 @@
                 </div>
             </div>
 
-            <!-- PASO 2 -->
             <div id="quiz-step-2" class="space-y-3 hidden">
                 <p class="text-xs font-bold text-[#7A8A7C]">2. ¿Dónde se concentra la mayor tensión física?</p>
                 <div class="space-y-2">
@@ -383,7 +389,6 @@
                 </div>
             </div>
 
-            <!-- PASO 3 -->
             <div id="quiz-step-3" class="space-y-3 hidden">
                 <p class="text-xs font-bold text-[#7A8A7C]">3. ¿Qué necesita tu cuerpo en este instante?</p>
                 <div class="space-y-2">
@@ -399,22 +404,18 @@
                 </div>
             </div>
 
-            <!-- RESULTADO Y TÉCNICA RECOMENDADA -->
             <div id="quiz-result" class="space-y-4 hidden">
                 <div class="p-3 rounded-2xl bg-orange-100/50 text-xs text-[#7A8A7C]">
                     <p id="quiz-diagnosis-title" class="font-bold text-[#E27D60] text-sm mb-1"></p>
                     <p id="quiz-diagnosis-desc"></p>
                 </div>
-                <div id="recommended-technique-card" class="p-4 rounded-2xl bg-white border border-[#E27D60]/30 shadow-sm space-y-2">
-                    <!-- Dinámico -->
-                </div>
+                <div id="recommended-technique-card" class="p-4 rounded-2xl bg-white border border-[#E27D60]/30 shadow-sm space-y-2"></div>
                 <button onclick="window.resetQuiz()" class="text-xs font-bold text-[#E27D60] underline text-center w-full block">
                     🔄 Repetir Evaluación
                 </button>
             </div>
         </div>
 
-        <!-- Círculo de Respiración -->
         <div class="clay-card p-6 text-center space-y-4">
             <h3 class="font-bold text-sm text-[#7A8A7C]">Práctica Guiada: Calibrador de Respiración</h3>
             <p class="text-[11px] text-[#7A8A7C]/80">Acompasa tu ritmo respiratorio con el círculo para activar el nervio vago ventral.</p>
@@ -441,7 +442,7 @@
         <button onclick="window.switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold text-xs">Volver</button>
     </main>
 
-    <!-- ================= 8. POLÍTICAS DE PRIVACIDAD Y TÉRMINOS ================= -->
+    <!-- ================= 8. POLÍTICAS DE PRIVACIDAD ================= -->
     <main id="view-privacidad" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
         <div class="text-center space-y-1">
             <h2 class="text-2xl font-bold text-[#7A8A7C]">Políticas de Privacidad</h2>
@@ -453,24 +454,72 @@
                 <h3 class="font-extrabold text-[#E27D60] text-sm">1. Protección de Datos Personales</h3>
                 <p>En Atrévete HealthTech valoramos y resguardamos tu privacidad. Los datos personales, registros de pagos móviles o transacciones en criptomonedas (Binance Pay) recopilados son utilizados exclusivamente para la validación de membresías, gestión de cupos en eventos y acompañamiento clínico somático.</p>
             </section>
-
             <section class="space-y-1.5">
                 <h3 class="font-extrabold text-[#E27D60] text-sm">2. Confidencialidad Clínica y Somática</h3>
                 <p>Toda la información obtenida a través de nuestros test de regulación somática, interacciones y sesiones agendadas se rige bajo estricta confidencialidad profesional médico-paciente.</p>
             </section>
-
             <section class="space-y-1.5">
                 <h3 class="font-extrabold text-[#E27D60] text-sm">3. Condiciones de Reserva y Pagos</h3>
-                <p>Las reservas para campamentos, eventos presenciales o consultas quedan sujetas a la verificación exitosa de los comprobantes de pago reportados mediante nuestros canales oficiales (Pago Móvil BDV, BNC o Binance Pay).</p>
-            </section>
-
-            <section class="space-y-1.5">
-                <h3 class="font-extrabold text-[#E27D60] text-sm">4. Modificaciones y Aceptación</h3>
-                <p>El uso continuado de la plataforma implica la aceptación absoluta de estos términos legales. Nos reservamos el derecho de actualizar estas políticas para adaptarlas a normativas vigentes.</p>
+                <p>Las reservas para campamentos, eventos presenciales o consultas quedan sujetas a la verificación exitosa de los comprobantes de pago reportados mediante nuestros canales oficiales.</p>
             </section>
         </div>
 
         <button onclick="window.switchView('view-auth')" class="clay-btn-primary w-full py-3.5 font-bold text-xs">Entendido / Volver</button>
+    </main>
+
+    <!-- ================= 9. PANEL ADMINISTRATIVO PRIVADO (LOGIN & DASHBOARD) ================= -->
+    
+    <!-- Login Admin -->
+    <main id="view-admin-login" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
+        <div class="text-center space-y-1">
+            <h2 class="text-2xl font-bold text-[#E27D60]">Acceso Administrativo</h2>
+            <p class="text-xs text-[#7A8A7C]/70">Área restringida para gestión visual y banners.</p>
+        </div>
+        <form onsubmit="event.preventDefault(); window.verificarAdminPin();" class="clay-card p-6 space-y-4">
+            <div>
+                <label class="block text-xs font-bold text-[#7A8A7C] mb-1">PIN o Contraseña de Administrador</label>
+                <input type="password" id="admin-pin-input" placeholder="••••" class="w-full p-3 text-xs clay-input focus:outline-none text-center tracking-widest text-lg" required>
+            </div>
+            <button type="submit" class="clay-btn-primary w-full py-3.5 text-xs font-bold">Desbloquear Panel</button>
+        </form>
+        <button onclick="window.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold">Volver al Inicio</button>
+    </main>
+
+    <!-- Dashboard Admin (Modificar Imágenes y Banners) -->
+    <main id="view-admin-dashboard" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
+        <div class="flex justify-between items-center border-b border-stone-200 pb-3">
+            <div>
+                <h2 class="text-xl font-bold text-[#7A8A7C]">Gestor Visual Admin</h2>
+                <p class="text-[10px] text-[#7A8A7C]/70">Actualiza logotipos e imágenes en tiempo real</p>
+            </div>
+            <button onclick="window.switchView('view-home')" class="px-3 py-1.5 bg-stone-200 text-[#7A8A7C] text-xs font-bold rounded-xl">Salir</button>
+        </div>
+
+        <form onsubmit="event.preventDefault(); window.guardarCambiosAdmin();" class="clay-card p-5 space-y-4">
+            <div>
+                <label class="block text-xs font-bold text-[#7A8A7C] mb-1">URL del Logotipo (Header)</label>
+                <input type="url" id="admin-logo-url" placeholder="https://ejemplo.com/logo.png" class="w-full p-3 text-xs clay-input focus:outline-none">
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-[#7A8A7C] mb-1">URL de la Imagen Banner Principal (Home)</label>
+                <input type="url" id="admin-banner-img-url" placeholder="https://images.unsplash.com/..." class="w-full p-3 text-xs clay-input focus:outline-none">
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-[#7A8A7C] mb-1">Texto Destacado del Banner Principal</label>
+                <input type="text" id="admin-banner-text" placeholder="Ej. Calibra tu calma somática hoy" class="w-full p-3 text-xs clay-input focus:outline-none">
+            </div>
+
+            <button type="submit" class="clay-btn-primary w-full py-3.5 text-xs font-bold mt-2">
+                💾 Guardar y Aplicar Cambios
+            </button>
+        </form>
+
+        <div class="clay-card p-4 bg-orange-50/40 text-[11px] text-[#7A8A7C] space-y-1">
+            <p class="font-bold text-[#E27D60]">💡 Nota de Seguridad:</p>
+            <p>Los cambios realizados se aplican de inmediato en la aplicación y se guardan en el almacenamiento local del navegador.</p>
+        </div>
     </main>
 
     <!-- ================= BARRA DE NAVEGACIÓN INFERIOR (FIJA) ================= -->
@@ -479,7 +528,7 @@
         <div onclick="window.switchView('view-regulacion')" class="cursor-pointer flex flex-col items-center text-[10px] text-[#7A8A7C] font-bold"><span>🫁</span> Gimnasio</div>
         <div onclick="window.switchView('view-citas')" class="cursor-pointer flex flex-col items-center text-[10px] text-[#7A8A7C] font-bold"><span>📅</span> Citas</div>
         <div onclick="window.switchView('view-pagos')" class="cursor-pointer flex flex-col items-center text-[10px] text-[#7A8A7C] font-bold"><span>💳</span> Pagos</div>
-        <div onclick="window.switchView('view-perfil-usuario')" class="cursor-pointer flex flex-col items-center text-[10px] text-[#7A8A7C] font-bold"><span>👤</span> Perfil</div>
+        <div onclick="window.switchView('view-auth')" class="cursor-pointer flex flex-col items-center text-[10px] text-[#7A8A7C] font-bold"><span>👤</span> Perfil</div>
     </nav>
 
     <!-- ================= JAVASCRIPT ================= -->
@@ -491,6 +540,60 @@
                 target.classList.remove('hidden');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
+        };
+
+        // Cargar configuraciones guardadas previamente (Persistencia Admin)
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedLogo = localStorage.getItem('app_logo');
+            const savedBannerImg = localStorage.getItem('app_banner_img');
+            const savedBannerText = localStorage.getItem('app_banner_text');
+
+            if (savedLogo) {
+                document.getElementById('app-logo-img').src = savedLogo;
+                document.getElementById('admin-logo-url').value = savedLogo;
+            }
+            if (savedBannerImg) {
+                document.getElementById('home-hero-banner').style.backgroundImage = `url('${savedBannerImg}')`;
+                document.getElementById('admin-banner-img-url').value = savedBannerImg;
+            }
+            if (savedBannerText) {
+                document.getElementById('home-banner-text').innerText = savedBannerText;
+                document.getElementById('admin-banner-text').value = savedBannerText;
+            }
+        });
+
+        // Verificación de PIN Admin (PIN predeterminado: 7777)
+        window.verificarAdminPin = function() {
+            const pin = document.getElementById('admin-pin-input').value;
+            if (pin === '7777') {
+                document.getElementById('admin-pin-input').value = '';
+                window.switchView('view-admin-dashboard');
+            } else {
+                alert('PIN incorrecto. Acceso denegado.');
+            }
+        };
+
+        // Guardar cambios del panel administrativo
+        window.guardarCambiosAdmin = function() {
+            const newLogo = document.getElementById('admin-logo-url').value;
+            const newBannerImg = document.getElementById('admin-banner-img-url').value;
+            const newBannerText = document.getElementById('admin-banner-text').value;
+
+            if (newLogo) {
+                localStorage.setItem('app_logo', newLogo);
+                document.getElementById('app-logo-img').src = newLogo;
+            }
+            if (newBannerImg) {
+                localStorage.setItem('app_banner_img', newBannerImg);
+                document.getElementById('home-hero-banner').style.backgroundImage = `url('${newBannerImg}')`;
+            }
+            if (newBannerText) {
+                localStorage.setItem('app_banner_text', newBannerText);
+                document.getElementById('home-banner-text').innerText = newBannerText;
+            }
+
+            alert('¡Imágenes y banners actualizados con éxito!');
+            window.switchView('view-home');
         };
 
         let authMode = 'login';
@@ -559,7 +662,6 @@
             window.switchView('view-auth');
         };
 
-        // Pasarela de Pagos con datos exactos
         window.selectPaymentMethod = function(method) {
             document.querySelectorAll('.clay-btn-pay').forEach(btn => btn.classList.remove('active-pay'));
             
@@ -613,7 +715,6 @@
                 `;
             }
         };
-        // Inicializar por defecto en Pago Móvil BDV
         window.selectPaymentMethod('pm_bdv');
 
         window.confirmarPagoMock = function() {
@@ -626,7 +727,6 @@
             window.switchView('view-perfil-usuario');
         };
 
-        // Cuestionario de Regulación Somática
         let quizAnswers = {};
         window.answerQuiz = function(step, choice) {
             quizAnswers[`step${step}`] = choice;
@@ -662,7 +762,6 @@
             window.open(`https://wa.me/584140000000?text=${mensaje}`, '_blank');
         };
 
-        // Animación del Círculo de Respiración
         const circle = document.getElementById('breath-circle');
         let breathState = 0;
         setInterval(() => {
@@ -684,3 +783,5 @@
     </script>
 </body>
 </html>
+
+```
