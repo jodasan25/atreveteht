@@ -526,7 +526,6 @@
             }
         };
 
-        // Cargar configuraciones guardadas y perfil al iniciar
         window.addEventListener('DOMContentLoaded', () => {
             const savedLogo = localStorage.getItem('app_logo');
             const savedBannerImg = localStorage.getItem('app_banner_img');
@@ -548,7 +547,6 @@
             actualizarPerfilUI();
         });
 
-        // Actualizar datos del perfil de usuario en pantalla
         function actualizarPerfilUI() {
             const name = localStorage.getItem('user_name') || 'Invitado Atrévete';
             const email = localStorage.getItem('user_email') || 'correo@ejemplo.com';
@@ -556,12 +554,10 @@
             document.getElementById('profile-name').innerText = name;
             document.getElementById('profile-email').innerText = email;
             
-            // Generar iniciales automáticas para el avatar
             const initials = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'AT';
             document.getElementById('profile-avatar').innerText = initials;
         }
 
-        // Autenticación por Correo
         window.procesarAuthEmail = function() {
             const email = document.getElementById('input-email').value;
             const nombreInput = document.getElementById('input-nombre');
@@ -577,20 +573,18 @@
             localStorage.setItem('user_email', email);
             actualizarPerfilUI();
 
-            alert(authMode === 'login' ? `Sesión iniciada con éxito para ${email}` : `Cuenta creada con éxito para ${email}`);
             window.switchView('view-perfil-usuario');
         };
 
-        // Simulación de Google Auth Dinámica
         window.simularGoogleAuth = function() {
-            const nombreGoogle = prompt("Simulación Google Auth - Ingresa tu nombre:", "Usuario Google") || "Usuario Google";
-            const emailGoogle = nombreGoogle.toLowerCase().replace(/[^a-z0-9]/g, '') + "@gmail.com";
+            const nombresPrueba = ["María Silva", "Carlos Mendoza", "Ana Sofía Rivas", "Daniel Pérez"];
+            const nombreRandom = nombresPrueba[Math.floor(Math.random() * nombresPrueba.length)];
+            const emailRandom = nombreRandom.toLowerCase().replace(/[^a-z]/g, '') + "@gmail.com";
 
-            localStorage.setItem('user_name', nombreGoogle);
-            localStorage.setItem('user_email', emailGoogle);
+            localStorage.setItem('user_name', nombreRandom);
+            localStorage.setItem('user_email', emailRandom);
             actualizarPerfilUI();
 
-            alert(`¡Autenticación con Google completada con éxito para ${nombreGoogle}!`);
             window.switchView('view-perfil-usuario');
         };
 
