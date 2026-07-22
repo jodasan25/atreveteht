@@ -108,7 +108,7 @@
 </head>
 <body class="pb-28">
 
-  <!-- CABECERA PRINCIPAL (REDUCIDO ESPACIO Y SIN BOTÓN DE PERFIL) -->
+  <!-- CABECERA PRINCIPAL -->
   <header class="pt-3 pb-1 px-6 flex justify-center items-center max-w-md mx-auto">
     <div class="cursor-pointer" onclick="window.switchView('view-home')">
       <img id="app-logo-img" src="atrevetehtlogo.png" alt="Atrévete HealthTech" class="h-28 w-auto object-contain">
@@ -150,7 +150,6 @@
             </div>
         </section>
 
-        <!-- Enlace discreto para acceder al panel admin -->
         <div class="text-center pt-1">
             <button onclick="window.switchView('view-admin-login')" class="text-[10px] text-stone-400 hover:text-[#7A8A7C] transition">⚙️ Panel Administrativo</button>
         </div>
@@ -258,19 +257,19 @@
         <button onclick="window.switchView('view-auth')" class="clay-btn-secondary w-full py-3 text-xs font-bold">← Volver al Ingreso</button>
     </main>
 
-    <!-- ================= 4. PERFIL DE USUARIO ================= -->
+    <!-- ================= 4. PERFIL DE USUARIO DINÁMICO ================= -->
     <main id="view-perfil-usuario" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
         <div class="clay-card p-6 text-center space-y-3">
-            <div class="w-20 h-20 rounded-full bg-[#E27D60] text-white flex items-center justify-center text-2xl font-bold mx-auto border-4 border-white shadow">
-                CR
+            <div id="profile-avatar" class="w-20 h-20 rounded-full bg-[#E27D60] text-white flex items-center justify-center text-2xl font-bold mx-auto border-4 border-white shadow">
+                US
             </div>
             <div>
-                <h3 class="text-lg font-bold text-[#7A8A7C]">Carla Rodríguez</h3>
-                <p class="text-xs text-[#7A8A7C]/70">Miembro Activo • Plan Somático Pro</p>
+                <h3 id="profile-name" class="text-lg font-bold text-[#7A8A7C]">Usuario</h3>
+                <p id="profile-email" class="text-xs text-[#7A8A7C]/70">correo@ejemplo.com</p>
             </div>
             <span class="inline-block bg-emerald-100 text-emerald-800 text-[10px] font-bold px-3 py-1 rounded-full">Suscripción Activa</span>
         </div>
-        <button onclick="window.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold">Cerrar Sesión</button>
+        <button onclick="window.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold">Cerrar Sesión / Volver</button>
     </main>
 
     <!-- ================= 5. MÉTODOS DE PAGO ================= -->
@@ -527,6 +526,7 @@
             }
         };
 
+        // Cargar configuraciones guardadas y perfil al iniciar
         window.addEventListener('DOMContentLoaded', () => {
             const savedLogo = localStorage.getItem('app_logo');
             const savedBannerImg = localStorage.getItem('app_banner_img');
@@ -544,7 +544,55 @@
                 document.getElementById('home-banner-text').innerText = savedBannerText;
                 document.getElementById('admin-banner-text').value = savedBannerText;
             }
+
+            actualizarPerfilUI();
         });
+
+        // Actualizar datos del perfil de usuario en pantalla
+        function actualizarPerfilUI() {
+            const name = localStorage.getItem('user_name') || 'Invitado Atrévete';
+            const email = localStorage.getItem('user_email') || 'correo@ejemplo.com';
+            
+            document.getElementById('profile-name').innerText = name;
+            document.getElementById('profile-email').innerText = email;
+            
+            // Generar iniciales automáticas para el avatar
+            const initials = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'AT';
+            document.getElementById('profile-avatar').innerText = initials;
+        }
+
+        // Autenticación por Correo
+        window.procesarAuthEmail = function() {
+            const email = document.getElementById('input-email').value;
+            const nombreInput = document.getElementById('input-nombre');
+            let nombre = 'Usuario Atrévete';
+
+            if (authMode === 'register' && nombreInput && nombreInput.value.trim() !== '') {
+                nombre = nombreInput.value.trim();
+            } else {
+                nombre = email.split('@')[0];
+            }
+
+            localStorage.setItem('user_name', nombre);
+            localStorage.setItem('user_email', email);
+            actualizarPerfilUI();
+
+            alert(authMode === 'login' ? `Sesión iniciada con éxito para ${email}` : `Cuenta creada con éxito para ${email}`);
+            window.switchView('view-perfil-usuario');
+        };
+
+        // Simulación de Google Auth Dinámica
+        window.simularGoogleAuth = function() {
+            const nombreGoogle = prompt("Simulación Google Auth - Ingresa tu nombre:", "Usuario Google") || "Usuario Google";
+            const emailGoogle = nombreGoogle.toLowerCase().replace(/[^a-z0-9]/g, '') + "@gmail.com";
+
+            localStorage.setItem('user_name', nombreGoogle);
+            localStorage.setItem('user_email', emailGoogle);
+            actualizarPerfilUI();
+
+            alert(`¡Autenticación con Google completada con éxito para ${nombreGoogle}!`);
+            window.switchView('view-perfil-usuario');
+        };
 
         window.verificarAdminPin = function() {
             const pin = document.getElementById('admin-pin-input').value;
@@ -621,17 +669,6 @@
                 btnSpec.className = 'flex-1 py-2 text-xs font-bold rounded-xl bg-orange-100 text-[#E27D60] border border-[#E27D60]/30 transition';
                 btnUser.className = 'flex-1 py-2 text-xs font-bold rounded-xl bg-stone-100 text-[#7A8A7C] transition';
             }
-        };
-
-        window.procesarAuthEmail = function() {
-            const email = document.getElementById('input-email').value;
-            alert(authMode === 'login' ? `Sesión iniciada con éxito para ${email}` : `Cuenta creada con éxito para ${email}`);
-            window.switchView('view-perfil-usuario');
-        };
-
-        window.simularGoogleAuth = function() {
-            alert('Autenticación con Google completada con éxito.');
-            window.switchView('view-perfil-usuario');
         };
 
         window.procesarRecuperacion = function() {
