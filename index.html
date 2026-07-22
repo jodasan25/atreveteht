@@ -155,6 +155,40 @@
             outline: 2px solid #E27D60;
             outline-offset: 2px;
         }
+
+        /* Modal de Google */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 28px;
+            padding: 32px;
+            max-width: 400px;
+            width: 90%;
+            transform: scale(0.9);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
     </style>
 </head>
 <body class="pb-28">
@@ -168,6 +202,41 @@
 
   <!-- ================= TOAST NOTIFICATIONS ================= -->
   <div id="toast" class="toast"></div>
+
+  <!-- ================= MODAL DE GOOGLE ================= -->
+  <div id="google-modal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="text-center space-y-4">
+        <div class="flex justify-center">
+          <svg class="w-16 h-16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-[#7A8A7C]">Registro con Google</h3>
+        <p class="text-xs text-[#7A8A7C]/70">Completa tus datos para finalizar el registro</p>
+        
+        <form id="google-register-form" onsubmit="event.preventDefault(); App.completarRegistroGoogle();" class="space-y-4 text-left">
+          <div>
+            <label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="google-nombre">Nombre Completo</label>
+            <input type="text" id="google-nombre" placeholder="Tu nombre completo" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible" required>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="google-email">Correo Electrónico</label>
+            <input type="email" id="google-email" placeholder="tu.correo@gmail.com" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible" required>
+          </div>
+          <button type="submit" class="clay-btn-primary w-full py-3 text-xs font-bold">
+            Registrar y Continuar
+          </button>
+          <button type="button" onclick="App.cerrarModalGoogle()" class="w-full py-2 text-xs text-[#7A8A7C]/60 hover:text-[#7A8A7C] transition">
+            Cancelar
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
 
   <!-- ================= 1. HOME (PANTALLA INICIAL) ================= -->
   <main id="view-home" class="app-view max-w-md mx-auto px-5 space-y-5">
@@ -225,14 +294,14 @@
       </button>
     </div>
 
-    <button onclick="App.simularGoogleAuth()" class="w-full flex items-center justify-center gap-3 bg-white border border-gray-300 text-gray-700 font-semibold py-3 px-4 rounded-full hover:bg-gray-50 shadow-sm transition-all text-xs focus-visible" aria-label="Continuar con Google">
+    <button onclick="App.iniciarRegistroGoogle()" class="w-full flex items-center justify-center gap-3 bg-white border border-gray-300 text-gray-700 font-semibold py-3 px-4 rounded-full hover:bg-gray-50 shadow-sm transition-all text-xs focus-visible" aria-label="Registrarse con Google">
       <svg class="w-4 h-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
         <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
         <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
         <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
       </svg>
-      Continuar con Google
+      Registrarse con Google
     </button>
 
     <div class="relative flex items-center py-1">
@@ -323,6 +392,7 @@
         <h3 id="profile-name" class="text-lg font-bold text-[#7A8A7C]">Usuario</h3>
         <p id="profile-email" class="text-xs text-[#7A8A7C]/70">correo@ejemplo.com</p>
         <p id="profile-role" class="text-xs text-[#7A8A7C]/60 mt-1">👤 Usuario</p>
+        <p id="profile-register-method" class="text-[10px] text-[#7A8A7C]/40 mt-1">Registrado con: Email</p>
       </div>
       <span class="inline-block bg-emerald-100 text-emerald-800 text-[10px] font-bold px-3 py-1 rounded-full">Suscripción Activa</span>
     </div>
@@ -428,71 +498,4 @@
           <button onclick="App.answerQuiz(2, 'cuello')" class="clay-btn-option w-full text-xs focus-visible">
             💆 <strong>Cuello / Mandíbula:</strong> Dientes apretados, hombros rígidos o cefalea.
           </button>
-          <button onclick="App.answerQuiz(2, 'estomago')" class="clay-btn-option w-full text-xs focus-visible">
-            🫃 <strong>Estómago / Plexo:</strong> Sensación de nudo en el abdomen o digestión lenta.
-          </button>
-        </div>
-      </div>
-
-      <div id="quiz-step-3" class="space-y-3 hidden">
-        <p class="text-xs font-bold text-[#7A8A7C]">3. ¿Qué necesita tu cuerpo en este instante?</p>
-        <div class="space-y-2">
-          <button onclick="App.answerQuiz(3, 'bajar')" class="clay-btn-option w-full text-xs focus-visible">
-            ⚓ <strong>Bajar revoluciones:</strong> Calmar la aceleración y soltar el control.
-          </button>
-          <button onclick="App.answerQuiz(3, 'activar')" class="clay-btn-option w-full text-xs focus-visible">
-            ⚡ <strong>Salir del aletargamiento:</strong> Movilizar la energía estancada.
-          </button>
-          <button onclick="App.answerQuiz(3, 'liberar')" class="clay-btn-option w-full text-xs focus-visible">
-            🕊️ <strong>Descargar tensión:</strong> Soltar cargas emocionales del día.
-          </button>
-        </div>
-      </div>
-
-      <div id="quiz-result" class="space-y-4 hidden">
-        <div class="p-3 rounded-2xl bg-orange-100/50 text-xs text-[#7A8A7C]">
-          <p id="quiz-diagnosis-title" class="font-bold text-[#E27D60] text-sm mb-1"></p>
-          <p id="quiz-diagnosis-desc"></p>
-        </div>
-        <div id="recommended-technique-card" class="p-4 rounded-2xl bg-white border border-[#E27D60]/30 shadow-sm space-y-2"></div>
-        <button onclick="App.resetQuiz()" class="text-xs font-bold text-[#E27D60] underline text-center w-full block focus-visible">
-          🔄 Repetir Evaluación
-        </button>
-      </div>
-    </div>
-
-    <div class="clay-card p-6 text-center space-y-4">
-      <h3 class="font-bold text-sm text-[#7A8A7C]">Práctica Guiada: Calibrador de Respiración</h3>
-      <p class="text-[11px] text-[#7A8A7C]/80">Acompasa tu ritmo respiratorio con el círculo para activar el nervio vago ventral.</p>
-      <div class="flex flex-col items-center justify-center py-4">
-        <div id="breath-circle" class="w-40 h-40 rounded-full bg-[#F0B7A1] flex items-center justify-center text-white font-bold text-base shadow-lg border-4 border-white transition-all duration-1000" role="img" aria-label="Círculo de respiración guiada">
-          Inhala...
-        </div>
-      </div>
-    </div>
-
-    <button onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold text-xs focus-visible">Volver al Inicio</button>
-  </main>
-
-  <!-- ================= 7. AGENDAMIENTO DE CITAS ================= -->
-  <main id="view-citas" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
-    <h2 class="text-2xl font-bold text-[#7A8A7C] text-center">Agendar tu Sesión</h2>
-    <div class="clay-card p-5 space-y-4">
-      <label class="block text-xs font-bold text-[#7A8A7C]" for="select-terapeuta">Especialista:</label>
-      <select id="select-terapeuta" class="w-full p-3 rounded-xl border border-[#7A8A7C]/20 bg-white text-xs text-[#7A8A7C] focus-visible">
-        <option value="Dra. Carla Rodríguez">Dra. Carla Rodríguez</option>
-        <option value="Dra. María González">Dra. María González</option>
-        <option value="Lic. Ana Pérez">Lic. Ana Pérez</option>
-      </select>
-      
-      <div>
-        <label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="fecha-cita">Fecha de la Cita:</label>
-        <input type="date" id="fecha-cita" class="w-full p-3 rounded-xl border border-[#7A8A7C]/20 bg-white text-xs text-[#7A8A7C] focus-visible">
-      </div>
-      
-      <div>
-        <label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="hora-cita">Hora de la Cita:</label>
-        <input type="time" id="hora-cita" class="w-full p-3 rounded-xl border border-[#7A8A7C]/20 bg-white text-xs text-[#7A8A7C] focus-visible">
-      </div>
-      
-      <button onclick
+          <button onclick="App.answerQuiz
