@@ -465,9 +465,9 @@
                 <label class="block text-xs font-bold text-[#7A8A7C] mb-1">PIN o Contraseña de Administrador</label>
                 <input type="password" id="admin-pin-input" placeholder="••••" class="w-full p-3 text-xs clay-input focus:outline-none text-center tracking-widest text-lg" required>
             </div>
-            <button type="submit" class="clay-btn-primary w-full py-3.5 text-xs font-bold">Desbloquear Panel</button>
+            <button type="submit" class="clay-btn-primary w-full py-3.5 font-bold text-xs">Desbloquear Panel</button>
         </form>
-        <button onclick="window.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold">Volver al Inicio</button>
+        <button onclick="window.switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold text-xs">Volver al Inicio</button>
     </main>
 
     <main id="view-admin-dashboard" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
@@ -495,7 +495,7 @@
                 <input type="text" id="admin-banner-text" placeholder="Ej. Calibra tu calma somática hoy" class="w-full p-3 text-xs clay-input focus:outline-none">
             </div>
 
-            <button type="submit" class="clay-btn-primary w-full py-3.5 text-xs font-bold mt-2">
+            <button type="submit" class="clay-btn-primary w-full py-3.5 font-bold text-xs mt-2">
                 💾 Guardar y Aplicar Cambios
             </button>
         </form>
@@ -577,12 +577,14 @@
         };
 
         window.simularGoogleAuth = function() {
-            const nombresPrueba = ["María Silva", "Carlos Mendoza", "Ana Sofía Rivas", "Daniel Pérez"];
-            const nombreRandom = nombresPrueba[Math.floor(Math.random() * nombresPrueba.length)];
-            const emailRandom = nombreRandom.toLowerCase().replace(/[^a-z]/g, '') + "@gmail.com";
+            const nombreCuenta = prompt("Ingresa tu Nombre y Apellido para la cuenta:", "Tu Nombre Real");
+            if (!nombreCuenta || nombreCuenta.trim() === "") return;
+            
+            const emailCuenta = prompt("Ingresa tu Correo Electrónico (ej. tu.correo@gmail.com):", "tucorreo@gmail.com");
+            if (!emailCuenta || emailCuenta.trim() === "") return;
 
-            localStorage.setItem('user_name', nombreRandom);
-            localStorage.setItem('user_email', emailRandom);
+            localStorage.setItem('user_name', nombreCuenta.trim());
+            localStorage.setItem('user_email', emailCuenta.trim());
             actualizarPerfilUI();
 
             window.switchView('view-perfil-usuario');
