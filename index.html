@@ -108,26 +108,21 @@
 </head>
 <body class="pb-28">
 
-  <!-- CABECERA PRINCIPAL -->
-  <header class="py-5 px-6 relative flex justify-center items-center max-w-md mx-auto">
+  <!-- CABECERA PRINCIPAL (REDUCIDO ESPACIO Y SIN BOTÓN DE PERFIL) -->
+  <header class="pt-3 pb-1 px-6 flex justify-center items-center max-w-md mx-auto">
     <div class="cursor-pointer" onclick="window.switchView('view-home')">
-      <img id="app-logo-img" src="atrevetehtlogo.png" alt="Atrévete HealthTech" class="h-40 w-auto object-contain">
+      <img id="app-logo-img" src="atrevetehtlogo.png" alt="Atrévete HealthTech" class="h-28 w-auto object-contain">
     </div>
-
-    <!-- Botón Perfil / Ingresar (Modificado previamente) -->
-    <button onclick="window.switchView('view-auth')" class="absolute right-6 px-5 py-2 text-xs font-bold text-[#E27D60] bg-[#E27D60]/10 rounded-full hover:bg-[#E27D60]/25 transition-colors">
-      Perfil
-    </button>
   </header>
 
     <!-- ================= 1. HOME (PANTALLA INICIAL) ================= -->
-    <main id="view-home" class="app-view max-w-md mx-auto px-5 space-y-7">
-        <div class="text-center space-y-2">
+    <main id="view-home" class="app-view max-w-md mx-auto px-5 space-y-5">
+        <div class="text-center space-y-1">
             <h2 class="text-3xl font-extrabold text-[#7A8A7C] leading-tight">Habita Tu Cuerpo</h2>
             <p class="text-xs text-[#7A8A7C]/80 px-2">Ecosistema somático integrativo para la regulación del sistema nervioso y acompañamiento clínico.</p>
         </div>
 
-        <div id="home-hero-banner" class="relative rounded-[32px] overflow-hidden shadow-md h-56 bg-cover bg-center clay-card" style="background-image: url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=800&q=80');">
+        <div id="home-hero-banner" class="relative rounded-[32px] overflow-hidden shadow-md h-52 bg-cover bg-center clay-card" style="background-image: url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=800&q=80');">
             <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-6">
                 <span id="home-banner-text" class="text-white font-semibold text-base drop-shadow">Calibra tu calma somática hoy</span>
             </div>
@@ -156,7 +151,7 @@
         </section>
 
         <!-- Enlace discreto para acceder al panel admin -->
-        <div class="text-center pt-2">
+        <div class="text-center pt-1">
             <button onclick="window.switchView('view-admin-login')" class="text-[10px] text-stone-400 hover:text-[#7A8A7C] transition">⚙️ Panel Administrativo</button>
         </div>
     </main>
@@ -460,9 +455,7 @@
         <button onclick="window.switchView('view-auth')" class="clay-btn-primary w-full py-3.5 font-bold text-xs">Entendido / Volver</button>
     </main>
 
-    <!-- ================= 9. PANEL ADMINISTRATIVO PRIVADO (LOGIN & DASHBOARD) ================= -->
-    
-    <!-- Login Admin -->
+    <!-- ================= 9. PANEL ADMINISTRATIVO PRIVADO ================= -->
     <main id="view-admin-login" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
         <div class="text-center space-y-1">
             <h2 class="text-2xl font-bold text-[#E27D60]">Acceso Administrativo</h2>
@@ -478,7 +471,6 @@
         <button onclick="window.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold">Volver al Inicio</button>
     </main>
 
-    <!-- Dashboard Admin (Modificar Imágenes y Banners) -->
     <main id="view-admin-dashboard" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
         <div class="flex justify-between items-center border-b border-stone-200 pb-3">
             <div>
@@ -535,7 +527,6 @@
             }
         };
 
-        // Cargar configuraciones guardadas previamente (Persistencia Admin)
         window.addEventListener('DOMContentLoaded', () => {
             const savedLogo = localStorage.getItem('app_logo');
             const savedBannerImg = localStorage.getItem('app_banner_img');
@@ -555,7 +546,6 @@
             }
         });
 
-        // Verificación de PIN Admin (PIN predeterminado: 7777)
         window.verificarAdminPin = function() {
             const pin = document.getElementById('admin-pin-input').value;
             if (pin === '7777') {
@@ -566,7 +556,6 @@
             }
         };
 
-        // Guardar cambios del panel administrativo
         window.guardarCambiosAdmin = function() {
             const newLogo = document.getElementById('admin-logo-url').value;
             const newBannerImg = document.getElementById('admin-banner-img-url').value;
@@ -776,5 +765,3 @@
     </script>
 </body>
 </html>
-
-```
