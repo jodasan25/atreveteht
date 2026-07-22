@@ -6,6 +6,8 @@
     <title>Atrévete HealthTech - Plataforma Integrativa</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Identity Services -->
+    <script src="https://accounts.google.com/gsi/client"></script>
     <style>
         .hidden { display: none !important; }
         
@@ -155,6 +157,161 @@
             outline: 2px solid #E27D60;
             outline-offset: 2px;
         }
+
+        /* Modal de confirmación de Google */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 32px;
+            padding: 32px;
+            max-width: 420px;
+            width: 92%;
+            transform: scale(0.9) translateY(20px);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal-overlay.active .modal-content {
+            transform: scale(1) translateY(0);
+        }
+
+        /* Badge de verificación */
+        .verified-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #E8F5E9;
+            color: #2E7D32;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        .unverified-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #FFF3E0;
+            color: #E65100;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        /* Botón de Google personalizado */
+        .gsi-material-button {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            -webkit-appearance: none;
+            background-color: WHITE;
+            background-image: none;
+            border: 1px solid #DADCE0;
+            border-radius: 4px;
+            box-sizing: border-box;
+            color: #1F1F1F;
+            cursor: pointer;
+            font-family: 'Roboto', arial, sans-serif;
+            font-size: 14px;
+            height: 40px;
+            letter-spacing: 0.25px;
+            outline: none;
+            overflow: hidden;
+            padding: 0 12px;
+            position: relative;
+            text-align: center;
+            vertical-align: middle;
+            white-space: nowrap;
+            width: auto;
+            max-width: 400px;
+            min-width: min-content;
+            transition: background-color .218s, border-color .218s, box-shadow .218s;
+        }
+        .gsi-material-button .gsi-material-button-icon {
+            height: 20px;
+            margin-right: 12px;
+            min-width: 20px;
+            width: 20px;
+        }
+        .gsi-material-button .gsi-material-button-content-wrapper {
+            -webkit-align-items: center;
+            align-items: center;
+            display: flex;
+            -webkit-flex-direction: row;
+            flex-direction: row;
+            -webkit-flex-wrap: nowrap;
+            flex-wrap: nowrap;
+            height: 100%;
+            justify-content: space-between;
+            position: relative;
+            width: 100%;
+        }
+        .gsi-material-button .gsi-material-button-contents {
+            -webkit-flex-grow: 1;
+            flex-grow: 1;
+            font-family: 'Roboto', arial, sans-serif;
+            font-weight: 500;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            vertical-align: top;
+        }
+        .gsi-material-button .gsi-material-button-state {
+            -webkit-transition: opacity .218s;
+            transition: opacity .218s;
+            bottom: 0;
+            left: 0;
+            opacity: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+        .gsi-material-button:disabled {
+            cursor: default;
+            background-color: #ffffff61;
+            border-color: #1f1f1f1f;
+        }
+        .gsi-material-button:disabled .gsi-material-button-state {
+            background-color: #1f1f1f1f;
+        }
+        .gsi-material-button:disabled .gsi-material-button-contents {
+            opacity: 38%;
+        }
+        .gsi-material-button:disabled .gsi-material-button-icon {
+            opacity: 38%;
+        }
+        .gsi-material-button:not(:disabled):active .gsi-material-button-state, 
+        .gsi-material-button:not(:disabled):focus .gsi-material-button-state {
+            background-color: #303030;
+            opacity: 12%;
+        }
+        .gsi-material-button:not(:disabled):hover {
+            -webkit-box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .30), 0 1px 3px 1px rgba(60, 64, 67, .15);
+            box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .30), 0 1px 3px 1px rgba(60, 64, 67, .15);
+        }
+        .gsi-material-button:not(:disabled):hover .gsi-material-button-state {
+            background-color: #303030;
+            opacity: 8%;
+        }
     </style>
 </head>
 <body class="pb-28">
@@ -168,6 +325,51 @@
 
   <!-- ================= TOAST NOTIFICATIONS ================= -->
   <div id="toast" class="toast"></div>
+
+  <!-- ================= MODAL DE CONFIRMACIÓN DE GOOGLE ================= -->
+  <div id="google-modal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="text-center space-y-4">
+        <div class="flex justify-center">
+          <div class="w-20 h-20 rounded-full bg-[#E27D60]/10 flex items-center justify-center">
+            <svg class="w-12 h-12" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+            </svg>
+          </div>
+        </div>
+        
+        <h3 class="text-2xl font-bold text-[#7A8A7C]">Confirmar Registro</h3>
+        <p class="text-sm text-[#7A8A7C]/70">Autoriza el acceso a tu cuenta de Google para continuar</p>
+        
+        <div id="google-user-info" class="bg-stone-50 rounded-2xl p-4 space-y-2 text-left">
+          <div class="flex items-center gap-3">
+            <div id="google-avatar-modal" class="w-12 h-12 rounded-full bg-[#E27D60] text-white flex items-center justify-center text-lg font-bold">G</div>
+            <div>
+              <p id="google-name-modal" class="font-bold text-sm text-[#7A8A7C]">Cargando...</p>
+              <p id="google-email-modal" class="text-xs text-[#7A8A7C]/70">Cargando...</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 pt-2 border-t border-stone-200">
+            <span class="text-xs text-[#7A8A7C]/60">🔒 Acceso autorizado a:</span>
+            <span class="text-xs font-medium text-[#7A8A7C]">Email, Nombre, Foto</span>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-3">
+          <button onclick="App.confirmarRegistroGoogle()" id="btn-confirmar-google" class="clay-btn-primary w-full py-3.5 text-sm font-bold flex items-center justify-center gap-2">
+            <span id="btn-google-text">✅ Confirmar y Continuar</span>
+            <span id="btn-google-spinner" class="hidden"><span class="spinner"></span></span>
+          </button>
+          <button onclick="App.cancelarRegistroGoogle()" class="w-full py-2.5 text-sm text-[#7A8A7C]/60 hover:text-[#7A8A7C] transition font-medium">
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- ================= 1. HOME (PANTALLA INICIAL) ================= -->
   <main id="view-home" class="app-view max-w-md mx-auto px-5 space-y-5">
@@ -225,15 +427,25 @@
       </button>
     </div>
 
-    <button onclick="App.registroAutomaticoGoogle()" class="w-full flex items-center justify-center gap-3 bg-white border border-gray-300 text-gray-700 font-semibold py-3 px-4 rounded-full hover:bg-gray-50 shadow-sm transition-all text-xs focus-visible" aria-label="Registrarse automáticamente con Google">
-      <svg class="w-4 h-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-      </svg>
-      Registro Automático con Google
-    </button>
+    <!-- Botón de Google con autenticación real -->
+    <div id="google-login-container" class="flex justify-center">
+      <div id="g_id_onload"
+           data-client_id="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com"
+           data-context="signin"
+           data-ux_mode="popup"
+           data-callback="App.handleGoogleCredentialResponse"
+           data-auto_prompt="false">
+      </div>
+      <div class="g_id_signin"
+           data-type="standard"
+           data-shape="rectangular"
+           data-theme="outline"
+           data-text="signin_with"
+           data-size="large"
+           data-logo_alignment="left"
+           data-width="340">
+      </div>
+    </div>
 
     <div class="relative flex items-center py-1">
       <div class="flex-grow border-t border-stone-300"></div>
@@ -324,6 +536,9 @@
         <p id="profile-email" class="text-xs text-[#7A8A7C]/70">correo@ejemplo.com</p>
         <p id="profile-role" class="text-xs text-[#7A8A7C]/60 mt-1">👤 Usuario</p>
         <p id="profile-register-method" class="text-[10px] text-[#7A8A7C]/40 mt-1">Registrado con: Email</p>
+        <div id="profile-verified-container" class="mt-2 flex justify-center">
+          <span class="unverified-badge">⏳ Correo no verificado</span>
+        </div>
       </div>
       <span class="inline-block bg-emerald-100 text-emerald-800 text-[10px] font-bold px-3 py-1 rounded-full">Suscripción Activa</span>
       
@@ -624,7 +839,7 @@
   <!-- ================= JAVASCRIPT ================= -->
   <script>
     // ============================================
-    // APP - Objeto principal para evitar contaminar window
+    // APP - Objeto principal
     // ============================================
     const App = {
         // Estado de la aplicación
@@ -632,16 +847,198 @@
             authMode: 'login',
             quizAnswers: {},
             selectedPayment: 'pm_bdv',
+            googleUserData: null,
             user: {
                 name: localStorage.getItem('user_name') || '',
                 email: localStorage.getItem('user_email') || '',
                 role: localStorage.getItem('user_role') || 'user',
                 registerMethod: localStorage.getItem('register_method') || 'email',
                 telefono: localStorage.getItem('user_telefono') || '',
-                fechaNac: localStorage.getItem('user_fecha_nac') || ''
+                fechaNac: localStorage.getItem('user_fecha_nac') || '',
+                emailVerified: localStorage.getItem('email_verified') === 'true'
             },
             isAuthenticated: !!localStorage.getItem('user_email'),
-            breathInterval: null
+            breathInterval: null,
+            googleInitialized: false
+        },
+
+        // ============================================
+        // INICIALIZACIÓN DE GOOGLE
+        // ============================================
+        initGoogle() {
+            if (this.state.googleInitialized) return;
+            
+            // Cargar el SDK de Google
+            if (typeof google !== 'undefined' && google.accounts) {
+                this.state.googleInitialized = true;
+                console.log('✅ Google Identity Services inicializado');
+            } else {
+                console.warn('⏳ Esperando carga de Google Identity Services...');
+                // Intentar nuevamente después de 1 segundo
+                setTimeout(() => this.initGoogle(), 1000);
+            }
+        },
+
+        // ============================================
+        // MANEJO DE CREDENCIALES DE GOOGLE
+        // ============================================
+        handleGoogleCredentialResponse(response) {
+            console.log('🔐 Credencial recibida de Google');
+            
+            try {
+                // Decodificar el JWT para obtener los datos del usuario
+                const credential = response.credential;
+                const payload = this.decodeJwtPayload(credential);
+                
+                if (!payload) {
+                    this.showToast('❌ Error al decodificar credencial de Google', 'error');
+                    return;
+                }
+
+                // Extraer datos del usuario
+                const userData = {
+                    name: payload.name || 'Usuario Google',
+                    email: payload.email || '',
+                    picture: payload.picture || '',
+                    email_verified: payload.email_verified || false,
+                    sub: payload.sub || ''
+                };
+
+                // Verificar que el email esté verificado
+                if (!userData.email_verified) {
+                    this.showToast('⚠️ El correo de Google no está verificado. Por favor verifica tu cuenta.', 'error');
+                    return;
+                }
+
+                console.log('👤 Datos de Google:', userData);
+                
+                // Guardar datos del usuario de Google
+                this.state.googleUserData = userData;
+                
+                // Mostrar modal de confirmación
+                this.mostrarModalConfirmacionGoogle(userData);
+                
+            } catch (error) {
+                console.error('Error al procesar credencial de Google:', error);
+                this.showToast('❌ Error al procesar autenticación de Google', 'error');
+            }
+        },
+
+        // ============================================
+        // DECODIFICAR JWT
+        // ============================================
+        decodeJwtPayload(token) {
+            try {
+                const base64Url = token.split('.')[1];
+                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                }).join(''));
+                return JSON.parse(jsonPayload);
+            } catch (e) {
+                console.error('Error decodificando JWT:', e);
+                return null;
+            }
+        },
+
+        // ============================================
+        // MODAL DE CONFIRMACIÓN DE GOOGLE
+        // ============================================
+        mostrarModalConfirmacionGoogle(userData) {
+            const modal = document.getElementById('google-modal');
+            const avatar = document.getElementById('google-avatar-modal');
+            const nameEl = document.getElementById('google-name-modal');
+            const emailEl = document.getElementById('google-email-modal');
+            
+            // Actualizar datos en el modal
+            const initials = userData.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+            avatar.textContent = initials;
+            nameEl.textContent = userData.name;
+            emailEl.textContent = userData.email;
+            
+            // Mostrar modal
+            modal.classList.add('active');
+            
+            // Resetear botón
+            const btnText = document.getElementById('btn-google-text');
+            const btnSpinner = document.getElementById('btn-google-spinner');
+            btnText.textContent = '✅ Confirmar y Continuar';
+            btnSpinner.classList.add('hidden');
+            document.getElementById('btn-confirmar-google').disabled = false;
+        },
+
+        // ============================================
+        // CONFIRMAR REGISTRO CON GOOGLE
+        // ============================================
+        confirmarRegistroGoogle() {
+            if (!this.state.googleUserData) {
+                this.showToast('❌ No hay datos de Google para confirmar', 'error');
+                return;
+            }
+
+            // Mostrar loading en el botón
+            const btnText = document.getElementById('btn-google-text');
+            const btnSpinner = document.getElementById('btn-google-spinner');
+            btnText.textContent = 'Registrando...';
+            btnSpinner.classList.remove('hidden');
+            document.getElementById('btn-confirmar-google').disabled = true;
+
+            // Simular proceso de registro
+            setTimeout(() => {
+                const userData = this.state.googleUserData;
+                
+                // Guardar datos en localStorage
+                localStorage.setItem('user_name', userData.name);
+                localStorage.setItem('user_email', userData.email);
+                localStorage.setItem('user_role', 'user');
+                localStorage.setItem('register_method', 'google');
+                localStorage.setItem('email_verified', 'true');
+                localStorage.setItem('google_picture', userData.picture || '');
+                
+                // Actualizar estado
+                this.state.user = {
+                    ...this.state.user,
+                    name: userData.name,
+                    email: userData.email,
+                    role: 'user',
+                    registerMethod: 'google',
+                    emailVerified: true
+                };
+                this.state.isAuthenticated = true;
+                
+                // Cerrar modal
+                document.getElementById('google-modal').classList.remove('active');
+                
+                // Actualizar UI
+                this.actualizarPerfilUI();
+                this.showToast('✅ ¡Registro con Google exitoso!', 'success');
+                
+                // Redirigir al perfil
+                this.switchView('view-perfil-usuario');
+                
+                // Mostrar formulario de edición automáticamente
+                setTimeout(() => {
+                    this.mostrarEditarPerfil();
+                }, 500);
+                
+                // Resetear el botón
+                btnText.textContent = '✅ Confirmar y Continuar';
+                btnSpinner.classList.add('hidden');
+                document.getElementById('btn-confirmar-google').disabled = false;
+                
+                // Limpiar datos de Google
+                this.state.googleUserData = null;
+                
+            }, 1500);
+        },
+
+        // ============================================
+        // CANCELAR REGISTRO CON GOOGLE
+        // ============================================
+        cancelarRegistroGoogle() {
+            document.getElementById('google-modal').classList.remove('active');
+            this.state.googleUserData = null;
+            this.showToast('Registro con Google cancelado', 'info');
         },
 
         // ============================================
@@ -686,12 +1083,14 @@
             const email = this.state.user.email || 'correo@ejemplo.com';
             const role = this.state.user.role || 'user';
             const registerMethod = this.state.user.registerMethod || 'email';
+            const emailVerified = this.state.user.emailVerified || false;
             
             const profileName = document.getElementById('profile-name');
             const profileEmail = document.getElementById('profile-email');
             const profileAvatar = document.getElementById('profile-avatar');
             const profileRole = document.getElementById('profile-role');
             const profileRegisterMethod = document.getElementById('profile-register-method');
+            const profileVerifiedContainer = document.getElementById('profile-verified-container');
 
             if (profileName) profileName.innerText = name;
             if (profileEmail) profileEmail.innerText = email;
@@ -704,9 +1103,27 @@
                 profileRegisterMethod.innerText = methodText;
             }
             
+            if (profileVerifiedContainer) {
+                if (emailVerified) {
+                    profileVerifiedContainer.innerHTML = '<span class="verified-badge">✅ Correo verificado</span>';
+                } else {
+                    profileVerifiedContainer.innerHTML = '<span class="unverified-badge">⏳ Correo no verificado</span>';
+                }
+            }
+            
             if (profileAvatar) {
-                const initials = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'AT';
-                profileAvatar.innerText = initials;
+                // Verificar si hay foto de Google
+                const googlePicture = localStorage.getItem('google_picture');
+                if (googlePicture) {
+                    profileAvatar.style.backgroundImage = `url('${googlePicture}')`;
+                    profileAvatar.style.backgroundSize = 'cover';
+                    profileAvatar.style.backgroundPosition = 'center';
+                    profileAvatar.textContent = '';
+                } else {
+                    const initials = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'AT';
+                    profileAvatar.textContent = initials;
+                    profileAvatar.style.backgroundImage = 'none';
+                }
             }
 
             // Cargar datos de edición
@@ -716,51 +1133,6 @@
             if (editNombre) editNombre.value = name;
             if (editTelefono) editTelefono.value = this.state.user.telefono || '';
             if (editFechaNac) editFechaNac.value = this.state.user.fechaNac || '';
-        },
-
-        // ============================================
-        // REGISTRO AUTOMÁTICO CON GOOGLE
-        // ============================================
-        registroAutomaticoGoogle() {
-            // Simular autenticación automática con Google
-            this.showToast('🔄 Conectando con Google...', 'info');
-            
-            setTimeout(() => {
-                // Datos de ejemplo del usuario de Google
-                const googleUser = {
-                    name: 'Usuario Google',
-                    email: `usuario.google${Math.floor(Math.random() * 1000)}@gmail.com`,
-                    registerMethod: 'google'
-                };
-                
-                // Guardar en localStorage
-                localStorage.setItem('user_name', googleUser.name);
-                localStorage.setItem('user_email', googleUser.email);
-                localStorage.setItem('user_role', 'user');
-                localStorage.setItem('register_method', 'google');
-                
-                // Actualizar estado
-                this.state.user = {
-                    ...this.state.user,
-                    name: googleUser.name,
-                    email: googleUser.email,
-                    role: 'user',
-                    registerMethod: 'google'
-                };
-                this.state.isAuthenticated = true;
-                
-                // Actualizar UI y mostrar mensaje
-                this.actualizarPerfilUI();
-                this.showToast('✅ ¡Registro automático exitoso! Completa tu perfil', 'success');
-                
-                // Redirigir al perfil para completar datos
-                this.switchView('view-perfil-usuario');
-                
-                // Mostrar formulario de edición automáticamente
-                setTimeout(() => {
-                    this.mostrarEditarPerfil();
-                }, 500);
-            }, 1500);
         },
 
         // ============================================
@@ -796,19 +1168,26 @@
             localStorage.setItem('user_email', email);
             localStorage.setItem('user_role', this.state.user.role || 'user');
             localStorage.setItem('register_method', 'email');
+            localStorage.setItem('email_verified', 'false');
             
             // Actualizar estado
             this.state.user = {
                 ...this.state.user,
                 name: nombre,
                 email: email,
-                registerMethod: 'email'
+                registerMethod: 'email',
+                emailVerified: false
             };
             this.state.isAuthenticated = true;
             
             this.actualizarPerfilUI();
-            this.showToast('✅ ¡Bienvenido a Atrévete HealthTech!', 'success');
+            this.showToast('✅ ¡Bienvenido a Atrévete HealthTech! Verifica tu correo para activar tu cuenta.', 'info');
             this.switchView('view-perfil-usuario');
+            
+            // Simular envío de correo de verificación
+            setTimeout(() => {
+                this.showToast('📧 Se ha enviado un correo de verificación a tu cuenta', 'info');
+            }, 2000);
         },
 
         // ============================================
@@ -887,6 +1266,8 @@
             localStorage.removeItem('register_method');
             localStorage.removeItem('user_telefono');
             localStorage.removeItem('user_fecha_nac');
+            localStorage.removeItem('email_verified');
+            localStorage.removeItem('google_picture');
             
             this.state.isAuthenticated = false;
             this.state.user = {
@@ -895,7 +1276,8 @@
                 role: 'user',
                 registerMethod: 'email',
                 telefono: '',
-                fechaNac: ''
+                fechaNac: '',
+                emailVerified: false
             };
             
             this.showToast('👋 Sesión cerrada exitosamente', 'info');
@@ -1164,6 +1546,7 @@
         App.state.user.registerMethod = localStorage.getItem('register_method') || 'email';
         App.state.user.telefono = localStorage.getItem('user_telefono') || '';
         App.state.user.fechaNac = localStorage.getItem('user_fecha_nac') || '';
+        App.state.user.emailVerified = localStorage.getItem('email_verified') === 'true';
 
         // Actualizar UI del perfil
         App.actualizarPerfilUI();
@@ -1175,6 +1558,11 @@
 
         // Inicializar método de pago por defecto
         App.selectPaymentMethod('pm_bdv');
+
+        // Inicializar Google Identity Services
+        App.initGoogle();
+
+        console.log('🚀 Atrévete HealthTech App inicializada');
     });
 
     // Exponer App globalmente para el HTML
