@@ -82,19 +82,20 @@
         .clay-btn-pay {
             background: #FFFFFF;
             color: #7A8A7C;
-            border-radius: 20px;
+            border-radius: 16px;
             border: 2px solid transparent;
-            box-shadow: 6px 6px 12px #e0deda, -6px -6px 12px #ffffff;
-            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 4px 4px 8px #e0deda, -4px -4px 8px #ffffff;
+            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
             cursor: pointer;
         }
         .clay-btn-pay:hover {
-            transform: translateY(-3px) scale(1.02);
+            transform: translateY(-2px);
         }
         .clay-btn-pay.active-pay {
             border-color: #E27D60;
             background: #FFF8F6;
             color: #E27D60;
+            box-shadow: inset 2px 2px 4px rgba(226, 125, 96, 0.15), inset -2px -2px 4px #ffffff;
         }
 
         .clay-nav {
@@ -269,33 +270,61 @@
         <button onclick="window.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold">Cerrar Sesión</button>
     </main>
 
-    <!-- ================= 5. MÉTODOS DE PAGO ================= -->
+    <!-- ================= 5. MÉTODOS DE PAGO ACTUALIZADOS ================= -->
     <main id="view-pagos" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
         <h2 class="text-2xl font-bold text-[#7A8A7C] text-center">Pasarela de Pago</h2>
+
+        <div class="clay-card p-4 bg-orange-50/30 border border-[#E27D60]/20 flex justify-between items-center">
+            <div>
+                <h4 class="font-bold text-xs text-[#7A8A7C]">Reserva Campamento Adultas en Fuga</h4>
+                <p class="text-[10px] text-[#7A8A7C]/70">26 de Septiembre, Maracay</p>
+            </div>
+            <span class="text-base font-extrabold text-[#E27D60]">$120.00</span>
+        </div>
+
         <div class="clay-card p-5 space-y-4">
             <label class="block text-xs font-bold text-[#7A8A7C]">Selecciona Método de Pago:</label>
-            <div class="grid grid-cols-3 gap-2">
+            
+            <div class="grid grid-cols-2 gap-2.5">
                 <button type="button" id="pay-bdv" onclick="window.selectPaymentMethod('pm_bdv')" class="clay-btn-pay active-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1">
-                    <span>🇻🇪 BDV</span>
+                    <span class="text-base">🇻🇪</span>
+                    <span>Pago Móvil BDV</span>
                 </button>
+                
                 <button type="button" id="pay-bnc" onclick="window.selectPaymentMethod('pm_bnc')" class="clay-btn-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1">
-                    <span>🇻🇪 BNC</span>
+                    <span class="text-base">🇻🇪</span>
+                    <span>Pago Móvil BNC</span>
                 </button>
+
+                <button type="button" id="pay-zelle" onclick="window.selectPaymentMethod('zelle')" class="clay-btn-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1">
+                    <span class="text-base">🇺🇸</span>
+                    <span>Zelle (Próximamente)</span>
+                </button>
+                
                 <button type="button" id="pay-binance" onclick="window.selectPaymentMethod('binance')" class="clay-btn-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1">
-                    <span>🟡 Binance</span>
+                    <span class="text-base">🟡</span>
+                    <span>Binance Pay</span>
                 </button>
             </div>
-            <div id="datos-pago-box" class="bg-stone-100/90 p-4 rounded-2xl border border-stone-200 text-xs text-[#7A8A7C]"></div>
-            <div>
-                <label class="block text-xs font-bold text-[#7A8A7C] mb-1">Referencia o Comprobante</label>
-                <input id="input-ref-pago" type="text" placeholder="Ej. #849204" class="w-full p-3 text-xs clay-input focus:outline-none">
+
+            <div id="datos-pago-box" class="bg-stone-100/90 p-4 rounded-2xl border border-stone-200/80 space-y-1.5 text-xs text-[#7A8A7C]">
+                <!-- Dinámico -->
             </div>
-            <button onclick="window.confirmarPagoMock()" class="clay-btn-primary w-full py-3.5 text-xs font-bold">Enviar Comprobante</button>
+
+            <div id="container-ref-pago">
+                <label class="block text-xs font-bold text-[#7A8A7C] mb-1">Número de Referencia / Hash / Comprobante</label>
+                <input id="input-ref-pago" type="text" placeholder="Ej. #849204 o Hash de transferencia" class="w-full p-3 text-xs clay-input focus:outline-none">
+            </div>
+
+            <button id="btn-enviar-pago" onclick="window.confirmarPagoMock()" class="clay-btn-primary w-full py-3.5 text-xs font-bold">
+                Reportar / Enviar Comprobante
+            </button>
         </div>
+
         <button onclick="window.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold">Cancelar</button>
     </main>
 
-    <!-- ================= 6. REGULACIÓN SOMÁTICA (GIMNASIO EMOCIONAL RESTAURADO) ================= -->
+    <!-- ================= 6. REGULACIÓN SOMÁTICA ================= -->
     <main id="view-regulacion" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
         <div class="text-center space-y-1">
             <h2 class="text-2xl font-bold text-[#7A8A7C]">Gimnasio Emocional</h2>
@@ -484,24 +513,70 @@
             window.switchView('view-auth');
         };
 
+        // Pasarela de Pagos Actualizada con tus datos exactos
         window.selectPaymentMethod = function(method) {
             document.querySelectorAll('.clay-btn-pay').forEach(btn => btn.classList.remove('active-pay'));
-            document.getElementById(method === 'binance' ? 'pay-binance' : (method === 'pm_bnc' ? 'pay-bnc' : 'pay-bdv')).classList.add('active-pay');
+            
+            const btnMap = {
+                'pm_bdv': 'pay-bdv',
+                'pm_bnc': 'pay-bnc',
+                'zelle': 'pay-zelle',
+                'binance': 'pay-binance'
+            };
+            
+            const targetBtn = document.getElementById(btnMap[method]);
+            if (targetBtn) targetBtn.classList.add('active-pay');
+
             const box = document.getElementById('datos-pago-box');
-            if (method === 'binance') {
-                box.innerHTML = `<p class="font-bold">🟡 Binance Pay (USDT)</p><p>ID: <strong>123456789</strong></p>`;
-            } else {
-                box.innerHTML = `<p class="font-bold">🇻🇪 Pago Móvil</p><p>Teléfono: <strong>0414-0000000</strong></p>`;
+            const containerRef = document.getElementById('container-ref-pago');
+            const btnEnviar = document.getElementById('btn-enviar-pago');
+
+            if (method === 'pm_bdv') {
+                containerRef.style.display = 'block';
+                btnEnviar.style.display = 'block';
+                box.innerHTML = `
+                    <p class="font-bold text-[#E27D60]">🇻🇪 Pago Móvil - Banco de Venezuela (0102)</p>
+                    <p>Teléfono: <strong>0414-4031678</strong></p>
+                    <p>C.I: <strong>V-18.478.170</strong></p>
+                    <p class="text-[10px] text-gray-500 mt-1">Monto: Equivalente en Bs. a la tasa BCV del día ($120.00)</p>
+                `;
+            } else if (method === 'pm_bnc') {
+                containerRef.style.display = 'block';
+                btnEnviar.style.display = 'block';
+                box.innerHTML = `
+                    <p class="font-bold text-[#E27D60]">🇻🇪 Pago Móvil - Banco Nacional de Crédito (0191)</p>
+                    <p>Teléfono: <strong>0414-4187215</strong></p>
+                    <p>C.I: <strong>V-13.518.664</strong></p>
+                    <p class="text-[10px] text-gray-500 mt-1">Monto: Equivalente en Bs. a la tasa BCV del día ($120.00)</p>
+                `;
+            } else if (method === 'zelle') {
+                containerRef.style.display = 'none';
+                btnEnviar.style.display = 'none';
+                box.innerHTML = `
+                    <p class="font-bold text-[#E27D60]">🇺🇸 Zelle (Divisas)</p>
+                    <p class="text-sm font-semibold mt-2 text-[#7A8A7C]">⏳ Próximamente disponible</p>
+                    <p class="text-[10px] text-gray-500 mt-1">Este método de pago se habilitará muy pronto.</p>
+                `;
+            } else if (method === 'binance') {
+                containerRef.style.display = 'block';
+                btnEnviar.style.display = 'block';
+                box.innerHTML = `
+                    <p class="font-bold text-[#E27D60]">🟡 Binance Pay (USDT)</p>
+                    <p>Binance Pay ID: <strong>163305332</strong></p>
+                    <p class="text-[10px] text-gray-500 mt-1">Monto exacto: <strong>$120.00 USDT</strong></p>
+                `;
             }
         };
+        // Inicializar por defecto en Pago Móvil BDV
         window.selectPaymentMethod('pm_bdv');
 
         window.confirmarPagoMock = function() {
-            if (!document.getElementById('input-ref-pago').value) {
-                alert('Ingresa la referencia.');
+            const ref = document.getElementById('input-ref-pago').value;
+            if (!ref) {
+                alert('Por favor ingresa el número de referencia, hash o comprobante.');
                 return;
             }
-            alert('Comprobante enviado con éxito.');
+            alert('¡Comprobante reportado con éxito! En verificación por administración.');
             window.switchView('view-perfil-usuario');
         };
 
