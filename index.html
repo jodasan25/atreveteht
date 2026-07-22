@@ -155,40 +155,6 @@
             outline: 2px solid #E27D60;
             outline-offset: 2px;
         }
-
-        /* Modal de Google */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(4px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10000;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-        .modal-overlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-        .modal-content {
-            background: white;
-            border-radius: 28px;
-            padding: 32px;
-            max-width: 400px;
-            width: 90%;
-            transform: scale(0.9);
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        .modal-overlay.active .modal-content {
-            transform: scale(1);
-        }
     </style>
 </head>
 <body class="pb-28">
@@ -202,41 +168,6 @@
 
   <!-- ================= TOAST NOTIFICATIONS ================= -->
   <div id="toast" class="toast"></div>
-
-  <!-- ================= MODAL DE GOOGLE ================= -->
-  <div id="google-modal" class="modal-overlay">
-    <div class="modal-content">
-      <div class="text-center space-y-4">
-        <div class="flex justify-center">
-          <svg class="w-16 h-16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-          </svg>
-        </div>
-        <h3 class="text-xl font-bold text-[#7A8A7C]">Registro con Google</h3>
-        <p class="text-xs text-[#7A8A7C]/70">Completa tus datos para finalizar el registro</p>
-        
-        <form id="google-register-form" onsubmit="event.preventDefault(); App.completarRegistroGoogle();" class="space-y-4 text-left">
-          <div>
-            <label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="google-nombre">Nombre Completo</label>
-            <input type="text" id="google-nombre" placeholder="Tu nombre completo" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible" required>
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="google-email">Correo Electrónico</label>
-            <input type="email" id="google-email" placeholder="tu.correo@gmail.com" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible" required>
-          </div>
-          <button type="submit" class="clay-btn-primary w-full py-3 text-xs font-bold">
-            Registrar y Continuar
-          </button>
-          <button type="button" onclick="App.cerrarModalGoogle()" class="w-full py-2 text-xs text-[#7A8A7C]/60 hover:text-[#7A8A7C] transition">
-            Cancelar
-          </button>
-        </form>
-      </div>
-    </div>
-  </div>
 
   <!-- ================= 1. HOME (PANTALLA INICIAL) ================= -->
   <main id="view-home" class="app-view max-w-md mx-auto px-5 space-y-5">
@@ -294,14 +225,14 @@
       </button>
     </div>
 
-    <button onclick="App.iniciarRegistroGoogle()" class="w-full flex items-center justify-center gap-3 bg-white border border-gray-300 text-gray-700 font-semibold py-3 px-4 rounded-full hover:bg-gray-50 shadow-sm transition-all text-xs focus-visible" aria-label="Registrarse con Google">
+    <button onclick="App.registroAutomaticoGoogle()" class="w-full flex items-center justify-center gap-3 bg-white border border-gray-300 text-gray-700 font-semibold py-3 px-4 rounded-full hover:bg-gray-50 shadow-sm transition-all text-xs focus-visible" aria-label="Registrarse automáticamente con Google">
       <svg class="w-4 h-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
         <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
         <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
         <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
       </svg>
-      Registrarse con Google
+      Registro Automático con Google
     </button>
 
     <div class="relative flex items-center py-1">
@@ -395,8 +326,41 @@
         <p id="profile-register-method" class="text-[10px] text-[#7A8A7C]/40 mt-1">Registrado con: Email</p>
       </div>
       <span class="inline-block bg-emerald-100 text-emerald-800 text-[10px] font-bold px-3 py-1 rounded-full">Suscripción Activa</span>
+      
+      <!-- Editar Perfil -->
+      <div class="mt-4 pt-4 border-t border-stone-200">
+        <button onclick="App.mostrarEditarPerfil()" class="text-xs text-[#E27D60] font-bold underline focus-visible">
+          ✏️ Editar Perfil
+        </button>
+      </div>
     </div>
-    <button onclick="App.cerrarSesion()" class="clay-btn-secondary w-full py-3 text-xs font-bold focus-visible">Cerrar Sesión</button>
+
+    <!-- Formulario de Edición de Perfil -->
+    <div id="editar-perfil-form" class="clay-card p-5 space-y-4 hidden">
+      <h4 class="font-bold text-sm text-[#7A8A7C]">Editar Datos Personales</h4>
+      <div>
+        <label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="edit-nombre">Nombre Completo</label>
+        <input type="text" id="edit-nombre" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible">
+      </div>
+      <div>
+        <label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="edit-telefono">Teléfono</label>
+        <input type="tel" id="edit-telefono" placeholder="0414-1234567" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible">
+      </div>
+      <div>
+        <label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="edit-fecha-nac">Fecha de Nacimiento</label>
+        <input type="date" id="edit-fecha-nac" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible">
+      </div>
+      <div class="flex gap-3">
+        <button onclick="App.guardarEditarPerfil()" class="clay-btn-primary flex-1 py-3 text-xs font-bold focus-visible">
+          💾 Guardar Cambios
+        </button>
+        <button onclick="App.cancelarEditarPerfil()" class="clay-btn-secondary flex-1 py-3 text-xs font-bold focus-visible">
+          Cancelar
+        </button>
+      </div>
+    </div>
+
+    <button onclick="App.cerrarSesion()" class="clay-btn-secondary w-full py-3 text-xs font-bold focus-visible mt-4">Cerrar Sesión</button>
     <button onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold focus-visible">Volver al Inicio</button>
   </main>
 
@@ -498,4 +462,723 @@
           <button onclick="App.answerQuiz(2, 'cuello')" class="clay-btn-option w-full text-xs focus-visible">
             💆 <strong>Cuello / Mandíbula:</strong> Dientes apretados, hombros rígidos o cefalea.
           </button>
-          <button onclick="App.answerQuiz
+          <button onclick="App.answerQuiz(2, 'estomago')" class="clay-btn-option w-full text-xs focus-visible">
+            🫃 <strong>Estómago / Plexo:</strong> Sensación de nudo en el abdomen o digestión lenta.
+          </button>
+        </div>
+      </div>
+
+      <div id="quiz-step-3" class="space-y-3 hidden">
+        <p class="text-xs font-bold text-[#7A8A7C]">3. ¿Qué necesita tu cuerpo en este instante?</p>
+        <div class="space-y-2">
+          <button onclick="App.answerQuiz(3, 'bajar')" class="clay-btn-option w-full text-xs focus-visible">
+            ⚓ <strong>Bajar revoluciones:</strong> Calmar la aceleración y soltar el control.
+          </button>
+          <button onclick="App.answerQuiz(3, 'activar')" class="clay-btn-option w-full text-xs focus-visible">
+            ⚡ <strong>Salir del aletargamiento:</strong> Movilizar la energía estancada.
+          </button>
+          <button onclick="App.answerQuiz(3, 'liberar')" class="clay-btn-option w-full text-xs focus-visible">
+            🕊️ <strong>Descargar tensión:</strong> Soltar cargas emocionales del día.
+          </button>
+        </div>
+      </div>
+
+      <div id="quiz-result" class="space-y-4 hidden">
+        <div class="p-3 rounded-2xl bg-orange-100/50 text-xs text-[#7A8A7C]">
+          <p id="quiz-diagnosis-title" class="font-bold text-[#E27D60] text-sm mb-1"></p>
+          <p id="quiz-diagnosis-desc"></p>
+        </div>
+        <div id="recommended-technique-card" class="p-4 rounded-2xl bg-white border border-[#E27D60]/30 shadow-sm space-y-2"></div>
+        <button onclick="App.resetQuiz()" class="text-xs font-bold text-[#E27D60] underline text-center w-full block focus-visible">
+          🔄 Repetir Evaluación
+        </button>
+      </div>
+    </div>
+
+    <div class="clay-card p-6 text-center space-y-4">
+      <h3 class="font-bold text-sm text-[#7A8A7C]">Práctica Guiada: Calibrador de Respiración</h3>
+      <p class="text-[11px] text-[#7A8A7C]/80">Acompasa tu ritmo respiratorio con el círculo para activar el nervio vago ventral.</p>
+      <div class="flex flex-col items-center justify-center py-4">
+        <div id="breath-circle" class="w-40 h-40 rounded-full bg-[#F0B7A1] flex items-center justify-center text-white font-bold text-base shadow-lg border-4 border-white transition-all duration-1000" role="img" aria-label="Círculo de respiración guiada">
+          Inhala...
+        </div>
+      </div>
+    </div>
+
+    <button onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold text-xs focus-visible">Volver al Inicio</button>
+  </main>
+
+  <!-- ================= 7. AGENDAMIENTO DE CITAS ================= -->
+  <main id="view-citas" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
+    <h2 class="text-2xl font-bold text-[#7A8A7C] text-center">Agendar tu Sesión</h2>
+    <div class="clay-card p-5 space-y-4">
+      <label class="block text-xs font-bold text-[#7A8A7C]" for="select-terapeuta">Especialista:</label>
+      <select id="select-terapeuta" class="w-full p-3 rounded-xl border border-[#7A8A7C]/20 bg-white text-xs text-[#7A8A7C] focus-visible">
+        <option value="Dra. Carla Rodríguez">Dra. Carla Rodríguez</option>
+        <option value="Dra. María González">Dra. María González</option>
+        <option value="Lic. Ana Pérez">Lic. Ana Pérez</option>
+      </select>
+      
+      <div>
+        <label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="fecha-cita">Fecha de la Cita:</label>
+        <input type="date" id="fecha-cita" class="w-full p-3 rounded-xl border border-[#7A8A7C]/20 bg-white text-xs text-[#7A8A7C] focus-visible">
+      </div>
+      
+      <div>
+        <label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="hora-cita">Hora de la Cita:</label>
+        <input type="time" id="hora-cita" class="w-full p-3 rounded-xl border border-[#7A8A7C]/20 bg-white text-xs text-[#7A8A7C] focus-visible">
+      </div>
+      
+      <button onclick="App.procesarCitaWhatsApp()" class="clay-btn-primary w-full py-3.5 font-bold text-xs focus-visible">Confirmar Cita vía WhatsApp</button>
+    </div>
+    <button onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold text-xs focus-visible">Volver</button>
+  </main>
+
+  <!-- ================= 8. POLÍTICAS DE PRIVACIDAD ================= -->
+  <main id="view-privacidad" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
+    <div class="text-center space-y-1">
+      <h2 class="text-2xl font-bold text-[#7A8A7C]">Políticas de Privacidad</h2>
+      <p class="text-xs text-[#7A8A7C]/70">Términos Legalmente Vinculantes • Atrévete HealthTech</p>
+    </div>
+
+    <div class="clay-card p-5 space-y-4 text-xs text-[#7A8A7C] leading-relaxed max-h-[60vh] overflow-y-auto">
+      <section class="space-y-1.5">
+        <h3 class="font-extrabold text-[#E27D60] text-sm">1. Protección de Datos Personales</h3>
+        <p>En Atrévete HealthTech valoramos y resguardamos tu privacidad. Los datos personales, registros de pagos móviles o transacciones en criptomonedas (Binance Pay) recopilados son utilizados exclusivamente para la validación de membresías, gestión de cupos en eventos y acompañamiento clínico somático.</p>
+      </section>
+      <section class="space-y-1.5">
+        <h3 class="font-extrabold text-[#E27D60] text-sm">2. Confidencialidad Clínica y Somática</h3>
+        <p>Toda la información obtenida a través de nuestros test de regulación somática, interacciones y sesiones agendadas se rige bajo estricta confidencialidad profesional médico-paciente.</p>
+      </section>
+      <section class="space-y-1.5">
+        <h3 class="font-extrabold text-[#E27D60] text-sm">3. Condiciones de Reserva y Pagos</h3>
+        <p>Las reservas para campamentos, eventos presenciales o consultas quedan sujetas a la verificación exitosa de los comprobantes de pago reportados mediante nuestros canales oficiales.</p>
+      </section>
+    </div>
+
+    <button onclick="App.switchView('view-auth')" class="clay-btn-primary w-full py-3.5 font-bold text-xs focus-visible">Entendido / Volver</button>
+  </main>
+
+  <!-- ================= 9. PANEL ADMINISTRATIVO PRIVADO ================= -->
+  <main id="view-admin-login" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
+    <div class="text-center space-y-1">
+      <h2 class="text-2xl font-bold text-[#E27D60]">Acceso Administrativo</h2>
+      <p class="text-xs text-[#7A8A7C]/70">Área restringida para gestión visual y banners.</p>
+    </div>
+    <form onsubmit="event.preventDefault(); App.verificarAdminPin();" class="clay-card p-6 space-y-4">
+      <div>
+        <label class="block text-xs font-bold text-[#7A8A7C] mb-1">PIN o Contraseña de Administrador</label>
+        <input type="password" id="admin-pin-input" placeholder="••••" class="w-full p-3 text-xs clay-input focus:outline-none text-center tracking-widest text-lg" required>
+      </div>
+      <button type="submit" class="clay-btn-primary w-full py-3.5 font-bold text-xs focus-visible">Desbloquear Panel</button>
+    </form>
+    <button onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold text-xs focus-visible">Volver al Inicio</button>
+  </main>
+
+  <!-- ================= 10. PANEL ADMINISTRATIVO DASHBOARD ================= -->
+  <main id="view-admin-dashboard" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
+    <div class="flex justify-between items-center border-b border-stone-200 pb-3">
+      <div>
+        <h2 class="text-xl font-bold text-[#7A8A7C]">Gestor Visual Admin</h2>
+        <p class="text-[10px] text-[#7A8A7C]/70">Actualiza logotipos e imágenes en tiempo real</p>
+      </div>
+      <button onclick="App.switchView('view-home')" class="px-3 py-1.5 bg-stone-200 text-[#7A8A7C] text-xs font-bold rounded-xl focus-visible">Salir</button>
+    </div>
+
+    <form onsubmit="event.preventDefault(); App.guardarCambiosAdmin();" class="clay-card p-5 space-y-4">
+      <div>
+        <label class="block text-xs font-bold text-[#7A8A7C] mb-1">URL del Logotipo (Header)</label>
+        <input type="url" id="admin-logo-url" placeholder="https://ejemplo.com/logo.png" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible">
+      </div>
+
+      <div>
+        <label class="block text-xs font-bold text-[#7A8A7C] mb-1">URL de la Imagen Banner Principal (Home)</label>
+        <input type="url" id="admin-banner-img-url" placeholder="https://images.unsplash.com/..." class="w-full p-3 text-xs clay-input focus:outline-none focus-visible">
+      </div>
+
+      <div>
+        <label class="block text-xs font-bold text-[#7A8A7C] mb-1">Texto Destacado del Banner Principal</label>
+        <input type="text" id="admin-banner-text" placeholder="Ej. Calibra tu calma somática hoy" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible">
+      </div>
+
+      <button type="submit" class="clay-btn-primary w-full py-3.5 font-bold text-xs mt-2 focus-visible">
+        💾 Guardar y Aplicar Cambios
+      </button>
+    </form>
+
+    <div class="clay-card p-4 bg-orange-50/40 text-[11px] text-[#7A8A7C] space-y-1">
+      <p class="font-bold text-[#E27D60]">💡 Nota de Seguridad:</p>
+      <p>Los cambios realizados se aplican de inmediato en la aplicación y se guardan en el almacenamiento local del navegador.</p>
+    </div>
+  </main>
+
+  <!-- ================= BARRA DE NAVEGACIÓN INFERIOR (FIJA) ================= -->
+  <nav class="clay-nav fixed bottom-0 inset-x-0 py-3 px-6 max-w-md mx-auto flex justify-between items-center z-50">
+    <div onclick="App.switchView('view-home')" class="cursor-pointer flex flex-col items-center text-[10px] text-[#7A8A7C] font-bold"><span>🏠</span> Inicio</div>
+    <div onclick="App.switchView('view-regulacion')" class="cursor-pointer flex flex-col items-center text-[10px] text-[#7A8A7C] font-bold"><span>🫁</span> Gimnasio</div>
+    <div onclick="App.switchView('view-citas')" class="cursor-pointer flex flex-col items-center text-[10px] text-[#7A8A7C] font-bold"><span>📅</span> Citas</div>
+    <div onclick="App.switchView('view-pagos')" class="cursor-pointer flex flex-col items-center text-[10px] text-[#7A8A7C] font-bold"><span>💳</span> Pagos</div>
+    <div onclick="App.switchView('view-auth')" class="cursor-pointer flex flex-col items-center text-[10px] text-[#7A8A7C] font-bold"><span>👤</span> Perfil</div>
+  </nav>
+
+  <!-- ================= JAVASCRIPT ================= -->
+  <script>
+    // ============================================
+    // APP - Objeto principal para evitar contaminar window
+    // ============================================
+    const App = {
+        // Estado de la aplicación
+        state: {
+            authMode: 'login',
+            quizAnswers: {},
+            selectedPayment: 'pm_bdv',
+            user: {
+                name: localStorage.getItem('user_name') || '',
+                email: localStorage.getItem('user_email') || '',
+                role: localStorage.getItem('user_role') || 'user',
+                registerMethod: localStorage.getItem('register_method') || 'email',
+                telefono: localStorage.getItem('user_telefono') || '',
+                fechaNac: localStorage.getItem('user_fecha_nac') || ''
+            },
+            isAuthenticated: !!localStorage.getItem('user_email'),
+            breathInterval: null
+        },
+
+        // ============================================
+        // NAVEGACIÓN
+        // ============================================
+        switchView(viewId) {
+            document.querySelectorAll('.app-view').forEach(v => v.classList.add('hidden'));
+            const target = document.getElementById(viewId);
+            if (target) {
+                target.classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            // Detener respiración si no está en regulación
+            if (viewId !== 'view-regulacion' && this.state.breathInterval) {
+                clearInterval(this.state.breathInterval);
+                this.state.breathInterval = null;
+            }
+            // Iniciar respiración si está en regulación
+            if (viewId === 'view-regulacion') {
+                this.iniciarRespiración();
+            }
+        },
+
+        // ============================================
+        // TOAST NOTIFICATIONS
+        // ============================================
+        showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.className = `toast toast-${type}`;
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 4000);
+        },
+
+        // ============================================
+        // PERFIL - ACTUALIZAR UI
+        // ============================================
+        actualizarPerfilUI() {
+            const name = this.state.user.name || 'Invitado Atrévete';
+            const email = this.state.user.email || 'correo@ejemplo.com';
+            const role = this.state.user.role || 'user';
+            const registerMethod = this.state.user.registerMethod || 'email';
+            
+            const profileName = document.getElementById('profile-name');
+            const profileEmail = document.getElementById('profile-email');
+            const profileAvatar = document.getElementById('profile-avatar');
+            const profileRole = document.getElementById('profile-role');
+            const profileRegisterMethod = document.getElementById('profile-register-method');
+
+            if (profileName) profileName.innerText = name;
+            if (profileEmail) profileEmail.innerText = email;
+            if (profileRole) {
+                const roleText = role === 'spec' ? '👩‍⚕️ Especialista' : '👤 Usuario';
+                profileRole.innerText = roleText;
+            }
+            if (profileRegisterMethod) {
+                const methodText = registerMethod === 'google' ? 'Registrado con: Google 🟢' : 'Registrado con: Email 📧';
+                profileRegisterMethod.innerText = methodText;
+            }
+            
+            if (profileAvatar) {
+                const initials = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'AT';
+                profileAvatar.innerText = initials;
+            }
+
+            // Cargar datos de edición
+            const editNombre = document.getElementById('edit-nombre');
+            const editTelefono = document.getElementById('edit-telefono');
+            const editFechaNac = document.getElementById('edit-fecha-nac');
+            if (editNombre) editNombre.value = name;
+            if (editTelefono) editTelefono.value = this.state.user.telefono || '';
+            if (editFechaNac) editFechaNac.value = this.state.user.fechaNac || '';
+        },
+
+        // ============================================
+        // REGISTRO AUTOMÁTICO CON GOOGLE
+        // ============================================
+        registroAutomaticoGoogle() {
+            // Simular autenticación automática con Google
+            this.showToast('🔄 Conectando con Google...', 'info');
+            
+            setTimeout(() => {
+                // Datos de ejemplo del usuario de Google
+                const googleUser = {
+                    name: 'Usuario Google',
+                    email: `usuario.google${Math.floor(Math.random() * 1000)}@gmail.com`,
+                    registerMethod: 'google'
+                };
+                
+                // Guardar en localStorage
+                localStorage.setItem('user_name', googleUser.name);
+                localStorage.setItem('user_email', googleUser.email);
+                localStorage.setItem('user_role', 'user');
+                localStorage.setItem('register_method', 'google');
+                
+                // Actualizar estado
+                this.state.user = {
+                    ...this.state.user,
+                    name: googleUser.name,
+                    email: googleUser.email,
+                    role: 'user',
+                    registerMethod: 'google'
+                };
+                this.state.isAuthenticated = true;
+                
+                // Actualizar UI y mostrar mensaje
+                this.actualizarPerfilUI();
+                this.showToast('✅ ¡Registro automático exitoso! Completa tu perfil', 'success');
+                
+                // Redirigir al perfil para completar datos
+                this.switchView('view-perfil-usuario');
+                
+                // Mostrar formulario de edición automáticamente
+                setTimeout(() => {
+                    this.mostrarEditarPerfil();
+                }, 500);
+            }, 1500);
+        },
+
+        // ============================================
+        // AUTH EMAIL (Login/Register)
+        // ============================================
+        procesarAuthEmail() {
+            const email = document.getElementById('input-email').value;
+            const password = document.getElementById('input-password').value;
+            const nombreInput = document.getElementById('input-nombre');
+            
+            // Validaciones
+            if (!email || !email.includes('@')) {
+                document.getElementById('email-error').classList.remove('hidden');
+                return;
+            }
+            document.getElementById('email-error').classList.add('hidden');
+            
+            if (password.length < 6) {
+                document.getElementById('password-error').classList.remove('hidden');
+                return;
+            }
+            document.getElementById('password-error').classList.add('hidden');
+
+            let nombre = 'Usuario Atrévete';
+            if (this.state.authMode === 'register' && nombreInput && nombreInput.value.trim() !== '') {
+                nombre = nombreInput.value.trim();
+            } else {
+                nombre = email.split('@')[0];
+            }
+
+            // Guardar en localStorage
+            localStorage.setItem('user_name', nombre);
+            localStorage.setItem('user_email', email);
+            localStorage.setItem('user_role', this.state.user.role || 'user');
+            localStorage.setItem('register_method', 'email');
+            
+            // Actualizar estado
+            this.state.user = {
+                ...this.state.user,
+                name: nombre,
+                email: email,
+                registerMethod: 'email'
+            };
+            this.state.isAuthenticated = true;
+            
+            this.actualizarPerfilUI();
+            this.showToast('✅ ¡Bienvenido a Atrévete HealthTech!', 'success');
+            this.switchView('view-perfil-usuario');
+        },
+
+        // ============================================
+        // AUTH MODE (Login/Register toggle)
+        // ============================================
+        switchAuthMode(mode) {
+            this.state.authMode = mode;
+            const tabLogin = document.getElementById('tab-login');
+            const tabRegister = document.getElementById('tab-register');
+            const fieldNombre = document.getElementById('field-nombre');
+            const fieldRol = document.getElementById('field-rol');
+            const linkForgot = document.getElementById('link-forgot-container');
+            const submitBtn = document.getElementById('auth-submit-btn');
+            const title = document.getElementById('auth-title');
+            const subtitle = document.getElementById('auth-subtitle');
+
+            if (mode === 'login') {
+                tabLogin.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[#7A8A7C] shadow-sm transition';
+                tabRegister.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl text-[#7A8A7C] transition';
+                fieldNombre.classList.add('hidden');
+                fieldRol.classList.add('hidden');
+                linkForgot.classList.remove('hidden');
+                submitBtn.innerText = 'Iniciar Sesión';
+                title.innerText = 'Iniciar Sesión';
+                subtitle.innerText = 'Accede a tu cuenta de Atrévete HealthTech';
+            } else {
+                tabRegister.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[#7A8A7C] shadow-sm transition';
+                tabLogin.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl text-[#7A8A7C] transition';
+                fieldNombre.classList.remove('hidden');
+                fieldRol.classList.remove('hidden');
+                linkForgot.classList.add('hidden');
+                submitBtn.innerText = 'Crear Mi Cuenta';
+                title.innerText = 'Crea tu Cuenta';
+                subtitle.innerText = 'Únete a nuestra plataforma somática';
+            }
+        },
+
+        // ============================================
+        // SET ROLE
+        // ============================================
+        setAuthRole(role) {
+            const btnUser = document.getElementById('btn-role-user');
+            const btnSpec = document.getElementById('btn-role-spec');
+            this.state.user.role = role;
+            localStorage.setItem('user_role', role);
+            
+            if (role === 'user') {
+                btnUser.className = 'flex-1 py-2 text-xs font-bold rounded-xl bg-orange-100 text-[#E27D60] border border-[#E27D60]/30 transition';
+                btnSpec.className = 'flex-1 py-2 text-xs font-bold rounded-xl bg-stone-100 text-[#7A8A7C] transition';
+            } else {
+                btnSpec.className = 'flex-1 py-2 text-xs font-bold rounded-xl bg-orange-100 text-[#E27D60] border border-[#E27D60]/30 transition';
+                btnUser.className = 'flex-1 py-2 text-xs font-bold rounded-xl bg-stone-100 text-[#7A8A7C] transition';
+            }
+        },
+
+        // ============================================
+        // RECUPERACIÓN
+        // ============================================
+        procesarRecuperacion() {
+            const email = document.getElementById('recovery-email').value;
+            if (!email) {
+                this.showToast('Por favor ingresa tu correo electrónico.', 'error');
+                return;
+            }
+            this.showToast(`📧 Instrucciones enviadas a: ${email}`, 'success');
+            this.switchView('view-auth');
+        },
+
+        // ============================================
+        // CERRAR SESIÓN
+        // ============================================
+        cerrarSesion() {
+            localStorage.removeItem('user_name');
+            localStorage.removeItem('user_email');
+            localStorage.removeItem('user_role');
+            localStorage.removeItem('register_method');
+            localStorage.removeItem('user_telefono');
+            localStorage.removeItem('user_fecha_nac');
+            
+            this.state.isAuthenticated = false;
+            this.state.user = {
+                name: '',
+                email: '',
+                role: 'user',
+                registerMethod: 'email',
+                telefono: '',
+                fechaNac: ''
+            };
+            
+            this.showToast('👋 Sesión cerrada exitosamente', 'info');
+            this.switchView('view-home');
+        },
+
+        // ============================================
+        // EDITAR PERFIL
+        // ============================================
+        mostrarEditarPerfil() {
+            const form = document.getElementById('editar-perfil-form');
+            form.classList.remove('hidden');
+            // Cargar datos actuales
+            document.getElementById('edit-nombre').value = this.state.user.name || '';
+            document.getElementById('edit-telefono').value = this.state.user.telefono || '';
+            document.getElementById('edit-fecha-nac').value = this.state.user.fechaNac || '';
+        },
+
+        cancelarEditarPerfil() {
+            document.getElementById('editar-perfil-form').classList.add('hidden');
+        },
+
+        guardarEditarPerfil() {
+            const nombre = document.getElementById('edit-nombre').value.trim();
+            const telefono = document.getElementById('edit-telefono').value.trim();
+            const fechaNac = document.getElementById('edit-fecha-nac').value;
+
+            if (!nombre) {
+                this.showToast('⚠️ El nombre es obligatorio', 'error');
+                return;
+            }
+
+            // Guardar en localStorage
+            localStorage.setItem('user_name', nombre);
+            localStorage.setItem('user_telefono', telefono);
+            localStorage.setItem('user_fecha_nac', fechaNac);
+            
+            // Actualizar estado
+            this.state.user.name = nombre;
+            this.state.user.telefono = telefono;
+            this.state.user.fechaNac = fechaNac;
+            
+            // Ocultar formulario y actualizar UI
+            document.getElementById('editar-perfil-form').classList.add('hidden');
+            this.actualizarPerfilUI();
+            this.showToast('✅ Perfil actualizado exitosamente', 'success');
+        },
+
+        // ============================================
+        // PAGOS
+        // ============================================
+        selectPaymentMethod(method) {
+            this.state.selectedPayment = method;
+            document.querySelectorAll('.clay-btn-pay').forEach(btn => btn.classList.remove('active-pay'));
+            
+            const btnMap = {
+                'pm_bdv': 'pay-bdv',
+                'pm_bnc': 'pay-bnc',
+                'zelle': 'pay-zelle',
+                'binance': 'pay-binance'
+            };
+            
+            const targetBtn = document.getElementById(btnMap[method]);
+            if (targetBtn) targetBtn.classList.add('active-pay');
+
+            const box = document.getElementById('datos-pago-box');
+            const containerRef = document.getElementById('container-ref-pago');
+            const btnEnviar = document.getElementById('btn-enviar-pago');
+
+            if (method === 'pm_bdv') {
+                containerRef.style.display = 'block';
+                btnEnviar.style.display = 'block';
+                box.innerHTML = `
+                    <p class="font-bold text-[#E27D60]">🇻🇪 Pago Móvil - Banco de Venezuela (0102)</p>
+                    <p>Teléfono: <strong>0414-4031678</strong></p>
+                    <p>C.I: <strong>18.478.170</strong></p>
+                    <p class="text-[10px] text-gray-500 mt-1">Monto: Equivalente en Bs. a la tasa BCV del día ($120.00)</p>
+                `;
+            } else if (method === 'pm_bnc') {
+                containerRef.style.display = 'block';
+                btnEnviar.style.display = 'block';
+                box.innerHTML = `
+                    <p class="font-bold text-[#E27D60]">🇻🇪 Pago Móvil - Banco Nacional de Crédito (0191)</p>
+                    <p>Teléfono: <strong>0414-4187215</strong></p>
+                    <p>C.I: <strong>13.518.664</strong></p>
+                    <p class="text-[10px] text-gray-500 mt-1">Monto: Equivalente en Bs. a la tasa BCV del día ($120.00)</p>
+                `;
+            } else if (method === 'zelle') {
+                containerRef.style.display = 'none';
+                btnEnviar.style.display = 'none';
+                box.innerHTML = `
+                    <p class="font-bold text-[#E27D60]">🇺🇸 Zelle (Divisas)</p>
+                    <p class="text-sm font-semibold mt-2 text-[#7A8A7C]">⏳ Próximamente disponible</p>
+                    <p class="text-[10px] text-gray-500 mt-1">Este método de pago se habilitará muy pronto.</p>
+                `;
+            } else if (method === 'binance') {
+                containerRef.style.display = 'block';
+                btnEnviar.style.display = 'block';
+                box.innerHTML = `
+                    <p class="font-bold text-[#E27D60]">🟡 Binance Pay (USDT)</p>
+                    <p>Binance Pay ID: <strong>163305332</strong></p>
+                    <p class="text-[10px] text-gray-500 mt-1">Monto exacto: <strong>$120.00 USDT</strong></p>
+                `;
+            }
+        },
+
+        confirmarPagoMock() {
+            const ref = document.getElementById('input-ref-pago').value;
+            if (!ref) {
+                this.showToast('⚠️ Por favor ingresa el número de referencia', 'error');
+                return;
+            }
+            this.showToast('✅ ¡Comprobante reportado con éxito! En verificación.', 'success');
+            this.switchView('view-perfil-usuario');
+        },
+
+        // ============================================
+        // QUIZ DE REGULACIÓN SOMÁTICA
+        // ============================================
+        answerQuiz(step, choice) {
+            this.state.quizAnswers[`step${step}`] = choice;
+            if (step < 3) {
+                document.getElementById(`quiz-step-${step}`).classList.add('hidden');
+                document.getElementById(`quiz-step-${step + 1}`).classList.remove('hidden');
+                document.getElementById('quiz-step-indicator').innerText = `Paso ${step + 1} de 3`;
+            } else {
+                document.getElementById('quiz-step-3').classList.add('hidden');
+                document.getElementById('quiz-result').classList.remove('hidden');
+                document.getElementById('quiz-step-indicator').innerText = `Completado ✅`;
+
+                document.getElementById('quiz-diagnosis-title').innerText = "Diagnóstico Somático Detectado";
+                document.getElementById('quiz-diagnosis-desc').innerText = "Tu sistema nervioso muestra acumulación de tensión corporal. Te recomendamos la siguiente técnica:";
+                
+                document.getElementById('recommended-technique-card').innerHTML = `
+                    <h5 class="font-bold text-xs text-[#7A8A7C]">🌟 Técnica Recomendada: Descarga Vagal</h5>
+                    <p class="text-[11px] text-gray-600">Realiza 3 ciclos de respiración profunda con exhalación prolongada y sacudida corporal.</p>
+                `;
+            }
+        },
+
+        resetQuiz() {
+            this.state.quizAnswers = {};
+            document.getElementById('quiz-result').classList.add('hidden');
+            document.getElementById('quiz-step-1').classList.remove('hidden');
+            document.getElementById('quiz-step-2').classList.add('hidden');
+            document.getElementById('quiz-step-3').classList.add('hidden');
+            document.getElementById('quiz-step-indicator').innerText = 'Paso 1 de 3';
+        },
+
+        // ============================================
+        // RESPIRACIÓN GUIADA
+        // ============================================
+        iniciarRespiración() {
+            if (this.state.breathInterval) {
+                clearInterval(this.state.breathInterval);
+            }
+            const circle = document.getElementById('breath-circle');
+            if (!circle) return;
+            
+            let breathState = 0;
+            circle.innerText = "Inhala...";
+            circle.style.transform = "scale(1.0)";
+            
+            this.state.breathInterval = setInterval(() => {
+                if (breathState === 0) {
+                    circle.innerText = "Sostén...";
+                    circle.style.transform = "scale(1.3)";
+                    breathState = 1;
+                } else if (breathState === 1) {
+                    circle.innerText = "Exhala...";
+                    circle.style.transform = "scale(0.8)";
+                    breathState = 2;
+                } else {
+                    circle.innerText = "Inhala...";
+                    circle.style.transform = "scale(1.0)";
+                    breathState = 0;
+                }
+            }, 3500);
+        },
+
+        // ============================================
+        // CITAS
+        // ============================================
+        procesarCitaWhatsApp() {
+            const terapeuta = document.getElementById('select-terapeuta').value;
+            const fecha = document.getElementById('fecha-cita').value || 'Sin fecha';
+            const hora = document.getElementById('hora-cita').value || 'Sin hora';
+            
+            if (!fecha || !hora) {
+                this.showToast('⚠️ Por favor selecciona fecha y hora', 'error');
+                return;
+            }
+            
+            const mensaje = encodeURIComponent(
+                `Hola, deseo confirmar mi cita con ${terapeuta}.\n📅 Fecha: ${fecha}\n🕐 Hora: ${hora}`
+            );
+            window.open(`https://wa.me/584140000000?text=${mensaje}`, '_blank');
+        },
+
+        // ============================================
+        // ADMIN
+        // ============================================
+        verificarAdminPin() {
+            const pin = document.getElementById('admin-pin-input').value;
+            if (pin === '7777') {
+                document.getElementById('admin-pin-input').value = '';
+                this.switchView('view-admin-dashboard');
+                this.showToast('🔓 Panel administrativo desbloqueado', 'success');
+            } else {
+                this.showToast('❌ PIN incorrecto. Acceso denegado.', 'error');
+            }
+        },
+
+        guardarCambiosAdmin() {
+            const newLogo = document.getElementById('admin-logo-url').value;
+            const newBannerImg = document.getElementById('admin-banner-img-url').value;
+            const newBannerText = document.getElementById('admin-banner-text').value;
+
+            if (newLogo) {
+                localStorage.setItem('app_logo', newLogo);
+                document.getElementById('app-logo-img').src = newLogo;
+            }
+            if (newBannerImg) {
+                localStorage.setItem('app_banner_img', newBannerImg);
+                document.getElementById('home-hero-banner').style.backgroundImage = `url('${newBannerImg}')`;
+            }
+            if (newBannerText) {
+                localStorage.setItem('app_banner_text', newBannerText);
+                document.getElementById('home-banner-text').innerText = newBannerText;
+            }
+
+            this.showToast('✅ ¡Imágenes y banners actualizados con éxito!', 'success');
+            this.switchView('view-home');
+        }
+    };
+
+    // ============================================
+    // INICIALIZACIÓN
+    // ============================================
+    document.addEventListener('DOMContentLoaded', function() {
+        // Cargar configuración guardada
+        const savedLogo = localStorage.getItem('app_logo');
+        const savedBannerImg = localStorage.getItem('app_banner_img');
+        const savedBannerText = localStorage.getItem('app_banner_text');
+
+        if (savedLogo) {
+            document.getElementById('app-logo-img').src = savedLogo;
+            const adminLogo = document.getElementById('admin-logo-url');
+            if (adminLogo) adminLogo.value = savedLogo;
+        }
+        if (savedBannerImg) {
+            document.getElementById('home-hero-banner').style.backgroundImage = `url('${savedBannerImg}')`;
+            const adminBanner = document.getElementById('admin-banner-img-url');
+            if (adminBanner) adminBanner.value = savedBannerImg;
+        }
+        if (savedBannerText) {
+            document.getElementById('home-banner-text').innerText = savedBannerText;
+            const adminText = document.getElementById('admin-banner-text');
+            if (adminText) adminText.value = savedBannerText;
+        }
+
+        // Cargar datos de usuario
+        App.state.user.name = localStorage.getItem('user_name') || '';
+        App.state.user.email = localStorage.getItem('user_email') || '';
+        App.state.user.role = localStorage.getItem('user_role') || 'user';
+        App.state.user.registerMethod = localStorage.getItem('register_method') || 'email';
+        App.state.user.telefono = localStorage.getItem('user_telefono') || '';
+        App.state.user.fechaNac = localStorage.getItem('user_fecha_nac') || '';
+
+        // Actualizar UI del perfil
+        App.actualizarPerfilUI();
+
+        // Si el usuario ya está autenticado, ir al home
+        if (App.state.isAuthenticated) {
+            App.switchView('view-home');
+        }
+
+        // Inicializar método de pago por defecto
+        App.selectPaymentMethod('pm_bdv');
+    });
+
+    // Exponer App globalmente para el HTML
+    window.App = App;
+</script>
+</body>
+</html>
