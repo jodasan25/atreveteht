@@ -433,7 +433,7 @@
         <div onclick="window.switchView('view-regulacion')" class="cursor-pointer flex flex-col items-center text-[10px] text-[#7A8A7C] font-bold"><span>🫁</span> Gimnasio</div>
         <div onclick="window.switchView('view-citas')" class="cursor-pointer flex flex-col items-center text-[10px] text-[#7A8A7C] font-bold"><span>📅</span> Citas</div>
         <div onclick="window.switchView('view-pagos')" class="cursor-pointer flex flex-col items-center text-[10px] text-[#7A8A7C] font-bold"><span>💳</span> Pagos</div>
-        <div onclick="window.switchView('view-auth')" class="cursor-pointer flex flex-col items-center text-[10px] text-[#7A8A7C] font-bold"><span>👤</span> Ingresar</div>
+        <div onclick="window.switchView('view-perfil-usuario')" class="cursor-pointer flex flex-col items-center text-[10px] text-[#7A8A7C] font-bold"><span>👤</span> Perfil</div>
     </nav>
 
     <!-- ================= JAVASCRIPT ================= -->
@@ -513,7 +513,7 @@
             window.switchView('view-auth');
         };
 
-        // Pasarela de Pagos Actualizada con tus datos exactos
+        // Pasarela de Pagos con datos exactos
         window.selectPaymentMethod = function(method) {
             document.querySelectorAll('.clay-btn-pay').forEach(btn => btn.classList.remove('active-pay'));
             
@@ -537,7 +537,7 @@
                 box.innerHTML = `
                     <p class="font-bold text-[#E27D60]">🇻🇪 Pago Móvil - Banco de Venezuela (0102)</p>
                     <p>Teléfono: <strong>0414-4031678</strong></p>
-                    <p>C.I: <strong>V-18.478.170</strong></p>
+                    <p>C.I: <strong>18.478.170</strong></p>
                     <p class="text-[10px] text-gray-500 mt-1">Monto: Equivalente en Bs. a la tasa BCV del día ($120.00)</p>
                 `;
             } else if (method === 'pm_bnc') {
@@ -546,7 +546,7 @@
                 box.innerHTML = `
                     <p class="font-bold text-[#E27D60]">🇻🇪 Pago Móvil - Banco Nacional de Crédito (0191)</p>
                     <p>Teléfono: <strong>0414-4187215</strong></p>
-                    <p>C.I: <strong>V-13.518.664</strong></p>
+                    <p>C.I: <strong>13.518.664</strong></p>
                     <p class="text-[10px] text-gray-500 mt-1">Monto: Equivalente en Bs. a la tasa BCV del día ($120.00)</p>
                 `;
             } else if (method === 'zelle') {
