@@ -219,7 +219,7 @@
             font-weight: bold;
         }
 
-        /* Botón Google estilo personalizado (sin OAuth) */
+        /* Botón Google estilo personalizado */
         .google-btn {
             display: flex;
             align-items: center;
@@ -246,14 +246,75 @@
             width: 20px;
             height: 20px;
         }
+
+        /* Botón de perfil en header */
+        .header-profile-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px 6px 6px;
+            border-radius: 9999px;
+            background: white;
+            border: 1px solid #E27D60/30;
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .header-profile-btn:hover {
+            border-color: #E27D60;
+            box-shadow: 4px 4px 12px rgba(0,0,0,0.1);
+            transform: translateY(-1px);
+        }
+        .header-profile-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 9999px;
+            background: #E27D60;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        .header-profile-name {
+            font-size: 12px;
+            font-weight: 600;
+            color: #7A8A7C;
+            max-width: 80px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
     </style>
 </head>
 <body class="pb-28">
 
-  <!-- CABECERA PRINCIPAL -->
-  <header class="pt-3 pb-1 px-6 flex justify-center items-center max-w-md mx-auto">
-    <div class="cursor-pointer" onclick="App.switchView('view-home')">
-      <img id="app-logo-img" src="atrevetehtlogo.png" alt="Atrévete HealthTech - Logotipo" class="h-28 w-auto object-contain">
+  <!-- ================= CABECERA CON BOTÓN DE LOGIN/PERFIL ================= -->
+  <header class="pt-3 pb-1 px-6 max-w-md mx-auto">
+    <div class="flex items-center justify-between">
+      <!-- Logo -->
+      <div class="cursor-pointer" onclick="App.switchView('view-home')">
+        <img id="app-logo-img" src="atrevetehtlogo.png" alt="Atrévete HealthTech - Logotipo" class="h-20 w-auto object-contain">
+      </div>
+
+      <!-- Botón de Login / Perfil -->
+      <div id="header-auth-container">
+        <!-- Cuando NO está autenticado -->
+        <div id="header-login-btn" class="flex items-center gap-2">
+          <button onclick="App.switchView('view-auth')" class="clay-btn-primary text-xs font-bold py-2 px-5 focus-visible">
+            🔑 Iniciar Sesión
+          </button>
+        </div>
+
+        <!-- Cuando SÍ está autenticado -->
+        <div id="header-profile-btn" class="hidden">
+          <div onclick="App.switchView('view-perfil-usuario')" class="header-profile-btn">
+            <div id="header-avatar" class="header-profile-avatar">US</div>
+            <span id="header-name" class="header-profile-name">Usuario</span>
+          </div>
+        </div>
+      </div>
     </div>
   </header>
 
@@ -786,10 +847,32 @@
         },
 
         // ============================================
-        // REGISTRO SIMULADO CON GOOGLE (Funcional sin OAuth)
+        // ACTUALIZAR HEADER (Login/Perfil)
+        // ============================================
+        actualizarHeader() {
+            const loginBtn = document.getElementById('header-login-btn');
+            const profileBtn = document.getElementById('header-profile-btn');
+            const headerName = document.getElementById('header-name');
+            const headerAvatar = document.getElementById('header-avatar');
+
+            if (this.state.isAuthenticated && this.state.user.name) {
+                loginBtn.classList.add('hidden');
+                profileBtn.classList.remove('hidden');
+                if (headerName) headerName.textContent = this.state.user.name;
+                if (headerAvatar) {
+                    const initials = this.state.user.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'US';
+                    headerAvatar.textContent = initials;
+                }
+            } else {
+                loginBtn.classList.remove('hidden');
+                profileBtn.classList.add('hidden');
+            }
+        },
+
+        // ============================================
+        // REGISTRO SIMULADO CON GOOGLE
         // ============================================
         iniciarRegistroGoogleSimulado() {
-            // Simular la obtención de datos de Google
             const googleUser = {
                 name: prompt('👤 Ingresa tu nombre completo:', 'Ana María Rodríguez') || 'Usuario Google',
                 email: prompt('📧 Ingresa tu correo electrónico:', 'usuario@gmail.com') || 'usuario@gmail.com',
@@ -815,16 +898,13 @@
             const nameEl = document.getElementById('google-name-modal');
             const emailEl = document.getElementById('google-email-modal');
             
-            // Actualizar datos en el modal
             const initials = userData.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
             avatar.textContent = initials;
             nameEl.textContent = userData.name;
             emailEl.textContent = userData.email;
             
-            // Mostrar modal
             modal.classList.add('active');
             
-            // Resetear botón
             const btnText = document.getElementById('btn-google-text');
             const btnSpinner = document.getElementById('btn-google-spinner');
             btnText.textContent = '✅ Confirmar y Continuar';
@@ -841,18 +921,15 @@
                 return;
             }
 
-            // Mostrar loading en el botón
             const btnText = document.getElementById('btn-google-text');
             const btnSpinner = document.getElementById('btn-google-spinner');
             btnText.textContent = 'Registrando...';
             btnSpinner.classList.remove('hidden');
             document.getElementById('btn-confirmar-google').disabled = true;
 
-            // Proceso de registro
             setTimeout(() => {
                 const userData = this.state.googleUserData;
                 
-                // Guardar datos en localStorage
                 localStorage.setItem('user_name', userData.name);
                 localStorage.setItem('user_email', userData.email);
                 localStorage.setItem('user_role', 'user');
@@ -860,7 +937,6 @@
                 localStorage.setItem('email_verified', 'true');
                 localStorage.setItem('google_picture', userData.picture || '');
                 
-                // Actualizar estado
                 this.state.user = {
                     ...this.state.user,
                     name: userData.name,
@@ -871,27 +947,20 @@
                 };
                 this.state.isAuthenticated = true;
                 
-                // Cerrar modal
                 document.getElementById('google-modal').classList.remove('active');
                 
-                // Actualizar UI
                 this.actualizarPerfilUI();
+                this.actualizarHeader();
                 this.showToast('✅ ¡Registro con Google exitoso!', 'success');
-                
-                // Redirigir al perfil
                 this.switchView('view-perfil-usuario');
                 
-                // Mostrar formulario de edición automáticamente
                 setTimeout(() => {
                     this.mostrarEditarPerfil();
                 }, 500);
                 
-                // Resetear el botón
                 btnText.textContent = '✅ Confirmar y Continuar';
                 btnSpinner.classList.add('hidden');
                 document.getElementById('btn-confirmar-google').disabled = false;
-                
-                // Limpiar datos de Google
                 this.state.googleUserData = null;
                 
             }, 1500);
@@ -916,12 +985,10 @@
                 target.classList.remove('hidden');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
-            // Detener respiración si no está en regulación
             if (viewId !== 'view-regulacion' && this.state.breathInterval) {
                 clearInterval(this.state.breathInterval);
                 this.state.breathInterval = null;
             }
-            // Iniciar respiración si está en regulación
             if (viewId === 'view-regulacion') {
                 this.iniciarRespiración();
             }
@@ -990,24 +1057,25 @@
                 }
             }
 
-            // Cargar datos de edición
             const editNombre = document.getElementById('edit-nombre');
             const editTelefono = document.getElementById('edit-telefono');
             const editFechaNac = document.getElementById('edit-fecha-nac');
             if (editNombre) editNombre.value = name;
             if (editTelefono) editTelefono.value = this.state.user.telefono || '';
             if (editFechaNac) editFechaNac.value = this.state.user.fechaNac || '';
+
+            // Actualizar header
+            this.actualizarHeader();
         },
 
         // ============================================
-        // AUTH EMAIL (Login/Register)
+        // AUTH EMAIL
         // ============================================
         procesarAuthEmail() {
             const email = document.getElementById('input-email').value;
             const password = document.getElementById('input-password').value;
             const nombreInput = document.getElementById('input-nombre');
             
-            // Validaciones
             if (!email || !email.includes('@')) {
                 document.getElementById('email-error').classList.remove('hidden');
                 return;
@@ -1027,14 +1095,12 @@
                 nombre = email.split('@')[0];
             }
 
-            // Guardar en localStorage
             localStorage.setItem('user_name', nombre);
             localStorage.setItem('user_email', email);
             localStorage.setItem('user_role', this.state.user.role || 'user');
             localStorage.setItem('register_method', 'email');
             localStorage.setItem('email_verified', 'false');
             
-            // Actualizar estado
             this.state.user = {
                 ...this.state.user,
                 name: nombre,
@@ -1045,17 +1111,17 @@
             this.state.isAuthenticated = true;
             
             this.actualizarPerfilUI();
-            this.showToast('✅ ¡Bienvenido a Atrévete HealthTech! Verifica tu correo para activar tu cuenta.', 'info');
+            this.actualizarHeader();
+            this.showToast('✅ ¡Bienvenido a Atrévete HealthTech!', 'info');
             this.switchView('view-perfil-usuario');
             
-            // Simular envío de correo de verificación
             setTimeout(() => {
                 this.showToast('📧 Se ha enviado un correo de verificación a tu cuenta', 'info');
             }, 2000);
         },
 
         // ============================================
-        // AUTH MODE (Login/Register toggle)
+        // AUTH MODE
         // ============================================
         switchAuthMode(mode) {
             this.state.authMode = mode;
@@ -1144,6 +1210,8 @@
                 emailVerified: false
             };
             
+            this.actualizarPerfilUI();
+            this.actualizarHeader();
             this.showToast('👋 Sesión cerrada exitosamente', 'info');
             this.switchView('view-home');
         },
@@ -1188,6 +1256,7 @@
             
             document.getElementById('editar-perfil-form').classList.add('hidden');
             this.actualizarPerfilUI();
+            this.actualizarHeader();
             this.showToast('✅ Perfil actualizado exitosamente', 'success');
         },
 
@@ -1383,7 +1452,6 @@
     // INICIALIZACIÓN
     // ============================================
     document.addEventListener('DOMContentLoaded', function() {
-        // Cargar configuración guardada
         const savedLogo = localStorage.getItem('app_logo');
         const savedBannerImg = localStorage.getItem('app_banner_img');
         const savedBannerText = localStorage.getItem('app_banner_text');
@@ -1404,7 +1472,6 @@
             if (adminText) adminText.value = savedBannerText;
         }
 
-        // Cargar datos de usuario
         App.state.user.name = localStorage.getItem('user_name') || '';
         App.state.user.email = localStorage.getItem('user_email') || '';
         App.state.user.role = localStorage.getItem('user_role') || 'user';
@@ -1413,15 +1480,13 @@
         App.state.user.fechaNac = localStorage.getItem('user_fecha_nac') || '';
         App.state.user.emailVerified = localStorage.getItem('email_verified') === 'true';
 
-        // Actualizar UI del perfil
         App.actualizarPerfilUI();
+        App.actualizarHeader();
 
-        // Si el usuario ya está autenticado, ir al home
         if (App.state.isAuthenticated) {
             App.switchView('view-home');
         }
 
-        // Inicializar método de pago por defecto
         App.selectPaymentMethod('pm_bdv');
 
         console.log('🚀 Atrévete HealthTech App inicializada');
