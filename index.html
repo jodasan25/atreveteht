@@ -410,74 +410,51 @@
         }
         .google-btn svg { width: 20px; height: 20px; }
 
-        .header-profile-btn {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px 14px 6px 6px;
-            border-radius: 9999px;
-            background: white;
-            border: 1px solid rgba(226, 125, 96, 0.3);
-            box-shadow: 2px 2px 8px rgba(0,0,0,0.05);
-            transition: all 0.2s ease;
-            cursor: pointer;
-        }
-        .header-profile-btn:hover {
-            border-color: #E27D60;
-            box-shadow: 4px 4px 12px rgba(0,0,0,0.1);
-            transform: translateY(-1px);
-        }
-        .header-profile-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 9999px;
-            background: #E27D60;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 12px;
-        }
-        .header-profile-name {
-            font-size: 12px;
-            font-weight: 600;
-            color: #7A8A7C;
-            max-width: 80px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
+        .header-profile-btn {    <form onsubmit="event.preventDefault(); App.procesarAuthEmail();" class="clay-card p-6 space-y-4" novalidate>
+      <div id="field-nombre" class="hidden">
+        <label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="input-nombre">Nombre Completo</label>
+        <input type="text" id="input-nombre" placeholder="Ej. Ana Mendoza" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible" aria-required="true">
+      </div>
 
-        .header-action-btn {
-            padding: 8px 16px;
-            border-radius: 9999px;
-            font-size: 12px;
-            font-weight: 600;
-            transition: all 0.2s ease;
-            cursor: pointer;
-            border: none;
-        }
-        .header-action-btn:hover { transform: translateY(-1px); }
-        .btn-login {
-            background: #E27D60;
-            color: white;
-            box-shadow: 3px 3px 8px rgba(226, 125, 96, 0.3);
-        }
-        .btn-register {
-            background: transparent;
-            color: #7A8A7C;
-            border: 1.5px solid #7A8A7C;
-        }
-        .btn-register:hover { background: #7A8A7C; color: white; }
+      <div>
+        <label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="input-email">Correo Electrónico</label>
+        <input type="email" id="input-email" placeholder="correo@ejemplo.com" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible" required aria-required="true">
+        <div id="email-error" class="text-red-500 text-xs mt-1 hidden">Por favor ingresa un correo válido</div>
+      </div>
 
-        .clay-btn-pay {
-            background: #FFFFFF;
-            color: #7A8A7C;
-            border-radius: 16px;
-            border: 2px solid transparent;
-            box-shadow: 4px 4px 8px #e0deda, -4px -4px 8px #ffffff;
-            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      <div>
+        <label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="input-password">Contraseña</label>
+        <input type="password" id="input-password" placeholder="••••••••" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible" required minlength="6" aria-required="true">
+        <div id="password-error" class="text-red-500 text-xs mt-1 hidden">La contraseña debe tener al menos 6 caracteres</div>
+      </div>
+
+      <div id="field-rol" class="hidden space-y-2 border-t border-[#7A8A7C]/20 pt-3">
+        <label class="block text-xs font-bold text-[#7A8A7C]">Tipo de Cuenta:</label>
+        <div class="flex gap-2">
+          <button type="button" id="btn-role-user" onclick="App.setAuthRole('user')" class="flex-1 py-2 text-xs font-bold rounded-xl bg-orange-100 text-[#E27D60] border border-[#E27D60]/30 transition focus-visible" aria-pressed="true">
+            Usuario / Paciente
+          </button>
+          <button type="button" id="btn-role-spec" onclick="App.setAuthRole('spec')" class="flex-1 py-2 text-xs font-bold rounded-xl bg-stone-100 text-[#7A8A7C] transition focus-visible" aria-pressed="false">
+            Especialista
+          </button>
+        </div>
+      </div>
+
+      <div id="link-forgot-container" class="text-right">
+        <button type="button" onclick="App.switchView('view-recovery')" class="text-[11px] text-[#E27D60] font-semibold hover:underline focus-visible">
+          ¿Olvidaste tu contraseña?
+        </button>
+      </div>
+
+      <button type="submit" id="auth-submit-btn" class="clay-btn-primary w-full py-3.5 text-xs font-bold mt-2 focus-visible">
+        Iniciar Sesión
+      </button>
+      
+      <!-- 🔴 BOTÓN DE CANCELAR AGREGADO AQUÍ 🔴 -->
+      <button type="button" onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold focus-visible">
+        Cancelar
+      </button>
+    </form>
             cursor: pointer;
         }
         .clay-btn-pay:hover { transform: translateY(-2px); }
