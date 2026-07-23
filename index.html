@@ -3,25 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atrévete HealthTech - Plataforma Integrativa</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-    :root {
-        --color-primary: #E27D60;
-        --color-secondary: #7A8A7C;
-    }
-    
-    .hidden { display: none !important; }
-    
-    body {
-        background-color: #F4F1ED;
-        font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    }
-    <style>
+        :root {
+            --color-primary: #E27D60;
+            --color-secondary: #7A8A7C;
+        }
+        
         .hidden { display: none !important; }
         
         body {
             background-color: #F4F1ED;
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            padding-bottom: 90px;
         }
 
         /* ESTILOS CLAYMORFISMO */
@@ -42,7 +37,7 @@
         }
 
         .clay-btn-primary {
-            background: #E27D60;
+            background: var(--color-primary);
             color: #FFFFFF;
             border-radius: 9999px;
             box-shadow: 6px 6px 12px #c06a51, 
@@ -61,7 +56,7 @@
 
         .clay-btn-secondary {
             background: #F0B7A1;
-            color: #7A8A7C;
+            color: var(--color-secondary);
             border-radius: 9999px;
             box-shadow: 6px 6px 12px #cc9b89, 
                         -6px -6px 12px #ffffff, 
@@ -73,257 +68,97 @@
             transform: translateY(-2px);
         }
 
-        /* ================= AGENTE IA FLOTANTE ================= */
-        .ia-float-btn {
-            position: fixed;
-            bottom: 90px;
-            right: 20px;
-            z-index: 999;
-            width: 68px;
-            height: 68px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #E27D60, #c06a51);
-            color: white;
-            border: none;
+        .clay-btn-option {
+            background: #FFFFFF;
+            color: var(--color-secondary);
+            border-radius: 18px;
+            border: 2px solid transparent;
+            box-shadow: 4px 4px 10px #e0deda, -4px -4px 10px #ffffff;
+            transition: all 0.2s ease;
+            text-align: left;
+            padding: 12px 16px;
             cursor: pointer;
-            box-shadow: 0 8px 32px rgba(226, 125, 96, 0.4), 
-                        0 4px 16px rgba(226, 125, 96, 0.2),
-                        inset 0 2px 4px rgba(255,255,255,0.2);
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
         }
-        .ia-float-btn:hover {
-            transform: scale(1.1) translateY(-4px);
-            box-shadow: 0 12px 40px rgba(226, 125, 96, 0.5);
-        }
-        .ia-float-btn:active {
-            transform: scale(0.95);
-        }
-        .ia-float-btn .pulse-ring {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            border: 2px solid rgba(226, 125, 96, 0.3);
-            animation: pulse-ring 2s ease-out infinite;
-        }
-        @keyframes pulse-ring {
-            0% { transform: scale(1); opacity: 1; }
-            100% { transform: scale(1.5); opacity: 0; }
-        }
-        .ia-float-btn .badge-online {
-            position: absolute;
-            top: 2px;
-            right: 2px;
-            width: 16px;
-            height: 16px;
-            background: #4CAF50;
-            border-radius: 50%;
-            border: 2px solid white;
-            animation: pulse-dot 1.5s ease-in-out infinite;
-        }
-        @keyframes pulse-dot {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
+        .clay-btn-option:hover {
+            transform: translateY(-2px);
+            border-color: rgba(226, 125, 96, 0.4);
         }
 
-        /* Modal del Agente IA */
-        .ia-modal {
-            position: fixed;
-            bottom: 170px;
-            right: 20px;
-            width: 380px;
-            max-width: calc(100vw - 40px);
-            max-height: 500px;
-            background: white;
-            border-radius: 24px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.2), 0 8px 24px rgba(0,0,0,0.1);
-            z-index: 1000;
-            transform: scale(0.8) translateY(20px);
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            overflow: hidden;
+        .clay-btn-pay {
+            background: #FFFFFF;
+            color: var(--color-secondary);
+            border-radius: 16px;
+            border: 2px solid transparent;
+            box-shadow: 4px 4px 8px #e0deda, -4px -4px 8px #ffffff;
+            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+        }
+        .clay-btn-pay:hover {
+            transform: translateY(-2px);
+        }
+        .clay-btn-pay.active-pay {
+            border-color: var(--color-primary);
+            background: #FFF8F6;
+            color: var(--color-primary);
+            box-shadow: inset 2px 2px 4px rgba(226, 125, 96, 0.15), inset -2px -2px 4px #ffffff;
+        }
+
+        /* Navegación inferior mejorada */
+        .clay-nav {
+            background: rgba(253, 251, 247, 0.95);
+            backdrop-filter: blur(12px);
+            border-radius: 24px 24px 0 0;
+            box-shadow: 0 -8px 16px rgba(0,0,0,0.04), inset 0 2px 4px #ffffff;
+            padding: 8px 12px 12px 12px;
+        }
+
+        .nav-item {
             display: flex;
             flex-direction: column;
-        }
-        .ia-modal.active {
-            transform: scale(1) translateY(0);
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        .ia-modal-header {
-            background: linear-gradient(135deg, #E27D60, #c06a51);
-            padding: 16px 20px;
-            color: white;
-            display: flex;
             align-items: center;
-            justify-content: space-between;
-        }
-        .ia-modal-header .ia-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-        }
-        .ia-modal-header .ia-info {
-            flex: 1;
-            margin-left: 12px;
-        }
-        .ia-modal-header .ia-info h4 {
-            font-weight: 700;
-            font-size: 14px;
-            margin: 0;
-        }
-        .ia-modal-header .ia-info p {
-            font-size: 11px;
-            opacity: 0.8;
-            margin: 0;
-        }
-        .ia-modal-header .ia-close {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            opacity: 0.7;
-            transition: opacity 0.2s;
-        }
-        .ia-modal-header .ia-close:hover {
-            opacity: 1;
-        }
-
-        .ia-modal-body {
-            padding: 16px 20px;
-            overflow-y: auto;
-            flex: 1;
-            max-height: 320px;
-            background: #F8F6F2;
-        }
-
-        .ia-message {
-            margin-bottom: 12px;
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            animation: messageIn 0.3s ease-out;
-        }
-        @keyframes messageIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .ia-message.bot {
-            flex-direction: row;
-        }
-        .ia-message.user {
-            flex-direction: row-reverse;
-        }
-        .ia-message .msg-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-        }
-        .ia-message.bot .msg-avatar {
-            background: #E27D60;
-            color: white;
-        }
-        .ia-message.user .msg-avatar {
-            background: #7A8A7C;
-            color: white;
-        }
-        .ia-message .msg-bubble {
-            padding: 10px 14px;
+            gap: 2px;
+            padding: 6px 10px;
             border-radius: 16px;
-            font-size: 13px;
-            line-height: 1.5;
-            max-width: 80%;
-            word-wrap: break-word;
-        }
-        .ia-message.bot .msg-bubble {
-            background: white;
-            color: #4A5D4E;
-            border-bottom-left-radius: 4px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-        }
-        .ia-message.user .msg-bubble {
-            background: #E27D60;
-            color: white;
-            border-bottom-right-radius: 4px;
-        }
-
-        .ia-modal-footer {
-            padding: 12px 16px;
-            border-top: 1px solid #eee;
-            background: white;
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-        .ia-modal-footer input {
-            flex: 1;
-            padding: 10px 14px;
-            border: 1px solid #ddd;
-            border-radius: 9999px;
-            font-size: 13px;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-        .ia-modal-footer input:focus {
-            border-color: #E27D60;
-        }
-        .ia-modal-footer button {
-            padding: 10px 18px;
-            background: #E27D60;
-            color: white;
-            border: none;
-            border-radius: 9999px;
-            font-weight: 600;
-            font-size: 13px;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            min-width: 48px;
+            position: relative;
         }
-        .ia-modal-footer button:hover {
-            background: #c06a51;
-            transform: scale(1.02);
+        .nav-item:hover {
+            background: rgba(226, 125, 96, 0.08);
         }
-
-        /* Quick replies */
-        .quick-replies {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-top: 8px;
+        .nav-item.active {
+            background: rgba(226, 125, 96, 0.15);
         }
-        .quick-replies button {
-            padding: 6px 14px;
-            border: 1px solid #E27D60;
-            border-radius: 9999px;
-            background: white;
-            color: #E27D60;
-            font-size: 11px;
+        .nav-item .nav-icon {
+            font-size: 20px;
+            line-height: 1;
+        }
+        .nav-item .nav-label {
+            font-size: 9px;
             font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
+            color: var(--color-secondary);
+            transition: color 0.2s ease;
         }
-        .quick-replies button:hover {
-            background: #E27D60;
+        .nav-item.active .nav-label {
+            color: var(--color-primary);
+        }
+        .nav-item .nav-badge {
+            position: absolute;
+            top: 2px;
+            right: 4px;
+            background: var(--color-primary);
             color: white;
+            font-size: 8px;
+            font-weight: bold;
+            padding: 1px 5px;
+            border-radius: 9999px;
+            min-width: 16px;
+            text-align: center;
         }
 
-        /* Toast */
+        /* Toast notifications */
         .toast {
             position: fixed;
             top: 20px;
@@ -339,12 +174,23 @@
             transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             max-width: 90%;
         }
-        .toast.show { transform: translateX(0); }
-        .toast-success { background: #4CAF50; }
-        .toast-error { background: #f44336; }
-        .toast-info { background: #2196F3; }
-        .toast-warning { background: #FF9800; }
+        .toast.show {
+            transform: translateX(0);
+        }
+        .toast-success {
+            background: #4CAF50;
+        }
+        .toast-error {
+            background: #f44336;
+        }
+        .toast-info {
+            background: #2196F3;
+        }
+        .toast-warning {
+            background: #FF9800;
+        }
 
+        /* Loading spinner */
         .spinner {
             border: 3px solid rgba(255,255,255,0.3);
             border-top: 3px solid #ffffff;
@@ -360,6 +206,13 @@
             100% { transform: rotate(360deg); }
         }
 
+        /* Mejoras de accesibilidad */
+        .focus-visible:focus-visible {
+            outline: 2px solid var(--color-primary);
+            outline-offset: 2px;
+        }
+
+        /* Modal de confirmación de Google */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -395,6 +248,31 @@
             transform: scale(1) translateY(0);
         }
 
+        /* Badge de verificación */
+        .verified-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #E8F5E9;
+            color: #2E7D32;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        .unverified-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #FFF3E0;
+            color: #E65100;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        /* Botón Google estilo personalizado */
         .google-btn {
             display: flex;
             align-items: center;
@@ -417,179 +295,201 @@
             background: #F8F9FA;
             box-shadow: 0 1px 3px rgba(0,0,0,0.12);
         }
-        .google-btn svg { width: 20px; height: 20px; }
-
-        .header-profile-btn {    <form onsubmit="event.preventDefault(); App.procesarAuthEmail();" class="clay-card p-6 space-y-4" novalidate>
-      <div id="field-nombre" class="hidden">
-        <label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="input-nombre">Nombre Completo</label>
-        <input type="text" id="input-nombre" placeholder="Ej. Ana Mendoza" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible" aria-required="true">
-      </div>
-
-      <div>
-        <label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="input-email">Correo Electrónico</label>
-        <input type="email" id="input-email" placeholder="correo@ejemplo.com" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible" required aria-required="true">
-        <div id="email-error" class="text-red-500 text-xs mt-1 hidden">Por favor ingresa un correo válido</div>
-      </div>
-
-      <div>
-        <label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="input-password">Contraseña</label>
-        <input type="password" id="input-password" placeholder="••••••••" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible" required minlength="6" aria-required="true">
-        <div id="password-error" class="text-red-500 text-xs mt-1 hidden">La contraseña debe tener al menos 6 caracteres</div>
-      </div>
-
-      <div id="field-rol" class="hidden space-y-2 border-t border-[#7A8A7C]/20 pt-3">
-        <label class="block text-xs font-bold text-[#7A8A7C]">Tipo de Cuenta:</label>
-        <div class="flex gap-2">
-          <button type="button" id="btn-role-user" onclick="App.setAuthRole('user')" class="flex-1 py-2 text-xs font-bold rounded-xl bg-orange-100 text-[#E27D60] border border-[#E27D60]/30 transition focus-visible" aria-pressed="true">
-            Usuario / Paciente
-          </button>
-          <button type="button" id="btn-role-spec" onclick="App.setAuthRole('spec')" class="flex-1 py-2 text-xs font-bold rounded-xl bg-stone-100 text-[#7A8A7C] transition focus-visible" aria-pressed="false">
-            Especialista
-          </button>
-        </div>
-      </div>
-
-      <div id="link-forgot-container" class="text-right">
-        <button type="button" onclick="App.switchView('view-recovery')" class="text-[11px] text-[#E27D60] font-semibold hover:underline focus-visible">
-          ¿Olvidaste tu contraseña?
-        </button>
-      </div>
-
-      <button type="submit" id="auth-submit-btn" class="clay-btn-primary w-full py-3.5 text-xs font-bold mt-2 focus-visible">
-        Iniciar Sesión
-      </button>
-      
-      <!-- 🔴 BOTÓN DE CANCELAR AGREGADO AQUÍ 🔴 -->
-      <button type="button" onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold focus-visible">
-        Cancelar
-      </button>
-    </form>
-            cursor: pointer;
-        }
-        .clay-btn-pay:hover { transform: translateY(-2px); }
-        .clay-btn-pay.active-pay {
-            border-color: #E27D60;
-            background: #FFF8F6;
-            color: #E27D60;
-            box-shadow: inset 2px 2px 4px rgba(226, 125, 96, 0.15), inset -2px -2px 4px #ffffff;
+        .google-btn svg {
+            width: 20px;
+            height: 20px;
         }
 
-        /* Navegación inferior fija */
-        .clay-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(253, 251, 247, 0.95);
-            backdrop-filter: blur(12px);
-            border-radius: 24px 24px 0 0;
-            box-shadow: 0 -8px 16px rgba(0,0,0,0.04), inset 0 2px 4px #ffffff;
-            padding: 8px 12px 12px 12px;
-            z-index: 900;
-            max-width: 480px;
-            margin: 0 auto;
-        }
-        .nav-item {
+        /* Botón de perfil en header */
+        .header-profile-btn {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            gap: 2px;
-            padding: 6px 10px;
-            border-radius: 16px;
-            cursor: pointer;
+            gap: 8px;
+            padding: 6px 14px 6px 6px;
+            border-radius: 9999px;
+            background: white;
+            border: 1px solid var(--color-primary)/30;
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.05);
             transition: all 0.2s ease;
-            text-decoration: none;
-            min-width: 48px;
-            position: relative;
+            cursor: pointer;
         }
-        .nav-item:hover { background: rgba(226, 125, 96, 0.08); }
-        .nav-item.active { background: rgba(226, 125, 96, 0.15); }
-        .nav-item .nav-icon { font-size: 20px; line-height: 1; }
-        .nav-item .nav-label {
-            font-size: 9px;
+        .header-profile-btn:hover {
+            border-color: var(--color-primary);
+            box-shadow: 4px 4px 12px rgba(0,0,0,0.1);
+            transform: translateY(-1px);
+        }
+        .header-profile-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 9999px;
+            background: var(--color-primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        .header-profile-name {
+            font-size: 12px;
             font-weight: 600;
-            color: #7A8A7C;
-            transition: color 0.2s ease;
+            color: var(--color-secondary);
+            max-width: 80px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
-        .nav-item.active .nav-label { color: #E27D60; }
+
+        /* Botones de acción en header */
+        .header-action-btn {
+            padding: 8px 16px;
+            border-radius: 9999px;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+        }
+        .header-action-btn:hover {
+            transform: translateY(-1px);
+        }
+        .btn-login {
+            background: var(--color-primary);
+            color: white;
+            box-shadow: 3px 3px 8px rgba(226, 125, 96, 0.3);
+        }
+        .btn-login:hover {
+            box-shadow: 5px 5px 12px rgba(226, 125, 96, 0.4);
+        }
+        .btn-register {
+            background: transparent;
+            color: var(--color-secondary);
+            border: 1.5px solid var(--color-secondary);
+        }
+        .btn-register:hover {
+            background: var(--color-secondary);
+            color: white;
+        }
+
+        /* Estilos del perfil */
+        .profile-card {
+            background: linear-gradient(135deg, #FFFFFF 0%, #F8F5F2 100%);
+        }
+        .profile-avatar-large {
+            width: 100px;
+            height: 100px;
+            border-radius: 9999px;
+            border: 4px solid white;
+            box-shadow: 0 8px 24px rgba(226, 125, 96, 0.2);
+        }
+        .profile-stat {
+            background: rgba(226, 125, 96, 0.06);
+            border-radius: 16px;
+            padding: 12px 16px;
+            text-align: center;
+        }
+        .profile-stat .number {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+        .profile-stat .label {
+            font-size: 10px;
+            color: var(--color-secondary);
+            font-weight: 500;
+        }
+
+        /* Animación de entrada del modal */
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        .modal-legal-content {
+            animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
     </style>
 </head>
 <body>
 
-  <!-- ================= BOTÓN FLOTANTE DEL AGENTE IA ================= -->
-  <button id="iaFloatBtn" class="ia-float-btn" onclick="App.IA.toggleModal()" aria-label="Abrir asistente virtual">
-    <span class="pulse-ring"></span>
-    <span class="badge-online"></span>
-    <span>🧠</span>
-  </button>
-
-  <!-- ================= MODAL DEL AGENTE IA ================= -->
-  <div id="iaModal" class="ia-modal">
-    <div class="ia-modal-header">
-      <div class="flex items-center">
-        <div class="ia-avatar">🧠</div>
-        <div class="ia-info">
-          <h4>🌟 Aura | Asistente HealthTech</h4>
-          <p>Tu guía somática • Online ahora</p>
-        </div>
-      </div>
-      <button class="ia-close" onclick="App.IA.toggleModal()">×</button>
-    </div>
-    <div class="ia-modal-body" id="iaMessages">
-      <!-- Mensajes dinámicos -->
-    </div>
-    <div class="ia-modal-footer">
-      <input type="text" id="iaInput" placeholder="Escribe tu mensaje..." onkeypress="if(event.key==='Enter') App.IA.enviarMensaje()">
-      <button onclick="App.IA.enviarMensaje()">Enviar</button>
-    </div>
-  </div>
-
-  <!-- ================= BARRERA LEGAL ================= -->
+  <!-- ==================== BARRERA LEGAL COMPLETA E INTEGRADA ==================== -->
   <div id="modal-legal-gate" class="fixed inset-0 bg-black/60 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-[#F9F6F0] w-full max-w-lg rounded-3xl p-6 shadow-[8px_8px_16px_#d1cdc7,-8px_-8px_16px_#ffffff] border border-white/60 flex flex-col max-h-[90vh]">
+    
+    <div class="bg-[#F9F6F0] w-full max-w-lg rounded-3xl p-6 shadow-[8px_8px_16px_#d1cdc7,-8px_-8px_16px_#ffffff] border border-white/60 flex flex-col max-h-[90vh] modal-legal-content">
+      
+      <!-- Encabezado -->
       <div class="text-center pb-3 border-b border-gray-200">
-        <span class="text-[10px] uppercase font-bold tracking-widest text-[#E27D60]">Requisito Legal de Ingreso</span>
-        <h3 class="text-base font-bold text-[#4A5D4E] mt-1">Términos, Privacidad y Blindaje Legal</h3>
+        <span class="text-[10px] uppercase font-bold tracking-widest text-[var(--color-primary)]">Requisito Legal de Ingreso</span>
+        <h3 class="text-base font-bold text-[var(--color-secondary)] mt-1">Términos, Privacidad y Blindaje Legal</h3>
       </div>
+
+      <!-- Contenido Legal Unificado Escroleable -->
       <div class="overflow-y-auto my-4 pr-2 space-y-4 text-xs text-gray-600 text-justify max-h-[60vh] leading-relaxed">
-        <p class="font-bold text-center text-[#E27D60]">Atrévete HealthTech — Versión Unificada 2026</p>
+        
+        <p class="font-bold text-center text-[var(--color-primary)]">Atrévete HealthTech — Versión Unificada 2026</p>
+        
+        <!-- Cuadro de Alerta Médica -->
         <div class="bg-amber-50 p-3 border-l-4 border-amber-400 rounded-r-lg text-[11px] text-amber-900">
           <strong>AVISO CRÍTICO DE DESLINDE MÉDICO Y CLÍNICO:</strong><br>
           Atrévete HealthTech, sus propietarios y la herramienta "Escáner Cuántico" ofrecen evaluaciones bioenergéticas holísticas y de regulación somática. <strong>NO constituyen diagnóstico médico, tratamiento psiquiátrico ni prescripción farmacológica.</strong>
         </div>
-        <h4 class="font-bold text-[#4A5D4E]">1. Aceptación por Adhesión</h4>
+
+        <h4 class="font-bold text-[var(--color-secondary)]">1. Aceptación por Adhesión</h4>
         <p>Al hacer clic en "Acepto", confirmas ser mayor de edad y aceptas el uso de LA PLATAFORMA bajo la Ley de Mensajes de Datos y Firmas Electrónicas de la República Bolivariana de Venezuela.</p>
-        <h4 class="font-bold text-[#4A5D4E]">2. Protección de Datos Personales y Sensibles</h4>
+
+        <h4 class="font-bold text-[var(--color-secondary)]">2. Protección de Datos Personales y Sensibles</h4>
         <p>Tus datos de bienestar se procesan bajo estricta confidencialidad (Art. 60 CRBV / RGPD). No se transfieren a terceros ni almacenamos claves o datos bancarios directos.</p>
-        <h4 class="font-bold text-[#4A5D4E]">3. Eventos Presenciales y Campamentos</h4>
+
+        <h4 class="font-bold text-[var(--color-secondary)]">3. Eventos Presenciales y Campamentos</h4>
         <p>La asistencia a actividades presenciales (ej. "Adultas en Fuga") se realiza bajo propio riesgo del participante. Los organizadores quedan exonerados de responsabilidad por eventualidades o fuerza mayor.</p>
-        <h4 class="font-bold text-[#4A5D4E]">4. Límite de Responsabilidad Financiera y Pagos</h4>
+
+        <h4 class="font-bold text-[var(--color-secondary)]">4. Límite de Responsabilidad Financiera y Pagos</h4>
         <p>Los pagos por reservaciones y evaluaciones no son reembolsables. La responsabilidad legal máxima acumulada de LOS PROPIETARIOS queda limitada estrictamente al monto pagado por el usuario en los últimos 30 días.</p>
-        <h4 class="font-bold text-[#4A5D4E]">5. Jurisdicción y Ley Aplicable</h4>
+
+        <h4 class="font-bold text-[var(--color-secondary)]">5. Jurisdicción y Ley Aplicable</h4>
         <p>Este acuerdo se rige bajo las leyes de la República Bolivariana de Venezuela y cualquier disputa se someterá de manera exclusiva a los Tribunales Ordinarios competentes.</p>
+
       </div>
+
+      <!-- Botones de Acción -->
       <div class="pt-3 border-t border-gray-200 space-y-2">
-        <button onclick="App.aceptarLegalYContinuar()" class="w-full py-3.5 bg-[#E27D60] text-white font-bold rounded-2xl shadow-[4px_4px_8px_#d1cdc7,-4px_-4px_8px_#ffffff] hover:opacity-95 transition-all text-xs tracking-wide">
+        <button onclick="App.aceptarLegalYContinuar()" class="w-full py-3.5 bg-[var(--color-primary)] text-white font-bold rounded-2xl shadow-[4px_4px_8px_#d1cdc7,-4px_-4px_8px_#ffffff] hover:opacity-95 transition-all text-xs tracking-wide">
           Acepto Términos, Políticas y Acelero mi Ingreso
         </button>
         <button onclick="App.cancelarLegal()" class="w-full py-2 text-[11px] text-gray-400 hover:text-gray-600 font-medium">
           Cancelar y Volver al Inicio
         </button>
       </div>
+
     </div>
   </div>
 
-  <!-- ================= CABECERA ================= -->
+  <!-- ================= CABECERA CON BOTONES DE LOGIN Y REGISTRO ================= -->
   <header class="pt-3 pb-1 px-6 max-w-md mx-auto">
     <div class="flex items-center justify-between">
+      <!-- Logo -->
       <div class="cursor-pointer" onclick="App.switchView('view-home')">
-        <span class="text-xl font-extrabold text-[#7A8A7C]">Atrévete <span class="text-[#E27D60]">HealthTech</span></span>
+        <img id="app-logo-img" src="atrevetehtlogo.png" alt="Atrévete HealthTech - Logotipo" class="h-16 w-auto object-contain">
       </div>
+
+      <!-- Botones de autenticación / Perfil -->
       <div id="header-auth-container" class="flex items-center gap-2">
+        <!-- Cuando NO está autenticado -->
         <div id="header-login-btns" class="flex items-center gap-2">
-          <button onclick="App.abrirLogin()" class="header-action-btn btn-login">🔑 Iniciar Sesión</button>
-          <button onclick="App.abrirRegistro()" class="header-action-btn btn-register">✨ Registrarse</button>
+          <button onclick="App.abrirLogin()" class="header-action-btn btn-login focus-visible">
+            🔑 Iniciar Sesión
+          </button>
+          <button onclick="App.abrirRegistro()" class="header-action-btn btn-register focus-visible">
+            ✨ Registrarse
+          </button>
         </div>
+
+        <!-- Cuando SÍ está autenticado -->
         <div id="header-profile-btn" class="hidden">
           <div onclick="App.switchView('view-perfil-usuario')" class="header-profile-btn">
             <div id="header-avatar" class="header-profile-avatar">US</div>
@@ -600,15 +500,15 @@
     </div>
   </header>
 
-  <!-- ================= TOAST ================= -->
+  <!-- ================= TOAST NOTIFICATIONS ================= -->
   <div id="toast" class="toast"></div>
 
-  <!-- ================= MODAL GOOGLE ================= -->
+  <!-- ================= MODAL DE CONFIRMACIÓN DE GOOGLE ================= -->
   <div id="google-modal" class="modal-overlay">
     <div class="modal-content">
       <div class="text-center space-y-4">
         <div class="flex justify-center">
-          <div class="w-20 h-20 rounded-full bg-[#E27D60]/10 flex items-center justify-center">
+          <div class="w-20 h-20 rounded-full bg-[var(--color-primary)]/10 flex items-center justify-center">
             <svg class="w-12 h-12" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
               <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
@@ -617,527 +517,1492 @@
             </svg>
           </div>
         </div>
-        <h3 class="text-2xl font-bold text-[#7A8A7C]">Confirmar Registro</h3>
-        <p class="text-sm text-[#7A8A7C]/70">Confirma tus datos para continuar</p>
+        
+        <h3 class="text-2xl font-bold text-[var(--color-secondary)]">Confirmar Registro</h3>
+        <p class="text-sm text-[var(--color-secondary)]/70">Confirma tus datos para continuar</p>
+        
         <div id="google-user-info" class="bg-stone-50 rounded-2xl p-4 space-y-2 text-left">
           <div class="flex items-center gap-3">
-            <div id="google-avatar-modal" class="w-12 h-12 rounded-full bg-[#E27D60] text-white flex items-center justify-center text-lg font-bold">G</div>
+            <div id="google-avatar-modal" class="w-12 h-12 rounded-full bg-[var(--color-primary)] text-white flex items-center justify-center text-lg font-bold">G</div>
             <div>
-              <p id="google-name-modal" class="font-bold text-sm text-[#7A8A7C]">Cargando...</p>
-              <p id="google-email-modal" class="text-xs text-[#7A8A7C]/70">Cargando...</p>
+              <p id="google-name-modal" class="font-bold text-sm text-[var(--color-secondary)]">Cargando...</p>
+              <p id="google-email-modal" class="text-xs text-[var(--color-secondary)]/70">Cargando...</p>
             </div>
           </div>
           <div class="flex items-center gap-2 pt-2 border-t border-stone-200">
-            <span class="text-xs text-[#7A8A7C]/60">✅ Verificado por Google</span>
+            <span class="text-xs text-[var(--color-secondary)]/60">✅ Verificado por Google</span>
           </div>
         </div>
+
         <div class="flex flex-col gap-3">
           <button onclick="App.confirmarRegistroGoogle()" id="btn-confirmar-google" class="clay-btn-primary w-full py-3.5 text-sm font-bold flex items-center justify-center gap-2">
             <span id="btn-google-text">✅ Confirmar y Continuar</span>
             <span id="btn-google-spinner" class="hidden"><span class="spinner"></span></span>
           </button>
-          <button onclick="App.cancelarRegistroGoogle()" class="w-full py-2.5 text-sm text-[#7A8A7C]/60 hover:text-[#7A8A7C] transition font-medium">Cancelar</button>
+          <button onclick="App.cancelarRegistroGoogle()" class="w-full py-2.5 text-sm text-[var(--color-secondary)]/60 hover:text-[var(--color-secondary)] transition font-medium">
+            Cancelar
+          </button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ================= VIEWS ================= -->
-  
-  <!-- 1. Home -->
-  <main id="view-home" class="app-view max-w-md mx-auto px-5 space-y-5">
-    <div class="text-center space-y-1 mt-3">
-      <h2 class="text-3xl font-extrabold text-[#7A8A7C] leading-tight">Habita Tu Cuerpo</h2>
-      <p class="text-xs text-[#7A8A7C]/80 px-2">Ecosistema somático integrativo para la regulación del sistema nervioso y acompañamiento clínico.</p>
+  <!-- ================= 1. HOME (PANTALLA INICIAL) ================= -->
+  <main id="view-home" class="app-view max-w-md mx-auto px-5 space-y-5 pb-24">
+    <div class="text-center space-y-1">
+      <h2 class="text-3xl font-extrabold text-[var(--color-secondary)] leading-tight">Habita Tu Cuerpo</h2>
+      <p class="text-xs text-[var(--color-secondary)]/80 px-2">Ecosistema somático integrativo para la regulación del sistema nervioso y acompañamiento clínico.</p>
     </div>
-    <div class="relative rounded-[32px] overflow-hidden shadow-md h-52 bg-cover bg-center clay-card" style="background-image: url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=800&q=80');">
+
+    <div id="home-hero-banner" class="relative rounded-[32px] overflow-hidden shadow-md h-52 bg-cover bg-center clay-card" style="background-image: url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=800&q=80');">
       <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-6">
-        <span class="text-white font-semibold text-base drop-shadow">Calibra tu calma somática hoy</span>
+        <span id="home-banner-text" class="text-white font-semibold text-base drop-shadow">Calibra tu calma somática hoy</span>
       </div>
     </div>
+
     <div class="grid grid-cols-2 gap-3">
-      <button onclick="App.switchView('view-regulacion')" class="clay-btn-primary py-3.5 text-center font-bold text-xs">🫁 Regulación Somática</button>
-      <button onclick="App.switchView('view-citas')" class="clay-btn-secondary py-3.5 text-center font-bold text-xs">📅 Agendar Sesión</button>
+      <button onclick="App.switchView('view-regulacion')" class="clay-btn-primary py-3.5 text-center font-bold text-xs focus-visible" aria-label="Ir a Regulación Somática">
+        🫁 Regulación Somática
+      </button>
+      <button onclick="App.switchView('view-citas')" class="clay-btn-secondary py-3.5 text-center font-bold text-xs focus-visible" aria-label="Agendar Sesión">
+        📅 Agendar Sesión
+      </button>
     </div>
+
     <section class="space-y-3">
-      <div class="clay-card p-6 border-2 border-[#E27D60] bg-orange-50/20">
-        <span class="bg-[#E27D60] text-white text-[9px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">Preventa Exclusiva 🔥</span>
-        <h3 class="text-2xl font-extrabold text-[#7A8A7C] mt-2">Campamento Adultas en Fuga</h3>
-        <p class="text-xs text-[#7A8A7C]/80 mt-1 mb-3">Una experiencia inmersiva para desconectarte del estrés corporal y reconectarte en comunidad.</p>
-        <div class="flex justify-between items-center text-xs text-[#7A8A7C] font-semibold mb-4 bg-white/60 p-2.5 rounded-xl">
+      <div class="clay-card p-6 border-2 border-[var(--color-primary)] bg-orange-50/20">
+        <span class="bg-[var(--color-primary)] text-white text-[9px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">Preventa Exclusiva 🔥</span>
+        <h3 class="text-2xl font-extrabold text-[var(--color-secondary)] mt-2">Campamento Adultas en Fuga</h3>
+        <p class="text-xs text-[var(--color-secondary)]/80 mt-1 mb-3">Una experiencia inmersiva para desconectarte del estrés corporal y reconectarte en comunidad.</p>
+        <div class="flex justify-between items-center text-xs text-[var(--color-secondary)] font-semibold mb-4 bg-white/60 p-2.5 rounded-xl">
           <span>📍 Maracay, Venezuela</span>
           <span>📅 26 Sep, 2026</span>
         </div>
-        <button onclick="App.switchView('view-pagos')" class="clay-btn-primary w-full py-3 font-bold text-sm">Reservar Mi Cupo ($120)</button>
+        <button onclick="App.switchView('view-pagos')" class="clay-btn-primary w-full py-3 font-bold text-sm focus-visible">Reservar Mi Cupo ($120)</button>
       </div>
     </section>
+
     <div class="text-center pt-1">
-      <button onclick="App.switchView('view-admin-login')" class="text-[10px] text-stone-400 hover:text-[#7A8A7C] transition">⚙️ Panel Administrativo</button>
+      <button onclick="App.switchView('view-admin-dashboard')" class="text-[10px] text-stone-400 hover:text-[var(--color-secondary)] transition focus-visible">⚙️ Panel Administrativo</button>
     </div>
   </main>
 
-  <!-- 2. Auth -->
-  <main id="view-auth" class="app-view max-w-md mx-auto px-5 space-y-6 hidden mt-4">
+  <!-- ================= 2. AUTENTICACIÓN (LOGIN / REGISTRO) ================= -->
+  <main id="view-auth" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
     <div class="text-center space-y-1">
-      <h2 id="auth-title" class="text-2xl font-bold text-[#7A8A7C]">Iniciar Sesión</h2>
-      <p id="auth-subtitle" class="text-xs text-[#7A8A7C]/70">Accede a tu cuenta de Atrévete HealthTech</p>
+      <h2 id="auth-title" class="text-2xl font-bold text-[var(--color-secondary)]">Iniciar Sesión</h2>
+      <p id="auth-subtitle" class="text-xs text-[var(--color-secondary)]/70">Accede a tu cuenta de Atrévete HealthTech</p>
     </div>
-    <div class="flex p-1 bg-stone-200/60 rounded-2xl">
-      <button id="tab-login" onclick="App.switchAuthMode('login')" class="flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[#7A8A7C] shadow-sm transition">🔑 Iniciar Sesión</button>
-      <button id="tab-register" onclick="App.switchAuthMode('register')" class="flex-1 py-2.5 text-xs font-bold rounded-xl text-[#7A8A7C] transition">✨ Registrarse</button>
+
+    <div class="flex p-1 bg-stone-200/60 rounded-2xl" role="tablist">
+      <button id="tab-login" onclick="App.switchAuthMode('login')" class="flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[var(--color-secondary)] shadow-sm transition focus-visible" role="tab" aria-selected="true">
+        🔑 Iniciar Sesión
+      </button>
+      <button id="tab-register" onclick="App.switchAuthMode('register')" class="flex-1 py-2.5 text-xs font-bold rounded-xl text-[var(--color-secondary)] transition focus-visible" role="tab" aria-selected="false">
+        ✨ Registrarse
+      </button>
     </div>
-    <button onclick="App.iniciarRegistroGoogleSimulado()" class="google-btn">
+
+    <!-- Botón de Google SIMULADO -->
+    <button onclick="App.iniciarRegistroGoogleSimulado()" class="google-btn focus-visible" aria-label="Registrarse con Google">
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
         <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
         <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
         <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
       </svg>
-      Continuar con Google
+      <span>Registrarse con Google</span>
     </button>
-    <div class="relative flex py-2 items-center">
+
+    <div class="relative flex items-center py-1">
       <div class="flex-grow border-t border-stone-300"></div>
-      <span class="flex-shrink mx-4 text-xs text-stone-400">o correo electrónico</span>
+      <span class="flex-shrink-0 mx-4 text-stone-400 text-[11px]">o con tu correo electrónico</span>
       <div class="flex-grow border-t border-stone-300"></div>
     </div>
-    <form onsubmit="App.handleAuthSubmit(event)" class="space-y-4">
-      <div>
-        <label class="block text-xs font-bold text-[#7A8A7C] mb-1">Correo electrónico</label>
-        <input type="email" id="auth-email" required class="w-full px-4 py-3 clay-input text-xs text-[#7A8A7C] outline-none" placeholder="tu@correo.com">
+
+    <form onsubmit="event.preventDefault(); App.procesarAuthEmail();" class="clay-card p-6 space-y-4" novalidate>
+      <div id="field-nombre" class="hidden">
+        <label class="block text-xs font-bold text-[var(--color-secondary)] mb-1" for="input-nombre">Nombre Completo</label>
+        <input type="text" id="input-nombre" placeholder="Ej. Ana Mendoza" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible" aria-required="true">
       </div>
+
       <div>
-        <label class="block text-xs font-bold text-[#7A8A7C] mb-1">Contraseña</label>
-        <input type="password" id="auth-password" required class="w-full px-4 py-3 clay-input text-xs text-[#7A8A7C] outline-none" placeholder="••••••••">
+        <label class="block text-xs font-bold text-[var(--color-secondary)] mb-1" for="input-email">Correo Electrónico</label>
+        <input type="email" id="input-email" placeholder="correo@ejemplo.com" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible" required aria-required="true">
+        <div id="email-error" class="text-red-500 text-xs mt-1 hidden">Por favor ingresa un correo válido</div>
       </div>
-      <button type="submit" id="auth-submit-btn" class="clay-btn-primary w-full py-3.5 text-xs font-bold">Iniciar Sesión</button>
+
+      <div>
+        <label class="block text-xs font-bold text-[var(--color-secondary)] mb-1" for="input-password">Contraseña</label>
+        <input type="password" id="input-password" placeholder="••••••••" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible" required minlength="6" aria-required="true">
+        <div id="password-error" class="text-red-500 text-xs mt-1 hidden">La contraseña debe tener al menos 6 caracteres</div>
+      </div>
+
+      <div id="field-rol" class="hidden space-y-2 border-t border-[var(--color-secondary)]/20 pt-3">
+        <label class="block text-xs font-bold text-[var(--color-secondary)]">Tipo de Cuenta:</label>
+        <div class="flex gap-2">
+          <button type="button" id="btn-role-user" onclick="App.setAuthRole('user')" class="flex-1 py-2 text-xs font-bold rounded-xl bg-orange-100 text-[var(--color-primary)] border border-[var(--color-primary)]/30 transition focus-visible" aria-pressed="true">
+            Usuario / Paciente
+          </button>
+          <button type="button" id="btn-role-spec" onclick="App.setAuthRole('spec')" class="flex-1 py-2 text-xs font-bold rounded-xl bg-stone-100 text-[var(--color-secondary)] transition focus-visible" aria-pressed="false">
+            Especialista
+          </button>
+        </div>
+      </div>
+
+      <div id="link-forgot-container" class="text-right">
+        <button type="button" onclick="App.switchView('view-recovery')" class="text-[11px] text-[var(--color-primary)] font-semibold hover:underline focus-visible">
+          ¿Olvidaste tu contraseña?
+        </button>
+      </div>
+
+      <button type="submit" id="auth-submit-btn" class="clay-btn-primary w-full py-3.5 text-xs font-bold mt-2 focus-visible">
+        Iniciar Sesión
+      </button>
+      
+      <!-- BOTÓN DE CANCELAR AGREGADO -->
+      <button type="button" onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold focus-visible">
+        Cancelar
+      </button>
     </form>
+
+    <p class="text-[10px] text-center text-[var(--color-secondary)]/70 mt-4">
+      Al registrarte o agendar, aceptas nuestras 
+      <button onclick="App.switchView('view-privacidad')" class="underline font-semibold text-[var(--color-primary)] focus-visible">
+        Políticas de Privacidad y Términos Legalmente Vinculantes
+      </button>.
+    </p>
+
+    <button onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold focus-visible">Volver al Inicio</button>
   </main>
 
-  <!-- 3. Regulación Somática -->
-  <main id="view-regulacion" class="app-view max-w-md mx-auto px-5 space-y-5 hidden mt-4">
+  <!-- ================= 3. RECUPERACIÓN DE CONTRASEÑA ================= -->
+  <main id="view-recovery" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
     <div class="text-center space-y-1">
-      <h2 class="text-2xl font-extrabold text-[#7A8A7C]">Escáner y Regulación</h2>
-      <p class="text-xs text-[#7A8A7C]/80">Ejercicios guiados para tu sistema nervioso autónomo.</p>
+      <h2 class="text-2xl font-bold text-[var(--color-secondary)]">Recuperar Contraseña</h2>
+      <p class="text-xs text-[var(--color-secondary)]/70">Ingresa tu correo electrónico registrado y te enviaremos las instrucciones.</p>
     </div>
-    <div class="clay-card p-6 space-y-4 text-center">
-      <div class="w-24 h-24 mx-auto rounded-full bg-orange-100 flex items-center justify-center text-4xl shadow-inner animate-pulse">
-        🫁
-      </div>
-      <h3 class="text-lg font-bold text-[#7A8A7C]">Respiración Coherente 4-6</h3>
-      <p class="text-xs text-stone-600">Inhala profundamente activando el diafragma y exhala con sonido para estimular el nervio vago.</p>
-      <button onclick="App.iniciarRespiracion()" id="btn-respirar" class="clay-btn-primary w-full py-3 text-xs font-bold">Iniciar Sesión de 3 Minutos</button>
-    </div>
-  </main>
 
-  <!-- 4. Citas -->
-  <main id="view-citas" class="app-view max-w-md mx-auto px-5 space-y-5 hidden mt-4">
-    <div class="text-center space-y-1">
-      <h2 class="text-2xl font-extrabold text-[#7A8A7C]">Agendar Sesión</h2>
-      <p class="text-xs text-[#7A8A7C]/80">Reserva tu espacio de acompañamiento integrativo.</p>
-    </div>
-    <div class="clay-card p-6 space-y-4">
+    <form onsubmit="event.preventDefault(); App.procesarRecuperacion();" class="clay-card p-6 space-y-4">
       <div>
-        <label class="block text-xs font-bold text-[#7A8A7C] mb-1">Selecciona la Especialidad</label>
-        <select id="cita-tipo" class="w-full px-4 py-3 clay-input text-xs text-[#7A8A7C] outline-none">
-          <option>Regulación del Sistema Nervioso ($50)</option>
-          <option>Acompañamiento Corporativo de Seguros ($90)</option>
-          <option>Valoración Somática Integral ($70)</option>
-        </select>
+        <label class="block text-xs font-bold text-[var(--color-secondary)] mb-1" for="recovery-email">Correo Electrónico</label>
+        <input type="email" id="recovery-email" placeholder="correo@ejemplo.com" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible" required>
       </div>
-      <div>
-        <label class="block text-xs font-bold text-[#7A8A7C] mb-1">Fecha y Hora Preferida</label>
-        <input type="datetime-local" id="cita-fecha" class="w-full px-4 py-3 clay-input text-xs text-[#7A8A7C] outline-none">
-      </div>
-      <button onclick="App.agendarCita()" class="clay-btn-primary w-full py-3 text-xs font-bold">Confirmar Cita</button>
-    </div>
+
+      <button type="submit" class="clay-btn-primary w-full py-3.5 text-xs font-bold mt-2 focus-visible">
+        Enviar Enlace de Recuperación
+      </button>
+    </form>
+
+    <button onclick="App.switchView('view-auth')" class="clay-btn-secondary w-full py-3 text-xs font-bold focus-visible">← Volver al Ingreso</button>
   </main>
 
-  <!-- 5. Pagos -->
-  <main id="view-pagos" class="app-view max-w-md mx-auto px-5 space-y-5 hidden mt-4">
-    <div class="text-center space-y-1">
-      <h2 class="text-2xl font-extrabold text-[#7A8A7C]">Pasarela de Pagos</h2>
-      <p class="text-xs text-[#7A8A7C]/80">Métodos seguros integrados para Venezuela y el mundo.</p>
-    </div>
-    <div class="clay-card p-6 space-y-4">
-      <div class="bg-orange-50 p-4 rounded-2xl border border-orange-200">
-        <p class="text-xs font-bold text-[#E27D60]">Total a Pagar:</p>
-        <p class="text-2xl font-extrabold text-[#7A8A7C]" id="monto-pagar">$120.00 USD</p>
+  <!-- ================= 4. PERFIL DE USUARIO MEJORADO ================= -->
+  <main id="view-perfil-usuario" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
+    <!-- Tarjeta de perfil principal -->
+    <div class="clay-card profile-card p-6 text-center space-y-4 relative overflow-hidden">
+      <!-- Decoración de fondo -->
+      <div class="absolute top-0 right-0 w-40 h-40 bg-[var(--color-primary)]/5 rounded-full -translate-y-20 translate-x-20"></div>
+      <div class="absolute bottom-0 left-0 w-32 h-32 bg-[var(--color-primary)]/5 rounded-full translate-y-16 -translate-x-16"></div>
+      
+      <!-- Avatar -->
+      <div class="relative z-10">
+        <div id="profile-avatar" class="profile-avatar-large mx-auto bg-[var(--color-primary)] text-white flex items-center justify-center text-4xl font-bold" aria-label="Avatar de usuario">
+          US
+        </div>
+        <button onclick="App.cambiarFotoPerfil()" class="absolute bottom-0 right-1/3 bg-white rounded-full p-1.5 shadow-md hover:shadow-lg transition-all z-20">
+          <svg class="w-4 h-4 text-[var(--color-secondary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+          </svg>
+        </button>
       </div>
-      <div class="space-y-2">
-        <label class="block text-xs font-bold text-[#7A8A7C]">Selecciona Método de Pago</label>
-        <div class="grid grid-cols-2 gap-2">
-          <button type="button" onclick="App.seleccionarMetodoPago('pagomovil')" class="clay-btn-pay p-3 text-xs font-bold text-center active-pay" id="pay-pagomovil">📱 Pago Móvil</button>
-          <button type="button" onclick="App.seleccionarMetodoPago('zelle')" class="clay-btn-pay p-3 text-xs font-bold text-center" id="pay-zelle">🏦 Zelle</button>
-          <button type="button" onclick="App.seleccionarMetodoPago('binance')" class="clay-btn-pay p-3 text-xs font-bold text-center" id="pay-binance">🪙 Binance Pay</button>
-          <button type="button" onclick="App.seleccionarMetodoPago('tarjeta')" class="clay-btn-pay p-3 text-xs font-bold text-center" id="pay-tarjeta">💳 Tarjeta Int.</button>
+      
+      <!-- Información del usuario -->
+      <div class="relative z-10">
+        <h3 id="profile-name" class="text-xl font-bold text-[var(--color-secondary)]">Usuario</h3>
+        <p id="profile-email" class="text-sm text-[var(--color-secondary)]/70">correo@ejemplo.com</p>
+        <div class="flex items-center justify-center gap-2 mt-1 flex-wrap">
+          <span id="profile-role" class="text-xs bg-[var(--color-primary)]/10 text-[var(--color-primary)] font-semibold px-3 py-1 rounded-full">👤 Usuario</span>
+          <span id="profile-register-method" class="text-[10px] text-[var(--color-secondary)]/40">Registrado con: Email</span>
+        </div>
+        <div id="profile-verified-container" class="mt-2 flex justify-center">
+          <span class="verified-badge">✅ Correo verificado</span>
         </div>
       </div>
-      <div id="instrucciones-pago" class="bg-stone-50 p-3 rounded-xl text-xs text-stone-600 space-y-1">
-        <p class="font-bold text-[#7A8A7C]">Datos de Pago Móvil:</p>
-        <p>Banco: BNC (0191) | V-15.123.456</p>
-        <p>Telf: 0414-4123456</p>
+    </div>
+
+    <!-- Estadísticas -->
+    <div class="grid grid-cols-3 gap-3">
+      <div class="profile-stat">
+        <div class="number" id="profile-sesiones">0</div>
+        <div class="label">Sesiones</div>
+      </div>
+      <div class="profile-stat">
+        <div class="number" id="profile-ejercicios">0</div>
+        <div class="label">Ejercicios</div>
+      </div>
+      <div class="profile-stat">
+        <div class="number" id="profile-dias">0</div>
+        <div class="label">Días Activo</div>
+      </div>
+    </div>
+
+    <!-- Información personal -->
+    <div class="clay-card p-5 space-y-3">
+      <h4 class="font-bold text-sm text-[var(--color-secondary)] flex items-center gap-2">
+        <span>📋</span> Información Personal
+      </h4>
+      <div class="space-y-2 text-xs">
+        <div class="flex justify-between py-2 border-b border-stone-100">
+          <span class="text-[var(--color-secondary)]/60">📱 Teléfono</span>
+          <span id="profile-telefono-display" class="text-[var(--color-secondary)] font-medium">No registrado</span>
+        </div>
+        <div class="flex justify-between py-2 border-b border-stone-100">
+          <span class="text-[var(--color-secondary)]/60">🎂 Fecha de Nacimiento</span>
+          <span id="profile-fecha-display" class="text-[var(--color-secondary)] font-medium">No registrada</span>
+        </div>
+        <div class="flex justify-between py-2">
+          <span class="text-[var(--color-secondary)]/60">📅 Miembro desde</span>
+          <span id="profile-miembro-desde" class="text-[var(--color-secondary)] font-medium">Hoy</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Acciones del perfil -->
+    <div class="space-y-3">
+      <button onclick="App.mostrarEditarPerfil()" class="clay-btn-primary w-full py-3.5 text-sm font-bold flex items-center justify-center gap-2 focus-visible">
+        <span>✏️</span> Editar Perfil
+      </button>
+      <button onclick="App.cerrarSesion()" class="w-full py-3.5 text-sm font-medium text-[var(--color-primary)] border-2 border-[var(--color-primary)]/30 rounded-full hover:bg-[var(--color-primary)]/5 hover:border-[var(--color-primary)] transition-all focus-visible">
+        Cerrar Sesión
+      </button>
+    </div>
+
+    <!-- Formulario de Edición de Perfil (oculto) -->
+    <div id="editar-perfil-form" class="clay-card p-5 space-y-4 hidden">
+      <h4 class="font-bold text-sm text-[var(--color-secondary)] flex items-center gap-2">
+        <span>✏️</span> Editar Datos Personales
+      </h4>
+      <div>
+        <label class="block text-xs font-bold text-[var(--color-secondary)] mb-1" for="edit-nombre">Nombre Completo</label>
+        <input type="text" id="edit-nombre" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible">
       </div>
       <div>
-        <label class="block text-xs font-bold text-[#7A8A7C] mb-1">Referencia o Comprobante</label>
-        <input type="text" id="pago-ref" class="w-full px-4 py-3 clay-input text-xs text-[#7A8A7C] outline-none" placeholder="Número de confirmación o hash">
+        <label class="block text-xs font-bold text-[var(--color-secondary)] mb-1" for="edit-telefono">Teléfono</label>
+        <input type="tel" id="edit-telefono" placeholder="0414-1234567" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible">
       </div>
-      <button onclick="App.procesarPago()" class="clay-btn-primary w-full py-3 text-xs font-bold">Reportar Pago y Acceder</button>
+      <div>
+        <label class="block text-xs font-bold text-[var(--color-secondary)] mb-1" for="edit-fecha-nac">Fecha de Nacimiento</label>
+        <input type="date" id="edit-fecha-nac" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible">
+      </div>
+      <div class="flex gap-3">
+        <button onclick="App.guardarEditarPerfil()" class="clay-btn-primary flex-1 py-3 text-xs font-bold focus-visible">
+          💾 Guardar Cambios
+        </button>
+        <button onclick="App.cancelarEditarPerfil()" class="clay-btn-secondary flex-1 py-3 text-xs font-bold focus-visible">
+          Cancelar
+        </button>
+      </div>
     </div>
   </main>
 
-  <!-- 6. Perfil Usuario -->
-  <main id="view-perfil-usuario" class="app-view max-w-md mx-auto px-5 space-y-5 hidden mt-4">
+  <!-- ================= 5. MÉTODOS DE PAGO ================= -->
+  <main id="view-pagos" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
+    <h2 class="text-2xl font-bold text-[var(--color-secondary)] text-center">Pasarela de Pago</h2>
+
+    <div class="clay-card p-4 bg-orange-50/30 border border-[var(--color-primary)]/20 flex justify-between items-center">
+      <div>
+        <h4 class="font-bold text-xs text-[var(--color-secondary)]">Reserva Campamento Adultas en Fuga</h4>
+        <p class="text-[10px] text-[var(--color-secondary)]/70">26 de Septiembre, Maracay</p>
+      </div>
+      <span class="text-base font-extrabold text-[var(--color-primary)]">$120.00</span>
+    </div>
+
+    <div class="clay-card p-5 space-y-4">
+      <label class="block text-xs font-bold text-[var(--color-secondary)]">Selecciona Método de Pago:</label>
+      
+      <div class="grid grid-cols-2 gap-2.5" role="radiogroup" aria-label="Métodos de pago">
+        <button type="button" id="pay-bdv" onclick="App.selectPaymentMethod('pm_bdv')" class="clay-btn-pay active-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1 focus-visible" role="radio" aria-checked="true" aria-label="Pago Móvil Banco de Venezuela">
+          <span class="text-base">🇻🇪</span>
+          <span>Pago Móvil BDV</span>
+        </button>
+        
+        <button type="button" id="pay-bnc" onclick="App.selectPaymentMethod('pm_bnc')" class="clay-btn-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1 focus-visible" role="radio" aria-checked="false" aria-label="Pago Móvil Banco Nacional de Crédito">
+          <span class="text-base">🇻🇪</span>
+          <span>Pago Móvil BNC</span>
+        </button>
+
+        <button type="button" id="pay-zelle" onclick="App.selectPaymentMethod('zelle')" class="clay-btn-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1 focus-visible" role="radio" aria-checked="false" aria-label="Zelle">
+          <span class="text-base">🇺🇸</span>
+          <span>Zelle</span>
+          <span class="text-[8px] text-amber-600 font-normal">(Próximamente)</span>
+        </button>
+        
+        <button type="button" id="pay-binance" onclick="App.selectPaymentMethod('binance')" class="clay-btn-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1 focus-visible" role="radio" aria-checked="false" aria-label="Binance Pay">
+          <span class="text-base">🟡</span>
+          <span>Binance Pay</span>
+          <span class="text-[8px] text-green-600 font-normal">(USDT)</span>
+        </button>
+      </div>
+
+      <div id="datos-pago-box" class="bg-stone-100/90 p-4 rounded-2xl border border-stone-200/80 space-y-1.5 text-xs text-[var(--color-secondary)] min-h-[80px]">
+        <!-- Dinámico -->
+        <p class="text-center text-stone-400">Selecciona un método de pago</p>
+      </div>
+
+      <div id="container-ref-pago" class="space-y-2">
+        <label class="block text-xs font-bold text-[var(--color-secondary)] mb-1" for="input-ref-pago">Número de Referencia / Hash / Comprobante</label>
+        <input id="input-ref-pago" type="text" placeholder="Ej. #849204 o Hash de transferencia" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible">
+        <p id="ref-pago-helper" class="text-[10px] text-stone-400 hidden">Ingresa el código de tu transferencia para verificar el pago.</p>
+      </div>
+
+      <button id="btn-enviar-pago" onclick="App.confirmarPagoMock()" class="clay-btn-primary w-full py-3.5 text-xs font-bold focus-visible">
+        Reportar / Enviar Comprobante
+      </button>
+    </div>
+
+    <p class="text-[10px] text-center text-[var(--color-secondary)]/70 mt-2">
+      Al registrarte o agendar, aceptas nuestras 
+      <button onclick="App.switchView('view-privacidad')" class="underline font-semibold text-[var(--color-primary)] focus-visible">
+        Políticas de Privacidad y Términos Legalmente Vinculantes
+      </button>.
+    </p>
+
+    <button onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold focus-visible">Cancelar</button>
+  </main>
+
+  <!-- ================= 6. REGULACIÓN SOMÁTICA ================= -->
+  <main id="view-regulacion" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
+    <div class="text-center space-y-1">
+      <h2 class="text-2xl font-bold text-[var(--color-secondary)]">Gimnasio Emocional</h2>
+      <p class="text-xs text-[var(--color-secondary)]/80">Diagnóstico Somático & Técnicas de Regulación</p>
+    </div>
+
+    <div class="clay-card p-5 space-y-4 border border-[var(--color-primary)]/20">
+      <div class="flex justify-between items-center border-b border-stone-200 pb-2">
+        <span class="text-xs font-bold text-[var(--color-primary)] uppercase tracking-wider">🔍 Chequeo Corporal</span>
+        <span id="quiz-step-indicator" class="text-[10px] font-bold text-[var(--color-secondary)] bg-stone-100 px-2 py-0.5 rounded-full">Paso 1 de 3</span>
+      </div>
+
+      <div id="quiz-step-1" class="space-y-3">
+        <p class="text-xs font-bold text-[var(--color-secondary)]">1. ¿Cómo sientes tu estado corporal / emocional en este momento?</p>
+        <div class="space-y-2">
+          <button onclick="App.answerQuiz(1, 'ansiedad')" class="clay-btn-option w-full text-xs focus-visible" aria-label="Ansioso o Acelerado">
+            🔴 <strong>Ansioso / Acelerado:</strong> Siento inquietud, taquicardia o mente saturada.
+          </button>
+          <button onclick="App.answerQuiz(1, 'bloqueo')" class="clay-btn-option w-full text-xs focus-visible" aria-label="Agotado o Desconectado">
+            🟡 <strong>Agotado / Desconectado:</strong> Siento pesadez, parálisis o desmotivación.
+          </button>
+          <button onclick="App.answerQuiz(1, 'calma')" class="clay-btn-option w-full text-xs focus-visible" aria-label="Estable o en Calma">
+            🟢 <strong>Estable / En Calma:</strong> Quiero mantener mi balance y centrar mi mente.
+          </button>
+        </div>
+      </div>
+
+      <div id="quiz-step-2" class="space-y-3 hidden">
+        <p class="text-xs font-bold text-[var(--color-secondary)]">2. ¿Dónde se concentra la mayor tensión física?</p>
+        <div class="space-y-2">
+          <button onclick="App.answerQuiz(2, 'pecho')" class="clay-btn-option w-full text-xs focus-visible">
+            🫁 <strong>Pecho / Respiración:</strong> Siento opresión al inhalar o aire entrecortado.
+          </button>
+          <button onclick="App.answerQuiz(2, 'cuello')" class="clay-btn-option w-full text-xs focus-visible">
+            💆 <strong>Cuello / Mandíbula:</strong> Dientes apretados, hombros rígidos o cefalea.
+          </button>
+          <button onclick="App.answerQuiz(2, 'estomago')" class="clay-btn-option w-full text-xs focus-visible">
+            🫃 <strong>Estómago / Plexo:</strong> Sensación de nudo en el abdomen o digestión lenta.
+          </button>
+        </div>
+      </div>
+
+      <div id="quiz-step-3" class="space-y-3 hidden">
+        <p class="text-xs font-bold text-[var(--color-secondary)]">3. ¿Qué necesita tu cuerpo en este instante?</p>
+        <div class="space-y-2">
+          <button onclick="App.answerQuiz(3, 'bajar')" class="clay-btn-option w-full text-xs focus-visible">
+            ⚓ <strong>Bajar revoluciones:</strong> Calmar la aceleración y soltar el control.
+          </button>
+          <button onclick="App.answerQuiz(3, 'activar')" class="clay-btn-option w-full text-xs focus-visible">
+            ⚡ <strong>Salir del aletargamiento:</strong> Movilizar la energía estancada.
+          </button>
+          <button onclick="App.answerQuiz(3, 'liberar')" class="clay-btn-option w-full text-xs focus-visible">
+            🕊️ <strong>Descargar tensión:</strong> Soltar cargas emocionales del día.
+          </button>
+        </div>
+      </div>
+
+      <div id="quiz-result" class="space-y-4 hidden">
+        <div class="p-3 rounded-2xl bg-orange-100/50 text-xs text-[var(--color-secondary)]">
+          <p id="quiz-diagnosis-title" class="font-bold text-[var(--color-primary)] text-sm mb-1"></p>
+          <p id="quiz-diagnosis-desc"></p>
+        </div>
+        <div id="recommended-technique-card" class="p-4 rounded-2xl bg-white border border-[var(--color-primary)]/30 shadow-sm space-y-2"></div>
+        <button onclick="App.resetQuiz()" class="text-xs font-bold text-[var(--color-primary)] underline text-center w-full block focus-visible">
+          🔄 Repetir Evaluación
+        </button>
+      </div>
+    </div>
+
     <div class="clay-card p-6 text-center space-y-4">
-      <div class="w-20 h-20 mx-auto rounded-full bg-[#E27D60] text-white flex items-center justify-center text-2xl font-bold shadow-lg" id="perfil-avatar">US</div>
-      <div>
-        <h3 class="text-lg font-bold text-[#7A8A7C]" id="perfil-nombre">Nombre de Usuario</h3>
-        <p class="text-xs text-stone-500" id="perfil-email">correo@dominio.com</p>
-        <span class="inline-block mt-2 px-3 py-1 bg-green-100 text-green-800 text-[10px] font-bold rounded-full">Miembro Verificado</span>
-      </div>
-      <div class="grid grid-cols-2 gap-3 pt-2">
-        <div class="bg-stone-50 p-3 rounded-2xl text-center">
-          <p class="text-xs text-stone-500">Sesiones</p>
-          <p class="text-base font-bold text-[#E27D60]">3</p>
-        </div>
-        <div class="bg-stone-50 p-3 rounded-2xl text-center">
-          <p class="text-xs text-stone-500">Estado</p>
-          <p class="text-base font-bold text-[#7A8A7C]">Activo</p>
+      <h3 class="font-bold text-sm text-[var(--color-secondary)]">Práctica Guiada: Calibrador de Respiración</h3>
+      <p class="text-[11px] text-[var(--color-secondary)]/80">Acompasa tu ritmo respiratorio con el círculo para activar el nervio vago ventral.</p>
+      <div class="flex flex-col items-center justify-center py-4">
+        <div id="breath-circle" class="w-40 h-40 rounded-full bg-[#F0B7A1] flex items-center justify-center text-white font-bold text-base shadow-lg border-4 border-white transition-all duration-1000" role="img" aria-label="Círculo de respiración guiada">
+          Inhala...
         </div>
       </div>
-      <button onclick="App.cerrarSesion()" class="w-full py-3 bg-red-100 text-red-600 text-xs font-bold rounded-2xl hover:bg-red-200 transition">Cerrar Sesión</button>
     </div>
+
+    <button onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold text-xs focus-visible">Volver al Inicio</button>
   </main>
 
-  <!-- 7. Panel Administrativo -->
-  <main id="view-admin-login" class="app-view max-w-md mx-auto px-5 space-y-5 hidden mt-4">
+  <!-- ================= 7. AGENDAMIENTO DE CITAS ================= -->
+  <main id="view-citas" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
+    <h2 class="text-2xl font-bold text-[var(--color-secondary)] text-center">Agendar tu Sesión</h2>
+    <div class="clay-card p-5 space-y-4">
+      <label class="block text-xs font-bold text-[var(--color-secondary)]" for="select-terapeuta">Especialista:</label>
+      <select id="select-terapeuta" class="w-full p-3 rounded-xl border border-[var(--color-secondary)]/20 bg-white text-xs text-[var(--color-secondary)] focus-visible">
+        <option value="Dra. Carla Rodríguez">Dra. Carla Rodríguez</option>
+        <option value="Dra. María González">Dra. María González</option>
+        <option value="Lic. Ana Pérez">Lic. Ana Pérez</option>
+      </select>
+      
+      <div>
+        <label class="block text-xs font-bold text-[var(--color-secondary)] mb-1" for="fecha-cita">Fecha de la Cita:</label>
+        <input type="date" id="fecha-cita" class="w-full p-3 rounded-xl border border-[var(--color-secondary)]/20 bg-white text-xs text-[var(--color-secondary)] focus-visible">
+      </div>
+      
+      <div>
+        <label class="block text-xs font-bold text-[var(--color-secondary)] mb-1" for="hora-cita">Hora de la Cita:</label>
+        <input type="time" id="hora-cita" class="w-full p-3 rounded-xl border border-[var(--color-secondary)]/20 bg-white text-xs text-[var(--color-secondary)] focus-visible">
+      </div>
+      
+      <button onclick="App.procesarCitaWhatsApp()" class="clay-btn-primary w-full py-3.5 font-bold text-xs focus-visible">Confirmar Cita vía WhatsApp</button>
+    </div>
+    <button onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold text-xs focus-visible">Volver</button>
+  </main>
+
+  <!-- ================= 8. POLÍTICAS DE PRIVACIDAD ================= -->
+  <main id="view-privacidad" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
     <div class="text-center space-y-1">
-      <h2 class="text-2xl font-extrabold text-[#7A8A7C]">Panel Administrativo</h2>
-      <p class="text-xs text-[#7A8A7C]/80">Acceso restringido para gestión de ecosystema y B2B.</p>
+      <h2 class="text-2xl font-bold text-[var(--color-secondary)]">Políticas de Privacidad</h2>
+      <p class="text-xs text-[var(--color-secondary)]/70">Términos Legalmente Vinculantes • Atrévete HealthTech</p>
     </div>
-    <div class="clay-card p-6 space-y-4">
+
+    <div class="clay-card p-5 space-y-4 text-xs text-[var(--color-secondary)] leading-relaxed max-h-[60vh] overflow-y-auto">
+      <section class="space-y-1.5">
+        <h3 class="font-extrabold text-[var(--color-primary)] text-sm">1. Protección de Datos Personales</h3>
+        <p>En Atrévete HealthTech valoramos y resguardamos tu privacidad. Los datos personales, registros de pagos móviles o transacciones en criptomonedas (Binance Pay) recopilados son utilizados exclusivamente para la validación de membresías, gestión de cupos en eventos y acompañamiento clínico somático.</p>
+      </section>
+      <section class="space-y-1.5">
+        <h3 class="font-extrabold text-[var(--color-primary)] text-sm">2. Confidencialidad Clínica y Somática</h3>
+        <p>Toda la información obtenida a través de nuestros test de regulación somática, interacciones y sesiones agendadas se rige bajo estricta confidencialidad profesional médico-paciente.</p>
+      </section>
+      <section class="space-y-1.5">
+        <h3 class="font-extrabold text-[var(--color-primary)] text-sm">3. Condiciones de Reserva y Pagos</h3>
+        <p>Las reservas para campamentos, eventos presenciales o consultas quedan sujetas a la verificación exitosa de los comprobantes de pago reportados mediante nuestros canales oficiales.</p>
+      </section>
+    </div>
+
+    <button onclick="App.switchView('view-auth')" class="clay-btn-primary w-full py-3.5 font-bold text-xs focus-visible">Entendido / Volver</button>
+  </main>
+
+  <!-- ================= 9. PANEL ADMINISTRATIVO DASHBOARD ================= -->
+  <main id="view-admin-dashboard" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
+    <div class="flex justify-between items-center border-b border-stone-200 pb-3">
       <div>
-        <label class="block text-xs font-bold text-[#7A8A7C] mb-1">Clave de Administrador</label>
-        <input type="password" id="admin-pass" class="w-full px-4 py-3 clay-input text-xs text-[#7A8A7C] outline-none" placeholder="••••••••">
+        <h2 class="text-xl font-bold text-[var(--color-secondary)]">Gestor Visual Admin</h2>
+        <p class="text-[10px] text-[var(--color-secondary)]/70">Actualiza logotipos e imágenes en tiempo real</p>
       </div>
-      <button onclick="App.loginAdmin()" class="clay-btn-primary w-full py-3 text-xs font-bold">Ingresar al Panel</button>
+      <button onclick="App.switchView('view-home')" class="px-3 py-1.5 bg-stone-200 text-[var(--color-secondary)] text-xs font-bold rounded-xl focus-visible">Salir</button>
+    </div>
+
+    <form onsubmit="event.preventDefault(); App.guardarCambiosAdmin();" class="clay-card p-5 space-y-4">
+      <div>
+        <label class="block text-xs font-bold text-[var(--color-secondary)] mb-1">URL del Logotipo (Header)</label>
+        <input type="url" id="admin-logo-url" placeholder="https://ejemplo.com/logo.png" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible">
+      </div>
+
+      <div>
+        <label class="block text-xs font-bold text-[var(--color-secondary)] mb-1">URL de la Imagen Banner Principal (Home)</label>
+        <input type="url" id="admin-banner-img-url" placeholder="https://images.unsplash.com/..." class="w-full p-3 text-xs clay-input focus:outline-none focus-visible">
+      </div>
+
+      <div>
+        <label class="block text-xs font-bold text-[var(--color-secondary)] mb-1">Texto Destacado del Banner Principal</label>
+        <input type="text" id="admin-banner-text" placeholder="Ej. Calibra tu calma somática hoy" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible">
+      </div>
+
+      <!-- Nuevos campos de color -->
+      <div class="space-y-3 border-t border-stone-200 pt-3">
+        <label class="block text-xs font-bold text-[var(--color-secondary)]">🎨 Colores Personalizados</label>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="text-[10px] text-[var(--color-secondary)]">Color Primario</label>
+            <input type="color" id="admin-color-primary" value="#E27D60" class="w-full h-10 rounded-xl cursor-pointer">
+          </div>
+          <div>
+            <label class="text-[10px] text-[var(--color-secondary)]">Color Secundario</label>
+            <input type="color" id="admin-color-secondary" value="#7A8A7C" class="w-full h-10 rounded-xl cursor-pointer">
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="clay-btn-primary w-full py-3.5 font-bold text-xs mt-2 focus-visible">
+        💾 Guardar y Aplicar Cambios
+      </button>
+    </form>
+
+    <div class="clay-card p-4 bg-orange-50/40 text-[11px] text-[var(--color-secondary)] space-y-1">
+      <p class="font-bold text-[var(--color-primary)]">💡 Nota de Seguridad:</p>
+      <p>Los cambios realizados se aplican de inmediato en la aplicación y se guardan en el almacenamiento local del navegador.</p>
     </div>
   </main>
 
-  <!-- ================= NAVEGACIÓN INFERIOR ================= -->
-  <nav class="clay-nav">
+  <!-- ================= BARRA DE NAVEGACIÓN INFERIOR ================= -->
+  <nav class="clay-nav fixed bottom-0 inset-x-0 max-w-md mx-auto z-50">
     <div class="flex justify-around items-center">
-      <a onclick="App.switchView('view-home')" class="nav-item active" id="nav-home">
+      <!-- Inicio -->
+      <div onclick="App.switchView('view-home')" class="nav-item active" data-view="view-home">
         <span class="nav-icon">🏠</span>
         <span class="nav-label">Inicio</span>
-      </a>
-      <a onclick="App.switchView('view-regulacion')" class="nav-item" id="nav-regulacion">
+      </div>
+
+      <!-- Gimnasio -->
+      <div onclick="App.switchView('view-regulacion')" class="nav-item" data-view="view-regulacion">
         <span class="nav-icon">🫁</span>
-        <span class="nav-label">Regulación</span>
-      </a>
-      <a onclick="App.switchView('view-citas')" class="nav-item" id="nav-citas">
+        <span class="nav-label">Gimnasio</span>
+      </div>
+
+      <!-- Citas -->
+      <div onclick="App.switchView('view-citas')" class="nav-item" data-view="view-citas">
         <span class="nav-icon">📅</span>
         <span class="nav-label">Citas</span>
-      </a>
-      <a onclick="App.switchView('view-pagos')" class="nav-item" id="nav-pagos">
+        <span class="nav-badge">1</span>
+      </div>
+
+      <!-- Pagos -->
+      <div onclick="App.switchView('view-pagos')" class="nav-item" data-view="view-pagos">
         <span class="nav-icon">💳</span>
         <span class="nav-label">Pagos</span>
-      </a>
-      <a onclick="App.verificarAccesoPerfil()" class="nav-item" id="nav-perfil">
-        <span class="nav-icon">👤</span>
-        <span class="nav-label">Perfil</span>
-      </a>
+      </div>
+
+      <!-- Perfil - Cambia según autenticación -->
+      <div onclick="App.irAPerfil()" class="nav-item" data-view="view-perfil-usuario" id="nav-perfil">
+        <span class="nav-icon" id="nav-perfil-icon">👤</span>
+        <span class="nav-label" id="nav-perfil-label">Perfil</span>
+      </div>
     </div>
   </nav>
 
-  <!-- ================= SCRIPT DE LA APLICACIÓN ================= -->
+  <!-- ================= JAVASCRIPT COMPLETO ================= -->
   <script>
+    // ============================================
+    // APP - Objeto principal
+    // ============================================
     const App = {
-      currentUser: null,
-      authMode: 'login',
-      metodoPagoActual: 'pagomovil',
+        // Estado de la aplicación
+        state: {
+            authMode: 'login',
+            quizAnswers: {},
+            selectedPayment: 'pm_bdv',
+            googleUserData: null,
+            legalAceptado: localStorage.getItem('legal_aceptado') === 'true',
+            user: {
+                name: localStorage.getItem('user_name') || '',
+                email: localStorage.getItem('user_email') || '',
+                role: localStorage.getItem('user_role') || 'user',
+                registerMethod: localStorage.getItem('register_method') || 'email',
+                telefono: localStorage.getItem('user_telefono') || '',
+                fechaNac: localStorage.getItem('user_fecha_nac') || '',
+                emailVerified: localStorage.getItem('email_verified') === 'true',
+                fechaRegistro: localStorage.getItem('fecha_registro') || new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' }),
+                sesiones: parseInt(localStorage.getItem('user_sesiones')) || 0,
+                ejercicios: parseInt(localStorage.getItem('user_ejercicios')) || 0,
+                diasActivo: parseInt(localStorage.getItem('user_dias_activo')) || 0
+            },
+            isAuthenticated: !!localStorage.getItem('user_email'),
+            breathInterval: null,
+            currentView: 'view-home'
+        },
 
-      init() {
-        const savedUser = localStorage.getItem('atrevete_user');
-        if (savedUser) {
-          this.currentUser = JSON.parse(savedUser);
-          this.actualizarUIUsuario();
-        } else {
-          // Verificar barrera legal inicial
-          const legalAccepted = localStorage.getItem('atrevete_legal');
-          if (!legalAccepted) {
-            document.getElementById('modal-legal-gate').classList.remove('hidden');
-          }
-        }
-        this.IA.init();
-      },
+        // ============================================
+        // FUNCIONES DE BARRERA LEGAL
+        // ============================================
+        verificarLegal() {
+            if (this.state.legalAceptado) {
+                return true;
+            }
+            const modal = document.getElementById('modal-legal-gate');
+            if (modal) {
+                modal.classList.remove('hidden');
+            }
+            return false;
+        },
 
-      aceptarLegalYContinuar() {
-        localStorage.setItem('atrevete_legal', 'true');
-        document.getElementById('modal-legal-gate').classList.add('hidden');
-        this.mostrarToast('¡Bienvenido a Atrévete HealthTech!', 'success');
-      },
+        aceptarLegalYContinuar() {
+            localStorage.setItem('legal_aceptado', 'true');
+            this.state.legalAceptado = true;
+            document.getElementById('modal-legal-gate').classList.add('hidden');
+            this.switchView('view-auth');
+        },
 
-      cancelarLegal() {
-        alert('Debes aceptar los términos y el deslinde legal para utilizar la plataforma.');
-      },
+        cancelarLegal() {
+            document.getElementById('modal-legal-gate').classList.add('hidden');
+            this.switchView('view-home');
+        },
 
-      switchView(viewId) {
-        document.querySelectorAll('.app-view').forEach(el => el.classList.add('hidden'));
-        const target = document.getElementById(viewId);
-        if (target) target.classList.remove('hidden');
+        // ============================================
+        // FUNCIONES DE NAVEGACIÓN MEJORADAS
+        // ============================================
+        irAPerfil() {
+            if (this.state.isAuthenticated) {
+                this.switchView('view-perfil-usuario');
+            } else {
+                this.abrirLogin();
+            }
+        },
 
-        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-        if (viewId === 'view-home') document.getElementById('nav-home').classList.add('active');
-        if (viewId === 'view-regulacion') document.getElementById('nav-regulacion').classList.add('active');
-        if (viewId === 'view-citas') document.getElementById('nav-citas').classList.add('active');
-        if (viewId === 'view-pagos') document.getElementById('nav-pagos').classList.add('active');
-        if (viewId === 'view-perfil-usuario') document.getElementById('nav-perfil').classList.add('active');
-        
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      },
+        abrirLogin() {
+            if (!this.verificarLegal()) {
+                return;
+            }
+            this.switchAuthMode('login');
+            this.switchView('view-auth');
+        },
 
-      abrirLogin() {
-        this.authMode = 'login';
-        document.getElementById('auth-title').innerText = 'Iniciar Sesión';
-        document.getElementById('auth-subtitle').innerText = 'Accede a tu cuenta de Atrévete HealthTech';
-        document.getElementById('tab-login').classList.add('bg-white', 'shadow-sm');
-        document.getElementById('tab-register').classList.remove('bg-white', 'shadow-sm');
-        document.getElementById('auth-submit-btn').innerText = 'Iniciar Sesión';
-        this.switchView('view-auth');
-      },
+        abrirRegistro() {
+            if (!this.verificarLegal()) {
+                return;
+            }
+            this.switchAuthMode('register');
+            this.switchView('view-auth');
+        },
 
-      abrirRegistro() {
-        this.authMode = 'register';
-        document.getElementById('auth-title').innerText = 'Crear Cuenta';
-        document.getElementById('auth-subtitle').innerText = 'Únete al ecosistema somático integrativo';
-        document.getElementById('tab-register').classList.add('bg-white', 'shadow-sm');
-        document.getElementById('tab-login').classList.remove('bg-white', 'shadow-sm');
-        document.getElementById('auth-submit-btn').innerText = 'Registrarse';
-        this.switchView('view-auth');
-      },
+        switchView(viewId) {
+            document.querySelectorAll('.app-view').forEach(v => v.classList.add('hidden'));
+            
+            const target = document.getElementById(viewId);
+            if (target) {
+                target.classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
 
-      switchAuthMode(mode) {
-        if (mode === 'login') this.abrirLogin();
-        else this.abrirRegistro();
-      },
+            this.state.currentView = viewId;
 
-      handleAuthSubmit(e) {
-        e.preventDefault();
-        const email = document.getElementById('auth-email').value;
-        const name = email.split('@')[0];
-        
-        this.currentUser = { name: name.charAt(0).toUpperCase() + name.slice(1), email: email };
-        localStorage.setItem('atrevete_user', JSON.stringify(this.currentUser));
-        this.actualizarUIUsuario();
-        this.switchView('view-home');
-        this.mostrarToast(this.authMode === 'login' ? '¡Sesión iniciada con éxito!' : '¡Cuenta creada con éxito!', 'success');
-      },
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+                if (item.dataset.view === viewId) {
+                    item.classList.add('active');
+                }
+            });
 
-      iniciarRegistroGoogleSimulado() {
-        const dummyUser = { name: 'Emprendedor Test', email: 'test@atrevete.com' };
-        document.getElementById('google-name-modal').innerText = dummyUser.name;
-        document.getElementById('google-email-modal').innerText = dummyUser.email;
-        document.getElementById('google-avatar-modal').innerText = dummyUser.name.charAt(0);
-        document.getElementById('google-modal').classList.add('active');
-      },
+            // Prevenir acceso a perfil sin autenticación
+            if (viewId === 'view-perfil-usuario' && !this.state.isAuthenticated) {
+                this.switchView('view-auth');
+                return;
+            }
 
-      confirmarRegistroGoogle() {
-        document.getElementById('btn-google-text').classList.add('hidden');
-        document.getElementById('btn-google-spinner').classList.remove('hidden');
-        setTimeout(() => {
-          this.currentUser = { name: 'Emprendedor Test', email: 'test@atrevete.com' };
-          localStorage.setItem('atrevete_user', JSON.stringify(this.currentUser));
-          document.getElementById('google-modal').classList.remove('active');
-          document.getElementById('btn-google-text').classList.remove('hidden');
-          document.getElementById('btn-google-spinner').classList.add('hidden');
-          this.actualizarUIUsuario();
-          this.switchView('view-home');
-          this.mostrarToast('¡Autenticado con Google correctamente!', 'success');
-        }, 1000);
-      },
+            // Manejar respiración guiada
+            if (viewId !== 'view-regulacion' && this.state.breathInterval) {
+                clearInterval(this.state.breathInterval);
+                this.state.breathInterval = null;
+            }
+            if (viewId === 'view-regulacion') {
+                this.iniciarRespiración();
+            }
+        },
 
-      cancelarRegistroGoogle() {
-        document.getElementById('google-modal').classList.remove('active');
-      },
+        // ============================================
+        // ACTUALIZAR NAVEGACIÓN Y HEADER
+        // ============================================
+        actualizarNav() {
+            const navPerfil = document.getElementById('nav-perfil');
+            const perfilIcon = document.getElementById('nav-perfil-icon');
+            const perfilLabel = document.getElementById('nav-perfil-label');
 
-      actualizarUIUsuario() {
-        if (this.currentUser) {
-          document.getElementById('header-login-btns').classList.add('hidden');
-          document.getElementById('header-profile-btn').classList.remove('hidden');
-          document.getElementById('header-name').innerText = this.currentUser.name;
-          document.getElementById('header-avatar').innerText = this.currentUser.name.charAt(0);
+            if (this.state.isAuthenticated) {
+                if (perfilIcon) perfilIcon.textContent = '👤';
+                if (perfilLabel) perfilLabel.textContent = 'Perfil';
+            } else {
+                if (perfilIcon) perfilIcon.textContent = '🔑';
+                if (perfilLabel) perfilLabel.textContent = 'Login';
+            }
+        },
 
-          document.getElementById('perfil-nombre').innerText = this.currentUser.name;
-          document.getElementById('perfil-email').innerText = this.currentUser.email;
-          document.getElementById('perfil-avatar').innerText = this.currentUser.name.charAt(0);
-        } else {
-          document.getElementById('header-login-btns').classList.remove('hidden');
-          document.getElementById('header-profile-btn').classList.add('hidden');
-        }
-      },
+        actualizarHeader() {
+            const loginBtns = document.getElementById('header-login-btns');
+            const profileBtn = document.getElementById('header-profile-btn');
+            const headerName = document.getElementById('header-name');
+            const headerAvatar = document.getElementById('header-avatar');
 
-      verificarAccesoPerfil() {
-        if (!this.currentUser) {
-          this.abrirLogin();
-          this.mostrarToast('Por favor inicia sesión para ver tu perfil', 'warning');
-        } else {
-          this.switchView('view-perfil-usuario');
-        }
-      },
+            if (this.state.isAuthenticated && this.state.user.name) {
+                loginBtns.classList.add('hidden');
+                profileBtn.classList.remove('hidden');
+                if (headerName) headerName.textContent = this.state.user.name;
+                if (headerAvatar) {
+                    const initials = this.state.user.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'US';
+                    headerAvatar.textContent = initials;
+                }
+            } else {
+                loginBtns.classList.remove('hidden');
+                profileBtn.classList.add('hidden');
+            }
+        },
 
-      cerrarSesion() {
-        localStorage.removeItem('atrevete_user');
-        this.currentUser = null;
-        this.actualizarUIUsuario();
-        this.switchView('view-home');
-        this.mostrarToast('Sesión cerrada correctamente', 'info');
-      },
+        // ============================================
+        // REGISTRO CON GOOGLE
+        // ============================================
+        iniciarRegistroGoogleSimulado() {
+            if (!this.verificarLegal()) {
+                return;
+            }
+            
+            const googleUser = {
+                name: prompt('👤 Ingresa tu nombre completo:', 'Ana María Rodríguez') || 'Usuario Google',
+                email: prompt('📧 Ingresa tu correo electrónico:', 'usuario@gmail.com') || 'usuario@gmail.com',
+                picture: '',
+                email_verified: true,
+                id: 'google_' + Date.now()
+            };
 
-      iniciarRespiracion() {
-        const btn = document.getElementById('btn-respirar');
-        btn.innerText = '🫁 Inhala profundo (4s)...';
-        setTimeout(() => { btn.innerText = '😌 Exhala suavemente (6s)...'; }, 4000);
-        setTimeout(() => { 
-          btn.innerText = '¡Sesión Completada con Éxito!';
-          this.mostrarToast('Regulación somática completada', 'success');
-          setTimeout(() => { btn.innerText = 'Iniciar Sesión de 3 Minutos'; }, 3000);
-        }, 10000);
-      },
+            if (!googleUser.email || !googleUser.email.includes('@')) {
+                this.showToast('⚠️ Por favor ingresa un correo válido', 'warning');
+                return;
+            }
 
-      agendarCita() {
-        if (!this.currentUser) {
-          this.abrirLogin();
-          this.mostrarToast('Inicia sesión para agendar tu cita', 'warning');
-          return;
-        }
-        const tipo = document.getElementById('cita-tipo').value;
-        const fecha = document.getElementById('cita-fecha').value;
-        if (!fecha) {
-          this.mostrarToast('Por favor selecciona fecha y hora', 'error');
-          return;
-        }
-        this.mostrarToast('¡Cita agendada con éxito!', 'success');
-        this.switchView('view-home');
-      },
+            const existingUser = localStorage.getItem('user_email');
+            if (existingUser && existingUser === googleUser.email) {
+                this.showToast('⚠️ Este correo ya está registrado. Por favor inicia sesión.', 'warning');
+                this.switchAuthMode('login');
+                document.getElementById('input-email').value = googleUser.email;
+                this.switchView('view-auth');
+                return;
+            }
 
-      seleccionarMetodoPago(metodo) {
-        this.metodoPagoActual = metodo;
-        document.querySelectorAll('.clay-btn-pay').forEach(el => el.classList.remove('active-pay'));
-        document.getElementById('pay-' + metodo).classList.add('active-pay');
+            this.state.googleUserData = googleUser;
+            this.mostrarModalConfirmacionGoogle(googleUser);
+        },
 
-        const instr = document.getElementById('instrucciones-pago');
-        if (metodo === 'pagomovil') {
-          instr.innerHTML = '<p class="font-bold text-[#7A8A7C]">Datos de Pago Móvil:</p><p>Banco: BNC (0191) | V-15.123.456</p><p>Telf: 0414-4123456</p>';
-        } else if (metodo === 'zelle') {
-          instr.innerHTML = '<p class="font-bold text-[#7A8A7C]">Datos de Zelle:</p><p>Zelle: pagos@atrevetehealth.com</p><p>Titular: Atrévete CA</p>';
-        } else if (metodo === 'binance') {
-          instr.innerHTML = '<p class="font-bold text-[#7A8A7C]">Datos Binance Pay:</p><p>Pay ID: 894512783</p><p>USDT / BUSD</p>';
-        } else {
-          instr.innerHTML = '<p class="font-bold text-[#7A8A7C]">Tarjeta Internacional:</p><p>Procesamiento seguro vía pasarela cifrada.</p>';
-        }
-      },
-
-      procesarPago() {
-        const ref = document.getElementById('pago-ref').value;
-        if (!ref) {
-          this.mostrarToast('Ingresa el número de referencia o comprobante', 'error');
-          return;
-        }
-        this.mostrarToast('¡Pago reportado y verificado con éxito!', 'success');
-        this.switchView('view-home');
-      },
-
-      loginAdmin() {
-        const pass = document.getElementById('admin-pass').value;
-        if (pass === 'atrevete2026') {
-          this.mostrarToast('Acceso autorizado al Panel B2B', 'success');
-          this.switchView('view-home');
-        } else {
-          this.mostrarToast('Clave incorrecta', 'error');
-        }
-      },
-
-      mostrarToast(mensaje, tipo = 'success') {
-        const toast = document.getElementById('toast');
-        toast.innerText = mensaje;
-        toast.className = `toast toast-${tipo} show`;
-        setTimeout(() => {
-          toast.classList.remove('show');
-        }, 3500);
-      },
-
-      IA: {
-        isOpen: false,
-        toggleModal() {
-          this.isOpen = !this.isOpen;
-          const modal = document.getElementById('iaModal');
-          if (this.isOpen) {
+        // ============================================
+        // MODAL DE CONFIRMACIÓN DE GOOGLE
+        // ============================================
+        mostrarModalConfirmacionGoogle(userData) {
+            const modal = document.getElementById('google-modal');
+            if (!modal) {
+                console.error('Modal de Google no encontrado');
+                return;
+            }
+            
+            const avatar = document.getElementById('google-avatar-modal');
+            const nameEl = document.getElementById('google-name-modal');
+            const emailEl = document.getElementById('google-email-modal');
+            
+            const initials = userData.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'G';
+            if (avatar) avatar.textContent = initials;
+            if (nameEl) nameEl.textContent = userData.name;
+            if (emailEl) emailEl.textContent = userData.email;
+            
             modal.classList.add('active');
-            if (document.getElementById('iaMessages').children.length === 0) {
-              this.agregarMensajeBot('¡Hola! Soy Aura, tu asistente en Atrévete HealthTech. ¿En qué puedo guiarte hoy respecto a regulación somática o nuestros campamentos?');
-              this.mostrarOpcionesRapidas(['¿Qué es Adultas en Fuga?', 'Ejercicios de Respiración', 'Agendar Sesión']);
-            }
-          } else {
-            modal.classList.remove('active');
-          }
+            
+            const btnText = document.getElementById('btn-google-text');
+            const btnSpinner = document.getElementById('btn-google-spinner');
+            if (btnText) btnText.textContent = '✅ Confirmar y Continuar';
+            if (btnSpinner) btnSpinner.classList.add('hidden');
+            
+            const confirmBtn = document.getElementById('btn-confirmar-google');
+            if (confirmBtn) confirmBtn.disabled = false;
         },
-        agregarMensajeBot(texto) {
-          const body = document.getElementById('iaMessages');
-          body.innerHTML += `
-            <div class="ia-message bot">
-              <div class="msg-avatar">🧠</div>
-              <div class="msg-bubble">${texto}</div>
-            </div>`;
-          body.scrollTop = body.scrollHeight;
-        },
-        agregarMensajeUser(texto) {
-          const body = document.getElementById('iaMessages');
-          body.innerHTML += `
-            <div class="ia-message user">
-              <div class="msg-avatar">👤</div>
-              <div class="msg-bubble">${texto}</div>
-            </div>`;
-          body.scrollTop = body.scrollHeight;
-        },
-        mostrarOpcionesRapidas(opciones) {
-          const body = document.getElementById('iaMessages');
-          let html = '<div class="quick-replies">';
-          opciones.forEach(op => {
-            html += `<button onclick="App.IA.enviarOpcion('${op}')">${op}</button>`;
-          });
-          html += '</div>';
-          body.innerHTML += html;
-          body.scrollTop = body.scrollHeight;
-        },
-        enviarOpcion(texto) {
-          document.getElementById('iaInput').value = texto;
-          this.enviarMensaje();
-        },
-        enviarMensaje() {
-          const input = document.getElementById('iaInput');
-          const texto = input.value.trim();
-          if (!texto) return;
-          this.agregarMensajeUser(texto);
-          input.value = '';
 
-          setTimeout(() => {
-            let respuesta = 'Entiendo perfectamente. Recuerda que el sistema nervioso se regula paso a paso.';
-            const lower = texto.toLowerCase();
-            if (lower.includes('adultas')) {
-              respuesta = 'El campamento "Adultas en Fuga" se realizará en Maracay el 26 de septiembre de 2026. Incluye talleres somáticos y vivenciales.';
-            } else if (lower.includes('respiración') || lower.includes('respirar')) {
-              respuesta = 'Te recomiendo ir a la sección "Regulación Somática" en el menú inferior para iniciar la respiración guiada 4-6.';
-            } else if (lower.includes('agendar') || lower.includes('sesión')) {
-              respuesta = 'Puedes agendar directamente con nuestros especialistas desde la sección "Agendar Sesión".';
+        // ============================================
+        // CONFIRMAR REGISTRO CON GOOGLE
+        // ============================================
+        confirmarRegistroGoogle() {
+            if (!this.state.googleUserData) {
+                this.showToast('❌ No hay datos de Google para confirmar', 'error');
+                return;
             }
-            this.agregarMensajeBot(respuesta);
-          }, 800);
+
+            const btnText = document.getElementById('btn-google-text');
+            const btnSpinner = document.getElementById('btn-google-spinner');
+            const confirmBtn = document.getElementById('btn-confirmar-google');
+            
+            if (btnText) btnText.textContent = 'Registrando...';
+            if (btnSpinner) btnSpinner.classList.remove('hidden');
+            if (confirmBtn) confirmBtn.disabled = true;
+
+            setTimeout(() => {
+                try {
+                    const userData = this.state.googleUserData;
+                    const fechaRegistro = new Date().toLocaleDateString('es-ES', { 
+                        day: '2-digit', 
+                        month: 'long', 
+                        year: 'numeric' 
+                    });
+                    
+                    localStorage.setItem('user_name', userData.name);
+                    localStorage.setItem('user_email', userData.email);
+                    localStorage.setItem('user_role', 'user');
+                    localStorage.setItem('register_method', 'google');
+                    localStorage.setItem('email_verified', 'true');
+                    localStorage.setItem('google_picture', userData.picture || '');
+                    localStorage.setItem('fecha_registro', fechaRegistro);
+                    localStorage.setItem('user_telefono', '');
+                    localStorage.setItem('user_fecha_nac', '');
+                    
+                    this.state.user = {
+                        ...this.state.user,
+                        name: userData.name,
+                        email: userData.email,
+                        role: 'user',
+                        registerMethod: 'google',
+                        emailVerified: true,
+                        fechaRegistro: fechaRegistro,
+                        telefono: '',
+                        fechaNac: ''
+                    };
+                    this.state.isAuthenticated = true;
+                    
+                    const modal = document.getElementById('google-modal');
+                    if (modal) modal.classList.remove('active');
+                    
+                    this.actualizarPerfilUI();
+                    this.actualizarHeader();
+                    this.actualizarNav();
+                    
+                    this.showToast('✅ ¡Registro con Google exitoso! Bienvenido a Atrévete HealthTech', 'success');
+                    this.switchView('view-perfil-usuario');
+                    
+                    setTimeout(() => {
+                        this.mostrarEditarPerfil();
+                    }, 500);
+                    
+                } catch (error) {
+                    console.error('Error en registro con Google:', error);
+                    this.showToast('❌ Error al registrar con Google. Intenta nuevamente.', 'error');
+                } finally {
+                    if (btnText) btnText.textContent = '✅ Confirmar y Continuar';
+                    if (btnSpinner) btnSpinner.classList.add('hidden');
+                    if (confirmBtn) confirmBtn.disabled = false;
+                    this.state.googleUserData = null;
+                }
+            }, 1500);
         },
-        init() {}
-      }
+
+        // ============================================
+        // CANCELAR REGISTRO CON GOOGLE
+        // ============================================
+        cancelarRegistroGoogle() {
+            const modal = document.getElementById('google-modal');
+            if (modal) modal.classList.remove('active');
+            this.state.googleUserData = null;
+            this.showToast('Registro con Google cancelado', 'info');
+        },
+
+        // ============================================
+        // TOAST NOTIFICATIONS
+        // ============================================
+        showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            if (!toast) return;
+            
+            toast.className = `toast toast-${type}`;
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 4000);
+        },
+
+        // ============================================
+        // PERFIL - ACTUALIZAR UI
+        // ============================================
+        actualizarPerfilUI() {
+            const name = this.state.user.name || 'Invitado Atrévete';
+            const email = this.state.user.email || 'correo@ejemplo.com';
+            const role = this.state.user.role || 'user';
+            const registerMethod = this.state.user.registerMethod || 'email';
+            const emailVerified = this.state.user.emailVerified || false;
+            const telefono = this.state.user.telefono || 'No registrado';
+            const fechaNac = this.state.user.fechaNac || 'No registrada';
+            const fechaRegistro = this.state.user.fechaRegistro || 'Hoy';
+            const sesiones = this.state.user.sesiones || 0;
+            const ejercicios = this.state.user.ejercicios || 0;
+            const diasActivo = this.state.user.diasActivo || 0;
+            
+            const profileName = document.getElementById('profile-name');
+            const profileEmail = document.getElementById('profile-email');
+            const profileAvatar = document.getElementById('profile-avatar');
+            const profileRole = document.getElementById('profile-role');
+            const profileRegisterMethod = document.getElementById('profile-register-method');
+            const profileVerifiedContainer = document.getElementById('profile-verified-container');
+            const profileTelefono = document.getElementById('profile-telefono-display');
+            const profileFecha = document.getElementById('profile-fecha-display');
+            const profileMiembroDesde = document.getElementById('profile-miembro-desde');
+            const profileSesiones = document.getElementById('profile-sesiones');
+            const profileEjercicios = document.getElementById('profile-ejercicios');
+            const profileDias = document.getElementById('profile-dias');
+
+            if (profileName) profileName.innerText = name;
+            if (profileEmail) profileEmail.innerText = email;
+            if (profileRole) {
+                const roleText = role === 'spec' ? '👩‍⚕️ Especialista' : '👤 Usuario';
+                profileRole.innerText = roleText;
+            }
+            if (profileRegisterMethod) {
+                const methodText = registerMethod === 'google' ? '🟢 Registrado con Google' : '📧 Registrado con Email';
+                profileRegisterMethod.innerText = methodText;
+            }
+            
+            if (profileVerifiedContainer) {
+                if (emailVerified) {
+                    profileVerifiedContainer.innerHTML = '<span class="verified-badge">✅ Correo verificado</span>';
+                } else {
+                    profileVerifiedContainer.innerHTML = '<span class="unverified-badge">⏳ Correo no verificado</span>';
+                }
+            }
+
+            if (profileTelefono) profileTelefono.innerText = telefono;
+            if (profileFecha) profileFecha.innerText = fechaNac;
+            if (profileMiembroDesde) profileMiembroDesde.innerText = fechaRegistro;
+            if (profileSesiones) profileSesiones.innerText = sesiones;
+            if (profileEjercicios) profileEjercicios.innerText = ejercicios;
+            if (profileDias) profileDias.innerText = diasActivo;
+            
+            if (profileAvatar) {
+                const googlePicture = localStorage.getItem('google_picture');
+                if (googlePicture && googlePicture !== '') {
+                    profileAvatar.style.backgroundImage = `url('${googlePicture}')`;
+                    profileAvatar.style.backgroundSize = 'cover';
+                    profileAvatar.style.backgroundPosition = 'center';
+                    profileAvatar.textContent = '';
+                } else {
+                    profileAvatar.style.backgroundImage = 'none';
+                    const initials = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'AT';
+                    profileAvatar.textContent = initials;
+                }
+            }
+
+            const editNombre = document.getElementById('edit-nombre');
+            const editTelefono = document.getElementById('edit-telefono');
+            const editFechaNac = document.getElementById('edit-fecha-nac');
+            if (editNombre) editNombre.value = name;
+            if (editTelefono) editTelefono.value = this.state.user.telefono || '';
+            if (editFechaNac) editFechaNac.value = this.state.user.fechaNac || '';
+
+            this.actualizarHeader();
+            this.actualizarNav();
+        },
+
+        // ============================================
+        // AUTH EMAIL
+        // ============================================
+        procesarAuthEmail() {
+            const email = document.getElementById('input-email').value;
+            const password = document.getElementById('input-password').value;
+            const nombreInput = document.getElementById('input-nombre');
+            const emailError = document.getElementById('email-error');
+            const passwordError = document.getElementById('password-error');
+            
+            if (!email || !email.includes('@')) {
+                if (emailError) emailError.classList.remove('hidden');
+                return;
+            }
+            if (emailError) emailError.classList.add('hidden');
+            
+            if (password.length < 6) {
+                if (passwordError) passwordError.classList.remove('hidden');
+                return;
+            }
+            if (passwordError) passwordError.classList.add('hidden');
+
+            let nombre = 'Usuario Atrévete';
+            if (this.state.authMode === 'register' && nombreInput && nombreInput.value.trim() !== '') {
+                nombre = nombreInput.value.trim();
+            } else {
+                nombre = email.split('@')[0];
+            }
+
+            const fechaRegistro = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' });
+
+            localStorage.setItem('user_name', nombre);
+            localStorage.setItem('user_email', email);
+            localStorage.setItem('user_role', this.state.user.role || 'user');
+            localStorage.setItem('register_method', 'email');
+            localStorage.setItem('email_verified', 'false');
+            localStorage.setItem('fecha_registro', fechaRegistro);
+            
+            this.state.user = {
+                ...this.state.user,
+                name: nombre,
+                email: email,
+                registerMethod: 'email',
+                emailVerified: false,
+                fechaRegistro: fechaRegistro
+            };
+            this.state.isAuthenticated = true;
+            
+            this.actualizarPerfilUI();
+            this.actualizarHeader();
+            this.actualizarNav();
+            this.showToast('✅ ¡Bienvenido a Atrévete HealthTech!', 'info');
+            this.switchView('view-perfil-usuario');
+            
+            setTimeout(() => {
+                this.showToast('📧 Se ha enviado un correo de verificación a tu cuenta', 'info');
+            }, 2000);
+        },
+
+        // ============================================
+        // AUTH MODE
+        // ============================================
+        switchAuthMode(mode) {
+            this.state.authMode = mode;
+            const tabLogin = document.getElementById('tab-login');
+            const tabRegister = document.getElementById('tab-register');
+            const fieldNombre = document.getElementById('field-nombre');
+            const fieldRol = document.getElementById('field-rol');
+            const linkForgot = document.getElementById('link-forgot-container');
+            const submitBtn = document.getElementById('auth-submit-btn');
+            const title = document.getElementById('auth-title');
+            const subtitle = document.getElementById('auth-subtitle');
+
+            if (mode === 'login') {
+                if (tabLogin) tabLogin.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[var(--color-secondary)] shadow-sm transition';
+                if (tabRegister) tabRegister.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl text-[var(--color-secondary)] transition';
+                if (fieldNombre) fieldNombre.classList.add('hidden');
+                if (fieldRol) fieldRol.classList.add('hidden');
+                if (linkForgot) linkForgot.classList.remove('hidden');
+                if (submitBtn) submitBtn.innerText = 'Iniciar Sesión';
+                if (title) title.innerText = 'Iniciar Sesión';
+                if (subtitle) subtitle.innerText = 'Accede a tu cuenta de Atrévete HealthTech';
+            } else {
+                if (tabRegister) tabRegister.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[var(--color-secondary)] shadow-sm transition';
+                if (tabLogin) tabLogin.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl text-[var(--color-secondary)] transition';
+                if (fieldNombre) fieldNombre.classList.remove('hidden');
+                if (fieldRol) fieldRol.classList.remove('hidden');
+                if (linkForgot) linkForgot.classList.add('hidden');
+                if (submitBtn) submitBtn.innerText = 'Crear Mi Cuenta';
+                if (title) title.innerText = 'Crea tu Cuenta';
+                if (subtitle) subtitle.innerText = 'Únete a nuestra plataforma somática';
+            }
+        },
+
+        // ============================================
+        // SET ROLE
+        // ============================================
+        setAuthRole(role) {
+            const btnUser = document.getElementById('btn-role-user');
+            const btnSpec = document.getElementById('btn-role-spec');
+            this.state.user.role = role;
+            localStorage.setItem('user_role', role);
+            
+            if (role === 'user') {
+                if (btnUser) btnUser.className = 'flex-1 py-2 text-xs font-bold rounded-xl bg-orange-100 text-[var(--color-primary)] border border-[var(--color-primary)]/30 transition';
+                if (btnSpec) btnSpec.className = 'flex-1 py-2 text-xs font-bold rounded-xl bg-stone-100 text-[var(--color-secondary)] transition';
+            } else {
+                if (btnSpec) btnSpec.className = 'flex-1 py-2 text-xs font-bold rounded-xl bg-orange-100 text-[var(--color-primary)] border border-[var(--color-primary)]/30 transition';
+                if (btnUser) btnUser.className = 'flex-1 py-2 text-xs font-bold rounded-xl bg-stone-100 text-[var(--color-secondary)] transition';
+            }
+        },
+
+        // ============================================
+        // RECUPERACIÓN
+        // ============================================
+        procesarRecuperacion() {
+            const email = document.getElementById('recovery-email').value;
+            if (!email) {
+                this.showToast('Por favor ingresa tu correo electrónico.', 'error');
+                return;
+            }
+            this.showToast(`📧 Instrucciones enviadas a: ${email}`, 'success');
+            this.switchView('view-auth');
+        },
+
+        // ============================================
+        // CERRAR SESIÓN
+        // ============================================
+        cerrarSesion() {
+            localStorage.removeItem('user_name');
+            localStorage.removeItem('user_email');
+            localStorage.removeItem('user_role');
+            localStorage.removeItem('register_method');
+            localStorage.removeItem('user_telefono');
+            localStorage.removeItem('user_fecha_nac');
+            localStorage.removeItem('email_verified');
+            localStorage.removeItem('google_picture');
+            localStorage.removeItem('fecha_registro');
+            localStorage.removeItem('user_sesiones');
+            localStorage.removeItem('user_ejercicios');
+            localStorage.removeItem('user_dias_activo');
+            
+            this.state.isAuthenticated = false;
+            this.state.user = {
+                name: '',
+                email: '',
+                role: 'user',
+                registerMethod: 'email',
+                telefono: '',
+                fechaNac: '',
+                emailVerified: false,
+                fechaRegistro: '',
+                sesiones: 0,
+                ejercicios: 0,
+                diasActivo: 0
+            };
+            
+            this.actualizarPerfilUI();
+            this.actualizarHeader();
+            this.actualizarNav();
+            this.showToast('👋 Sesión cerrada exitosamente', 'info');
+            this.switchView('view-home');
+        },
+
+        // ============================================
+        // EDITAR PERFIL
+        // ============================================
+        mostrarEditarPerfil() {
+            const form = document.getElementById('editar-perfil-form');
+            if (form) {
+                form.classList.remove('hidden');
+                document.getElementById('edit-nombre').value = this.state.user.name || '';
+                document.getElementById('edit-telefono').value = this.state.user.telefono || '';
+                document.getElementById('edit-fecha-nac').value = this.state.user.fechaNac || '';
+            }
+        },
+
+        cancelarEditarPerfil() {
+            const form = document.getElementById('editar-perfil-form');
+            if (form) {
+                form.classList.add('hidden');
+            }
+        },
+
+        guardarEditarPerfil() {
+            const nombre = document.getElementById('edit-nombre').value.trim();
+            const telefono = document.getElementById('edit-telefono').value.trim();
+            const fechaNac = document.getElementById('edit-fecha-nac').value;
+
+            if (!nombre) {
+                this.showToast('⚠️ El nombre es obligatorio', 'error');
+                return;
+            }
+
+            localStorage.setItem('user_name', nombre);
+            localStorage.setItem('user_telefono', telefono);
+            localStorage.setItem('user_fecha_nac', fechaNac);
+            
+            this.state.user.name = nombre;
+            this.state.user.telefono = telefono;
+            this.state.user.fechaNac = fechaNac;
+            
+            document.getElementById('editar-perfil-form').classList.add('hidden');
+            this.actualizarPerfilUI();
+            this.actualizarHeader();
+            this.actualizarNav();
+            this.showToast('✅ Perfil actualizado exitosamente', 'success');
+        },
+
+        cambiarFotoPerfil() {
+            this.showToast('📸 Función de cambio de foto en desarrollo', 'info');
+        },
+
+        // ============================================
+        // PAGOS
+        // ============================================
+        selectPaymentMethod(method) {
+            this.state.selectedPayment = method;
+            document.querySelectorAll('.clay-btn-pay').forEach(btn => btn.classList.remove('active-pay'));
+            
+            const btnMap = {
+                'pm_bdv': 'pay-bdv',
+                'pm_bnc': 'pay-bnc',
+                'zelle': 'pay-zelle',
+                'binance': 'pay-binance'
+            };
+            
+            const targetBtn = document.getElementById(btnMap[method]);
+            if (targetBtn) targetBtn.classList.add('active-pay');
+
+            const box = document.getElementById('datos-pago-box');
+            const containerRef = document.getElementById('container-ref-pago');
+            const btnEnviar = document.getElementById('btn-enviar-pago');
+            const helperRef = document.getElementById('ref-pago-helper');
+
+            containerRef.style.display = 'block';
+            btnEnviar.style.display = 'block';
+            btnEnviar.disabled = false;
+            btnEnviar.classList.remove('opacity-50', 'cursor-not-allowed');
+            if (helperRef) helperRef.classList.add('hidden');
+
+            if (method === 'pm_bdv') {
+                box.innerHTML = `
+                    <p class="font-bold text-[var(--color-primary)]">🇻🇪 Pago Móvil - Banco de Venezuela (0102)</p>
+                    <p>Teléfono: <strong>0414-4031678</strong></p>
+                    <p>C.I: <strong>18.478.170</strong></p>
+                    <p class="text-[10px] text-gray-500 mt-1">Monto: Equivalente en Bs. a la tasa BCV del día ($120.00)</p>
+                `;
+                if (helperRef) {
+                    helperRef.textContent = 'Ingresa el número de referencia de tu Pago Móvil.';
+                    helperRef.classList.remove('hidden');
+                }
+            } else if (method === 'pm_bnc') {
+                box.innerHTML = `
+                    <p class="font-bold text-[var(--color-primary)]">🇻🇪 Pago Móvil - Banco Nacional de Crédito (0191)</p>
+                    <p>Teléfono: <strong>0414-4187215</strong></p>
+                    <p>C.I: <strong>13.518.664</strong></p>
+                    <p class="text-[10px] text-gray-500 mt-1">Monto: Equivalente en Bs. a la tasa BCV del día ($120.00)</p>
+                `;
+                if (helperRef) {
+                    helperRef.textContent = 'Ingresa el número de referencia de tu Pago Móvil.';
+                    helperRef.classList.remove('hidden');
+                }
+            } else if (method === 'zelle') {
+                containerRef.style.display = 'none';
+                btnEnviar.style.display = 'none';
+                box.innerHTML = `
+                    <p class="font-bold text-[var(--color-primary)]">🇺🇸 Zelle (Divisas)</p>
+                    <p class="text-sm font-semibold mt-2 text-[var(--color-secondary)]">⏳ Próximamente disponible</p>
+                    <p class="text-[10px] text-gray-500 mt-1">Este método de pago se habilitará muy pronto. Mientras tanto, utiliza Pago Móvil o Binance Pay.</p>
+                `;
+            } else if (method === 'binance') {
+                box.innerHTML = `
+                    <p class="font-bold text-[var(--color-primary)]">🟡 Binance Pay (USDT)</p>
+                    <p>Binance Pay ID: <strong>163305332</strong></p>
+                    <p class="text-[10px] text-gray-500 mt-1">Monto exacto: <strong>$120.00 USDT</strong> (red BEP-20)</p>
+                `;
+                if (helperRef) {
+                    helperRef.textContent = 'Ingresa el ID de la transacción o el hash de tu pago en Binance Pay.';
+                    helperRef.classList.remove('hidden');
+                }
+            }
+        },
+
+        confirmarPagoMock() {
+            if (this.state.selectedPayment === 'zelle') {
+                this.showToast('⏳ El método de pago Zelle aún no está disponible.', 'warning');
+                return;
+            }
+
+            const ref = document.getElementById('input-ref-pago').value;
+            if (!ref) {
+                this.showToast('⚠️ Por favor ingresa el número de referencia o comprobante.', 'error');
+                document.getElementById('input-ref-pago').classList.add('border-red-400', 'border-2');
+                setTimeout(() => {
+                    document.getElementById('input-ref-pago').classList.remove('border-red-400', 'border-2');
+                }, 3000);
+                return;
+            }
+            
+            this.showToast('✅ ¡Comprobante reportado con éxito! Nuestro equipo lo verificará.', 'success');
+            this.switchView('view-perfil-usuario');
+        },
+
+        // ============================================
+        // QUIZ DE REGULACIÓN SOMÁTICA
+        // ============================================
+        answerQuiz(step, choice) {
+            this.state.quizAnswers[`step${step}`] = choice;
+            if (step < 3) {
+                document.getElementById(`quiz-step-${step}`).classList.add('hidden');
+                document.getElementById(`quiz-step-${step + 1}`).classList.remove('hidden');
+                document.getElementById('quiz-step-indicator').innerText = `Paso ${step + 1} de 3`;
+            } else {
+                document.getElementById('quiz-step-3').classList.add('hidden');
+                document.getElementById('quiz-result').classList.remove('hidden');
+                document.getElementById('quiz-step-indicator').innerText = `Completado ✅`;
+
+                document.getElementById('quiz-diagnosis-title').innerText = "Diagnóstico Somático Detectado";
+                document.getElementById('quiz-diagnosis-desc').innerText = "Tu sistema nervioso muestra acumulación de tensión corporal. Te recomendamos la siguiente técnica:";
+                
+                document.getElementById('recommended-technique-card').innerHTML = `
+                    <h5 class="font-bold text-xs text-[var(--color-secondary)]">🌟 Técnica Recomendada: Descarga Vagal</h5>
+                    <p class="text-[11px] text-gray-600">Realiza 3 ciclos de respiración profunda con exhalación prolongada y sacudida corporal.</p>
+                `;
+            }
+        },
+
+        resetQuiz() {
+            this.state.quizAnswers = {};
+            document.getElementById('quiz-result').classList.add('hidden');
+            document.getElementById('quiz-step-1').classList.remove('hidden');
+            document.getElementById('quiz-step-2').classList.add('hidden');
+            document.getElementById('quiz-step-3').classList.add('hidden');
+            document.getElementById('quiz-step-indicator').innerText = 'Paso 1 de 3';
+        },
+
+        // ============================================
+        // RESPIRACIÓN GUIADA
+        // ============================================
+        iniciarRespiración() {
+            if (this.state.breathInterval) {
+                clearInterval(this.state.breathInterval);
+            }
+            const circle = document.getElementById('breath-circle');
+            if (!circle) return;
+            
+            let breathState = 0;
+            circle.innerText = "Inhala...";
+            circle.style.transform = "scale(1.0)";
+            
+            this.state.breathInterval = setInterval(() => {
+                if (breathState === 0) {
+                    circle.innerText = "Sostén...";
+                    circle.style.transform = "scale(1.3)";
+                    breathState = 1;
+                } else if (breathState === 1) {
+                    circle.innerText = "Exhala...";
+                    circle.style.transform = "scale(0.8)";
+                    breathState = 2;
+                } else {
+                    circle.innerText = "Inhala...";
+                    circle.style.transform = "scale(1.0)";
+                    breathState = 0;
+                }
+            }, 3500);
+        },
+
+        // ============================================
+        // CITAS
+        // ============================================
+        procesarCitaWhatsApp() {
+            const terapeuta = document.getElementById('select-terapeuta').value;
+            const fecha = document.getElementById('fecha-cita').value || 'Sin fecha';
+            const hora = document.getElementById('hora-cita').value || 'Sin hora';
+            
+            if (!fecha || !hora) {
+                this.showToast('⚠️ Por favor selecciona fecha y hora', 'error');
+                return;
+            }
+            
+            const mensaje = encodeURIComponent(
+                `Hola, deseo confirmar mi cita con ${terapeuta}.\n📅 Fecha: ${fecha}\n🕐 Hora: ${hora}`
+            );
+            window.open(`https://wa.me/584140000000?text=${mensaje}`, '_blank');
+        },
+
+        // ============================================
+        // ADMIN - MODIFICADO SIN PIN Y CON COLORES
+        // ============================================
+        guardarCambiosAdmin() {
+            const newLogo = document.getElementById('admin-logo-url').value;
+            const newBannerImg = document.getElementById('admin-banner-img-url').value;
+            const newBannerText = document.getElementById('admin-banner-text').value;
+            const newColorPrimary = document.getElementById('admin-color-primary').value;
+            const newColorSecondary = document.getElementById('admin-color-secondary').value;
+
+            if (newLogo) {
+                localStorage.setItem('app_logo', newLogo);
+                document.getElementById('app-logo-img').src = newLogo;
+            }
+            if (newBannerImg) {
+                localStorage.setItem('app_banner_img', newBannerImg);
+                document.getElementById('home-hero-banner').style.backgroundImage = `url('${newBannerImg}')`;
+            }
+            if (newBannerText) {
+                localStorage.setItem('app_banner_text', newBannerText);
+                document.getElementById('home-banner-text').innerText = newBannerText;
+            }
+            if (newColorPrimary) {
+                localStorage.setItem('app_color_primary', newColorPrimary);
+                document.documentElement.style.setProperty('--color-primary', newColorPrimary);
+            }
+            if (newColorSecondary) {
+                localStorage.setItem('app_color_secondary', newColorSecondary);
+                document.documentElement.style.setProperty('--color-secondary', newColorSecondary);
+            }
+
+            this.showToast('✅ ¡Cambios guardados y aplicados con éxito!', 'success');
+            this.switchView('view-home');
+        }
     };
 
-    window.onload = () => App.init();
+    // ============================================
+    // INICIALIZACIÓN
+    // ============================================
+    document.addEventListener('DOMContentLoaded', function() {
+        // Cargar configuraciones visuales
+        const savedLogo = localStorage.getItem('app_logo');
+        const savedBannerImg = localStorage.getItem('app_banner_img');
+        const savedBannerText = localStorage.getItem('app_banner_text');
+        const savedColorPrimary = localStorage.getItem('app_color_primary');
+        const savedColorSecondary = localStorage.getItem('app_color_secondary');
+
+        // Aplicar colores personalizados
+        if (savedColorPrimary) {
+            document.documentElement.style.setProperty('--color-primary', savedColorPrimary);
+        }
+        if (savedColorSecondary) {
+            document.documentElement.style.setProperty('--color-secondary', savedColorSecondary);
+        }
+
+        if (savedLogo) {
+            document.getElementById('app-logo-img').src = savedLogo;
+            const adminLogo = document.getElementById('admin-logo-url');
+            if (adminLogo) adminLogo.value = savedLogo;
+        }
+        if (savedBannerImg) {
+            document.getElementById('home-hero-banner').style.backgroundImage = `url('${savedBannerImg}')`;
+            const adminBanner = document.getElementById('admin-banner-img-url');
+            if (adminBanner) adminBanner.value = savedBannerImg;
+        }
+        if (savedBannerText) {
+            document.getElementById('home-banner-text').innerText = savedBannerText;
+            const adminText = document.getElementById('admin-banner-text');
+            if (adminText) adminText.value = savedBannerText;
+        }
+        if (savedColorPrimary) {
+            const adminColorPrimary = document.getElementById('admin-color-primary');
+            if (adminColorPrimary) adminColorPrimary.value = savedColorPrimary;
+        }
+        if (savedColorSecondary) {
+            const adminColorSecondary = document.getElementById('admin-color-secondary');
+            if (adminColorSecondary) adminColorSecondary.value = savedColorSecondary;
+        }
+
+        // Cargar datos del usuario
+        App.state.user.name = localStorage.getItem('user_name') || '';
+        App.state.user.email = localStorage.getItem('user_email') || '';
+        App.state.user.role = localStorage.getItem('user_role') || 'user';
+        App.state.user.registerMethod = localStorage.getItem('register_method') || 'email';
+        App.state.user.telefono = localStorage.getItem('user_telefono') || '';
+        App.state.user.fechaNac = localStorage.getItem('user_fecha_nac') || '';
+        App.state.user.emailVerified = localStorage.getItem('email_verified') === 'true';
+        App.state.user.fechaRegistro = localStorage.getItem('fecha_registro') || new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' });
+        App.state.user.sesiones = parseInt(localStorage.getItem('user_sesiones')) || 0;
+        App.state.user.ejercicios = parseInt(localStorage.getItem('user_ejercicios')) || 0;
+        App.state.user.diasActivo = parseInt(localStorage.getItem('user_dias_activo')) || 0;
+        App.state.legalAceptado = localStorage.getItem('legal_aceptado') === 'true';
+        App.state.isAuthenticated = !!localStorage.getItem('user_email');
+
+        // Actualizar UI
+        App.actualizarPerfilUI();
+        App.actualizarHeader();
+        App.actualizarNav();
+
+        // Seleccionar vista inicial
+        App.switchView('view-home');
+
+        // Seleccionar método de pago por defecto
+        App.selectPaymentMethod('pm_bdv');
+
+        // Validación de contraseña en tiempo real
+        const passwordInput = document.getElementById('input-password');
+        const passwordError = document.getElementById('password-error');
+        if (passwordInput && passwordError) {
+            passwordInput.addEventListener('input', function() {
+                if (this.value.length > 0 && this.value.length < 6) {
+                    passwordError.classList.remove('hidden');
+                } else {
+                    passwordError.classList.add('hidden');
+                }
+            });
+        }
+
+        console.log('🚀 Atrévete HealthTech App inicializada correctamente');
+        console.log('👤 Usuario autenticado:', App.state.isAuthenticated);
+    });
+
+    window.App = App;
   </script>
 </body>
 </html>
