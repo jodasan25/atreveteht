@@ -543,7 +543,7 @@
   </div>
 
   <!-- ================= 1. HOME (PANTALLA INICIAL) ================= -->
-  <main id="view-home" class="app-view max-w-md mx-auto px-5 space-y-5">
+  <main id="view-home" class="app-view max-w-md mx-auto px-5 space-y-5 pb-24">
     <div class="text-center space-y-1">
       <h2 class="text-3xl font-extrabold text-[#7A8A7C] leading-tight">Habita Tu Cuerpo</h2>
       <p class="text-xs text-[#7A8A7C]/80 px-2">Ecosistema somático integrativo para la regulación del sistema nervioso y acompañamiento clínico.</p>
@@ -583,7 +583,7 @@
   </main>
 
   <!-- ================= 2. AUTENTICACIÓN (LOGIN / REGISTRO) ================= -->
-  <main id="view-auth" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
+  <main id="view-auth" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
     <div class="text-center space-y-1">
       <h2 id="auth-title" class="text-2xl font-bold text-[#7A8A7C]">Iniciar Sesión</h2>
       <p id="auth-subtitle" class="text-xs text-[#7A8A7C]/70">Accede a tu cuenta de Atrévete HealthTech</p>
@@ -667,7 +667,7 @@
   </main>
 
   <!-- ================= 3. RECUPERACIÓN DE CONTRASEÑA ================= -->
-  <main id="view-recovery" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
+  <main id="view-recovery" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
     <div class="text-center space-y-1">
       <h2 class="text-2xl font-bold text-[#7A8A7C]">Recuperar Contraseña</h2>
       <p class="text-xs text-[#7A8A7C]/70">Ingresa tu correo electrónico registrado y te enviaremos las instrucciones.</p>
@@ -688,7 +688,7 @@
   </main>
 
   <!-- ================= 4. PERFIL DE USUARIO MEJORADO ================= -->
-  <main id="view-perfil-usuario" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
+  <main id="view-perfil-usuario" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
     <!-- Tarjeta de perfil principal -->
     <div class="clay-card profile-card p-6 text-center space-y-4 relative overflow-hidden">
       <!-- Decoración de fondo -->
@@ -798,7 +798,7 @@
   </main>
 
   <!-- ================= 5. MÉTODOS DE PAGO ================= -->
-  <main id="view-pagos" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
+  <main id="view-pagos" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
     <h2 class="text-2xl font-bold text-[#7A8A7C] text-center">Pasarela de Pago</h2>
 
     <div class="clay-card p-4 bg-orange-50/30 border border-[#E27D60]/20 flex justify-between items-center">
@@ -825,22 +825,26 @@
 
         <button type="button" id="pay-zelle" onclick="App.selectPaymentMethod('zelle')" class="clay-btn-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1 focus-visible" role="radio" aria-checked="false" aria-label="Zelle">
           <span class="text-base">🇺🇸</span>
-          <span>Zelle (Próximamente)</span>
+          <span>Zelle</span>
+          <span class="text-[8px] text-amber-600 font-normal">(Próximamente)</span>
         </button>
         
         <button type="button" id="pay-binance" onclick="App.selectPaymentMethod('binance')" class="clay-btn-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1 focus-visible" role="radio" aria-checked="false" aria-label="Binance Pay">
           <span class="text-base">🟡</span>
           <span>Binance Pay</span>
+          <span class="text-[8px] text-green-600 font-normal">(USDT)</span>
         </button>
       </div>
 
-      <div id="datos-pago-box" class="bg-stone-100/90 p-4 rounded-2xl border border-stone-200/80 space-y-1.5 text-xs text-[#7A8A7C]">
+      <div id="datos-pago-box" class="bg-stone-100/90 p-4 rounded-2xl border border-stone-200/80 space-y-1.5 text-xs text-[#7A8A7C] min-h-[80px]">
         <!-- Dinámico -->
+        <p class="text-center text-stone-400">Selecciona un método de pago</p>
       </div>
 
-      <div id="container-ref-pago">
+      <div id="container-ref-pago" class="space-y-2">
         <label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="input-ref-pago">Número de Referencia / Hash / Comprobante</label>
         <input id="input-ref-pago" type="text" placeholder="Ej. #849204 o Hash de transferencia" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible">
+        <p id="ref-pago-helper" class="text-[10px] text-stone-400 hidden">Ingresa el código de tu transferencia para verificar el pago.</p>
       </div>
 
       <button id="btn-enviar-pago" onclick="App.confirmarPagoMock()" class="clay-btn-primary w-full py-3.5 text-xs font-bold focus-visible">
@@ -859,7 +863,7 @@
   </main>
 
   <!-- ================= 6. REGULACIÓN SOMÁTICA ================= -->
-  <main id="view-regulacion" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
+  <main id="view-regulacion" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
     <div class="text-center space-y-1">
       <h2 class="text-2xl font-bold text-[#7A8A7C]">Gimnasio Emocional</h2>
       <p class="text-xs text-[#7A8A7C]/80">Diagnóstico Somático & Técnicas de Regulación</p>
@@ -942,7 +946,7 @@
   </main>
 
   <!-- ================= 7. AGENDAMIENTO DE CITAS ================= -->
-  <main id="view-citas" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
+  <main id="view-citas" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
     <h2 class="text-2xl font-bold text-[#7A8A7C] text-center">Agendar tu Sesión</h2>
     <div class="clay-card p-5 space-y-4">
       <label class="block text-xs font-bold text-[#7A8A7C]" for="select-terapeuta">Especialista:</label>
@@ -968,7 +972,7 @@
   </main>
 
   <!-- ================= 8. POLÍTICAS DE PRIVACIDAD ================= -->
-  <main id="view-privacidad" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
+  <main id="view-privacidad" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
     <div class="text-center space-y-1">
       <h2 class="text-2xl font-bold text-[#7A8A7C]">Políticas de Privacidad</h2>
       <p class="text-xs text-[#7A8A7C]/70">Términos Legalmente Vinculantes • Atrévete HealthTech</p>
@@ -993,7 +997,7 @@
   </main>
 
   <!-- ================= 9. PANEL ADMINISTRATIVO PRIVADO ================= -->
-  <main id="view-admin-login" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
+  <main id="view-admin-login" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
     <div class="text-center space-y-1">
       <h2 class="text-2xl font-bold text-[#E27D60]">Acceso Administrativo</h2>
       <p class="text-xs text-[#7A8A7C]/70">Área restringida para gestión visual y banners.</p>
@@ -1009,7 +1013,7 @@
   </main>
 
   <!-- ================= 10. PANEL ADMINISTRATIVO DASHBOARD ================= -->
-  <main id="view-admin-dashboard" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
+  <main id="view-admin-dashboard" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
     <div class="flex justify-between items-center border-b border-stone-200 pb-3">
       <div>
         <h2 class="text-xl font-bold text-[#7A8A7C]">Gestor Visual Admin</h2>
@@ -1081,10 +1085,10 @@
     </div>
   </nav>
 
-  <!-- ================= JAVASCRIPT ================= -->
+  <!-- ================= JAVASCRIPT COMPLETO CORREGIDO ================= -->
   <script>
     // ============================================
-    // APP - Objeto principal
+    // APP - Objeto principal (VERSIÓN CORREGIDA)
     // ============================================
     const App = {
         // Estado de la aplicación
@@ -1119,7 +1123,10 @@
             if (this.state.legalAceptado) {
                 return true;
             }
-            document.getElementById('modal-legal-gate').classList.remove('hidden');
+            const modal = document.getElementById('modal-legal-gate');
+            if (modal) {
+                modal.classList.remove('hidden');
+            }
             return false;
         },
 
@@ -1136,7 +1143,7 @@
         },
 
         // ============================================
-        // FUNCIONES DE NAVEGACIÓN CON BARRERA LEGAL
+        // FUNCIONES DE NAVEGACIÓN MEJORADAS
         // ============================================
         irAPerfil() {
             if (this.state.isAuthenticated) {
@@ -1162,34 +1169,6 @@
             this.switchView('view-auth');
         },
 
-        // ============================================
-        // ACTUALIZAR NAVEGACIÓN INFERIOR
-        // ============================================
-        actualizarNav() {
-            const navPerfil = document.getElementById('nav-perfil');
-            const perfilIcon = document.getElementById('nav-perfil-icon');
-            const perfilLabel = document.getElementById('nav-perfil-label');
-
-            if (this.state.isAuthenticated) {
-                if (perfilIcon) {
-                    perfilIcon.textContent = '👤';
-                }
-                if (perfilLabel) {
-                    perfilLabel.textContent = 'Perfil';
-                }
-            } else {
-                if (perfilIcon) {
-                    perfilIcon.textContent = '🔑';
-                }
-                if (perfilLabel) {
-                    perfilLabel.textContent = 'Login';
-                }
-            }
-        },
-
-        // ============================================
-        // NAVEGACIÓN CON INDICADOR ACTIVO
-        // ============================================
         switchView(viewId) {
             document.querySelectorAll('.app-view').forEach(v => v.classList.add('hidden'));
             
@@ -1208,11 +1187,13 @@
                 }
             });
 
+            // Prevenir acceso a perfil sin autenticación
             if (viewId === 'view-perfil-usuario' && !this.state.isAuthenticated) {
                 this.switchView('view-auth');
                 return;
             }
 
+            // Manejar respiración guiada
             if (viewId !== 'view-regulacion' && this.state.breathInterval) {
                 clearInterval(this.state.breathInterval);
                 this.state.breathInterval = null;
@@ -1223,8 +1204,22 @@
         },
 
         // ============================================
-        // ACTUALIZAR HEADER
+        // ACTUALIZAR NAVEGACIÓN Y HEADER
         // ============================================
+        actualizarNav() {
+            const navPerfil = document.getElementById('nav-perfil');
+            const perfilIcon = document.getElementById('nav-perfil-icon');
+            const perfilLabel = document.getElementById('nav-perfil-label');
+
+            if (this.state.isAuthenticated) {
+                if (perfilIcon) perfilIcon.textContent = '👤';
+                if (perfilLabel) perfilLabel.textContent = 'Perfil';
+            } else {
+                if (perfilIcon) perfilIcon.textContent = '🔑';
+                if (perfilLabel) perfilLabel.textContent = 'Login';
+            }
+        },
+
         actualizarHeader() {
             const loginBtns = document.getElementById('header-login-btns');
             const profileBtn = document.getElementById('header-profile-btn');
@@ -1246,25 +1241,39 @@
         },
 
         // ============================================
-        // REGISTRO SIMULADO CON GOOGLE
+        // REGISTRO CON GOOGLE - CORREGIDO
         // ============================================
         iniciarRegistroGoogleSimulado() {
             if (!this.verificarLegal()) {
                 return;
             }
             
+            // Simular datos de Google
             const googleUser = {
                 name: prompt('👤 Ingresa tu nombre completo:', 'Ana María Rodríguez') || 'Usuario Google',
                 email: prompt('📧 Ingresa tu correo electrónico:', 'usuario@gmail.com') || 'usuario@gmail.com',
                 picture: '',
-                email_verified: true
+                email_verified: true,
+                id: 'google_' + Date.now()
             };
 
+            // Validación básica
             if (!googleUser.email || !googleUser.email.includes('@')) {
                 this.showToast('⚠️ Por favor ingresa un correo válido', 'warning');
                 return;
             }
 
+            // Verificar si el usuario ya existe
+            const existingUser = localStorage.getItem('user_email');
+            if (existingUser && existingUser === googleUser.email) {
+                this.showToast('⚠️ Este correo ya está registrado. Por favor inicia sesión.', 'warning');
+                this.switchAuthMode('login');
+                document.getElementById('input-email').value = googleUser.email;
+                this.switchView('view-auth');
+                return;
+            }
+
+            // Guardar datos de Google para el modal
             this.state.googleUserData = googleUser;
             this.mostrarModalConfirmacionGoogle(googleUser);
         },
@@ -1274,26 +1283,33 @@
         // ============================================
         mostrarModalConfirmacionGoogle(userData) {
             const modal = document.getElementById('google-modal');
+            if (!modal) {
+                console.error('Modal de Google no encontrado');
+                return;
+            }
+            
             const avatar = document.getElementById('google-avatar-modal');
             const nameEl = document.getElementById('google-name-modal');
             const emailEl = document.getElementById('google-email-modal');
             
-            const initials = userData.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
-            avatar.textContent = initials;
-            nameEl.textContent = userData.name;
-            emailEl.textContent = userData.email;
+            const initials = userData.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'G';
+            if (avatar) avatar.textContent = initials;
+            if (nameEl) nameEl.textContent = userData.name;
+            if (emailEl) emailEl.textContent = userData.email;
             
             modal.classList.add('active');
             
             const btnText = document.getElementById('btn-google-text');
             const btnSpinner = document.getElementById('btn-google-spinner');
-            btnText.textContent = '✅ Confirmar y Continuar';
-            btnSpinner.classList.add('hidden');
-            document.getElementById('btn-confirmar-google').disabled = false;
+            if (btnText) btnText.textContent = '✅ Confirmar y Continuar';
+            if (btnSpinner) btnSpinner.classList.add('hidden');
+            
+            const confirmBtn = document.getElementById('btn-confirmar-google');
+            if (confirmBtn) confirmBtn.disabled = false;
         },
 
         // ============================================
-        // CONFIRMAR REGISTRO CON GOOGLE
+        // CONFIRMAR REGISTRO CON GOOGLE - CORREGIDO
         // ============================================
         confirmarRegistroGoogle() {
             if (!this.state.googleUserData) {
@@ -1303,50 +1319,67 @@
 
             const btnText = document.getElementById('btn-google-text');
             const btnSpinner = document.getElementById('btn-google-spinner');
-            btnText.textContent = 'Registrando...';
-            btnSpinner.classList.remove('hidden');
-            document.getElementById('btn-confirmar-google').disabled = true;
+            const confirmBtn = document.getElementById('btn-confirmar-google');
+            
+            if (btnText) btnText.textContent = 'Registrando...';
+            if (btnSpinner) btnSpinner.classList.remove('hidden');
+            if (confirmBtn) confirmBtn.disabled = true;
 
             setTimeout(() => {
-                const userData = this.state.googleUserData;
-                const fechaRegistro = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' });
-                
-                localStorage.setItem('user_name', userData.name);
-                localStorage.setItem('user_email', userData.email);
-                localStorage.setItem('user_role', 'user');
-                localStorage.setItem('register_method', 'google');
-                localStorage.setItem('email_verified', 'true');
-                localStorage.setItem('google_picture', userData.picture || '');
-                localStorage.setItem('fecha_registro', fechaRegistro);
-                
-                this.state.user = {
-                    ...this.state.user,
-                    name: userData.name,
-                    email: userData.email,
-                    role: 'user',
-                    registerMethod: 'google',
-                    emailVerified: true,
-                    fechaRegistro: fechaRegistro
-                };
-                this.state.isAuthenticated = true;
-                
-                document.getElementById('google-modal').classList.remove('active');
-                
-                this.actualizarPerfilUI();
-                this.actualizarHeader();
-                this.actualizarNav();
-                this.showToast('✅ ¡Registro con Google exitoso!', 'success');
-                this.switchView('view-perfil-usuario');
-                
-                setTimeout(() => {
-                    this.mostrarEditarPerfil();
-                }, 500);
-                
-                btnText.textContent = '✅ Confirmar y Continuar';
-                btnSpinner.classList.add('hidden');
-                document.getElementById('btn-confirmar-google').disabled = false;
-                this.state.googleUserData = null;
-                
+                try {
+                    const userData = this.state.googleUserData;
+                    const fechaRegistro = new Date().toLocaleDateString('es-ES', { 
+                        day: '2-digit', 
+                        month: 'long', 
+                        year: 'numeric' 
+                    });
+                    
+                    localStorage.setItem('user_name', userData.name);
+                    localStorage.setItem('user_email', userData.email);
+                    localStorage.setItem('user_role', 'user');
+                    localStorage.setItem('register_method', 'google');
+                    localStorage.setItem('email_verified', 'true');
+                    localStorage.setItem('google_picture', userData.picture || '');
+                    localStorage.setItem('fecha_registro', fechaRegistro);
+                    localStorage.setItem('user_telefono', '');
+                    localStorage.setItem('user_fecha_nac', '');
+                    
+                    this.state.user = {
+                        ...this.state.user,
+                        name: userData.name,
+                        email: userData.email,
+                        role: 'user',
+                        registerMethod: 'google',
+                        emailVerified: true,
+                        fechaRegistro: fechaRegistro,
+                        telefono: '',
+                        fechaNac: ''
+                    };
+                    this.state.isAuthenticated = true;
+                    
+                    const modal = document.getElementById('google-modal');
+                    if (modal) modal.classList.remove('active');
+                    
+                    this.actualizarPerfilUI();
+                    this.actualizarHeader();
+                    this.actualizarNav();
+                    
+                    this.showToast('✅ ¡Registro con Google exitoso! Bienvenido a Atrévete HealthTech', 'success');
+                    this.switchView('view-perfil-usuario');
+                    
+                    setTimeout(() => {
+                        this.mostrarEditarPerfil();
+                    }, 500);
+                    
+                } catch (error) {
+                    console.error('Error en registro con Google:', error);
+                    this.showToast('❌ Error al registrar con Google. Intenta nuevamente.', 'error');
+                } finally {
+                    if (btnText) btnText.textContent = '✅ Confirmar y Continuar';
+                    if (btnSpinner) btnSpinner.classList.add('hidden');
+                    if (confirmBtn) confirmBtn.disabled = false;
+                    this.state.googleUserData = null;
+                }
             }, 1500);
         },
 
@@ -1354,16 +1387,10 @@
         // CANCELAR REGISTRO CON GOOGLE
         // ============================================
         cancelarRegistroGoogle() {
-            document.getElementById('google-modal').classList.remove('active');
+            const modal = document.getElementById('google-modal');
+            if (modal) modal.classList.remove('active');
             this.state.googleUserData = null;
             this.showToast('Registro con Google cancelado', 'info');
-        },
-
-        // ============================================
-        // CAMBIAR FOTO DE PERFIL
-        // ============================================
-        cambiarFotoPerfil() {
-            this.showToast('📸 Función de cambio de foto en desarrollo', 'info');
         },
 
         // ============================================
@@ -1371,6 +1398,8 @@
         // ============================================
         showToast(message, type = 'success') {
             const toast = document.getElementById('toast');
+            if (!toast) return;
+            
             toast.className = `toast toast-${type}`;
             toast.textContent = message;
             toast.classList.add('show');
@@ -1415,7 +1444,7 @@
                 profileRole.innerText = roleText;
             }
             if (profileRegisterMethod) {
-                const methodText = registerMethod === 'google' ? 'Registrado con: Google 🟢' : 'Registrado con: Email 📧';
+                const methodText = registerMethod === 'google' ? '🟢 Registrado con Google' : '📧 Registrado con Email';
                 profileRegisterMethod.innerText = methodText;
             }
             
@@ -1466,18 +1495,20 @@
             const email = document.getElementById('input-email').value;
             const password = document.getElementById('input-password').value;
             const nombreInput = document.getElementById('input-nombre');
+            const emailError = document.getElementById('email-error');
+            const passwordError = document.getElementById('password-error');
             
             if (!email || !email.includes('@')) {
-                document.getElementById('email-error').classList.remove('hidden');
+                if (emailError) emailError.classList.remove('hidden');
                 return;
             }
-            document.getElementById('email-error').classList.add('hidden');
+            if (emailError) emailError.classList.add('hidden');
             
             if (password.length < 6) {
-                document.getElementById('password-error').classList.remove('hidden');
+                if (passwordError) passwordError.classList.remove('hidden');
                 return;
             }
-            document.getElementById('password-error').classList.add('hidden');
+            if (passwordError) passwordError.classList.add('hidden');
 
             let nombre = 'Usuario Atrévete';
             if (this.state.authMode === 'register' && nombreInput && nombreInput.value.trim() !== '') {
@@ -1531,23 +1562,23 @@
             const subtitle = document.getElementById('auth-subtitle');
 
             if (mode === 'login') {
-                tabLogin.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[#7A8A7C] shadow-sm transition';
-                tabRegister.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl text-[#7A8A7C] transition';
-                fieldNombre.classList.add('hidden');
-                fieldRol.classList.add('hidden');
-                linkForgot.classList.remove('hidden');
-                submitBtn.innerText = 'Iniciar Sesión';
-                title.innerText = 'Iniciar Sesión';
-                subtitle.innerText = 'Accede a tu cuenta de Atrévete HealthTech';
+                if (tabLogin) tabLogin.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[#7A8A7C] shadow-sm transition';
+                if (tabRegister) tabRegister.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl text-[#7A8A7C] transition';
+                if (fieldNombre) fieldNombre.classList.add('hidden');
+                if (fieldRol) fieldRol.classList.add('hidden');
+                if (linkForgot) linkForgot.classList.remove('hidden');
+                if (submitBtn) submitBtn.innerText = 'Iniciar Sesión';
+                if (title) title.innerText = 'Iniciar Sesión';
+                if (subtitle) subtitle.innerText = 'Accede a tu cuenta de Atrévete HealthTech';
             } else {
-                tabRegister.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[#7A8A7C] shadow-sm transition';
-                tabLogin.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl text-[#7A8A7C] transition';
-                fieldNombre.classList.remove('hidden');
-                fieldRol.classList.remove('hidden');
-                linkForgot.classList.add('hidden');
-                submitBtn.innerText = 'Crear Mi Cuenta';
-                title.innerText = 'Crea tu Cuenta';
-                subtitle.innerText = 'Únete a nuestra plataforma somática';
+                if (tabRegister) tabRegister.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[#7A8A7C] shadow-sm transition';
+                if (tabLogin) tabLogin.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl text-[#7A8A7C] transition';
+                if (fieldNombre) fieldNombre.classList.remove('hidden');
+                if (fieldRol) fieldRol.classList.remove('hidden');
+                if (linkForgot) linkForgot.classList.add('hidden');
+                if (submitBtn) submitBtn.innerText = 'Crear Mi Cuenta';
+                if (title) title.innerText = 'Crea tu Cuenta';
+                if (subtitle) subtitle.innerText = 'Únete a nuestra plataforma somática';
             }
         },
 
@@ -1561,11 +1592,11 @@
             localStorage.setItem('user_role', role);
             
             if (role === 'user') {
-                btnUser.className = 'flex-1 py-2 text-xs font-bold rounded-xl bg-orange-100 text-[#E27D60] border border-[#E27D60]/30 transition';
-                btnSpec.className = 'flex-1 py-2 text-xs font-bold rounded-xl bg-stone-100 text-[#7A8A7C] transition';
+                if (btnUser) btnUser.className = 'flex-1 py-2 text-xs font-bold rounded-xl bg-orange-100 text-[#E27D60] border border-[#E27D60]/30 transition';
+                if (btnSpec) btnSpec.className = 'flex-1 py-2 text-xs font-bold rounded-xl bg-stone-100 text-[#7A8A7C] transition';
             } else {
-                btnSpec.className = 'flex-1 py-2 text-xs font-bold rounded-xl bg-orange-100 text-[#E27D60] border border-[#E27D60]/30 transition';
-                btnUser.className = 'flex-1 py-2 text-xs font-bold rounded-xl bg-stone-100 text-[#7A8A7C] transition';
+                if (btnSpec) btnSpec.className = 'flex-1 py-2 text-xs font-bold rounded-xl bg-orange-100 text-[#E27D60] border border-[#E27D60]/30 transition';
+                if (btnUser) btnUser.className = 'flex-1 py-2 text-xs font-bold rounded-xl bg-stone-100 text-[#7A8A7C] transition';
             }
         },
 
@@ -1595,6 +1626,9 @@
             localStorage.removeItem('email_verified');
             localStorage.removeItem('google_picture');
             localStorage.removeItem('fecha_registro');
+            localStorage.removeItem('user_sesiones');
+            localStorage.removeItem('user_ejercicios');
+            localStorage.removeItem('user_dias_activo');
             
             this.state.isAuthenticated = false;
             this.state.user = {
@@ -1663,6 +1697,10 @@
             this.showToast('✅ Perfil actualizado exitosamente', 'success');
         },
 
+        cambiarFotoPerfil() {
+            this.showToast('📸 Función de cambio de foto en desarrollo', 'info');
+        },
+
         // ============================================
         // PAGOS
         // ============================================
@@ -1683,51 +1721,74 @@
             const box = document.getElementById('datos-pago-box');
             const containerRef = document.getElementById('container-ref-pago');
             const btnEnviar = document.getElementById('btn-enviar-pago');
+            const helperRef = document.getElementById('ref-pago-helper');
+
+            containerRef.style.display = 'block';
+            btnEnviar.style.display = 'block';
+            btnEnviar.disabled = false;
+            btnEnviar.classList.remove('opacity-50', 'cursor-not-allowed');
+            if (helperRef) helperRef.classList.add('hidden');
 
             if (method === 'pm_bdv') {
-                containerRef.style.display = 'block';
-                btnEnviar.style.display = 'block';
                 box.innerHTML = `
                     <p class="font-bold text-[#E27D60]">🇻🇪 Pago Móvil - Banco de Venezuela (0102)</p>
                     <p>Teléfono: <strong>0414-4031678</strong></p>
                     <p>C.I: <strong>18.478.170</strong></p>
                     <p class="text-[10px] text-gray-500 mt-1">Monto: Equivalente en Bs. a la tasa BCV del día ($120.00)</p>
                 `;
+                if (helperRef) {
+                    helperRef.textContent = 'Ingresa el número de referencia de tu Pago Móvil.';
+                    helperRef.classList.remove('hidden');
+                }
             } else if (method === 'pm_bnc') {
-                containerRef.style.display = 'block';
-                btnEnviar.style.display = 'block';
                 box.innerHTML = `
                     <p class="font-bold text-[#E27D60]">🇻🇪 Pago Móvil - Banco Nacional de Crédito (0191)</p>
                     <p>Teléfono: <strong>0414-4187215</strong></p>
                     <p>C.I: <strong>13.518.664</strong></p>
                     <p class="text-[10px] text-gray-500 mt-1">Monto: Equivalente en Bs. a la tasa BCV del día ($120.00)</p>
                 `;
+                if (helperRef) {
+                    helperRef.textContent = 'Ingresa el número de referencia de tu Pago Móvil.';
+                    helperRef.classList.remove('hidden');
+                }
             } else if (method === 'zelle') {
                 containerRef.style.display = 'none';
                 btnEnviar.style.display = 'none';
                 box.innerHTML = `
                     <p class="font-bold text-[#E27D60]">🇺🇸 Zelle (Divisas)</p>
                     <p class="text-sm font-semibold mt-2 text-[#7A8A7C]">⏳ Próximamente disponible</p>
-                    <p class="text-[10px] text-gray-500 mt-1">Este método de pago se habilitará muy pronto.</p>
+                    <p class="text-[10px] text-gray-500 mt-1">Este método de pago se habilitará muy pronto. Mientras tanto, utiliza Pago Móvil o Binance Pay.</p>
                 `;
             } else if (method === 'binance') {
-                containerRef.style.display = 'block';
-                btnEnviar.style.display = 'block';
                 box.innerHTML = `
                     <p class="font-bold text-[#E27D60]">🟡 Binance Pay (USDT)</p>
                     <p>Binance Pay ID: <strong>163305332</strong></p>
-                    <p class="text-[10px] text-gray-500 mt-1">Monto exacto: <strong>$120.00 USDT</strong></p>
+                    <p class="text-[10px] text-gray-500 mt-1">Monto exacto: <strong>$120.00 USDT</strong> (red BEP-20)</p>
                 `;
+                if (helperRef) {
+                    helperRef.textContent = 'Ingresa el ID de la transacción o el hash de tu pago en Binance Pay.';
+                    helperRef.classList.remove('hidden');
+                }
             }
         },
 
         confirmarPagoMock() {
-            const ref = document.getElementById('input-ref-pago').value;
-            if (!ref) {
-                this.showToast('⚠️ Por favor ingresa el número de referencia', 'error');
+            if (this.state.selectedPayment === 'zelle') {
+                this.showToast('⏳ El método de pago Zelle aún no está disponible.', 'warning');
                 return;
             }
-            this.showToast('✅ ¡Comprobante reportado con éxito! En verificación.', 'success');
+
+            const ref = document.getElementById('input-ref-pago').value;
+            if (!ref) {
+                this.showToast('⚠️ Por favor ingresa el número de referencia o comprobante.', 'error');
+                document.getElementById('input-ref-pago').classList.add('border-red-400', 'border-2');
+                setTimeout(() => {
+                    document.getElementById('input-ref-pago').classList.remove('border-red-400', 'border-2');
+                }, 3000);
+                return;
+            }
+            
+            this.showToast('✅ ¡Comprobante reportado con éxito! Nuestro equipo lo verificará.', 'success');
             this.switchView('view-perfil-usuario');
         },
 
@@ -1855,6 +1916,7 @@
     // INICIALIZACIÓN
     // ============================================
     document.addEventListener('DOMContentLoaded', function() {
+        // Cargar configuraciones visuales
         const savedLogo = localStorage.getItem('app_logo');
         const savedBannerImg = localStorage.getItem('app_banner_img');
         const savedBannerText = localStorage.getItem('app_banner_text');
@@ -1875,6 +1937,7 @@
             if (adminText) adminText.value = savedBannerText;
         }
 
+        // Cargar datos del usuario
         App.state.user.name = localStorage.getItem('user_name') || '';
         App.state.user.email = localStorage.getItem('user_email') || '';
         App.state.user.role = localStorage.getItem('user_role') || 'user';
@@ -1887,21 +1950,37 @@
         App.state.user.ejercicios = parseInt(localStorage.getItem('user_ejercicios')) || 0;
         App.state.user.diasActivo = parseInt(localStorage.getItem('user_dias_activo')) || 0;
         App.state.legalAceptado = localStorage.getItem('legal_aceptado') === 'true';
+        App.state.isAuthenticated = !!localStorage.getItem('user_email');
 
+        // Actualizar UI
         App.actualizarPerfilUI();
         App.actualizarHeader();
         App.actualizarNav();
 
-        if (App.state.isAuthenticated) {
-            App.switchView('view-home');
-        }
+        // Seleccionar vista inicial
+        App.switchView('view-home');
 
+        // Seleccionar método de pago por defecto
         App.selectPaymentMethod('pm_bdv');
 
-        console.log('🚀 Atrévete HealthTech App inicializada');
+        // Validación de contraseña en tiempo real
+        const passwordInput = document.getElementById('input-password');
+        const passwordError = document.getElementById('password-error');
+        if (passwordInput && passwordError) {
+            passwordInput.addEventListener('input', function() {
+                if (this.value.length > 0 && this.value.length < 6) {
+                    passwordError.classList.remove('hidden');
+                } else {
+                    passwordError.classList.add('hidden');
+                }
+            });
+        }
+
+        console.log('🚀 Atrévete HealthTech App inicializada correctamente');
+        console.log('👤 Usuario autenticado:', App.state.isAuthenticated);
     });
 
     window.App = App;
-</script>
+  </script>
 </body>
 </html>
