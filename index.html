@@ -393,9 +393,76 @@
             color: #7A8A7C;
             font-weight: 500;
         }
+
+        /* Animación de entrada del modal */
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        .modal-legal-content {
+            animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
     </style>
 </head>
 <body>
+
+  <!-- ==================== BARRERA LEGAL COMPLETA E INTEGRADA ==================== -->
+  <div id="modal-legal-gate" class="fixed inset-0 bg-black/60 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+    
+    <div class="bg-[#F9F6F0] w-full max-w-lg rounded-3xl p-6 shadow-[8px_8px_16px_#d1cdc7,-8px_-8px_16px_#ffffff] border border-white/60 flex flex-col max-h-[90vh] modal-legal-content">
+      
+      <!-- Encabezado -->
+      <div class="text-center pb-3 border-b border-gray-200">
+        <span class="text-[10px] uppercase font-bold tracking-widest text-[#E27D60]">Requisito Legal de Ingreso</span>
+        <h3 class="text-base font-bold text-[#4A5D4E] mt-1">Términos, Privacidad y Blindaje Legal</h3>
+      </div>
+
+      <!-- Contenido Legal Unificado Escroleable -->
+      <div class="overflow-y-auto my-4 pr-2 space-y-4 text-xs text-gray-600 text-justify max-h-[60vh] leading-relaxed">
+        
+        <p class="font-bold text-center text-[#E27D60]">Atrévete HealthTech — Versión Unificada 2026</p>
+        
+        <!-- Cuadro de Alerta Médica -->
+        <div class="bg-amber-50 p-3 border-l-4 border-amber-400 rounded-r-lg text-[11px] text-amber-900">
+          <strong>AVISO CRÍTICO DE DESLINDE MÉDICO Y CLÍNICO:</strong><br>
+          Atrévete HealthTech, sus propietarios y la herramienta "Escáner Cuántico" ofrecen evaluaciones bioenergéticas holísticas y de regulación somática. <strong>NO constituyen diagnóstico médico, tratamiento psiquiátrico ni prescripción farmacológica.</strong>
+        </div>
+
+        <h4 class="font-bold text-[#4A5D4E]">1. Aceptación por Adhesión</h4>
+        <p>Al hacer clic en "Acepto", confirmas ser mayor de edad y aceptas el uso de LA PLATAFORMA bajo la Ley de Mensajes de Datos y Firmas Electrónicas de la República Bolivariana de Venezuela.</p>
+
+        <h4 class="font-bold text-[#4A5D4E]">2. Protección de Datos Personales y Sensibles</h4>
+        <p>Tus datos de bienestar se procesan bajo estricta confidencialidad (Art. 60 CRBV / RGPD). No se transfieren a terceros ni almacenamos claves o datos bancarios directos.</p>
+
+        <h4 class="font-bold text-[#4A5D4E]">3. Eventos Presenciales y Campamentos</h4>
+        <p>La asistencia a actividades presenciales (ej. "Adultas en Fuga") se realiza bajo propio riesgo del participante. Los organizadores quedan exonerados de responsabilidad por eventualidades o fuerza mayor.</p>
+
+        <h4 class="font-bold text-[#4A5D4E]">4. Límite de Responsabilidad Financiera y Pagos</h4>
+        <p>Los pagos por reservaciones y evaluaciones no son reembolsables. La responsabilidad legal máxima acumulada de LOS PROPIETARIOS queda limitada estrictamente al monto pagado por el usuario en los últimos 30 días.</p>
+
+        <h4 class="font-bold text-[#4A5D4E]">5. Jurisdicción y Ley Aplicable</h4>
+        <p>Este acuerdo se rige bajo las leyes de la República Bolivariana de Venezuela y cualquier disputa se someterá de manera exclusiva a los Tribunales Ordinarios competentes.</p>
+
+      </div>
+
+      <!-- Botones de Acción -->
+      <div class="pt-3 border-t border-gray-200 space-y-2">
+        <button onclick="App.aceptarLegalYContinuar()" class="w-full py-3.5 bg-[#E27D60] text-white font-bold rounded-2xl shadow-[4px_4px_8px_#d1cdc7,-4px_-4px_8px_#ffffff] hover:opacity-95 transition-all text-xs tracking-wide">
+          Acepto Términos, Políticas y Acelero mi Ingreso
+        </button>
+        <button onclick="App.cancelarLegal()" class="w-full py-2 text-[11px] text-gray-400 hover:text-gray-600 font-medium">
+          Cancelar y Volver al Inicio
+        </button>
+      </div>
+
+    </div>
+  </div>
 
   <!-- ================= CABECERA CON BOTONES DE LOGIN Y REGISTRO ================= -->
   <header class="pt-3 pb-1 px-6 max-w-md mx-auto">
@@ -1026,6 +1093,7 @@
             quizAnswers: {},
             selectedPayment: 'pm_bdv',
             googleUserData: null,
+            legalAceptado: localStorage.getItem('legal_aceptado') === 'true',
             user: {
                 name: localStorage.getItem('user_name') || '',
                 email: localStorage.getItem('user_email') || '',
@@ -1045,14 +1113,53 @@
         },
 
         // ============================================
-        // FUNCIONES DE NAVEGACIÓN
+        // FUNCIONES DE BARRERA LEGAL
+        // ============================================
+        verificarLegal() {
+            if (this.state.legalAceptado) {
+                return true;
+            }
+            document.getElementById('modal-legal-gate').classList.remove('hidden');
+            return false;
+        },
+
+        aceptarLegalYContinuar() {
+            localStorage.setItem('legal_aceptado', 'true');
+            this.state.legalAceptado = true;
+            document.getElementById('modal-legal-gate').classList.add('hidden');
+            this.switchView('view-auth');
+        },
+
+        cancelarLegal() {
+            document.getElementById('modal-legal-gate').classList.add('hidden');
+            this.switchView('view-home');
+        },
+
+        // ============================================
+        // FUNCIONES DE NAVEGACIÓN CON BARRERA LEGAL
         // ============================================
         irAPerfil() {
             if (this.state.isAuthenticated) {
                 this.switchView('view-perfil-usuario');
             } else {
-                this.switchView('view-auth');
+                this.abrirLogin();
             }
+        },
+
+        abrirLogin() {
+            if (!this.verificarLegal()) {
+                return;
+            }
+            this.switchAuthMode('login');
+            this.switchView('view-auth');
+        },
+
+        abrirRegistro() {
+            if (!this.verificarLegal()) {
+                return;
+            }
+            this.switchAuthMode('register');
+            this.switchView('view-auth');
         },
 
         // ============================================
@@ -1116,19 +1223,6 @@
         },
 
         // ============================================
-        // FUNCIONES DE HEADER
-        // ============================================
-        abrirLogin() {
-            this.switchAuthMode('login');
-            this.switchView('view-auth');
-        },
-
-        abrirRegistro() {
-            this.switchAuthMode('register');
-            this.switchView('view-auth');
-        },
-
-        // ============================================
         // ACTUALIZAR HEADER
         // ============================================
         actualizarHeader() {
@@ -1155,6 +1249,10 @@
         // REGISTRO SIMULADO CON GOOGLE
         // ============================================
         iniciarRegistroGoogleSimulado() {
+            if (!this.verificarLegal()) {
+                return;
+            }
+            
             const googleUser = {
                 name: prompt('👤 Ingresa tu nombre completo:', 'Ana María Rodríguez') || 'Usuario Google',
                 email: prompt('📧 Ingresa tu correo electrónico:', 'usuario@gmail.com') || 'usuario@gmail.com',
@@ -1265,7 +1363,6 @@
         // CAMBIAR FOTO DE PERFIL
         // ============================================
         cambiarFotoPerfil() {
-            // Simular cambio de foto
             this.showToast('📸 Función de cambio de foto en desarrollo', 'info');
         },
 
@@ -1789,6 +1886,7 @@
         App.state.user.sesiones = parseInt(localStorage.getItem('user_sesiones')) || 0;
         App.state.user.ejercicios = parseInt(localStorage.getItem('user_ejercicios')) || 0;
         App.state.user.diasActivo = parseInt(localStorage.getItem('user_dias_activo')) || 0;
+        App.state.legalAceptado = localStorage.getItem('legal_aceptado') === 'true';
 
         App.actualizarPerfilUI();
         App.actualizarHeader();
