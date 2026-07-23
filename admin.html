@@ -1,1 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Admin - Atrévete HealthTech</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #F4F1ED;
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+        .clay-card {
+            background: #FFFFFF;
+            border-radius: 28px;
+            box-shadow: 8px 8px 16px #e0deda, -8px -8px 16px #ffffff;
+        }
+        .clay-input {
+            background: #F4F1ED;
+            border-radius: 16px;
+            box-shadow: inset 4px 4px 8px #e0deda, inset -4px -4px 8px #ffffff;
+            border: 1px solid rgba(122, 138, 124, 0.2);
+        }
+        .clay-btn-primary {
+            background: #E27D60;
+            color: #FFFFFF;
+            border-radius: 9999px;
+            box-shadow: 6px 6px 12px #c06a51, -6px -6px 12px #ffffff;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .clay-btn-primary:hover {
+            transform: translateY(-2px);
+        }
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            padding: 16px 24px;
+            border-radius: 16px;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            transform: translateX(120%);
+            transition: transform 0.3s ease;
+        }
+        .toast.show { transform: translateX(0); }
+        .toast-success { background: #4CAF50; }
+        .toast-error { background: #f44336; }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+    
+    <div id="toast" class="toast"></div>
 
+    <main class="w-full max-w-lg space-y-6">
+        <!-- Header -->
+        <div class="text-center space-y-2">
+            <div class="flex items-center justify-center gap-3">
+                <span class="text-3xl">⚙️</span>
+                <h1 class="text-3xl font-extrabold text-[#7A8A7C]">Panel Administrativo</h1>
+            </div>
+            <p class="text-xs text-[#7A8A7C]/70">Gestión visual de Atrévete HealthTech</p>
+            <div class="flex items-center justify-center gap-2 mt-2">
+                <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                <span class="text-[10px] text-green-600 font-semibold">Cambios en tiempo real</span>
+            </div>
+        </div>
+
+        <!-- Formulario de Logo y Banner -->
+        <form onsubmit="event.preventDefault(); Admin.guardarCambios();" class="clay-card p-6 space-y-5">
+            
+            <!-- LOGO -->
+            <div class="space-y-2">
+                <label class="block text-xs font-bold text-[#7A8A7C] flex items-center gap-2">
+                    <span>🖼️</span> Logotipo Principal (Header)
+                </label>
+                <input type="url" id="admin-logo-url" placeholder="https://ejemplo.com/logo.png" 
+                       class="w-full p-3 text-xs clay-input focus:outline-none">
+                <div class="flex items-center gap-2">
+                    <span class="text-[10px] text-[#7A8A7C]/60">Vista previa:</span>
+                    <img id="logo-preview" src="" alt="Logo preview" class="h-8 object-contain hidden">
+                </div>
+            </div>
+
+            <!-- BANNER IMAGEN -->
+            <div class="space-y-2">
+                <label class="block text-xs font-bold text-[#7A8A7C] flex items-center gap-2">
+                    <span>🖼️</span> Imagen del Banner Principal (Home)
+                </label>
+                <input type="url" id="admin-banner-img-url" placeholder="https://images.unsplash.com/..." 
+                       class="w-full p-3 text-xs clay-input focus:outline-none">
+                <div id="banner-preview-container" class="hidden">
+                    <span class="text-[10px] text-[#7A8A7C]/60">Vista previa:</span>
+                    <img id="banner-preview" src="" alt="Banner preview" class="w-full h-24 object-cover rounded-xl mt-1">
+                </div>
+            </div>
+
+            <!-- TEXTO BANNER -->
+            <div class="space-y-2">
+                <label class="block text-xs font-bold text-[#7A8A7C] flex items-center gap-2">
+                    <span>📝</span> Texto del Banner
+                </label>
+                <input type="text" id="admin-banner-text" placeholder="Ej. Calibra tu calma somática hoy" 
+                       class="w-full p-3 text-xs clay-input focus:outline-none">
+            </div>
+
+            <!-- COLORES PERSONALIZADOS -->
+            <div class="space-y-3 border-t border-stone-200 pt-3">
+                <label class="block text-xs font-bold text-[#7A8A7C] flex items-center gap-2">
+                    <span>🎨</span> Colores Personalizados
+                </label>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="text-[10px] text-[#7A8A7C]">Color Primario</label>
+                        <input type="color" id="admin-color-primary" value="#E27D60" 
+                               class="w-full h-10 rounded-xl cursor-pointer">
+                    </div>
+                    <div>
+                        <label class="text-[10px] text-[#7A8A7C]">Color Secundario</label>
+                        <input type="color" id="admin-color-secondary" value="#7A8A7C" 
+                               class="w-full h-10 rounded-xl cursor-pointer">
+                    </div>
+                </div>
+            </div>
+
+            <!-- BOTONES -->
+            <div class="flex gap-3 pt-2">
+                <button type="submit" class="clay-btn-primary flex-1 py-3.5 text-xs font-bold">
+                    💾 Guardar Cambios
+                </button>
+                <button type="button" onclick="Admin.resetearValores()" 
+                        class="flex-1 py-3.5 text-xs font-bold text-[#7A8A7C] bg-stone-200 rounded-full hover:bg-stone-300 transition">
+                    🔄 Restaurar
+                </button>
+            </div>
+        </form>
+
+        <!-- Info -->
+        <div class="clay-card p-4 bg-orange-50/40 text-[11px] text-[#7A8A7C] space-y-1">
+            <p class="font-bold text-[#E27D60]">💡 ¿Cómo funciona?</p>
+            <p>Los cambios se guardan en el almacenamiento local y se reflejan automáticamente en la app principal.</p>
+            <p class="text-[10px] mt-2">📍 Archivo: <code class="bg-stone-200 px-2 py-0.5 rounded">admin.html</code> (independiente)</p>
+        </div>
+
+        <!-- Botón para abrir la app -->
+        <button onclick="window.open('index.html', '_blank')" 
+                class="w-full py-3 text-xs font-bold text-[#E27D60] border-2 border-[#E27D60]/30 rounded-full hover:bg-[#E27D60]/5 transition">
+            🔗 Abrir App Principal
+        </button>
+    </main>
+
+    <script>
+        const Admin = {
+            // Cargar valores guardados
+            init() {
+                const logo = localStorage.getItem('app_logo');
+                const bannerImg = localStorage.getItem('app_banner_img');
+                const bannerText = localStorage.getItem('app_banner_text');
+                const colorPrimary = localStorage.getItem('app_color_primary');
+                const colorSecondary = localStorage.getItem('app_color_secondary');
+
+                if (logo) {
+                    document.getElementById('admin-logo-url').value = logo;
+                    this.mostrarPreviewLogo(logo);
+                }
+                if (bannerImg) {
+                    document.getElementById('admin-banner-img-url').value = bannerImg;
+                    this.mostrarPreviewBanner(bannerImg);
+                }
+                if (bannerText) document.getElementById('admin-banner-text').value = bannerText;
+                if (colorPrimary) document.getElementById('admin-color-primary').value = colorPrimary;
+                if (colorSecondary) document.getElementById('admin-color-secondary').value = colorSecondary;
+
+                // Eventos de preview
+                document.getElementById('admin-logo-url').addEventListener('input', (e) => {
+                    this.mostrarPreviewLogo(e.target.value);
+                });
+                document.getElementById('admin-banner-img-url').addEventListener('input', (e) => {
+                    this.mostrarPreviewBanner(e.target.value);
+                });
+            },
+
+            mostrarPreviewLogo(url) {
+                const preview = document.getElementById('logo-preview');
+                if (url && url.startsWith('http')) {
+                    preview.src = url;
+                    preview.classList.remove('hidden');
+                } else {
+                    preview.classList.add('hidden');
+                }
+            },
+
+            mostrarPreviewBanner(url) {
+                const container = document.getElementById('banner-preview-container');
+                const preview = document.getElementById('banner-preview');
+                if (url && url.startsWith('http')) {
+                    preview.src = url;
+                    container.classList.remove('hidden');
+                } else {
+                    container.classList.add('hidden');
+                }
+            },
+
+            guardarCambios() {
+                const logo = document.getElementById('admin-logo-url').value.trim();
+                const bannerImg = document.getElementById('admin-banner-img-url').value.trim();
+                const bannerText = document.getElementById('admin-banner-text').value.trim();
+                const colorPrimary = document.getElementById('admin-color-primary').value;
+                const colorSecondary = document.getElementById('admin-color-secondary').value;
+
+                if (logo) localStorage.setItem('app_logo', logo);
+                if (bannerImg) localStorage.setItem('app_banner_img', bannerImg);
+                if (bannerText) localStorage.setItem('app_banner_text', bannerText);
+                if (colorPrimary) localStorage.setItem('app_color_primary', colorPrimary);
+                if (colorSecondary) localStorage.setItem('app_color_secondary', colorSecondary);
+
+                this.mostrarToast('✅ Cambios guardados exitosamente', 'success');
+            },
+
+            resetearValores() {
+                localStorage.removeItem('app_logo');
+                localStorage.removeItem('app_banner_img');
+                localStorage.removeItem('app_banner_text');
+                localStorage.removeItem('app_color_primary');
+                localStorage.removeItem('app_color_secondary');
+
+                document.getElementById('admin-logo-url').value = '';
+                document.getElementById('admin-banner-img-url').value = '';
+                document.getElementById('admin-banner-text').value = '';
+                document.getElementById('admin-color-primary').value = '#E27D60';
+                document.getElementById('admin-color-secondary').value = '#7A8A7C';
+                document.getElementById('logo-preview').classList.add('hidden');
+                document.getElementById('banner-preview-container').classList.add('hidden');
+
+                this.mostrarToast('🔄 Valores restaurados a predeterminados', 'success');
+            },
+
+            mostrarToast(mensaje, tipo) {
+                const toast = document.getElementById('toast');
+                toast.className = `toast toast-${tipo}`;
+                toast.textContent = mensaje;
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 3500);
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => Admin.init());
+    </script>
+</body>
+</html>
