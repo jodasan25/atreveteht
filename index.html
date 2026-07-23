@@ -12,6 +12,7 @@
         body {
             background-color: #F4F1ED;
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            padding-bottom: 80px;
         }
 
         /* ESTILOS CLAYMORFISMO */
@@ -63,97 +64,289 @@
             transform: translateY(-2px);
         }
 
-        .clay-btn-option {
-            background: #FFFFFF;
-            color: #7A8A7C;
-            border-radius: 18px;
-            border: 2px solid transparent;
-            box-shadow: 4px 4px 10px #e0deda, -4px -4px 10px #ffffff;
-            transition: all 0.2s ease;
-            text-align: left;
-            padding: 12px 16px;
+        /* ================= AGENTE IA FLOTANTE ================= */
+        .ia-float-btn {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            z-index: 999;
+            width: 68px;
+            height: 68px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #E27D60, #c06a51);
+            color: white;
+            border: none;
             cursor: pointer;
-        }
-        .clay-btn-option:hover {
-            transform: translateY(-2px);
-            border-color: rgba(226, 125, 96, 0.4);
-        }
-
-        .clay-btn-pay {
-            background: #FFFFFF;
-            color: #7A8A7C;
-            border-radius: 16px;
-            border: 2px solid transparent;
-            box-shadow: 4px 4px 8px #e0deda, -4px -4px 8px #ffffff;
-            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-            cursor: pointer;
-        }
-        .clay-btn-pay:hover {
-            transform: translateY(-2px);
-        }
-        .clay-btn-pay.active-pay {
-            border-color: #E27D60;
-            background: #FFF8F6;
-            color: #E27D60;
-            box-shadow: inset 2px 2px 4px rgba(226, 125, 96, 0.15), inset -2px -2px 4px #ffffff;
-        }
-
-        /* Navegación inferior mejorada */
-        .clay-nav {
-            background: rgba(253, 251, 247, 0.95);
-            backdrop-filter: blur(12px);
-            border-radius: 24px 24px 0 0;
-            box-shadow: 0 -8px 16px rgba(0,0,0,0.04), inset 0 2px 4px #ffffff;
-            padding: 8px 12px 12px 12px;
-        }
-
-        .nav-item {
+            box-shadow: 0 8px 32px rgba(226, 125, 96, 0.4), 
+                        0 4px 16px rgba(226, 125, 96, 0.2),
+                        inset 0 2px 4px rgba(255,255,255,0.2);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             display: flex;
-            flex-direction: column;
             align-items: center;
-            gap: 2px;
-            padding: 6px 10px;
-            border-radius: 16px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-decoration: none;
-            min-width: 48px;
-            position: relative;
+            justify-content: center;
+            font-size: 32px;
         }
-        .nav-item:hover {
-            background: rgba(226, 125, 96, 0.08);
+        .ia-float-btn:hover {
+            transform: scale(1.1) translateY(-4px);
+            box-shadow: 0 12px 40px rgba(226, 125, 96, 0.5);
         }
-        .nav-item.active {
-            background: rgba(226, 125, 96, 0.15);
+        .ia-float-btn:active {
+            transform: scale(0.95);
         }
-        .nav-item .nav-icon {
-            font-size: 20px;
-            line-height: 1;
+        .ia-float-btn .pulse-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid rgba(226, 125, 96, 0.3);
+            animation: pulse-ring 2s ease-out infinite;
         }
-        .nav-item .nav-label {
-            font-size: 9px;
-            font-weight: 600;
-            color: #7A8A7C;
-            transition: color 0.2s ease;
+        @keyframes pulse-ring {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(1.5); opacity: 0; }
         }
-        .nav-item.active .nav-label {
-            color: #E27D60;
-        }
-        .nav-item .nav-badge {
+        .ia-float-btn .badge-online {
             position: absolute;
             top: 2px;
-            right: 4px;
-            background: #E27D60;
-            color: white;
-            font-size: 8px;
-            font-weight: bold;
-            padding: 1px 5px;
-            border-radius: 9999px;
-            min-width: 16px;
-            text-align: center;
+            right: 2px;
+            width: 16px;
+            height: 16px;
+            background: #4CAF50;
+            border-radius: 50%;
+            border: 2px solid white;
+            animation: pulse-dot 1.5s ease-in-out infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
         }
 
-        /* Toast notifications */
+        /* Modal del Agente IA */
+        .ia-modal {
+            position: fixed;
+            bottom: 170px;
+            right: 20px;
+            width: 380px;
+            max-width: calc(100vw - 40px);
+            max-height: 500px;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2), 0 8px 24px rgba(0,0,0,0.1);
+            z-index: 1000;
+            transform: scale(0.8) translateY(20px);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .ia-modal.active {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .ia-modal-header {
+            background: linear-gradient(135deg, #E27D60, #c06a51);
+            padding: 16px 20px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .ia-modal-header .ia-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+        .ia-modal-header .ia-info {
+            flex: 1;
+            margin-left: 12px;
+        }
+        .ia-modal-header .ia-info h4 {
+            font-weight: 700;
+            font-size: 14px;
+            margin: 0;
+        }
+        .ia-modal-header .ia-info p {
+            font-size: 11px;
+            opacity: 0.8;
+            margin: 0;
+        }
+        .ia-modal-header .ia-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+        .ia-modal-header .ia-close:hover {
+            opacity: 1;
+        }
+
+        .ia-modal-body {
+            padding: 16px 20px;
+            overflow-y: auto;
+            flex: 1;
+            max-height: 320px;
+            background: #F8F6F2;
+        }
+
+        .ia-message {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            animation: messageIn 0.3s ease-out;
+        }
+        @keyframes messageIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .ia-message.bot {
+            flex-direction: row;
+        }
+        .ia-message.user {
+            flex-direction: row-reverse;
+        }
+        .ia-message .msg-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+        .ia-message.bot .msg-avatar {
+            background: #E27D60;
+            color: white;
+        }
+        .ia-message.user .msg-avatar {
+            background: #7A8A7C;
+            color: white;
+        }
+        .ia-message .msg-bubble {
+            padding: 10px 14px;
+            border-radius: 16px;
+            font-size: 13px;
+            line-height: 1.5;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+        .ia-message.bot .msg-bubble {
+            background: white;
+            color: #4A5D4E;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        .ia-message.user .msg-bubble {
+            background: #E27D60;
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+        .ia-message .msg-time {
+            font-size: 9px;
+            color: #999;
+            margin-top: 4px;
+        }
+
+        .ia-modal-footer {
+            padding: 12px 16px;
+            border-top: 1px solid #eee;
+            background: white;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .ia-modal-footer input {
+            flex: 1;
+            padding: 10px 14px;
+            border: 1px solid #ddd;
+            border-radius: 9999px;
+            font-size: 13px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .ia-modal-footer input:focus {
+            border-color: #E27D60;
+        }
+        .ia-modal-footer button {
+            padding: 10px 18px;
+            background: #E27D60;
+            color: white;
+            border: none;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .ia-modal-footer button:hover {
+            background: #c06a51;
+            transform: scale(1.02);
+        }
+        .ia-modal-footer button:active {
+            transform: scale(0.97);
+        }
+
+        /* Quick replies */
+        .quick-replies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 8px;
+        }
+        .quick-replies button {
+            padding: 6px 14px;
+            border: 1px solid #E27D60;
+            border-radius: 9999px;
+            background: white;
+            color: #E27D60;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .quick-replies button:hover {
+            background: #E27D60;
+            color: white;
+        }
+
+        /* Typing indicator */
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: 8px 12px;
+            background: white;
+            border-radius: 16px;
+            border-bottom-left-radius: 4px;
+            width: fit-content;
+        }
+        .typing-indicator span {
+            width: 8px;
+            height: 8px;
+            background: #999;
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+            30% { transform: translateY(-8px); opacity: 1; }
+        }
+
+        /* Resto de estilos... */
         .toast {
             position: fixed;
             top: 20px;
@@ -169,23 +362,12 @@
             transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             max-width: 90%;
         }
-        .toast.show {
-            transform: translateX(0);
-        }
-        .toast-success {
-            background: #4CAF50;
-        }
-        .toast-error {
-            background: #f44336;
-        }
-        .toast-info {
-            background: #2196F3;
-        }
-        .toast-warning {
-            background: #FF9800;
-        }
+        .toast.show { transform: translateX(0); }
+        .toast-success { background: #4CAF50; }
+        .toast-error { background: #f44336; }
+        .toast-info { background: #2196F3; }
+        .toast-warning { background: #FF9800; }
 
-        /* Loading spinner */
         .spinner {
             border: 3px solid rgba(255,255,255,0.3);
             border-top: 3px solid #ffffff;
@@ -201,13 +383,11 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Mejoras de accesibilidad */
         .focus-visible:focus-visible {
             outline: 2px solid #E27D60;
             outline-offset: 2px;
         }
 
-        /* Modal de confirmación de Google */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -243,7 +423,6 @@
             transform: scale(1) translateY(0);
         }
 
-        /* Badge de verificación */
         .verified-badge {
             display: inline-flex;
             align-items: center;
@@ -267,7 +446,6 @@
             font-weight: bold;
         }
 
-        /* Botón Google estilo personalizado */
         .google-btn {
             display: flex;
             align-items: center;
@@ -290,12 +468,8 @@
             background: #F8F9FA;
             box-shadow: 0 1px 3px rgba(0,0,0,0.12);
         }
-        .google-btn svg {
-            width: 20px;
-            height: 20px;
-        }
+        .google-btn svg { width: 20px; height: 20px; }
 
-        /* Botón de perfil en header */
         .header-profile-btn {
             display: flex;
             align-items: center;
@@ -335,7 +509,6 @@
             white-space: nowrap;
         }
 
-        /* Botones de acción en header */
         .header-action-btn {
             padding: 8px 16px;
             border-radius: 9999px;
@@ -345,28 +518,20 @@
             cursor: pointer;
             border: none;
         }
-        .header-action-btn:hover {
-            transform: translateY(-1px);
-        }
+        .header-action-btn:hover { transform: translateY(-1px); }
         .btn-login {
             background: #E27D60;
             color: white;
             box-shadow: 3px 3px 8px rgba(226, 125, 96, 0.3);
         }
-        .btn-login:hover {
-            box-shadow: 5px 5px 12px rgba(226, 125, 96, 0.4);
-        }
+        .btn-login:hover { box-shadow: 5px 5px 12px rgba(226, 125, 96, 0.4); }
         .btn-register {
             background: transparent;
             color: #7A8A7C;
             border: 1.5px solid #7A8A7C;
         }
-        .btn-register:hover {
-            background: #7A8A7C;
-            color: white;
-        }
+        .btn-register:hover { background: #7A8A7C; color: white; }
 
-        /* Estilos del perfil */
         .profile-card {
             background: linear-gradient(135deg, #FFFFFF 0%, #F8F5F2 100%);
         }
@@ -394,64 +559,148 @@
             font-weight: 500;
         }
 
-        /* Animación de entrada del modal */
         @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px) scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+            from { opacity: 0; transform: translateY(30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
         .modal-legal-content {
             animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         }
+
+        .clay-btn-option {
+            background: #FFFFFF;
+            color: #7A8A7C;
+            border-radius: 18px;
+            border: 2px solid transparent;
+            box-shadow: 4px 4px 10px #e0deda, -4px -4px 10px #ffffff;
+            transition: all 0.2s ease;
+            text-align: left;
+            padding: 12px 16px;
+            cursor: pointer;
+        }
+        .clay-btn-option:hover {
+            transform: translateY(-2px);
+            border-color: rgba(226, 125, 96, 0.4);
+        }
+
+        .clay-btn-pay {
+            background: #FFFFFF;
+            color: #7A8A7C;
+            border-radius: 16px;
+            border: 2px solid transparent;
+            box-shadow: 4px 4px 8px #e0deda, -4px -4px 8px #ffffff;
+            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+        }
+        .clay-btn-pay:hover { transform: translateY(-2px); }
+        .clay-btn-pay.active-pay {
+            border-color: #E27D60;
+            background: #FFF8F6;
+            color: #E27D60;
+            box-shadow: inset 2px 2px 4px rgba(226, 125, 96, 0.15), inset -2px -2px 4px #ffffff;
+        }
+
+        .clay-nav {
+            background: rgba(253, 251, 247, 0.95);
+            backdrop-filter: blur(12px);
+            border-radius: 24px 24px 0 0;
+            box-shadow: 0 -8px 16px rgba(0,0,0,0.04), inset 0 2px 4px #ffffff;
+            padding: 8px 12px 12px 12px;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            padding: 6px 10px;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            min-width: 48px;
+            position: relative;
+        }
+        .nav-item:hover { background: rgba(226, 125, 96, 0.08); }
+        .nav-item.active { background: rgba(226, 125, 96, 0.15); }
+        .nav-item .nav-icon { font-size: 20px; line-height: 1; }
+        .nav-item .nav-label {
+            font-size: 9px;
+            font-weight: 600;
+            color: #7A8A7C;
+            transition: color 0.2s ease;
+        }
+        .nav-item.active .nav-label { color: #E27D60; }
+        .nav-item .nav-badge {
+            position: absolute;
+            top: 2px;
+            right: 4px;
+            background: #E27D60;
+            color: white;
+            font-size: 8px;
+            font-weight: bold;
+            padding: 1px 5px;
+            border-radius: 9999px;
+            min-width: 16px;
+            text-align: center;
+        }
+
+        .app-view { padding-bottom: 20px; }
     </style>
 </head>
 <body>
 
-  <!-- ==================== BARRERA LEGAL COMPLETA E INTEGRADA ==================== -->
+  <!-- ================= BOTÓN FLOTANTE DEL AGENTE IA ================= -->
+  <button id="iaFloatBtn" class="ia-float-btn" onclick="App.IA.toggleModal()" aria-label="Abrir asistente virtual">
+    <span class="pulse-ring"></span>
+    <span class="badge-online"></span>
+    <span>🧠</span>
+  </button>
+
+  <!-- ================= MODAL DEL AGENTE IA ================= -->
+  <div id="iaModal" class="ia-modal">
+    <div class="ia-modal-header">
+      <div class="flex items-center">
+        <div class="ia-avatar">🧠</div>
+        <div class="ia-info">
+          <h4>🌟 Aura | Asistente HealthTech</h4>
+          <p>Tu guía somática • Online ahora</p>
+        </div>
+      </div>
+      <button class="ia-close" onclick="App.IA.toggleModal()">×</button>
+    </div>
+    <div class="ia-modal-body" id="iaMessages">
+      <!-- Mensajes dinámicos -->
+    </div>
+    <div class="ia-modal-footer">
+      <input type="text" id="iaInput" placeholder="Escribe tu mensaje..." onkeypress="if(event.key==='Enter') App.IA.enviarMensaje()">
+      <button onclick="App.IA.enviarMensaje()">Enviar</button>
+    </div>
+  </div>
+
+  <!-- ================= BARRERA LEGAL ================= -->
   <div id="modal-legal-gate" class="fixed inset-0 bg-black/60 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-    
     <div class="bg-[#F9F6F0] w-full max-w-lg rounded-3xl p-6 shadow-[8px_8px_16px_#d1cdc7,-8px_-8px_16px_#ffffff] border border-white/60 flex flex-col max-h-[90vh] modal-legal-content">
-      
-      <!-- Encabezado -->
       <div class="text-center pb-3 border-b border-gray-200">
         <span class="text-[10px] uppercase font-bold tracking-widest text-[#E27D60]">Requisito Legal de Ingreso</span>
         <h3 class="text-base font-bold text-[#4A5D4E] mt-1">Términos, Privacidad y Blindaje Legal</h3>
       </div>
-
-      <!-- Contenido Legal Unificado Escroleable -->
       <div class="overflow-y-auto my-4 pr-2 space-y-4 text-xs text-gray-600 text-justify max-h-[60vh] leading-relaxed">
-        
         <p class="font-bold text-center text-[#E27D60]">Atrévete HealthTech — Versión Unificada 2026</p>
-        
-        <!-- Cuadro de Alerta Médica -->
         <div class="bg-amber-50 p-3 border-l-4 border-amber-400 rounded-r-lg text-[11px] text-amber-900">
           <strong>AVISO CRÍTICO DE DESLINDE MÉDICO Y CLÍNICO:</strong><br>
           Atrévete HealthTech, sus propietarios y la herramienta "Escáner Cuántico" ofrecen evaluaciones bioenergéticas holísticas y de regulación somática. <strong>NO constituyen diagnóstico médico, tratamiento psiquiátrico ni prescripción farmacológica.</strong>
         </div>
-
         <h4 class="font-bold text-[#4A5D4E]">1. Aceptación por Adhesión</h4>
         <p>Al hacer clic en "Acepto", confirmas ser mayor de edad y aceptas el uso de LA PLATAFORMA bajo la Ley de Mensajes de Datos y Firmas Electrónicas de la República Bolivariana de Venezuela.</p>
-
         <h4 class="font-bold text-[#4A5D4E]">2. Protección de Datos Personales y Sensibles</h4>
         <p>Tus datos de bienestar se procesan bajo estricta confidencialidad (Art. 60 CRBV / RGPD). No se transfieren a terceros ni almacenamos claves o datos bancarios directos.</p>
-
         <h4 class="font-bold text-[#4A5D4E]">3. Eventos Presenciales y Campamentos</h4>
         <p>La asistencia a actividades presenciales (ej. "Adultas en Fuga") se realiza bajo propio riesgo del participante. Los organizadores quedan exonerados de responsabilidad por eventualidades o fuerza mayor.</p>
-
         <h4 class="font-bold text-[#4A5D4E]">4. Límite de Responsabilidad Financiera y Pagos</h4>
         <p>Los pagos por reservaciones y evaluaciones no son reembolsables. La responsabilidad legal máxima acumulada de LOS PROPIETARIOS queda limitada estrictamente al monto pagado por el usuario en los últimos 30 días.</p>
-
         <h4 class="font-bold text-[#4A5D4E]">5. Jurisdicción y Ley Aplicable</h4>
         <p>Este acuerdo se rige bajo las leyes de la República Bolivariana de Venezuela y cualquier disputa se someterá de manera exclusiva a los Tribunales Ordinarios competentes.</p>
-
       </div>
-
-      <!-- Botones de Acción -->
       <div class="pt-3 border-t border-gray-200 space-y-2">
         <button onclick="App.aceptarLegalYContinuar()" class="w-full py-3.5 bg-[#E27D60] text-white font-bold rounded-2xl shadow-[4px_4px_8px_#d1cdc7,-4px_-4px_8px_#ffffff] hover:opacity-95 transition-all text-xs tracking-wide">
           Acepto Términos, Políticas y Acelero mi Ingreso
@@ -460,31 +709,20 @@
           Cancelar y Volver al Inicio
         </button>
       </div>
-
     </div>
   </div>
 
-  <!-- ================= CABECERA CON BOTONES DE LOGIN Y REGISTRO ================= -->
+  <!-- ================= CABECERA ================= -->
   <header class="pt-3 pb-1 px-6 max-w-md mx-auto">
     <div class="flex items-center justify-between">
-      <!-- Logo -->
       <div class="cursor-pointer" onclick="App.switchView('view-home')">
-        <img id="app-logo-img" src="atrevetehtlogo.png" alt="Atrévete HealthTech - Logotipo" class="h-16 w-auto object-contain">
+        <img id="app-logo-img" src="atrevetehtlogo.png" alt="Atrévete HealthTech" class="h-16 w-auto object-contain">
       </div>
-
-      <!-- Botones de autenticación / Perfil -->
       <div id="header-auth-container" class="flex items-center gap-2">
-        <!-- Cuando NO está autenticado -->
         <div id="header-login-btns" class="flex items-center gap-2">
-          <button onclick="App.abrirLogin()" class="header-action-btn btn-login focus-visible">
-            🔑 Iniciar Sesión
-          </button>
-          <button onclick="App.abrirRegistro()" class="header-action-btn btn-register focus-visible">
-            ✨ Registrarse
-          </button>
+          <button onclick="App.abrirLogin()" class="header-action-btn btn-login focus-visible">🔑 Iniciar Sesión</button>
+          <button onclick="App.abrirRegistro()" class="header-action-btn btn-register focus-visible">✨ Registrarse</button>
         </div>
-
-        <!-- Cuando SÍ está autenticado -->
         <div id="header-profile-btn" class="hidden">
           <div onclick="App.switchView('view-perfil-usuario')" class="header-profile-btn">
             <div id="header-avatar" class="header-profile-avatar">US</div>
@@ -495,10 +733,10 @@
     </div>
   </header>
 
-  <!-- ================= TOAST NOTIFICATIONS ================= -->
+  <!-- ================= TOAST ================= -->
   <div id="toast" class="toast"></div>
 
-  <!-- ================= MODAL DE CONFIRMACIÓN DE GOOGLE ================= -->
+  <!-- ================= MODAL GOOGLE ================= -->
   <div id="google-modal" class="modal-overlay">
     <div class="modal-content">
       <div class="text-center space-y-4">
@@ -512,10 +750,8 @@
             </svg>
           </div>
         </div>
-        
         <h3 class="text-2xl font-bold text-[#7A8A7C]">Confirmar Registro</h3>
         <p class="text-sm text-[#7A8A7C]/70">Confirma tus datos para continuar</p>
-        
         <div id="google-user-info" class="bg-stone-50 rounded-2xl p-4 space-y-2 text-left">
           <div class="flex items-center gap-3">
             <div id="google-avatar-modal" class="w-12 h-12 rounded-full bg-[#E27D60] text-white flex items-center justify-center text-lg font-bold">G</div>
@@ -528,42 +764,33 @@
             <span class="text-xs text-[#7A8A7C]/60">✅ Verificado por Google</span>
           </div>
         </div>
-
         <div class="flex flex-col gap-3">
           <button onclick="App.confirmarRegistroGoogle()" id="btn-confirmar-google" class="clay-btn-primary w-full py-3.5 text-sm font-bold flex items-center justify-center gap-2">
             <span id="btn-google-text">✅ Confirmar y Continuar</span>
             <span id="btn-google-spinner" class="hidden"><span class="spinner"></span></span>
           </button>
-          <button onclick="App.cancelarRegistroGoogle()" class="w-full py-2.5 text-sm text-[#7A8A7C]/60 hover:text-[#7A8A7C] transition font-medium">
-            Cancelar
-          </button>
+          <button onclick="App.cancelarRegistroGoogle()" class="w-full py-2.5 text-sm text-[#7A8A7C]/60 hover:text-[#7A8A7C] transition font-medium">Cancelar</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ================= 1. HOME (PANTALLA INICIAL) ================= -->
-  <main id="view-home" class="app-view max-w-md mx-auto px-5 space-y-5 pb-24">
+  <!-- ================= VIEWS ================= -->
+  <!-- Home -->
+  <main id="view-home" class="app-view max-w-md mx-auto px-5 space-y-5">
     <div class="text-center space-y-1">
       <h2 class="text-3xl font-extrabold text-[#7A8A7C] leading-tight">Habita Tu Cuerpo</h2>
       <p class="text-xs text-[#7A8A7C]/80 px-2">Ecosistema somático integrativo para la regulación del sistema nervioso y acompañamiento clínico.</p>
     </div>
-
     <div id="home-hero-banner" class="relative rounded-[32px] overflow-hidden shadow-md h-52 bg-cover bg-center clay-card" style="background-image: url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=800&q=80');">
       <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-6">
         <span id="home-banner-text" class="text-white font-semibold text-base drop-shadow">Calibra tu calma somática hoy</span>
       </div>
     </div>
-
     <div class="grid grid-cols-2 gap-3">
-      <button onclick="App.switchView('view-regulacion')" class="clay-btn-primary py-3.5 text-center font-bold text-xs focus-visible" aria-label="Ir a Regulación Somática">
-        🫁 Regulación Somática
-      </button>
-      <button onclick="App.switchView('view-citas')" class="clay-btn-secondary py-3.5 text-center font-bold text-xs focus-visible" aria-label="Agendar Sesión">
-        📅 Agendar Sesión
-      </button>
+      <button onclick="App.switchView('view-regulacion')" class="clay-btn-primary py-3.5 text-center font-bold text-xs">🫁 Regulación Somática</button>
+      <button onclick="App.switchView('view-citas')" class="clay-btn-secondary py-3.5 text-center font-bold text-xs">📅 Agendar Sesión</button>
     </div>
-
     <section class="space-y-3">
       <div class="clay-card p-6 border-2 border-[#E27D60] bg-orange-50/20">
         <span class="bg-[#E27D60] text-white text-[9px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">Preventa Exclusiva 🔥</span>
@@ -573,33 +800,25 @@
           <span>📍 Maracay, Venezuela</span>
           <span>📅 26 Sep, 2026</span>
         </div>
-        <button onclick="App.switchView('view-pagos')" class="clay-btn-primary w-full py-3 font-bold text-sm focus-visible">Reservar Mi Cupo ($120)</button>
+        <button onclick="App.switchView('view-pagos')" class="clay-btn-primary w-full py-3 font-bold text-sm">Reservar Mi Cupo ($120)</button>
       </div>
     </section>
-
     <div class="text-center pt-1">
-      <button onclick="App.switchView('view-admin-login')" class="text-[10px] text-stone-400 hover:text-[#7A8A7C] transition focus-visible">⚙️ Panel Administrativo</button>
+      <button onclick="App.switchView('view-admin-login')" class="text-[10px] text-stone-400 hover:text-[#7A8A7C] transition">⚙️ Panel Administrativo</button>
     </div>
   </main>
 
-  <!-- ================= 2. AUTENTICACIÓN (LOGIN / REGISTRO) ================= -->
-  <main id="view-auth" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
+  <!-- Auth -->
+  <main id="view-auth" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
     <div class="text-center space-y-1">
       <h2 id="auth-title" class="text-2xl font-bold text-[#7A8A7C]">Iniciar Sesión</h2>
       <p id="auth-subtitle" class="text-xs text-[#7A8A7C]/70">Accede a tu cuenta de Atrévete HealthTech</p>
     </div>
-
-    <div class="flex p-1 bg-stone-200/60 rounded-2xl" role="tablist">
-      <button id="tab-login" onclick="App.switchAuthMode('login')" class="flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[#7A8A7C] shadow-sm transition focus-visible" role="tab" aria-selected="true">
-        🔑 Iniciar Sesión
-      </button>
-      <button id="tab-register" onclick="App.switchAuthMode('register')" class="flex-1 py-2.5 text-xs font-bold rounded-xl text-[#7A8A7C] transition focus-visible" role="tab" aria-selected="false">
-        ✨ Registrarse
-      </button>
+    <div class="flex p-1 bg-stone-200/60 rounded-2xl">
+      <button id="tab-login" onclick="App.switchAuthMode('login')" class="flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[#7A8A7C] shadow-sm transition">🔑 Iniciar Sesión</button>
+      <button id="tab-register" onclick="App.switchAuthMode('register')" class="flex-1 py-2.5 text-xs font-bold rounded-xl text-[#7A8A7C] transition">✨ Registrarse</button>
     </div>
-
-    <!-- Botón de Google SIMULADO -->
-    <button onclick="App.iniciarRegistroGoogleSimulado()" class="google-btn focus-visible" aria-label="Registrarse con Google">
+    <button onclick="App.iniciarRegistroGoogleSimulado()" class="google-btn">
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
         <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
@@ -608,98 +827,68 @@
       </svg>
       <span>Registrarse con Google</span>
     </button>
-
     <div class="relative flex items-center py-1">
       <div class="flex-grow border-t border-stone-300"></div>
       <span class="flex-shrink-0 mx-4 text-stone-400 text-[11px]">o con tu correo electrónico</span>
       <div class="flex-grow border-t border-stone-300"></div>
     </div>
-
     <form onsubmit="event.preventDefault(); App.procesarAuthEmail();" class="clay-card p-6 space-y-4" novalidate>
       <div id="field-nombre" class="hidden">
         <label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="input-nombre">Nombre Completo</label>
-        <input type="text" id="input-nombre" placeholder="Ej. Ana Mendoza" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible" aria-required="true">
+        <input type="text" id="input-nombre" placeholder="Ej. Ana Mendoza" class="w-full p-3 text-xs clay-input focus:outline-none">
       </div>
-
       <div>
         <label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="input-email">Correo Electrónico</label>
-        <input type="email" id="input-email" placeholder="correo@ejemplo.com" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible" required aria-required="true">
+        <input type="email" id="input-email" placeholder="correo@ejemplo.com" class="w-full p-3 text-xs clay-input focus:outline-none" required>
         <div id="email-error" class="text-red-500 text-xs mt-1 hidden">Por favor ingresa un correo válido</div>
       </div>
-
       <div>
         <label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="input-password">Contraseña</label>
-        <input type="password" id="input-password" placeholder="••••••••" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible" required minlength="6" aria-required="true">
+        <input type="password" id="input-password" placeholder="••••••••" class="w-full p-3 text-xs clay-input focus:outline-none" required minlength="6">
         <div id="password-error" class="text-red-500 text-xs mt-1 hidden">La contraseña debe tener al menos 6 caracteres</div>
       </div>
-
       <div id="field-rol" class="hidden space-y-2 border-t border-[#7A8A7C]/20 pt-3">
         <label class="block text-xs font-bold text-[#7A8A7C]">Tipo de Cuenta:</label>
         <div class="flex gap-2">
-          <button type="button" id="btn-role-user" onclick="App.setAuthRole('user')" class="flex-1 py-2 text-xs font-bold rounded-xl bg-orange-100 text-[#E27D60] border border-[#E27D60]/30 transition focus-visible" aria-pressed="true">
-            Usuario / Paciente
-          </button>
-          <button type="button" id="btn-role-spec" onclick="App.setAuthRole('spec')" class="flex-1 py-2 text-xs font-bold rounded-xl bg-stone-100 text-[#7A8A7C] transition focus-visible" aria-pressed="false">
-            Especialista
-          </button>
+          <button type="button" id="btn-role-user" onclick="App.setAuthRole('user')" class="flex-1 py-2 text-xs font-bold rounded-xl bg-orange-100 text-[#E27D60] border border-[#E27D60]/30 transition">Usuario / Paciente</button>
+          <button type="button" id="btn-role-spec" onclick="App.setAuthRole('spec')" class="flex-1 py-2 text-xs font-bold rounded-xl bg-stone-100 text-[#7A8A7C] transition">Especialista</button>
         </div>
       </div>
-
       <div id="link-forgot-container" class="text-right">
-        <button type="button" onclick="App.switchView('view-recovery')" class="text-[11px] text-[#E27D60] font-semibold hover:underline focus-visible">
-          ¿Olvidaste tu contraseña?
-        </button>
+        <button type="button" onclick="App.switchView('view-recovery')" class="text-[11px] text-[#E27D60] font-semibold hover:underline">¿Olvidaste tu contraseña?</button>
       </div>
-
-      <button type="submit" id="auth-submit-btn" class="clay-btn-primary w-full py-3.5 text-xs font-bold mt-2 focus-visible">
-        Iniciar Sesión
-      </button>
+      <button type="submit" id="auth-submit-btn" class="clay-btn-primary w-full py-3.5 text-xs font-bold mt-2">Iniciar Sesión</button>
     </form>
-
     <p class="text-[10px] text-center text-[#7A8A7C]/70 mt-4">
       Al registrarte o agendar, aceptas nuestras 
-      <button onclick="App.switchView('view-privacidad')" class="underline font-semibold text-[#E27D60] focus-visible">
-        Políticas de Privacidad y Términos Legalmente Vinculantes
-      </button>.
+      <button onclick="App.switchView('view-privacidad')" class="underline font-semibold text-[#E27D60]">Políticas de Privacidad y Términos Legalmente Vinculantes</button>.
     </p>
-
-    <button onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold focus-visible">Volver al Inicio</button>
+    <button onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold">Volver al Inicio</button>
   </main>
 
-  <!-- ================= 3. RECUPERACIÓN DE CONTRASEÑA ================= -->
-  <main id="view-recovery" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
+  <!-- Recovery -->
+  <main id="view-recovery" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
     <div class="text-center space-y-1">
       <h2 class="text-2xl font-bold text-[#7A8A7C]">Recuperar Contraseña</h2>
       <p class="text-xs text-[#7A8A7C]/70">Ingresa tu correo electrónico registrado y te enviaremos las instrucciones.</p>
     </div>
-
     <form onsubmit="event.preventDefault(); App.procesarRecuperacion();" class="clay-card p-6 space-y-4">
       <div>
         <label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="recovery-email">Correo Electrónico</label>
-        <input type="email" id="recovery-email" placeholder="correo@ejemplo.com" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible" required>
+        <input type="email" id="recovery-email" placeholder="correo@ejemplo.com" class="w-full p-3 text-xs clay-input focus:outline-none" required>
       </div>
-
-      <button type="submit" class="clay-btn-primary w-full py-3.5 text-xs font-bold mt-2 focus-visible">
-        Enviar Enlace de Recuperación
-      </button>
+      <button type="submit" class="clay-btn-primary w-full py-3.5 text-xs font-bold mt-2">Enviar Enlace de Recuperación</button>
     </form>
-
-    <button onclick="App.switchView('view-auth')" class="clay-btn-secondary w-full py-3 text-xs font-bold focus-visible">← Volver al Ingreso</button>
+    <button onclick="App.switchView('view-auth')" class="clay-btn-secondary w-full py-3 text-xs font-bold">← Volver al Ingreso</button>
   </main>
 
-  <!-- ================= 4. PERFIL DE USUARIO MEJORADO ================= -->
-  <main id="view-perfil-usuario" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
-    <!-- Tarjeta de perfil principal -->
+  <!-- Perfil -->
+  <main id="view-perfil-usuario" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
     <div class="clay-card profile-card p-6 text-center space-y-4 relative overflow-hidden">
-      <!-- Decoración de fondo -->
       <div class="absolute top-0 right-0 w-40 h-40 bg-[#E27D60]/5 rounded-full -translate-y-20 translate-x-20"></div>
       <div class="absolute bottom-0 left-0 w-32 h-32 bg-[#E27D60]/5 rounded-full translate-y-16 -translate-x-16"></div>
-      
-      <!-- Avatar -->
       <div class="relative z-10">
-        <div id="profile-avatar" class="profile-avatar-large mx-auto bg-[#E27D60] text-white flex items-center justify-center text-4xl font-bold" aria-label="Avatar de usuario">
-          US
-        </div>
+        <div id="profile-avatar" class="profile-avatar-large mx-auto bg-[#E27D60] text-white flex items-center justify-center text-4xl font-bold">US</div>
         <button onclick="App.cambiarFotoPerfil()" class="absolute bottom-0 right-1/3 bg-white rounded-full p-1.5 shadow-md hover:shadow-lg transition-all z-20">
           <svg class="w-4 h-4 text-[#7A8A7C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
@@ -707,8 +896,6 @@
           </svg>
         </button>
       </div>
-      
-      <!-- Información del usuario -->
       <div class="relative z-10">
         <h3 id="profile-name" class="text-xl font-bold text-[#7A8A7C]">Usuario</h3>
         <p id="profile-email" class="text-sm text-[#7A8A7C]/70">correo@ejemplo.com</p>
@@ -721,374 +908,198 @@
         </div>
       </div>
     </div>
-
-    <!-- Estadísticas -->
     <div class="grid grid-cols-3 gap-3">
-      <div class="profile-stat">
-        <div class="number" id="profile-sesiones">0</div>
-        <div class="label">Sesiones</div>
-      </div>
-      <div class="profile-stat">
-        <div class="number" id="profile-ejercicios">0</div>
-        <div class="label">Ejercicios</div>
-      </div>
-      <div class="profile-stat">
-        <div class="number" id="profile-dias">0</div>
-        <div class="label">Días Activo</div>
-      </div>
+      <div class="profile-stat"><div class="number" id="profile-sesiones">0</div><div class="label">Sesiones</div></div>
+      <div class="profile-stat"><div class="number" id="profile-ejercicios">0</div><div class="label">Ejercicios</div></div>
+      <div class="profile-stat"><div class="number" id="profile-dias">0</div><div class="label">Días Activo</div></div>
     </div>
-
-    <!-- Información personal -->
     <div class="clay-card p-5 space-y-3">
-      <h4 class="font-bold text-sm text-[#7A8A7C] flex items-center gap-2">
-        <span>📋</span> Información Personal
-      </h4>
+      <h4 class="font-bold text-sm text-[#7A8A7C] flex items-center gap-2"><span>📋</span> Información Personal</h4>
       <div class="space-y-2 text-xs">
-        <div class="flex justify-between py-2 border-b border-stone-100">
-          <span class="text-[#7A8A7C]/60">📱 Teléfono</span>
-          <span id="profile-telefono-display" class="text-[#7A8A7C] font-medium">No registrado</span>
-        </div>
-        <div class="flex justify-between py-2 border-b border-stone-100">
-          <span class="text-[#7A8A7C]/60">🎂 Fecha de Nacimiento</span>
-          <span id="profile-fecha-display" class="text-[#7A8A7C] font-medium">No registrada</span>
-        </div>
-        <div class="flex justify-between py-2">
-          <span class="text-[#7A8A7C]/60">📅 Miembro desde</span>
-          <span id="profile-miembro-desde" class="text-[#7A8A7C] font-medium">Hoy</span>
-        </div>
+        <div class="flex justify-between py-2 border-b border-stone-100"><span class="text-[#7A8A7C]/60">📱 Teléfono</span><span id="profile-telefono-display" class="text-[#7A8A7C] font-medium">No registrado</span></div>
+        <div class="flex justify-between py-2 border-b border-stone-100"><span class="text-[#7A8A7C]/60">🎂 Fecha de Nacimiento</span><span id="profile-fecha-display" class="text-[#7A8A7C] font-medium">No registrada</span></div>
+        <div class="flex justify-between py-2"><span class="text-[#7A8A7C]/60">📅 Miembro desde</span><span id="profile-miembro-desde" class="text-[#7A8A7C] font-medium">Hoy</span></div>
       </div>
     </div>
-
-    <!-- Acciones del perfil -->
     <div class="space-y-3">
-      <button onclick="App.mostrarEditarPerfil()" class="clay-btn-primary w-full py-3.5 text-sm font-bold flex items-center justify-center gap-2 focus-visible">
-        <span>✏️</span> Editar Perfil
-      </button>
-      <button onclick="App.cerrarSesion()" class="w-full py-3.5 text-sm font-medium text-[#E27D60] border-2 border-[#E27D60]/30 rounded-full hover:bg-[#E27D60]/5 hover:border-[#E27D60] transition-all focus-visible">
-        Cerrar Sesión
-      </button>
+      <button onclick="App.mostrarEditarPerfil()" class="clay-btn-primary w-full py-3.5 text-sm font-bold flex items-center justify-center gap-2"><span>✏️</span> Editar Perfil</button>
+      <button onclick="App.cerrarSesion()" class="w-full py-3.5 text-sm font-medium text-[#E27D60] border-2 border-[#E27D60]/30 rounded-full hover:bg-[#E27D60]/5 hover:border-[#E27D60] transition-all">Cerrar Sesión</button>
     </div>
-
-    <!-- Formulario de Edición de Perfil (oculto) -->
     <div id="editar-perfil-form" class="clay-card p-5 space-y-4 hidden">
-      <h4 class="font-bold text-sm text-[#7A8A7C] flex items-center gap-2">
-        <span>✏️</span> Editar Datos Personales
-      </h4>
-      <div>
-        <label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="edit-nombre">Nombre Completo</label>
-        <input type="text" id="edit-nombre" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible">
-      </div>
-      <div>
-        <label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="edit-telefono">Teléfono</label>
-        <input type="tel" id="edit-telefono" placeholder="0414-1234567" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible">
-      </div>
-      <div>
-        <label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="edit-fecha-nac">Fecha de Nacimiento</label>
-        <input type="date" id="edit-fecha-nac" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible">
-      </div>
+      <h4 class="font-bold text-sm text-[#7A8A7C] flex items-center gap-2"><span>✏️</span> Editar Datos Personales</h4>
+      <div><label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="edit-nombre">Nombre Completo</label><input type="text" id="edit-nombre" class="w-full p-3 text-xs clay-input focus:outline-none"></div>
+      <div><label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="edit-telefono">Teléfono</label><input type="tel" id="edit-telefono" placeholder="0414-1234567" class="w-full p-3 text-xs clay-input focus:outline-none"></div>
+      <div><label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="edit-fecha-nac">Fecha de Nacimiento</label><input type="date" id="edit-fecha-nac" class="w-full p-3 text-xs clay-input focus:outline-none"></div>
       <div class="flex gap-3">
-        <button onclick="App.guardarEditarPerfil()" class="clay-btn-primary flex-1 py-3 text-xs font-bold focus-visible">
-          💾 Guardar Cambios
-        </button>
-        <button onclick="App.cancelarEditarPerfil()" class="clay-btn-secondary flex-1 py-3 text-xs font-bold focus-visible">
-          Cancelar
-        </button>
+        <button onclick="App.guardarEditarPerfil()" class="clay-btn-primary flex-1 py-3 text-xs font-bold">💾 Guardar Cambios</button>
+        <button onclick="App.cancelarEditarPerfil()" class="clay-btn-secondary flex-1 py-3 text-xs font-bold">Cancelar</button>
       </div>
     </div>
   </main>
 
-  <!-- ================= 5. MÉTODOS DE PAGO ================= -->
-  <main id="view-pagos" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
+  <!-- Pagos -->
+  <main id="view-pagos" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
     <h2 class="text-2xl font-bold text-[#7A8A7C] text-center">Pasarela de Pago</h2>
-
     <div class="clay-card p-4 bg-orange-50/30 border border-[#E27D60]/20 flex justify-between items-center">
-      <div>
-        <h4 class="font-bold text-xs text-[#7A8A7C]">Reserva Campamento Adultas en Fuga</h4>
-        <p class="text-[10px] text-[#7A8A7C]/70">26 de Septiembre, Maracay</p>
-      </div>
+      <div><h4 class="font-bold text-xs text-[#7A8A7C]">Reserva Campamento Adultas en Fuga</h4><p class="text-[10px] text-[#7A8A7C]/70">26 de Septiembre, Maracay</p></div>
       <span class="text-base font-extrabold text-[#E27D60]">$120.00</span>
     </div>
-
     <div class="clay-card p-5 space-y-4">
       <label class="block text-xs font-bold text-[#7A8A7C]">Selecciona Método de Pago:</label>
-      
-      <div class="grid grid-cols-2 gap-2.5" role="radiogroup" aria-label="Métodos de pago">
-        <button type="button" id="pay-bdv" onclick="App.selectPaymentMethod('pm_bdv')" class="clay-btn-pay active-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1 focus-visible" role="radio" aria-checked="true" aria-label="Pago Móvil Banco de Venezuela">
-          <span class="text-base">🇻🇪</span>
-          <span>Pago Móvil BDV</span>
-        </button>
-        
-        <button type="button" id="pay-bnc" onclick="App.selectPaymentMethod('pm_bnc')" class="clay-btn-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1 focus-visible" role="radio" aria-checked="false" aria-label="Pago Móvil Banco Nacional de Crédito">
-          <span class="text-base">🇻🇪</span>
-          <span>Pago Móvil BNC</span>
-        </button>
-
-        <button type="button" id="pay-zelle" onclick="App.selectPaymentMethod('zelle')" class="clay-btn-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1 focus-visible" role="radio" aria-checked="false" aria-label="Zelle">
-          <span class="text-base">🇺🇸</span>
-          <span>Zelle</span>
-          <span class="text-[8px] text-amber-600 font-normal">(Próximamente)</span>
-        </button>
-        
-        <button type="button" id="pay-binance" onclick="App.selectPaymentMethod('binance')" class="clay-btn-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1 focus-visible" role="radio" aria-checked="false" aria-label="Binance Pay">
-          <span class="text-base">🟡</span>
-          <span>Binance Pay</span>
-          <span class="text-[8px] text-green-600 font-normal">(USDT)</span>
-        </button>
+      <div class="grid grid-cols-2 gap-2.5">
+        <button type="button" id="pay-bdv" onclick="App.selectPaymentMethod('pm_bdv')" class="clay-btn-pay active-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1"><span class="text-base">🇻🇪</span><span>Pago Móvil BDV</span></button>
+        <button type="button" id="pay-bnc" onclick="App.selectPaymentMethod('pm_bnc')" class="clay-btn-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1"><span class="text-base">🇻🇪</span><span>Pago Móvil BNC</span></button>
+        <button type="button" id="pay-zelle" onclick="App.selectPaymentMethod('zelle')" class="clay-btn-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1"><span class="text-base">🇺🇸</span><span>Zelle</span><span class="text-[8px] text-amber-600 font-normal">(Próximamente)</span></button>
+        <button type="button" id="pay-binance" onclick="App.selectPaymentMethod('binance')" class="clay-btn-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1"><span class="text-base">🟡</span><span>Binance Pay</span><span class="text-[8px] text-green-600 font-normal">(USDT)</span></button>
       </div>
-
       <div id="datos-pago-box" class="bg-stone-100/90 p-4 rounded-2xl border border-stone-200/80 space-y-1.5 text-xs text-[#7A8A7C] min-h-[80px]">
-        <!-- Dinámico -->
         <p class="text-center text-stone-400">Selecciona un método de pago</p>
       </div>
-
       <div id="container-ref-pago" class="space-y-2">
         <label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="input-ref-pago">Número de Referencia / Hash / Comprobante</label>
-        <input id="input-ref-pago" type="text" placeholder="Ej. #849204 o Hash de transferencia" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible">
+        <input id="input-ref-pago" type="text" placeholder="Ej. #849204 o Hash de transferencia" class="w-full p-3 text-xs clay-input focus:outline-none">
         <p id="ref-pago-helper" class="text-[10px] text-stone-400 hidden">Ingresa el código de tu transferencia para verificar el pago.</p>
       </div>
-
-      <button id="btn-enviar-pago" onclick="App.confirmarPagoMock()" class="clay-btn-primary w-full py-3.5 text-xs font-bold focus-visible">
-        Reportar / Enviar Comprobante
-      </button>
+      <button id="btn-enviar-pago" onclick="App.confirmarPagoMock()" class="clay-btn-primary w-full py-3.5 text-xs font-bold">Reportar / Enviar Comprobante</button>
     </div>
-
     <p class="text-[10px] text-center text-[#7A8A7C]/70 mt-2">
       Al registrarte o agendar, aceptas nuestras 
-      <button onclick="App.switchView('view-privacidad')" class="underline font-semibold text-[#E27D60] focus-visible">
-        Políticas de Privacidad y Términos Legalmente Vinculantes
-      </button>.
+      <button onclick="App.switchView('view-privacidad')" class="underline font-semibold text-[#E27D60]">Políticas de Privacidad y Términos Legalmente Vinculantes</button>.
     </p>
-
-    <button onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold focus-visible">Cancelar</button>
+    <button onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold">Cancelar</button>
   </main>
 
-  <!-- ================= 6. REGULACIÓN SOMÁTICA ================= -->
-  <main id="view-regulacion" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
+  <!-- Regulación -->
+  <main id="view-regulacion" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
     <div class="text-center space-y-1">
       <h2 class="text-2xl font-bold text-[#7A8A7C]">Gimnasio Emocional</h2>
       <p class="text-xs text-[#7A8A7C]/80">Diagnóstico Somático & Técnicas de Regulación</p>
     </div>
-
     <div class="clay-card p-5 space-y-4 border border-[#E27D60]/20">
       <div class="flex justify-between items-center border-b border-stone-200 pb-2">
         <span class="text-xs font-bold text-[#E27D60] uppercase tracking-wider">🔍 Chequeo Corporal</span>
         <span id="quiz-step-indicator" class="text-[10px] font-bold text-[#7A8A7C] bg-stone-100 px-2 py-0.5 rounded-full">Paso 1 de 3</span>
       </div>
-
       <div id="quiz-step-1" class="space-y-3">
         <p class="text-xs font-bold text-[#7A8A7C]">1. ¿Cómo sientes tu estado corporal / emocional en este momento?</p>
         <div class="space-y-2">
-          <button onclick="App.answerQuiz(1, 'ansiedad')" class="clay-btn-option w-full text-xs focus-visible" aria-label="Ansioso o Acelerado">
-            🔴 <strong>Ansioso / Acelerado:</strong> Siento inquietud, taquicardia o mente saturada.
-          </button>
-          <button onclick="App.answerQuiz(1, 'bloqueo')" class="clay-btn-option w-full text-xs focus-visible" aria-label="Agotado o Desconectado">
-            🟡 <strong>Agotado / Desconectado:</strong> Siento pesadez, parálisis o desmotivación.
-          </button>
-          <button onclick="App.answerQuiz(1, 'calma')" class="clay-btn-option w-full text-xs focus-visible" aria-label="Estable o en Calma">
-            🟢 <strong>Estable / En Calma:</strong> Quiero mantener mi balance y centrar mi mente.
-          </button>
+          <button onclick="App.answerQuiz(1, 'ansiedad')" class="clay-btn-option w-full text-xs">🔴 <strong>Ansioso / Acelerado:</strong> Siento inquietud, taquicardia o mente saturada.</button>
+          <button onclick="App.answerQuiz(1, 'bloqueo')" class="clay-btn-option w-full text-xs">🟡 <strong>Agotado / Desconectado:</strong> Siento pesadez, parálisis o desmotivación.</button>
+          <button onclick="App.answerQuiz(1, 'calma')" class="clay-btn-option w-full text-xs">🟢 <strong>Estable / En Calma:</strong> Quiero mantener mi balance y centrar mi mente.</button>
         </div>
       </div>
-
       <div id="quiz-step-2" class="space-y-3 hidden">
         <p class="text-xs font-bold text-[#7A8A7C]">2. ¿Dónde se concentra la mayor tensión física?</p>
         <div class="space-y-2">
-          <button onclick="App.answerQuiz(2, 'pecho')" class="clay-btn-option w-full text-xs focus-visible">
-            🫁 <strong>Pecho / Respiración:</strong> Siento opresión al inhalar o aire entrecortado.
-          </button>
-          <button onclick="App.answerQuiz(2, 'cuello')" class="clay-btn-option w-full text-xs focus-visible">
-            💆 <strong>Cuello / Mandíbula:</strong> Dientes apretados, hombros rígidos o cefalea.
-          </button>
-          <button onclick="App.answerQuiz(2, 'estomago')" class="clay-btn-option w-full text-xs focus-visible">
-            🫃 <strong>Estómago / Plexo:</strong> Sensación de nudo en el abdomen o digestión lenta.
-          </button>
+          <button onclick="App.answerQuiz(2, 'pecho')" class="clay-btn-option w-full text-xs">🫁 <strong>Pecho / Respiración:</strong> Siento opresión al inhalar o aire entrecortado.</button>
+          <button onclick="App.answerQuiz(2, 'cuello')" class="clay-btn-option w-full text-xs">💆 <strong>Cuello / Mandíbula:</strong> Dientes apretados, hombros rígidos o cefalea.</button>
+          <button onclick="App.answerQuiz(2, 'estomago')" class="clay-btn-option w-full text-xs">🫃 <strong>Estómago / Plexo:</strong> Sensación de nudo en el abdomen o digestión lenta.</button>
         </div>
       </div>
-
       <div id="quiz-step-3" class="space-y-3 hidden">
         <p class="text-xs font-bold text-[#7A8A7C]">3. ¿Qué necesita tu cuerpo en este instante?</p>
         <div class="space-y-2">
-          <button onclick="App.answerQuiz(3, 'bajar')" class="clay-btn-option w-full text-xs focus-visible">
-            ⚓ <strong>Bajar revoluciones:</strong> Calmar la aceleración y soltar el control.
-          </button>
-          <button onclick="App.answerQuiz(3, 'activar')" class="clay-btn-option w-full text-xs focus-visible">
-            ⚡ <strong>Salir del aletargamiento:</strong> Movilizar la energía estancada.
-          </button>
-          <button onclick="App.answerQuiz(3, 'liberar')" class="clay-btn-option w-full text-xs focus-visible">
-            🕊️ <strong>Descargar tensión:</strong> Soltar cargas emocionales del día.
-          </button>
+          <button onclick="App.answerQuiz(3, 'bajar')" class="clay-btn-option w-full text-xs">⚓ <strong>Bajar revoluciones:</strong> Calmar la aceleración y soltar el control.</button>
+          <button onclick="App.answerQuiz(3, 'activar')" class="clay-btn-option w-full text-xs">⚡ <strong>Salir del aletargamiento:</strong> Movilizar la energía estancada.</button>
+          <button onclick="App.answerQuiz(3, 'liberar')" class="clay-btn-option w-full text-xs">🕊️ <strong>Descargar tensión:</strong> Soltar cargas emocionales del día.</button>
         </div>
       </div>
-
       <div id="quiz-result" class="space-y-4 hidden">
         <div class="p-3 rounded-2xl bg-orange-100/50 text-xs text-[#7A8A7C]">
           <p id="quiz-diagnosis-title" class="font-bold text-[#E27D60] text-sm mb-1"></p>
           <p id="quiz-diagnosis-desc"></p>
         </div>
         <div id="recommended-technique-card" class="p-4 rounded-2xl bg-white border border-[#E27D60]/30 shadow-sm space-y-2"></div>
-        <button onclick="App.resetQuiz()" class="text-xs font-bold text-[#E27D60] underline text-center w-full block focus-visible">
-          🔄 Repetir Evaluación
-        </button>
+        <button onclick="App.resetQuiz()" class="text-xs font-bold text-[#E27D60] underline text-center w-full block">🔄 Repetir Evaluación</button>
       </div>
     </div>
-
     <div class="clay-card p-6 text-center space-y-4">
       <h3 class="font-bold text-sm text-[#7A8A7C]">Práctica Guiada: Calibrador de Respiración</h3>
       <p class="text-[11px] text-[#7A8A7C]/80">Acompasa tu ritmo respiratorio con el círculo para activar el nervio vago ventral.</p>
       <div class="flex flex-col items-center justify-center py-4">
-        <div id="breath-circle" class="w-40 h-40 rounded-full bg-[#F0B7A1] flex items-center justify-center text-white font-bold text-base shadow-lg border-4 border-white transition-all duration-1000" role="img" aria-label="Círculo de respiración guiada">
-          Inhala...
-        </div>
+        <div id="breath-circle" class="w-40 h-40 rounded-full bg-[#F0B7A1] flex items-center justify-center text-white font-bold text-base shadow-lg border-4 border-white transition-all duration-1000">Inhala...</div>
       </div>
     </div>
-
-    <button onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold text-xs focus-visible">Volver al Inicio</button>
+    <button onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold text-xs">Volver al Inicio</button>
   </main>
 
-  <!-- ================= 7. AGENDAMIENTO DE CITAS ================= -->
-  <main id="view-citas" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
+  <!-- Citas -->
+  <main id="view-citas" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
     <h2 class="text-2xl font-bold text-[#7A8A7C] text-center">Agendar tu Sesión</h2>
     <div class="clay-card p-5 space-y-4">
       <label class="block text-xs font-bold text-[#7A8A7C]" for="select-terapeuta">Especialista:</label>
-      <select id="select-terapeuta" class="w-full p-3 rounded-xl border border-[#7A8A7C]/20 bg-white text-xs text-[#7A8A7C] focus-visible">
+      <select id="select-terapeuta" class="w-full p-3 rounded-xl border border-[#7A8A7C]/20 bg-white text-xs text-[#7A8A7C]">
         <option value="Dra. Carla Rodríguez">Dra. Carla Rodríguez</option>
         <option value="Dra. María González">Dra. María González</option>
         <option value="Lic. Ana Pérez">Lic. Ana Pérez</option>
       </select>
-      
-      <div>
-        <label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="fecha-cita">Fecha de la Cita:</label>
-        <input type="date" id="fecha-cita" class="w-full p-3 rounded-xl border border-[#7A8A7C]/20 bg-white text-xs text-[#7A8A7C] focus-visible">
-      </div>
-      
-      <div>
-        <label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="hora-cita">Hora de la Cita:</label>
-        <input type="time" id="hora-cita" class="w-full p-3 rounded-xl border border-[#7A8A7C]/20 bg-white text-xs text-[#7A8A7C] focus-visible">
-      </div>
-      
-      <button onclick="App.procesarCitaWhatsApp()" class="clay-btn-primary w-full py-3.5 font-bold text-xs focus-visible">Confirmar Cita vía WhatsApp</button>
+      <div><label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="fecha-cita">Fecha de la Cita:</label><input type="date" id="fecha-cita" class="w-full p-3 rounded-xl border border-[#7A8A7C]/20 bg-white text-xs text-[#7A8A7C]"></div>
+      <div><label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="hora-cita">Hora de la Cita:</label><input type="time" id="hora-cita" class="w-full p-3 rounded-xl border border-[#7A8A7C]/20 bg-white text-xs text-[#7A8A7C]"></div>
+      <button onclick="App.procesarCitaWhatsApp()" class="clay-btn-primary w-full py-3.5 font-bold text-xs">Confirmar Cita vía WhatsApp</button>
     </div>
-    <button onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold text-xs focus-visible">Volver</button>
+    <button onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold text-xs">Volver</button>
   </main>
 
-  <!-- ================= 8. POLÍTICAS DE PRIVACIDAD ================= -->
-  <main id="view-privacidad" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
+  <!-- Privacidad -->
+  <main id="view-privacidad" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
     <div class="text-center space-y-1">
       <h2 class="text-2xl font-bold text-[#7A8A7C]">Políticas de Privacidad</h2>
       <p class="text-xs text-[#7A8A7C]/70">Términos Legalmente Vinculantes • Atrévete HealthTech</p>
     </div>
-
     <div class="clay-card p-5 space-y-4 text-xs text-[#7A8A7C] leading-relaxed max-h-[60vh] overflow-y-auto">
-      <section class="space-y-1.5">
-        <h3 class="font-extrabold text-[#E27D60] text-sm">1. Protección de Datos Personales</h3>
-        <p>En Atrévete HealthTech valoramos y resguardamos tu privacidad. Los datos personales, registros de pagos móviles o transacciones en criptomonedas (Binance Pay) recopilados son utilizados exclusivamente para la validación de membresías, gestión de cupos en eventos y acompañamiento clínico somático.</p>
-      </section>
-      <section class="space-y-1.5">
-        <h3 class="font-extrabold text-[#E27D60] text-sm">2. Confidencialidad Clínica y Somática</h3>
-        <p>Toda la información obtenida a través de nuestros test de regulación somática, interacciones y sesiones agendadas se rige bajo estricta confidencialidad profesional médico-paciente.</p>
-      </section>
-      <section class="space-y-1.5">
-        <h3 class="font-extrabold text-[#E27D60] text-sm">3. Condiciones de Reserva y Pagos</h3>
-        <p>Las reservas para campamentos, eventos presenciales o consultas quedan sujetas a la verificación exitosa de los comprobantes de pago reportados mediante nuestros canales oficiales.</p>
-      </section>
+      <section class="space-y-1.5"><h3 class="font-extrabold text-[#E27D60] text-sm">1. Protección de Datos Personales</h3><p>En Atrévete HealthTech valoramos y resguardamos tu privacidad. Los datos personales, registros de pagos móviles o transacciones en criptomonedas (Binance Pay) recopilados son utilizados exclusivamente para la validación de membresías, gestión de cupos en eventos y acompañamiento clínico somático.</p></section>
+      <section class="space-y-1.5"><h3 class="font-extrabold text-[#E27D60] text-sm">2. Confidencialidad Clínica y Somática</h3><p>Toda la información obtenida a través de nuestros test de regulación somática, interacciones y sesiones agendadas se rige bajo estricta confidencialidad profesional médico-paciente.</p></section>
+      <section class="space-y-1.5"><h3 class="font-extrabold text-[#E27D60] text-sm">3. Condiciones de Reserva y Pagos</h3><p>Las reservas para campamentos, eventos presenciales o consultas quedan sujetas a la verificación exitosa de los comprobantes de pago reportados mediante nuestros canales oficiales.</p></section>
     </div>
-
-    <button onclick="App.switchView('view-auth')" class="clay-btn-primary w-full py-3.5 font-bold text-xs focus-visible">Entendido / Volver</button>
+    <button onclick="App.switchView('view-auth')" class="clay-btn-primary w-full py-3.5 font-bold text-xs">Entendido / Volver</button>
   </main>
 
-  <!-- ================= 9. PANEL ADMINISTRATIVO PRIVADO ================= -->
-  <main id="view-admin-login" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
+  <!-- Admin Login -->
+  <main id="view-admin-login" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
     <div class="text-center space-y-1">
       <h2 class="text-2xl font-bold text-[#E27D60]">Acceso Administrativo</h2>
       <p class="text-xs text-[#7A8A7C]/70">Área restringida para gestión visual y banners.</p>
     </div>
     <form onsubmit="event.preventDefault(); App.verificarAdminPin();" class="clay-card p-6 space-y-4">
-      <div>
-        <label class="block text-xs font-bold text-[#7A8A7C] mb-1">PIN o Contraseña de Administrador</label>
-        <input type="password" id="admin-pin-input" placeholder="••••" class="w-full p-3 text-xs clay-input focus:outline-none text-center tracking-widest text-lg" required>
-      </div>
-      <button type="submit" class="clay-btn-primary w-full py-3.5 font-bold text-xs focus-visible">Desbloquear Panel</button>
+      <div><label class="block text-xs font-bold text-[#7A8A7C] mb-1">PIN o Contraseña de Administrador</label><input type="password" id="admin-pin-input" placeholder="••••" class="w-full p-3 text-xs clay-input focus:outline-none text-center tracking-widest text-lg" required></div>
+      <button type="submit" class="clay-btn-primary w-full py-3.5 font-bold text-xs">Desbloquear Panel</button>
     </form>
-    <button onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold text-xs focus-visible">Volver al Inicio</button>
+    <button onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold text-xs">Volver al Inicio</button>
   </main>
 
-  <!-- ================= 10. PANEL ADMINISTRATIVO DASHBOARD ================= -->
-  <main id="view-admin-dashboard" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
+  <!-- Admin Dashboard -->
+  <main id="view-admin-dashboard" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
     <div class="flex justify-between items-center border-b border-stone-200 pb-3">
-      <div>
-        <h2 class="text-xl font-bold text-[#7A8A7C]">Gestor Visual Admin</h2>
-        <p class="text-[10px] text-[#7A8A7C]/70">Actualiza logotipos e imágenes en tiempo real</p>
-      </div>
-      <button onclick="App.switchView('view-home')" class="px-3 py-1.5 bg-stone-200 text-[#7A8A7C] text-xs font-bold rounded-xl focus-visible">Salir</button>
+      <div><h2 class="text-xl font-bold text-[#7A8A7C]">Gestor Visual Admin</h2><p class="text-[10px] text-[#7A8A7C]/70">Actualiza logotipos e imágenes en tiempo real</p></div>
+      <button onclick="App.switchView('view-home')" class="px-3 py-1.5 bg-stone-200 text-[#7A8A7C] text-xs font-bold rounded-xl">Salir</button>
     </div>
-
     <form onsubmit="event.preventDefault(); App.guardarCambiosAdmin();" class="clay-card p-5 space-y-4">
-      <div>
-        <label class="block text-xs font-bold text-[#7A8A7C] mb-1">URL del Logotipo (Header)</label>
-        <input type="url" id="admin-logo-url" placeholder="https://ejemplo.com/logo.png" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible">
-      </div>
-
-      <div>
-        <label class="block text-xs font-bold text-[#7A8A7C] mb-1">URL de la Imagen Banner Principal (Home)</label>
-        <input type="url" id="admin-banner-img-url" placeholder="https://images.unsplash.com/..." class="w-full p-3 text-xs clay-input focus:outline-none focus-visible">
-      </div>
-
-      <div>
-        <label class="block text-xs font-bold text-[#7A8A7C] mb-1">Texto Destacado del Banner Principal</label>
-        <input type="text" id="admin-banner-text" placeholder="Ej. Calibra tu calma somática hoy" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible">
-      </div>
-
-      <button type="submit" class="clay-btn-primary w-full py-3.5 font-bold text-xs mt-2 focus-visible">
-        💾 Guardar y Aplicar Cambios
-      </button>
+      <div><label class="block text-xs font-bold text-[#7A8A7C] mb-1">URL del Logotipo (Header)</label><input type="url" id="admin-logo-url" placeholder="https://ejemplo.com/logo.png" class="w-full p-3 text-xs clay-input focus:outline-none"></div>
+      <div><label class="block text-xs font-bold text-[#7A8A7C] mb-1">URL de la Imagen Banner Principal (Home)</label><input type="url" id="admin-banner-img-url" placeholder="https://images.unsplash.com/..." class="w-full p-3 text-xs clay-input focus:outline-none"></div>
+      <div><label class="block text-xs font-bold text-[#7A8A7C] mb-1">Texto Destacado del Banner Principal</label><input type="text" id="admin-banner-text" placeholder="Ej. Calibra tu calma somática hoy" class="w-full p-3 text-xs clay-input focus:outline-none"></div>
+      <button type="submit" class="clay-btn-primary w-full py-3.5 font-bold text-xs mt-2">💾 Guardar y Aplicar Cambios</button>
     </form>
-
     <div class="clay-card p-4 bg-orange-50/40 text-[11px] text-[#7A8A7C] space-y-1">
       <p class="font-bold text-[#E27D60]">💡 Nota de Seguridad:</p>
       <p>Los cambios realizados se aplican de inmediato en la aplicación y se guardan en el almacenamiento local del navegador.</p>
     </div>
   </main>
 
-  <!-- ================= BARRA DE NAVEGACIÓN INFERIOR ================= -->
+  <!-- ================= NAVEGACIÓN INFERIOR ================= -->
   <nav class="clay-nav fixed bottom-0 inset-x-0 max-w-md mx-auto z-50">
     <div class="flex justify-around items-center">
-      <!-- Inicio -->
-      <div onclick="App.switchView('view-home')" class="nav-item active" data-view="view-home">
-        <span class="nav-icon">🏠</span>
-        <span class="nav-label">Inicio</span>
-      </div>
-
-      <!-- Gimnasio -->
-      <div onclick="App.switchView('view-regulacion')" class="nav-item" data-view="view-regulacion">
-        <span class="nav-icon">🫁</span>
-        <span class="nav-label">Gimnasio</span>
-      </div>
-
-      <!-- Citas -->
-      <div onclick="App.switchView('view-citas')" class="nav-item" data-view="view-citas">
-        <span class="nav-icon">📅</span>
-        <span class="nav-label">Citas</span>
-        <span class="nav-badge">1</span>
-      </div>
-
-      <!-- Pagos -->
-      <div onclick="App.switchView('view-pagos')" class="nav-item" data-view="view-pagos">
-        <span class="nav-icon">💳</span>
-        <span class="nav-label">Pagos</span>
-      </div>
-
-      <!-- Perfil - Cambia según autenticación -->
-      <div onclick="App.irAPerfil()" class="nav-item" data-view="view-perfil-usuario" id="nav-perfil">
-        <span class="nav-icon" id="nav-perfil-icon">👤</span>
-        <span class="nav-label" id="nav-perfil-label">Perfil</span>
-      </div>
+      <div onclick="App.switchView('view-home')" class="nav-item active" data-view="view-home"><span class="nav-icon">🏠</span><span class="nav-label">Inicio</span></div>
+      <div onclick="App.switchView('view-regulacion')" class="nav-item" data-view="view-regulacion"><span class="nav-icon">🫁</span><span class="nav-label">Gimnasio</span></div>
+      <div onclick="App.switchView('view-citas')" class="nav-item" data-view="view-citas"><span class="nav-icon">📅</span><span class="nav-label">Citas</span><span class="nav-badge">1</span></div>
+      <div onclick="App.switchView('view-pagos')" class="nav-item" data-view="view-pagos"><span class="nav-icon">💳</span><span class="nav-label">Pagos</span></div>
+      <div onclick="App.irAPerfil()" class="nav-item" data-view="view-perfil-usuario" id="nav-perfil"><span class="nav-icon" id="nav-perfil-icon">👤</span><span class="nav-label" id="nav-perfil-label">Perfil</span></div>
     </div>
   </nav>
 
-  <!-- ================= JAVASCRIPT COMPLETO CORREGIDO ================= -->
+  <!-- ================= JAVASCRIPT COMPLETO ================= -->
   <script>
     // ============================================
-    // APP - Objeto principal (VERSIÓN CORREGIDA)
+    // APP - Objeto principal
     // ============================================
     const App = {
         // Estado de la aplicación
@@ -1117,16 +1128,146 @@
         },
 
         // ============================================
+        // AGENTE IA - SISTEMA DE CONVERSACIÓN PARA VENTAS
+        // ============================================
+        IA: {
+            isOpen: false,
+            messages: [],
+            firstMessage: true,
+
+            // Mensajes predefinidos del asistente
+            getBotResponse(userMessage) {
+                const msg = userMessage.toLowerCase().trim();
+                
+                // Patrones de detección para ventas
+                if (msg.includes('hola') || msg.includes('buenas') || msg.includes('saludos')) {
+                    return "🌟 ¡Hola! Soy Aura, tu asistente somática. ¿Cómo te sientes hoy? Te invito a descubrir nuestro Campamento 'Adultas en Fuga', una experiencia única para reconectar con tu cuerpo en comunidad. ¿Te gustaría saber más?";
+                }
+                if (msg.includes('campamento') || msg.includes('adultas') || msg.includes('fuga') || msg.includes('evento')) {
+                    return "🔥 ¡Excelente elección! El Campamento 'Adultas en Fuga' es una experiencia inmersiva de 3 días donde:\n\n✨ Reconectarás con tu cuerpo a través de prácticas somáticas\n✨ Te liberarás del estrés acumulado\n✨ Crearás vínculos profundos con otras mujeres\n✨ Aprenderás herramientas para tu día a día\n\n📍 Maracay, Venezuela | 📅 26 de Septiembre\n💰 Inversión: $120 (incluye alojamiento, alimentación y talleres)\n\n¿Te animas a reservar tu cupo? Solo tenemos 15 espacios disponibles. ¡Es hoy o nunca!";
+                }
+                if (msg.includes('precio') || msg.includes('costo') || msg.includes('valor') || msg.includes('cuanto') || msg.includes('$')) {
+                    return "💰 La inversión es de $120 USD. Incluye:\n\n🏕️ Alojamiento en un entorno natural\n🍽️ Alimentación completa (3 comidas/día)\n🧘 Talleres de regulación somática\n🌿 Prácticas de conexión con la naturaleza\n🎁 Kit de bienestar sorpresa\n\n¿Quieres asegurar tu lugar? El cupo es limitado y la demanda es alta. ¡Haz clic en 'Reservar Mi Cupo' ahora!";
+                }
+                if (msg.includes('reservar') || msg.includes('comprar') || msg.includes('cupo') || msg.includes('inscribir')) {
+                    return "🎉 ¡Perfecto! Para reservar tu cupo, ve a la sección de PAGOS en el menú inferior. Allí encontrarás todas las opciones de pago disponibles (Pago Móvil BDV, BNC o Binance Pay).\n\n⚠️ Recuerda: los cupos son limitados y la preventa está volando. ¡No te quedes sin tu lugar!\n\n¿Necesitas ayuda con el proceso de pago? Estoy aquí para guiarte. 😊";
+                }
+                if (msg.includes('gratis') || msg.includes('descuento') || msg.includes('promo') || msg.includes('oferta')) {
+                    return "🎁 ¡Qué buena pregunta! Actualmente tenemos una oferta especial de preventa:\n\n🔥 Descuento del 15% si reservas antes del 15 de Septiembre\n💝 Incluye un bonus: sesión de 30 min con nuestra especialista somática\n\nEl precio regular es de $120, pero en preventa queda en solo $102.\n\n¿Aprovechas esta oportunidad única? ¡El tiempo vuela!";
+                }
+                if (msg.includes('gracias') || msg.includes('graci') || msg.includes('ok') || msg.includes('vale')) {
+                    return "😊 ¡Un placer ayudarte! Recuerda que puedes reservar tu cupo en la sección PAGOS. Si tienes más preguntas, estoy aquí para ti.\n\n✨ ¡Tu bienestar es nuestra prioridad! ✨";
+                }
+                if (msg.includes('quien') || msg.includes('eres') || msg.includes('quién')) {
+                    return "🧠 Soy Aura, tu asistente virtual de Atrévete HealthTech. Estoy aquí para guiarte en tu proceso de bienestar somático y ayudarte a descubrir nuestras experiencias transformadoras.\n\n¿Qué te gustaría saber hoy?";
+                }
+                
+                // Respuesta por defecto (orientada a ventas)
+                return "✨ Gracias por tu mensaje. En Atrévete HealthTech tenemos experiencias únicas para tu bienestar somático. Te recomiendo conocer nuestro Campamento 'Adultas en Fuga' - una oportunidad para reconectar contigo misma en comunidad.\n\n¿Te gustaría que te cuente más detalles o prefieres ir directamente a reservar tu cupo?";
+            },
+
+            // Mostrar/Ocultar modal
+            toggleModal() {
+                this.isOpen = !this.isOpen;
+                const modal = document.getElementById('iaModal');
+                if (this.isOpen) {
+                    modal.classList.add('active');
+                    if (this.firstMessage) {
+                        this.firstMessage = false;
+                        setTimeout(() => {
+                            this.addMessage('bot', '🌟 ¡Hola! Soy Aura, tu asistente somática. ¿Lista para comenzar tu viaje de bienestar? Te invito a descubrir el Campamento "Adultas en Fuga". ¿Quieres saber más?');
+                            this.mostrarQuickReplies();
+                        }, 500);
+                    }
+                    document.getElementById('iaInput').focus();
+                } else {
+                    modal.classList.remove('active');
+                }
+            },
+
+            // Agregar mensaje al chat
+            addMessage(type, text) {
+                const container = document.getElementById('iaMessages');
+                const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                
+                const msgDiv = document.createElement('div');
+                msgDiv.className = `ia-message ${type}`;
+                msgDiv.innerHTML = `
+                    <div class="msg-avatar">${type === 'bot' ? '🧠' : '👤'}</div>
+                    <div>
+                        <div class="msg-bubble">${text.replace(/\n/g, '<br>')}</div>
+                        <div class="msg-time">${time}</div>
+                    </div>
+                `;
+                container.appendChild(msgDiv);
+                container.scrollTop = container.scrollHeight;
+                this.messages.push({ type, text, time });
+            },
+
+            // Mostrar respuestas rápidas
+            mostrarQuickReplies() {
+                const container = document.getElementById('iaMessages');
+                const qrDiv = document.createElement('div');
+                qrDiv.className = 'quick-replies';
+                qrDiv.innerHTML = `
+                    <button onclick="App.IA.enviarMensajeTexto('Quiero saber más del campamento')">🏕️ Campamento</button>
+                    <button onclick="App.IA.enviarMensajeTexto('¿Cuánto cuesta?')">💰 Precio</button>
+                    <button onclick="App.IA.enviarMensajeTexto('Quiero reservar')">🎯 Reservar</button>
+                    <button onclick="App.IA.enviarMensajeTexto('Gracias')">😊 Gracias</button>
+                `;
+                container.appendChild(qrDiv);
+                container.scrollTop = container.scrollHeight;
+            },
+
+            // Enviar mensaje desde input
+            enviarMensaje() {
+                const input = document.getElementById('iaInput');
+                const text = input.value.trim();
+                if (!text) return;
+                this.enviarMensajeTexto(text);
+                input.value = '';
+            },
+
+            // Enviar mensaje de texto (desde input o quick reply)
+            enviarMensajeTexto(text) {
+                this.addMessage('user', text);
+                
+                // Mostrar indicador de escritura
+                const container = document.getElementById('iaMessages');
+                const typingDiv = document.createElement('div');
+                typingDiv.className = 'ia-message bot';
+                typingDiv.id = 'typing-indicator';
+                typingDiv.innerHTML = `
+                    <div class="msg-avatar">🧠</div>
+                    <div class="typing-indicator">
+                        <span></span><span></span><span></span>
+                    </div>
+                `;
+                container.appendChild(typingDiv);
+                container.scrollTop = container.scrollHeight;
+
+                // Simular tiempo de respuesta
+                setTimeout(() => {
+                    const typingEl = document.getElementById('typing-indicator');
+                    if (typingEl) typingEl.remove();
+                    
+                    const response = this.getBotResponse(text);
+                    this.addMessage('bot', response);
+                    
+                    // Mostrar quick replies si es un mensaje de saludo o consulta general
+                    if (text.toLowerCase().includes('hola') || text.toLowerCase().includes('gracias')) {
+                        setTimeout(() => this.mostrarQuickReplies(), 500);
+                    }
+                }, 800 + Math.random() * 400);
+            }
+        },
+
+        // ============================================
         // FUNCIONES DE BARRERA LEGAL
         // ============================================
         verificarLegal() {
-            if (this.state.legalAceptado) {
-                return true;
-            }
-            const modal = document.getElementById('modal-legal-gate');
-            if (modal) {
-                modal.classList.remove('hidden');
-            }
+            if (this.state.legalAceptado) return true;
+            document.getElementById('modal-legal-gate').classList.remove('hidden');
             return false;
         },
 
@@ -1143,7 +1284,7 @@
         },
 
         // ============================================
-        // FUNCIONES DE NAVEGACIÓN MEJORADAS
+        // NAVEGACIÓN
         // ============================================
         irAPerfil() {
             if (this.state.isAuthenticated) {
@@ -1154,63 +1295,47 @@
         },
 
         abrirLogin() {
-            if (!this.verificarLegal()) {
-                return;
-            }
+            if (!this.verificarLegal()) return;
             this.switchAuthMode('login');
             this.switchView('view-auth');
         },
 
         abrirRegistro() {
-            if (!this.verificarLegal()) {
-                return;
-            }
+            if (!this.verificarLegal()) return;
             this.switchAuthMode('register');
             this.switchView('view-auth');
         },
 
         switchView(viewId) {
             document.querySelectorAll('.app-view').forEach(v => v.classList.add('hidden'));
-            
             const target = document.getElementById(viewId);
             if (target) {
                 target.classList.remove('hidden');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
-
             this.state.currentView = viewId;
 
             document.querySelectorAll('.nav-item').forEach(item => {
                 item.classList.remove('active');
-                if (item.dataset.view === viewId) {
-                    item.classList.add('active');
-                }
+                if (item.dataset.view === viewId) item.classList.add('active');
             });
 
-            // Prevenir acceso a perfil sin autenticación
             if (viewId === 'view-perfil-usuario' && !this.state.isAuthenticated) {
                 this.switchView('view-auth');
                 return;
             }
 
-            // Manejar respiración guiada
             if (viewId !== 'view-regulacion' && this.state.breathInterval) {
                 clearInterval(this.state.breathInterval);
                 this.state.breathInterval = null;
             }
-            if (viewId === 'view-regulacion') {
-                this.iniciarRespiración();
-            }
+            if (viewId === 'view-regulacion') this.iniciarRespiración();
         },
 
-        // ============================================
-        // ACTUALIZAR NAVEGACIÓN Y HEADER
-        // ============================================
         actualizarNav() {
             const navPerfil = document.getElementById('nav-perfil');
             const perfilIcon = document.getElementById('nav-perfil-icon');
             const perfilLabel = document.getElementById('nav-perfil-label');
-
             if (this.state.isAuthenticated) {
                 if (perfilIcon) perfilIcon.textContent = '👤';
                 if (perfilLabel) perfilLabel.textContent = 'Perfil';
@@ -1241,14 +1366,10 @@
         },
 
         // ============================================
-        // REGISTRO CON GOOGLE - CORREGIDO
+        // GOOGLE AUTH
         // ============================================
         iniciarRegistroGoogleSimulado() {
-            if (!this.verificarLegal()) {
-                return;
-            }
-            
-            // Simular datos de Google
+            if (!this.verificarLegal()) return;
             const googleUser = {
                 name: prompt('👤 Ingresa tu nombre completo:', 'Ana María Rodríguez') || 'Usuario Google',
                 email: prompt('📧 Ingresa tu correo electrónico:', 'usuario@gmail.com') || 'usuario@gmail.com',
@@ -1256,14 +1377,10 @@
                 email_verified: true,
                 id: 'google_' + Date.now()
             };
-
-            // Validación básica
             if (!googleUser.email || !googleUser.email.includes('@')) {
                 this.showToast('⚠️ Por favor ingresa un correo válido', 'warning');
                 return;
             }
-
-            // Verificar si el usuario ya existe
             const existingUser = localStorage.getItem('user_email');
             if (existingUser && existingUser === googleUser.email) {
                 this.showToast('⚠️ Este correo ya está registrado. Por favor inicia sesión.', 'warning');
@@ -1272,55 +1389,34 @@
                 this.switchView('view-auth');
                 return;
             }
-
-            // Guardar datos de Google para el modal
             this.state.googleUserData = googleUser;
             this.mostrarModalConfirmacionGoogle(googleUser);
         },
 
-        // ============================================
-        // MODAL DE CONFIRMACIÓN DE GOOGLE
-        // ============================================
         mostrarModalConfirmacionGoogle(userData) {
             const modal = document.getElementById('google-modal');
-            if (!modal) {
-                console.error('Modal de Google no encontrado');
-                return;
-            }
-            
+            if (!modal) return;
             const avatar = document.getElementById('google-avatar-modal');
             const nameEl = document.getElementById('google-name-modal');
             const emailEl = document.getElementById('google-email-modal');
-            
             const initials = userData.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'G';
             if (avatar) avatar.textContent = initials;
             if (nameEl) nameEl.textContent = userData.name;
             if (emailEl) emailEl.textContent = userData.email;
-            
             modal.classList.add('active');
-            
-            const btnText = document.getElementById('btn-google-text');
-            const btnSpinner = document.getElementById('btn-google-spinner');
-            if (btnText) btnText.textContent = '✅ Confirmar y Continuar';
-            if (btnSpinner) btnSpinner.classList.add('hidden');
-            
-            const confirmBtn = document.getElementById('btn-confirmar-google');
-            if (confirmBtn) confirmBtn.disabled = false;
+            document.getElementById('btn-google-text').textContent = '✅ Confirmar y Continuar';
+            document.getElementById('btn-google-spinner').classList.add('hidden');
+            document.getElementById('btn-confirmar-google').disabled = false;
         },
 
-        // ============================================
-        // CONFIRMAR REGISTRO CON GOOGLE - CORREGIDO
-        // ============================================
         confirmarRegistroGoogle() {
             if (!this.state.googleUserData) {
                 this.showToast('❌ No hay datos de Google para confirmar', 'error');
                 return;
             }
-
             const btnText = document.getElementById('btn-google-text');
             const btnSpinner = document.getElementById('btn-google-spinner');
             const confirmBtn = document.getElementById('btn-confirmar-google');
-            
             if (btnText) btnText.textContent = 'Registrando...';
             if (btnSpinner) btnSpinner.classList.remove('hidden');
             if (confirmBtn) confirmBtn.disabled = true;
@@ -1328,12 +1424,7 @@
             setTimeout(() => {
                 try {
                     const userData = this.state.googleUserData;
-                    const fechaRegistro = new Date().toLocaleDateString('es-ES', { 
-                        day: '2-digit', 
-                        month: 'long', 
-                        year: 'numeric' 
-                    });
-                    
+                    const fechaRegistro = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' });
                     localStorage.setItem('user_name', userData.name);
                     localStorage.setItem('user_email', userData.email);
                     localStorage.setItem('user_role', 'user');
@@ -1344,35 +1435,17 @@
                     localStorage.setItem('user_telefono', '');
                     localStorage.setItem('user_fecha_nac', '');
                     
-                    this.state.user = {
-                        ...this.state.user,
-                        name: userData.name,
-                        email: userData.email,
-                        role: 'user',
-                        registerMethod: 'google',
-                        emailVerified: true,
-                        fechaRegistro: fechaRegistro,
-                        telefono: '',
-                        fechaNac: ''
-                    };
+                    this.state.user = { ...this.state.user, name: userData.name, email: userData.email, role: 'user', registerMethod: 'google', emailVerified: true, fechaRegistro: fechaRegistro, telefono: '', fechaNac: '' };
                     this.state.isAuthenticated = true;
                     
-                    const modal = document.getElementById('google-modal');
-                    if (modal) modal.classList.remove('active');
-                    
+                    document.getElementById('google-modal').classList.remove('active');
                     this.actualizarPerfilUI();
                     this.actualizarHeader();
                     this.actualizarNav();
-                    
                     this.showToast('✅ ¡Registro con Google exitoso! Bienvenido a Atrévete HealthTech', 'success');
                     this.switchView('view-perfil-usuario');
-                    
-                    setTimeout(() => {
-                        this.mostrarEditarPerfil();
-                    }, 500);
-                    
+                    setTimeout(() => this.mostrarEditarPerfil(), 500);
                 } catch (error) {
-                    console.error('Error en registro con Google:', error);
                     this.showToast('❌ Error al registrar con Google. Intenta nuevamente.', 'error');
                 } finally {
                     if (btnText) btnText.textContent = '✅ Confirmar y Continuar';
@@ -1383,33 +1456,26 @@
             }, 1500);
         },
 
-        // ============================================
-        // CANCELAR REGISTRO CON GOOGLE
-        // ============================================
         cancelarRegistroGoogle() {
-            const modal = document.getElementById('google-modal');
-            if (modal) modal.classList.remove('active');
+            document.getElementById('google-modal').classList.remove('active');
             this.state.googleUserData = null;
             this.showToast('Registro con Google cancelado', 'info');
         },
 
         // ============================================
-        // TOAST NOTIFICATIONS
+        // TOAST
         // ============================================
         showToast(message, type = 'success') {
             const toast = document.getElementById('toast');
             if (!toast) return;
-            
             toast.className = `toast toast-${type}`;
             toast.textContent = message;
             toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 4000);
+            setTimeout(() => toast.classList.remove('show'), 4000);
         },
 
         // ============================================
-        // PERFIL - ACTUALIZAR UI
+        // PERFIL
         // ============================================
         actualizarPerfilUI() {
             const name = this.state.user.name || 'Invitado Atrévete';
@@ -1424,66 +1490,33 @@
             const ejercicios = this.state.user.ejercicios || 0;
             const diasActivo = this.state.user.diasActivo || 0;
             
-            const profileName = document.getElementById('profile-name');
-            const profileEmail = document.getElementById('profile-email');
+            document.getElementById('profile-name').innerText = name;
+            document.getElementById('profile-email').innerText = email;
+            document.getElementById('profile-role').innerText = role === 'spec' ? '👩‍⚕️ Especialista' : '👤 Usuario';
+            document.getElementById('profile-register-method').innerText = registerMethod === 'google' ? '🟢 Registrado con Google' : '📧 Registrado con Email';
+            document.getElementById('profile-verified-container').innerHTML = emailVerified ? '<span class="verified-badge">✅ Correo verificado</span>' : '<span class="unverified-badge">⏳ Correo no verificado</span>';
+            document.getElementById('profile-telefono-display').innerText = telefono;
+            document.getElementById('profile-fecha-display').innerText = fechaNac;
+            document.getElementById('profile-miembro-desde').innerText = fechaRegistro;
+            document.getElementById('profile-sesiones').innerText = sesiones;
+            document.getElementById('profile-ejercicios').innerText = ejercicios;
+            document.getElementById('profile-dias').innerText = diasActivo;
+            
             const profileAvatar = document.getElementById('profile-avatar');
-            const profileRole = document.getElementById('profile-role');
-            const profileRegisterMethod = document.getElementById('profile-register-method');
-            const profileVerifiedContainer = document.getElementById('profile-verified-container');
-            const profileTelefono = document.getElementById('profile-telefono-display');
-            const profileFecha = document.getElementById('profile-fecha-display');
-            const profileMiembroDesde = document.getElementById('profile-miembro-desde');
-            const profileSesiones = document.getElementById('profile-sesiones');
-            const profileEjercicios = document.getElementById('profile-ejercicios');
-            const profileDias = document.getElementById('profile-dias');
-
-            if (profileName) profileName.innerText = name;
-            if (profileEmail) profileEmail.innerText = email;
-            if (profileRole) {
-                const roleText = role === 'spec' ? '👩‍⚕️ Especialista' : '👤 Usuario';
-                profileRole.innerText = roleText;
+            const googlePicture = localStorage.getItem('google_picture');
+            if (googlePicture && googlePicture !== '') {
+                profileAvatar.style.backgroundImage = `url('${googlePicture}')`;
+                profileAvatar.style.backgroundSize = 'cover';
+                profileAvatar.style.backgroundPosition = 'center';
+                profileAvatar.textContent = '';
+            } else {
+                profileAvatar.style.backgroundImage = 'none';
+                const initials = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'AT';
+                profileAvatar.textContent = initials;
             }
-            if (profileRegisterMethod) {
-                const methodText = registerMethod === 'google' ? '🟢 Registrado con Google' : '📧 Registrado con Email';
-                profileRegisterMethod.innerText = methodText;
-            }
-            
-            if (profileVerifiedContainer) {
-                if (emailVerified) {
-                    profileVerifiedContainer.innerHTML = '<span class="verified-badge">✅ Correo verificado</span>';
-                } else {
-                    profileVerifiedContainer.innerHTML = '<span class="unverified-badge">⏳ Correo no verificado</span>';
-                }
-            }
-
-            if (profileTelefono) profileTelefono.innerText = telefono;
-            if (profileFecha) profileFecha.innerText = fechaNac;
-            if (profileMiembroDesde) profileMiembroDesde.innerText = fechaRegistro;
-            if (profileSesiones) profileSesiones.innerText = sesiones;
-            if (profileEjercicios) profileEjercicios.innerText = ejercicios;
-            if (profileDias) profileDias.innerText = diasActivo;
-            
-            if (profileAvatar) {
-                const googlePicture = localStorage.getItem('google_picture');
-                if (googlePicture && googlePicture !== '') {
-                    profileAvatar.style.backgroundImage = `url('${googlePicture}')`;
-                    profileAvatar.style.backgroundSize = 'cover';
-                    profileAvatar.style.backgroundPosition = 'center';
-                    profileAvatar.textContent = '';
-                } else {
-                    profileAvatar.style.backgroundImage = 'none';
-                    const initials = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'AT';
-                    profileAvatar.textContent = initials;
-                }
-            }
-
-            const editNombre = document.getElementById('edit-nombre');
-            const editTelefono = document.getElementById('edit-telefono');
-            const editFechaNac = document.getElementById('edit-fecha-nac');
-            if (editNombre) editNombre.value = name;
-            if (editTelefono) editTelefono.value = this.state.user.telefono || '';
-            if (editFechaNac) editFechaNac.value = this.state.user.fechaNac || '';
-
+            document.getElementById('edit-nombre').value = name;
+            document.getElementById('edit-telefono').value = this.state.user.telefono || '';
+            document.getElementById('edit-fecha-nac').value = this.state.user.fechaNac || '';
             this.actualizarHeader();
             this.actualizarNav();
         },
@@ -1495,20 +1528,10 @@
             const email = document.getElementById('input-email').value;
             const password = document.getElementById('input-password').value;
             const nombreInput = document.getElementById('input-nombre');
-            const emailError = document.getElementById('email-error');
-            const passwordError = document.getElementById('password-error');
-            
-            if (!email || !email.includes('@')) {
-                if (emailError) emailError.classList.remove('hidden');
-                return;
-            }
-            if (emailError) emailError.classList.add('hidden');
-            
-            if (password.length < 6) {
-                if (passwordError) passwordError.classList.remove('hidden');
-                return;
-            }
-            if (passwordError) passwordError.classList.add('hidden');
+            if (!email || !email.includes('@')) { document.getElementById('email-error').classList.remove('hidden'); return; }
+            document.getElementById('email-error').classList.add('hidden');
+            if (password.length < 6) { document.getElementById('password-error').classList.remove('hidden'); return; }
+            document.getElementById('password-error').classList.add('hidden');
 
             let nombre = 'Usuario Atrévete';
             if (this.state.authMode === 'register' && nombreInput && nombreInput.value.trim() !== '') {
@@ -1516,9 +1539,7 @@
             } else {
                 nombre = email.split('@')[0];
             }
-
             const fechaRegistro = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' });
-
             localStorage.setItem('user_name', nombre);
             localStorage.setItem('user_email', email);
             localStorage.setItem('user_role', this.state.user.role || 'user');
@@ -1526,25 +1547,14 @@
             localStorage.setItem('email_verified', 'false');
             localStorage.setItem('fecha_registro', fechaRegistro);
             
-            this.state.user = {
-                ...this.state.user,
-                name: nombre,
-                email: email,
-                registerMethod: 'email',
-                emailVerified: false,
-                fechaRegistro: fechaRegistro
-            };
+            this.state.user = { ...this.state.user, name: nombre, email: email, registerMethod: 'email', emailVerified: false, fechaRegistro: fechaRegistro };
             this.state.isAuthenticated = true;
-            
             this.actualizarPerfilUI();
             this.actualizarHeader();
             this.actualizarNav();
             this.showToast('✅ ¡Bienvenido a Atrévete HealthTech!', 'info');
             this.switchView('view-perfil-usuario');
-            
-            setTimeout(() => {
-                this.showToast('📧 Se ha enviado un correo de verificación a tu cuenta', 'info');
-            }, 2000);
+            setTimeout(() => this.showToast('📧 Se ha enviado un correo de verificación a tu cuenta', 'info'), 2000);
         },
 
         // ============================================
@@ -1552,52 +1562,24 @@
         // ============================================
         switchAuthMode(mode) {
             this.state.authMode = mode;
-            const tabLogin = document.getElementById('tab-login');
-            const tabRegister = document.getElementById('tab-register');
-            const fieldNombre = document.getElementById('field-nombre');
-            const fieldRol = document.getElementById('field-rol');
-            const linkForgot = document.getElementById('link-forgot-container');
-            const submitBtn = document.getElementById('auth-submit-btn');
-            const title = document.getElementById('auth-title');
-            const subtitle = document.getElementById('auth-subtitle');
-
-            if (mode === 'login') {
-                if (tabLogin) tabLogin.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[#7A8A7C] shadow-sm transition';
-                if (tabRegister) tabRegister.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl text-[#7A8A7C] transition';
-                if (fieldNombre) fieldNombre.classList.add('hidden');
-                if (fieldRol) fieldRol.classList.add('hidden');
-                if (linkForgot) linkForgot.classList.remove('hidden');
-                if (submitBtn) submitBtn.innerText = 'Iniciar Sesión';
-                if (title) title.innerText = 'Iniciar Sesión';
-                if (subtitle) subtitle.innerText = 'Accede a tu cuenta de Atrévete HealthTech';
-            } else {
-                if (tabRegister) tabRegister.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[#7A8A7C] shadow-sm transition';
-                if (tabLogin) tabLogin.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl text-[#7A8A7C] transition';
-                if (fieldNombre) fieldNombre.classList.remove('hidden');
-                if (fieldRol) fieldRol.classList.remove('hidden');
-                if (linkForgot) linkForgot.classList.add('hidden');
-                if (submitBtn) submitBtn.innerText = 'Crear Mi Cuenta';
-                if (title) title.innerText = 'Crea tu Cuenta';
-                if (subtitle) subtitle.innerText = 'Únete a nuestra plataforma somática';
-            }
+            document.getElementById('tab-login').className = mode === 'login' ? 'flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[#7A8A7C] shadow-sm transition' : 'flex-1 py-2.5 text-xs font-bold rounded-xl text-[#7A8A7C] transition';
+            document.getElementById('tab-register').className = mode === 'register' ? 'flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[#7A8A7C] shadow-sm transition' : 'flex-1 py-2.5 text-xs font-bold rounded-xl text-[#7A8A7C] transition';
+            document.getElementById('field-nombre').classList.toggle('hidden', mode === 'login');
+            document.getElementById('field-rol').classList.toggle('hidden', mode === 'login');
+            document.getElementById('link-forgot-container').classList.toggle('hidden', mode === 'register');
+            document.getElementById('auth-submit-btn').innerText = mode === 'login' ? 'Iniciar Sesión' : 'Crear Mi Cuenta';
+            document.getElementById('auth-title').innerText = mode === 'login' ? 'Iniciar Sesión' : 'Crea tu Cuenta';
+            document.getElementById('auth-subtitle').innerText = mode === 'login' ? 'Accede a tu cuenta de Atrévete HealthTech' : 'Únete a nuestra plataforma somática';
         },
 
         // ============================================
         // SET ROLE
         // ============================================
         setAuthRole(role) {
-            const btnUser = document.getElementById('btn-role-user');
-            const btnSpec = document.getElementById('btn-role-spec');
             this.state.user.role = role;
             localStorage.setItem('user_role', role);
-            
-            if (role === 'user') {
-                if (btnUser) btnUser.className = 'flex-1 py-2 text-xs font-bold rounded-xl bg-orange-100 text-[#E27D60] border border-[#E27D60]/30 transition';
-                if (btnSpec) btnSpec.className = 'flex-1 py-2 text-xs font-bold rounded-xl bg-stone-100 text-[#7A8A7C] transition';
-            } else {
-                if (btnSpec) btnSpec.className = 'flex-1 py-2 text-xs font-bold rounded-xl bg-orange-100 text-[#E27D60] border border-[#E27D60]/30 transition';
-                if (btnUser) btnUser.className = 'flex-1 py-2 text-xs font-bold rounded-xl bg-stone-100 text-[#7A8A7C] transition';
-            }
+            document.getElementById('btn-role-user').className = role === 'user' ? 'flex-1 py-2 text-xs font-bold rounded-xl bg-orange-100 text-[#E27D60] border border-[#E27D60]/30 transition' : 'flex-1 py-2 text-xs font-bold rounded-xl bg-stone-100 text-[#7A8A7C] transition';
+            document.getElementById('btn-role-spec').className = role === 'spec' ? 'flex-1 py-2 text-xs font-bold rounded-xl bg-orange-100 text-[#E27D60] border border-[#E27D60]/30 transition' : 'flex-1 py-2 text-xs font-bold rounded-xl bg-stone-100 text-[#7A8A7C] transition';
         },
 
         // ============================================
@@ -1605,10 +1587,7 @@
         // ============================================
         procesarRecuperacion() {
             const email = document.getElementById('recovery-email').value;
-            if (!email) {
-                this.showToast('Por favor ingresa tu correo electrónico.', 'error');
-                return;
-            }
+            if (!email) { this.showToast('Por favor ingresa tu correo electrónico.', 'error'); return; }
             this.showToast(`📧 Instrucciones enviadas a: ${email}`, 'success');
             this.switchView('view-auth');
         },
@@ -1629,22 +1608,8 @@
             localStorage.removeItem('user_sesiones');
             localStorage.removeItem('user_ejercicios');
             localStorage.removeItem('user_dias_activo');
-            
             this.state.isAuthenticated = false;
-            this.state.user = {
-                name: '',
-                email: '',
-                role: 'user',
-                registerMethod: 'email',
-                telefono: '',
-                fechaNac: '',
-                emailVerified: false,
-                fechaRegistro: '',
-                sesiones: 0,
-                ejercicios: 0,
-                diasActivo: 0
-            };
-            
+            this.state.user = { name: '', email: '', role: 'user', registerMethod: 'email', telefono: '', fechaNac: '', emailVerified: false, fechaRegistro: '', sesiones: 0, ejercicios: 0, diasActivo: 0 };
             this.actualizarPerfilUI();
             this.actualizarHeader();
             this.actualizarNav();
@@ -1656,40 +1621,27 @@
         // EDITAR PERFIL
         // ============================================
         mostrarEditarPerfil() {
-            const form = document.getElementById('editar-perfil-form');
-            if (form) {
-                form.classList.remove('hidden');
-                document.getElementById('edit-nombre').value = this.state.user.name || '';
-                document.getElementById('edit-telefono').value = this.state.user.telefono || '';
-                document.getElementById('edit-fecha-nac').value = this.state.user.fechaNac || '';
-            }
+            document.getElementById('editar-perfil-form').classList.remove('hidden');
+            document.getElementById('edit-nombre').value = this.state.user.name || '';
+            document.getElementById('edit-telefono').value = this.state.user.telefono || '';
+            document.getElementById('edit-fecha-nac').value = this.state.user.fechaNac || '';
         },
 
         cancelarEditarPerfil() {
-            const form = document.getElementById('editar-perfil-form');
-            if (form) {
-                form.classList.add('hidden');
-            }
+            document.getElementById('editar-perfil-form').classList.add('hidden');
         },
 
         guardarEditarPerfil() {
             const nombre = document.getElementById('edit-nombre').value.trim();
             const telefono = document.getElementById('edit-telefono').value.trim();
             const fechaNac = document.getElementById('edit-fecha-nac').value;
-
-            if (!nombre) {
-                this.showToast('⚠️ El nombre es obligatorio', 'error');
-                return;
-            }
-
+            if (!nombre) { this.showToast('⚠️ El nombre es obligatorio', 'error'); return; }
             localStorage.setItem('user_name', nombre);
             localStorage.setItem('user_telefono', telefono);
             localStorage.setItem('user_fecha_nac', fechaNac);
-            
             this.state.user.name = nombre;
             this.state.user.telefono = telefono;
             this.state.user.fechaNac = fechaNac;
-            
             document.getElementById('editar-perfil-form').classList.add('hidden');
             this.actualizarPerfilUI();
             this.actualizarHeader();
@@ -1707,16 +1659,8 @@
         selectPaymentMethod(method) {
             this.state.selectedPayment = method;
             document.querySelectorAll('.clay-btn-pay').forEach(btn => btn.classList.remove('active-pay'));
-            
-            const btnMap = {
-                'pm_bdv': 'pay-bdv',
-                'pm_bnc': 'pay-bnc',
-                'zelle': 'pay-zelle',
-                'binance': 'pay-binance'
-            };
-            
-            const targetBtn = document.getElementById(btnMap[method]);
-            if (targetBtn) targetBtn.classList.add('active-pay');
+            const btnMap = { 'pm_bdv': 'pay-bdv', 'pm_bnc': 'pay-bnc', 'zelle': 'pay-zelle', 'binance': 'pay-binance' };
+            document.getElementById(btnMap[method]).classList.add('active-pay');
 
             const box = document.getElementById('datos-pago-box');
             const containerRef = document.getElementById('container-ref-pago');
@@ -1730,45 +1674,18 @@
             if (helperRef) helperRef.classList.add('hidden');
 
             if (method === 'pm_bdv') {
-                box.innerHTML = `
-                    <p class="font-bold text-[#E27D60]">🇻🇪 Pago Móvil - Banco de Venezuela (0102)</p>
-                    <p>Teléfono: <strong>0414-4031678</strong></p>
-                    <p>C.I: <strong>18.478.170</strong></p>
-                    <p class="text-[10px] text-gray-500 mt-1">Monto: Equivalente en Bs. a la tasa BCV del día ($120.00)</p>
-                `;
-                if (helperRef) {
-                    helperRef.textContent = 'Ingresa el número de referencia de tu Pago Móvil.';
-                    helperRef.classList.remove('hidden');
-                }
+                box.innerHTML = `<p class="font-bold text-[#E27D60]">🇻🇪 Pago Móvil - Banco de Venezuela (0102)</p><p>Teléfono: <strong>0414-4031678</strong></p><p>C.I: <strong>18.478.170</strong></p><p class="text-[10px] text-gray-500 mt-1">Monto: Equivalente en Bs. a la tasa BCV del día ($120.00)</p>`;
+                if (helperRef) { helperRef.textContent = 'Ingresa el número de referencia de tu Pago Móvil.'; helperRef.classList.remove('hidden'); }
             } else if (method === 'pm_bnc') {
-                box.innerHTML = `
-                    <p class="font-bold text-[#E27D60]">🇻🇪 Pago Móvil - Banco Nacional de Crédito (0191)</p>
-                    <p>Teléfono: <strong>0414-4187215</strong></p>
-                    <p>C.I: <strong>13.518.664</strong></p>
-                    <p class="text-[10px] text-gray-500 mt-1">Monto: Equivalente en Bs. a la tasa BCV del día ($120.00)</p>
-                `;
-                if (helperRef) {
-                    helperRef.textContent = 'Ingresa el número de referencia de tu Pago Móvil.';
-                    helperRef.classList.remove('hidden');
-                }
+                box.innerHTML = `<p class="font-bold text-[#E27D60]">🇻🇪 Pago Móvil - Banco Nacional de Crédito (0191)</p><p>Teléfono: <strong>0414-4187215</strong></p><p>C.I: <strong>13.518.664</strong></p><p class="text-[10px] text-gray-500 mt-1">Monto: Equivalente en Bs. a la tasa BCV del día ($120.00)</p>`;
+                if (helperRef) { helperRef.textContent = 'Ingresa el número de referencia de tu Pago Móvil.'; helperRef.classList.remove('hidden'); }
             } else if (method === 'zelle') {
                 containerRef.style.display = 'none';
                 btnEnviar.style.display = 'none';
-                box.innerHTML = `
-                    <p class="font-bold text-[#E27D60]">🇺🇸 Zelle (Divisas)</p>
-                    <p class="text-sm font-semibold mt-2 text-[#7A8A7C]">⏳ Próximamente disponible</p>
-                    <p class="text-[10px] text-gray-500 mt-1">Este método de pago se habilitará muy pronto. Mientras tanto, utiliza Pago Móvil o Binance Pay.</p>
-                `;
+                box.innerHTML = `<p class="font-bold text-[#E27D60]">🇺🇸 Zelle (Divisas)</p><p class="text-sm font-semibold mt-2 text-[#7A8A7C]">⏳ Próximamente disponible</p><p class="text-[10px] text-gray-500 mt-1">Este método de pago se habilitará muy pronto. Mientras tanto, utiliza Pago Móvil o Binance Pay.</p>`;
             } else if (method === 'binance') {
-                box.innerHTML = `
-                    <p class="font-bold text-[#E27D60]">🟡 Binance Pay (USDT)</p>
-                    <p>Binance Pay ID: <strong>163305332</strong></p>
-                    <p class="text-[10px] text-gray-500 mt-1">Monto exacto: <strong>$120.00 USDT</strong> (red BEP-20)</p>
-                `;
-                if (helperRef) {
-                    helperRef.textContent = 'Ingresa el ID de la transacción o el hash de tu pago en Binance Pay.';
-                    helperRef.classList.remove('hidden');
-                }
+                box.innerHTML = `<p class="font-bold text-[#E27D60]">🟡 Binance Pay (USDT)</p><p>Binance Pay ID: <strong>163305332</strong></p><p class="text-[10px] text-gray-500 mt-1">Monto exacto: <strong>$120.00 USDT</strong> (red BEP-20)</p>`;
+                if (helperRef) { helperRef.textContent = 'Ingresa el ID de la transacción o el hash de tu pago en Binance Pay.'; helperRef.classList.remove('hidden'); }
             }
         },
 
@@ -1777,23 +1694,19 @@
                 this.showToast('⏳ El método de pago Zelle aún no está disponible.', 'warning');
                 return;
             }
-
             const ref = document.getElementById('input-ref-pago').value;
             if (!ref) {
                 this.showToast('⚠️ Por favor ingresa el número de referencia o comprobante.', 'error');
                 document.getElementById('input-ref-pago').classList.add('border-red-400', 'border-2');
-                setTimeout(() => {
-                    document.getElementById('input-ref-pago').classList.remove('border-red-400', 'border-2');
-                }, 3000);
+                setTimeout(() => document.getElementById('input-ref-pago').classList.remove('border-red-400', 'border-2'), 3000);
                 return;
             }
-            
             this.showToast('✅ ¡Comprobante reportado con éxito! Nuestro equipo lo verificará.', 'success');
             this.switchView('view-perfil-usuario');
         },
 
         // ============================================
-        // QUIZ DE REGULACIÓN SOMÁTICA
+        // QUIZ
         // ============================================
         answerQuiz(step, choice) {
             this.state.quizAnswers[`step${step}`] = choice;
@@ -1804,15 +1717,10 @@
             } else {
                 document.getElementById('quiz-step-3').classList.add('hidden');
                 document.getElementById('quiz-result').classList.remove('hidden');
-                document.getElementById('quiz-step-indicator').innerText = `Completado ✅`;
-
+                document.getElementById('quiz-step-indicator').innerText = 'Completado ✅';
                 document.getElementById('quiz-diagnosis-title').innerText = "Diagnóstico Somático Detectado";
                 document.getElementById('quiz-diagnosis-desc').innerText = "Tu sistema nervioso muestra acumulación de tensión corporal. Te recomendamos la siguiente técnica:";
-                
-                document.getElementById('recommended-technique-card').innerHTML = `
-                    <h5 class="font-bold text-xs text-[#7A8A7C]">🌟 Técnica Recomendada: Descarga Vagal</h5>
-                    <p class="text-[11px] text-gray-600">Realiza 3 ciclos de respiración profunda con exhalación prolongada y sacudida corporal.</p>
-                `;
+                document.getElementById('recommended-technique-card').innerHTML = `<h5 class="font-bold text-xs text-[#7A8A7C]">🌟 Técnica Recomendada: Descarga Vagal</h5><p class="text-[11px] text-gray-600">Realiza 3 ciclos de respiración profunda con exhalación prolongada y sacudida corporal.</p>`;
             }
         },
 
@@ -1826,33 +1734,19 @@
         },
 
         // ============================================
-        // RESPIRACIÓN GUIADA
+        // RESPIRACIÓN
         // ============================================
         iniciarRespiración() {
-            if (this.state.breathInterval) {
-                clearInterval(this.state.breathInterval);
-            }
+            if (this.state.breathInterval) clearInterval(this.state.breathInterval);
             const circle = document.getElementById('breath-circle');
             if (!circle) return;
-            
             let breathState = 0;
             circle.innerText = "Inhala...";
             circle.style.transform = "scale(1.0)";
-            
             this.state.breathInterval = setInterval(() => {
-                if (breathState === 0) {
-                    circle.innerText = "Sostén...";
-                    circle.style.transform = "scale(1.3)";
-                    breathState = 1;
-                } else if (breathState === 1) {
-                    circle.innerText = "Exhala...";
-                    circle.style.transform = "scale(0.8)";
-                    breathState = 2;
-                } else {
-                    circle.innerText = "Inhala...";
-                    circle.style.transform = "scale(1.0)";
-                    breathState = 0;
-                }
+                if (breathState === 0) { circle.innerText = "Sostén..."; circle.style.transform = "scale(1.3)"; breathState = 1; }
+                else if (breathState === 1) { circle.innerText = "Exhala..."; circle.style.transform = "scale(0.8)"; breathState = 2; }
+                else { circle.innerText = "Inhala..."; circle.style.transform = "scale(1.0)"; breathState = 0; }
             }, 3500);
         },
 
@@ -1863,15 +1757,8 @@
             const terapeuta = document.getElementById('select-terapeuta').value;
             const fecha = document.getElementById('fecha-cita').value || 'Sin fecha';
             const hora = document.getElementById('hora-cita').value || 'Sin hora';
-            
-            if (!fecha || !hora) {
-                this.showToast('⚠️ Por favor selecciona fecha y hora', 'error');
-                return;
-            }
-            
-            const mensaje = encodeURIComponent(
-                `Hola, deseo confirmar mi cita con ${terapeuta}.\n📅 Fecha: ${fecha}\n🕐 Hora: ${hora}`
-            );
+            if (!fecha || !hora) { this.showToast('⚠️ Por favor selecciona fecha y hora', 'error'); return; }
+            const mensaje = encodeURIComponent(`Hola, deseo confirmar mi cita con ${terapeuta}.\n📅 Fecha: ${fecha}\n🕐 Hora: ${hora}`);
             window.open(`https://wa.me/584140000000?text=${mensaje}`, '_blank');
         },
 
@@ -1893,20 +1780,9 @@
             const newLogo = document.getElementById('admin-logo-url').value;
             const newBannerImg = document.getElementById('admin-banner-img-url').value;
             const newBannerText = document.getElementById('admin-banner-text').value;
-
-            if (newLogo) {
-                localStorage.setItem('app_logo', newLogo);
-                document.getElementById('app-logo-img').src = newLogo;
-            }
-            if (newBannerImg) {
-                localStorage.setItem('app_banner_img', newBannerImg);
-                document.getElementById('home-hero-banner').style.backgroundImage = `url('${newBannerImg}')`;
-            }
-            if (newBannerText) {
-                localStorage.setItem('app_banner_text', newBannerText);
-                document.getElementById('home-banner-text').innerText = newBannerText;
-            }
-
+            if (newLogo) { localStorage.setItem('app_logo', newLogo); document.getElementById('app-logo-img').src = newLogo; }
+            if (newBannerImg) { localStorage.setItem('app_banner_img', newBannerImg); document.getElementById('home-hero-banner').style.backgroundImage = `url('${newBannerImg}')`; }
+            if (newBannerText) { localStorage.setItem('app_banner_text', newBannerText); document.getElementById('home-banner-text').innerText = newBannerText; }
             this.showToast('✅ ¡Imágenes y banners actualizados con éxito!', 'success');
             this.switchView('view-home');
         }
@@ -1916,28 +1792,13 @@
     // INICIALIZACIÓN
     // ============================================
     document.addEventListener('DOMContentLoaded', function() {
-        // Cargar configuraciones visuales
         const savedLogo = localStorage.getItem('app_logo');
         const savedBannerImg = localStorage.getItem('app_banner_img');
         const savedBannerText = localStorage.getItem('app_banner_text');
+        if (savedLogo) { document.getElementById('app-logo-img').src = savedLogo; document.getElementById('admin-logo-url').value = savedLogo; }
+        if (savedBannerImg) { document.getElementById('home-hero-banner').style.backgroundImage = `url('${savedBannerImg}')`; document.getElementById('admin-banner-img-url').value = savedBannerImg; }
+        if (savedBannerText) { document.getElementById('home-banner-text').innerText = savedBannerText; document.getElementById('admin-banner-text').value = savedBannerText; }
 
-        if (savedLogo) {
-            document.getElementById('app-logo-img').src = savedLogo;
-            const adminLogo = document.getElementById('admin-logo-url');
-            if (adminLogo) adminLogo.value = savedLogo;
-        }
-        if (savedBannerImg) {
-            document.getElementById('home-hero-banner').style.backgroundImage = `url('${savedBannerImg}')`;
-            const adminBanner = document.getElementById('admin-banner-img-url');
-            if (adminBanner) adminBanner.value = savedBannerImg;
-        }
-        if (savedBannerText) {
-            document.getElementById('home-banner-text').innerText = savedBannerText;
-            const adminText = document.getElementById('admin-banner-text');
-            if (adminText) adminText.value = savedBannerText;
-        }
-
-        // Cargar datos del usuario
         App.state.user.name = localStorage.getItem('user_name') || '';
         App.state.user.email = localStorage.getItem('user_email') || '';
         App.state.user.role = localStorage.getItem('user_role') || 'user';
@@ -1952,32 +1813,24 @@
         App.state.legalAceptado = localStorage.getItem('legal_aceptado') === 'true';
         App.state.isAuthenticated = !!localStorage.getItem('user_email');
 
-        // Actualizar UI
         App.actualizarPerfilUI();
         App.actualizarHeader();
         App.actualizarNav();
-
-        // Seleccionar vista inicial
         App.switchView('view-home');
-
-        // Seleccionar método de pago por defecto
         App.selectPaymentMethod('pm_bdv');
 
-        // Validación de contraseña en tiempo real
         const passwordInput = document.getElementById('input-password');
         const passwordError = document.getElementById('password-error');
         if (passwordInput && passwordError) {
             passwordInput.addEventListener('input', function() {
-                if (this.value.length > 0 && this.value.length < 6) {
-                    passwordError.classList.remove('hidden');
-                } else {
-                    passwordError.classList.add('hidden');
-                }
+                if (this.value.length > 0 && this.value.length < 6) passwordError.classList.remove('hidden');
+                else passwordError.classList.add('hidden');
             });
         }
 
         console.log('🚀 Atrévete HealthTech App inicializada correctamente');
         console.log('👤 Usuario autenticado:', App.state.isAuthenticated);
+        console.log('🧠 Agente IA "Aura" activo y listo para atender ventas');
     });
 
     window.App = App;
