@@ -98,11 +98,59 @@
             box-shadow: inset 2px 2px 4px rgba(226, 125, 96, 0.15), inset -2px -2px 4px #ffffff;
         }
 
+        /* Navegación inferior mejorada */
         .clay-nav {
             background: rgba(253, 251, 247, 0.95);
             backdrop-filter: blur(12px);
             border-radius: 24px 24px 0 0;
             box-shadow: 0 -8px 16px rgba(0,0,0,0.04), inset 0 2px 4px #ffffff;
+            padding: 8px 12px 12px 12px;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            padding: 6px 10px;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            min-width: 48px;
+            position: relative;
+        }
+        .nav-item:hover {
+            background: rgba(226, 125, 96, 0.08);
+        }
+        .nav-item.active {
+            background: rgba(226, 125, 96, 0.15);
+        }
+        .nav-item .nav-icon {
+            font-size: 20px;
+            line-height: 1;
+        }
+        .nav-item .nav-label {
+            font-size: 9px;
+            font-weight: 600;
+            color: #7A8A7C;
+            transition: color 0.2s ease;
+        }
+        .nav-item.active .nav-label {
+            color: #E27D60;
+        }
+        .nav-item .nav-badge {
+            position: absolute;
+            top: 2px;
+            right: 4px;
+            background: #E27D60;
+            color: white;
+            font-size: 8px;
+            font-weight: bold;
+            padding: 1px 5px;
+            border-radius: 9999px;
+            min-width: 16px;
+            text-align: center;
         }
 
         /* Toast notifications */
@@ -319,7 +367,7 @@
         }
     </style>
 </head>
-<body class="pb-28">
+<body>
 
   <!-- ================= CABECERA CON BOTONES DE LOGIN Y REGISTRO ================= -->
   <header class="pt-3 pb-1 px-6 max-w-md mx-auto">
@@ -544,32 +592,64 @@
     <button onclick="App.switchView('view-auth')" class="clay-btn-secondary w-full py-3 text-xs font-bold focus-visible">← Volver al Ingreso</button>
   </main>
 
-  <!-- ================= 4. PERFIL DE USUARIO DINÁMICO ================= -->
+  <!-- ================= 4. PERFIL DE USUARIO - FICHA DE IDENTIFICACIÓN ================= -->
   <main id="view-perfil-usuario" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
-    <div class="clay-card p-6 text-center space-y-3">
-      <div id="profile-avatar" class="w-20 h-20 rounded-full bg-[#E27D60] text-white flex items-center justify-center text-2xl font-bold mx-auto border-4 border-white shadow" aria-label="Avatar de usuario">
+    <!-- Tarjeta de identificación -->
+    <div class="clay-card p-6 text-center space-y-3 relative overflow-hidden">
+      <!-- Fondo decorativo -->
+      <div class="absolute top-0 right-0 w-32 h-32 bg-[#E27D60]/5 rounded-full -translate-y-12 translate-x-12"></div>
+      <div class="absolute bottom-0 left-0 w-24 h-24 bg-[#E27D60]/5 rounded-full translate-y-8 -translate-x-8"></div>
+      
+      <div id="profile-avatar" class="w-24 h-24 rounded-full bg-[#E27D60] text-white flex items-center justify-center text-3xl font-bold mx-auto border-4 border-white shadow-lg relative z-10" aria-label="Avatar de usuario">
         US
       </div>
-      <div>
-        <h3 id="profile-name" class="text-lg font-bold text-[#7A8A7C]">Usuario</h3>
+      <div class="relative z-10">
+        <h3 id="profile-name" class="text-xl font-bold text-[#7A8A7C]">Usuario</h3>
         <p id="profile-email" class="text-xs text-[#7A8A7C]/70">correo@ejemplo.com</p>
-        <p id="profile-role" class="text-xs text-[#7A8A7C]/60 mt-1">👤 Usuario</p>
-        <p id="profile-register-method" class="text-[10px] text-[#7A8A7C]/40 mt-1">Registrado con: Email</p>
+        <div class="flex items-center justify-center gap-2 mt-1">
+          <p id="profile-role" class="text-xs text-[#7A8A7C]/60">👤 Usuario</p>
+          <span class="w-1 h-1 rounded-full bg-[#7A8A7C]/30"></span>
+          <p id="profile-register-method" class="text-[10px] text-[#7A8A7C]/40">Registrado con: Email</p>
+        </div>
         <div id="profile-verified-container" class="mt-2 flex justify-center">
           <span class="verified-badge">✅ Correo verificado</span>
         </div>
       </div>
-      <span class="inline-block bg-emerald-100 text-emerald-800 text-[10px] font-bold px-3 py-1 rounded-full">Suscripción Activa</span>
-      
-      <!-- Editar Perfil -->
-      <div class="mt-4 pt-4 border-t border-stone-200">
-        <button onclick="App.mostrarEditarPerfil()" class="text-xs text-[#E27D60] font-bold underline focus-visible">
-          ✏️ Editar Perfil
-        </button>
+      <span class="inline-block bg-emerald-100 text-emerald-800 text-[10px] font-bold px-4 py-1.5 rounded-full relative z-10">Suscripción Activa</span>
+    </div>
+
+    <!-- Información adicional -->
+    <div class="clay-card p-5 space-y-3">
+      <h4 class="font-bold text-sm text-[#7A8A7C] flex items-center gap-2">
+        <span>📋</span> Información Personal
+      </h4>
+      <div class="space-y-2 text-xs">
+        <div class="flex justify-between py-2 border-b border-stone-100">
+          <span class="text-[#7A8A7C]/60">Teléfono</span>
+          <span id="profile-telefono-display" class="text-[#7A8A7C] font-medium">No registrado</span>
+        </div>
+        <div class="flex justify-between py-2 border-b border-stone-100">
+          <span class="text-[#7A8A7C]/60">Fecha de Nacimiento</span>
+          <span id="profile-fecha-display" class="text-[#7A8A7C] font-medium">No registrada</span>
+        </div>
+        <div class="flex justify-between py-2">
+          <span class="text-[#7A8A7C]/60">Miembro desde</span>
+          <span id="profile-miembro-desde" class="text-[#7A8A7C] font-medium">Hoy</span>
+        </div>
       </div>
     </div>
 
-    <!-- Formulario de Edición de Perfil -->
+    <!-- Acciones -->
+    <div class="space-y-3">
+      <button onclick="App.mostrarEditarPerfil()" class="clay-btn-secondary w-full py-3 text-xs font-bold focus-visible">
+        ✏️ Editar Perfil
+      </button>
+      <button onclick="App.cerrarSesion()" class="w-full py-3 text-xs font-bold text-[#E27D60] border border-[#E27D60]/30 rounded-full hover:bg-[#E27D60]/5 transition focus-visible">
+        Cerrar Sesión
+      </button>
+    </div>
+
+    <!-- Formulario de Edición de Perfil (oculto) -->
     <div id="editar-perfil-form" class="clay-card p-5 space-y-4 hidden">
       <h4 class="font-bold text-sm text-[#7A8A7C]">Editar Datos Personales</h4>
       <div>
@@ -593,9 +673,6 @@
         </button>
       </div>
     </div>
-
-    <button onclick="App.cerrarSesion()" class="clay-btn-secondary w-full py-3 text-xs font-bold focus-visible mt-4">Cerrar Sesión</button>
-    <button onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold focus-visible">Volver al Inicio</button>
   </main>
 
   <!-- ================= 5. MÉTODOS DE PAGO ================= -->
@@ -846,13 +923,40 @@
     </div>
   </main>
 
-  <!-- ================= BARRA DE NAVEGACIÓN INFERIOR (FIJA) ================= -->
-  <nav class="clay-nav fixed bottom-0 inset-x-0 py-3 px-6 max-w-md mx-auto flex justify-between items-center z-50">
-    <div onclick="App.switchView('view-home')" class="cursor-pointer flex flex-col items-center text-[10px] text-[#7A8A7C] font-bold"><span>🏠</span> Inicio</div>
-    <div onclick="App.switchView('view-regulacion')" class="cursor-pointer flex flex-col items-center text-[10px] text-[#7A8A7C] font-bold"><span>🫁</span> Gimnasio</div>
-    <div onclick="App.switchView('view-citas')" class="cursor-pointer flex flex-col items-center text-[10px] text-[#7A8A7C] font-bold"><span>📅</span> Citas</div>
-    <div onclick="App.switchView('view-pagos')" class="cursor-pointer flex flex-col items-center text-[10px] text-[#7A8A7C] font-bold"><span>💳</span> Pagos</div>
-    <div onclick="App.switchView('view-auth')" class="cursor-pointer flex flex-col items-center text-[10px] text-[#7A8A7C] font-bold"><span>👤</span> Perfil</div>
+  <!-- ================= BARRA DE NAVEGACIÓN INFERIOR MEJORADA ================= -->
+  <nav class="clay-nav fixed bottom-0 inset-x-0 max-w-md mx-auto z-50">
+    <div class="flex justify-around items-center">
+      <!-- Inicio -->
+      <div onclick="App.switchView('view-home')" class="nav-item active" data-view="view-home">
+        <span class="nav-icon">🏠</span>
+        <span class="nav-label">Inicio</span>
+      </div>
+
+      <!-- Gimnasio -->
+      <div onclick="App.switchView('view-regulacion')" class="nav-item" data-view="view-regulacion">
+        <span class="nav-icon">🫁</span>
+        <span class="nav-label">Gimnasio</span>
+      </div>
+
+      <!-- Citas -->
+      <div onclick="App.switchView('view-citas')" class="nav-item" data-view="view-citas">
+        <span class="nav-icon">📅</span>
+        <span class="nav-label">Citas</span>
+        <span class="nav-badge">1</span>
+      </div>
+
+      <!-- Pagos -->
+      <div onclick="App.switchView('view-pagos')" class="nav-item" data-view="view-pagos">
+        <span class="nav-icon">💳</span>
+        <span class="nav-label">Pagos</span>
+      </div>
+
+      <!-- Perfil - Cambia según autenticación -->
+      <div onclick="App.irAPerfil()" class="nav-item" data-view="view-perfil-usuario" id="nav-perfil">
+        <span class="nav-icon" id="nav-perfil-icon">👤</span>
+        <span class="nav-label" id="nav-perfil-label">Perfil</span>
+      </div>
+    </div>
   </nav>
 
   <!-- ================= JAVASCRIPT ================= -->
@@ -874,10 +978,97 @@
                 registerMethod: localStorage.getItem('register_method') || 'email',
                 telefono: localStorage.getItem('user_telefono') || '',
                 fechaNac: localStorage.getItem('user_fecha_nac') || '',
-                emailVerified: localStorage.getItem('email_verified') === 'true'
+                emailVerified: localStorage.getItem('email_verified') === 'true',
+                fechaRegistro: localStorage.getItem('fecha_registro') || new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' })
             },
             isAuthenticated: !!localStorage.getItem('user_email'),
-            breathInterval: null
+            breathInterval: null,
+            currentView: 'view-home'
+        },
+
+        // ============================================
+        // FUNCIONES DE NAVEGACIÓN
+        // ============================================
+        irAPerfil() {
+            if (this.state.isAuthenticated) {
+                this.switchView('view-perfil-usuario');
+            } else {
+                this.abrirLogin();
+            }
+        },
+
+        // ============================================
+        // ACTUALIZAR NAVEGACIÓN INFERIOR
+        // ============================================
+        actualizarNav() {
+            const navPerfil = document.getElementById('nav-perfil');
+            const perfilIcon = document.getElementById('nav-perfil-icon');
+            const perfilLabel = document.getElementById('nav-perfil-label');
+
+            if (this.state.isAuthenticated) {
+                // Usuario autenticado - mostrar perfil con avatar
+                if (perfilIcon) {
+                    const initials = this.state.user.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'US';
+                    perfilIcon.textContent = '👤';
+                    perfilIcon.style.fontSize = '20px';
+                }
+                if (perfilLabel) {
+                    perfilLabel.textContent = 'Perfil';
+                }
+                // Remover badge si existe
+                const badge = navPerfil?.querySelector('.nav-badge');
+                if (badge) badge.remove();
+            } else {
+                // Usuario no autenticado - mostrar login
+                if (perfilIcon) {
+                    perfilIcon.textContent = '🔑';
+                    perfilIcon.style.fontSize = '18px';
+                }
+                if (perfilLabel) {
+                    perfilLabel.textContent = 'Login';
+                }
+            }
+        },
+
+        // ============================================
+        // NAVEGACIÓN CON INDICADOR ACTIVO
+        // ============================================
+        switchView(viewId) {
+            // Ocultar todas las vistas
+            document.querySelectorAll('.app-view').forEach(v => v.classList.add('hidden'));
+            
+            // Mostrar la vista seleccionada
+            const target = document.getElementById(viewId);
+            if (target) {
+                target.classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            // Actualizar estado de navegación
+            this.state.currentView = viewId;
+
+            // Actualizar elementos de navegación
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+                if (item.dataset.view === viewId) {
+                    item.classList.add('active');
+                }
+            });
+
+            // Manejo especial para el perfil
+            if (viewId === 'view-perfil-usuario' && !this.state.isAuthenticated) {
+                this.abrirLogin();
+                return;
+            }
+
+            // Detener respiración si no está en regulación
+            if (viewId !== 'view-regulacion' && this.state.breathInterval) {
+                clearInterval(this.state.breathInterval);
+                this.state.breathInterval = null;
+            }
+            if (viewId === 'view-regulacion') {
+                this.iniciarRespiración();
+            }
         },
 
         // ============================================
@@ -894,7 +1085,7 @@
         },
 
         // ============================================
-        // ACTUALIZAR HEADER (Login/Perfil)
+        // ACTUALIZAR HEADER
         // ============================================
         actualizarHeader() {
             const loginBtns = document.getElementById('header-login-btns');
@@ -976,6 +1167,7 @@
 
             setTimeout(() => {
                 const userData = this.state.googleUserData;
+                const fechaRegistro = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' });
                 
                 localStorage.setItem('user_name', userData.name);
                 localStorage.setItem('user_email', userData.email);
@@ -983,6 +1175,7 @@
                 localStorage.setItem('register_method', 'google');
                 localStorage.setItem('email_verified', 'true');
                 localStorage.setItem('google_picture', userData.picture || '');
+                localStorage.setItem('fecha_registro', fechaRegistro);
                 
                 this.state.user = {
                     ...this.state.user,
@@ -990,7 +1183,8 @@
                     email: userData.email,
                     role: 'user',
                     registerMethod: 'google',
-                    emailVerified: true
+                    emailVerified: true,
+                    fechaRegistro: fechaRegistro
                 };
                 this.state.isAuthenticated = true;
                 
@@ -998,6 +1192,7 @@
                 
                 this.actualizarPerfilUI();
                 this.actualizarHeader();
+                this.actualizarNav();
                 this.showToast('✅ ¡Registro con Google exitoso!', 'success');
                 this.switchView('view-perfil-usuario');
                 
@@ -1023,25 +1218,6 @@
         },
 
         // ============================================
-        // NAVEGACIÓN
-        // ============================================
-        switchView(viewId) {
-            document.querySelectorAll('.app-view').forEach(v => v.classList.add('hidden'));
-            const target = document.getElementById(viewId);
-            if (target) {
-                target.classList.remove('hidden');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-            if (viewId !== 'view-regulacion' && this.state.breathInterval) {
-                clearInterval(this.state.breathInterval);
-                this.state.breathInterval = null;
-            }
-            if (viewId === 'view-regulacion') {
-                this.iniciarRespiración();
-            }
-        },
-
-        // ============================================
         // TOAST NOTIFICATIONS
         // ============================================
         showToast(message, type = 'success') {
@@ -1063,6 +1239,9 @@
             const role = this.state.user.role || 'user';
             const registerMethod = this.state.user.registerMethod || 'email';
             const emailVerified = this.state.user.emailVerified || false;
+            const telefono = this.state.user.telefono || 'No registrado';
+            const fechaNac = this.state.user.fechaNac || 'No registrada';
+            const fechaRegistro = this.state.user.fechaRegistro || 'Hoy';
             
             const profileName = document.getElementById('profile-name');
             const profileEmail = document.getElementById('profile-email');
@@ -1070,6 +1249,9 @@
             const profileRole = document.getElementById('profile-role');
             const profileRegisterMethod = document.getElementById('profile-register-method');
             const profileVerifiedContainer = document.getElementById('profile-verified-container');
+            const profileTelefono = document.getElementById('profile-telefono-display');
+            const profileFecha = document.getElementById('profile-fecha-display');
+            const profileMiembroDesde = document.getElementById('profile-miembro-desde');
 
             if (profileName) profileName.innerText = name;
             if (profileEmail) profileEmail.innerText = email;
@@ -1089,6 +1271,10 @@
                     profileVerifiedContainer.innerHTML = '<span class="unverified-badge">⏳ Correo no verificado</span>';
                 }
             }
+
+            if (profileTelefono) profileTelefono.innerText = telefono;
+            if (profileFecha) profileFecha.innerText = fechaNac;
+            if (profileMiembroDesde) profileMiembroDesde.innerText = fechaRegistro;
             
             if (profileAvatar) {
                 const googlePicture = localStorage.getItem('google_picture');
@@ -1112,6 +1298,7 @@
             if (editFechaNac) editFechaNac.value = this.state.user.fechaNac || '';
 
             this.actualizarHeader();
+            this.actualizarNav();
         },
 
         // ============================================
@@ -1141,23 +1328,28 @@
                 nombre = email.split('@')[0];
             }
 
+            const fechaRegistro = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' });
+
             localStorage.setItem('user_name', nombre);
             localStorage.setItem('user_email', email);
             localStorage.setItem('user_role', this.state.user.role || 'user');
             localStorage.setItem('register_method', 'email');
             localStorage.setItem('email_verified', 'false');
+            localStorage.setItem('fecha_registro', fechaRegistro);
             
             this.state.user = {
                 ...this.state.user,
                 name: nombre,
                 email: email,
                 registerMethod: 'email',
-                emailVerified: false
+                emailVerified: false,
+                fechaRegistro: fechaRegistro
             };
             this.state.isAuthenticated = true;
             
             this.actualizarPerfilUI();
             this.actualizarHeader();
+            this.actualizarNav();
             this.showToast('✅ ¡Bienvenido a Atrévete HealthTech!', 'info');
             this.switchView('view-perfil-usuario');
             
@@ -1244,6 +1436,7 @@
             localStorage.removeItem('user_fecha_nac');
             localStorage.removeItem('email_verified');
             localStorage.removeItem('google_picture');
+            localStorage.removeItem('fecha_registro');
             
             this.state.isAuthenticated = false;
             this.state.user = {
@@ -1253,11 +1446,13 @@
                 registerMethod: 'email',
                 telefono: '',
                 fechaNac: '',
-                emailVerified: false
+                emailVerified: false,
+                fechaRegistro: ''
             };
             
             this.actualizarPerfilUI();
             this.actualizarHeader();
+            this.actualizarNav();
             this.showToast('👋 Sesión cerrada exitosamente', 'info');
             this.switchView('view-home');
         },
@@ -1303,6 +1498,7 @@
             document.getElementById('editar-perfil-form').classList.add('hidden');
             this.actualizarPerfilUI();
             this.actualizarHeader();
+            this.actualizarNav();
             this.showToast('✅ Perfil actualizado exitosamente', 'success');
         },
 
@@ -1525,9 +1721,11 @@
         App.state.user.telefono = localStorage.getItem('user_telefono') || '';
         App.state.user.fechaNac = localStorage.getItem('user_fecha_nac') || '';
         App.state.user.emailVerified = localStorage.getItem('email_verified') === 'true';
+        App.state.user.fechaRegistro = localStorage.getItem('fecha_registro') || new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' });
 
         App.actualizarPerfilUI();
         App.actualizarHeader();
+        App.actualizarNav();
 
         if (App.state.isAuthenticated) {
             App.switchView('view-home');
