@@ -135,6 +135,9 @@
         .toast-info {
             background: #2196F3;
         }
+        .toast-warning {
+            background: #FF9800;
+        }
 
         /* Loading spinner */
         .spinner {
@@ -430,7 +433,7 @@
     <!-- Botón de Google con autenticación real -->
     <div id="google-login-container" class="flex justify-center">
       <div id="g_id_onload"
-           data-client_id="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com"
+           data-client_id="759730169795-6p7ohp6qqh56msefe2k7t5f7k2p3i9p9.apps.googleusercontent.com"
            data-context="signin"
            data-ux_mode="popup"
            data-callback="App.handleGoogleCredentialResponse"
@@ -858,25 +861,7 @@
                 emailVerified: localStorage.getItem('email_verified') === 'true'
             },
             isAuthenticated: !!localStorage.getItem('user_email'),
-            breathInterval: null,
-            googleInitialized: false
-        },
-
-        // ============================================
-        // INICIALIZACIÓN DE GOOGLE
-        // ============================================
-        initGoogle() {
-            if (this.state.googleInitialized) return;
-            
-            // Cargar el SDK de Google
-            if (typeof google !== 'undefined' && google.accounts) {
-                this.state.googleInitialized = true;
-                console.log('✅ Google Identity Services inicializado');
-            } else {
-                console.warn('⏳ Esperando carga de Google Identity Services...');
-                // Intentar nuevamente después de 1 segundo
-                setTimeout(() => this.initGoogle(), 1000);
-            }
+            breathInterval: null
         },
 
         // ============================================
@@ -906,7 +891,7 @@
 
                 // Verificar que el email esté verificado
                 if (!userData.email_verified) {
-                    this.showToast('⚠️ El correo de Google no está verificado. Por favor verifica tu cuenta.', 'error');
+                    this.showToast('⚠️ El correo de Google no está verificado. Por favor verifica tu cuenta.', 'warning');
                     return;
                 }
 
@@ -1114,15 +1099,15 @@
             if (profileAvatar) {
                 // Verificar si hay foto de Google
                 const googlePicture = localStorage.getItem('google_picture');
-                if (googlePicture) {
+                if (googlePicture && googlePicture !== '') {
                     profileAvatar.style.backgroundImage = `url('${googlePicture}')`;
                     profileAvatar.style.backgroundSize = 'cover';
                     profileAvatar.style.backgroundPosition = 'center';
                     profileAvatar.textContent = '';
                 } else {
+                    profileAvatar.style.backgroundImage = 'none';
                     const initials = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'AT';
                     profileAvatar.textContent = initials;
-                    profileAvatar.style.backgroundImage = 'none';
                 }
             }
 
@@ -1289,15 +1274,20 @@
         // ============================================
         mostrarEditarPerfil() {
             const form = document.getElementById('editar-perfil-form');
-            form.classList.remove('hidden');
-            // Cargar datos actuales
-            document.getElementById('edit-nombre').value = this.state.user.name || '';
-            document.getElementById('edit-telefono').value = this.state.user.telefono || '';
-            document.getElementById('edit-fecha-nac').value = this.state.user.fechaNac || '';
+            if (form) {
+                form.classList.remove('hidden');
+                // Cargar datos actuales
+                document.getElementById('edit-nombre').value = this.state.user.name || '';
+                document.getElementById('edit-telefono').value = this.state.user.telefono || '';
+                document.getElementById('edit-fecha-nac').value = this.state.user.fechaNac || '';
+            }
         },
 
         cancelarEditarPerfil() {
-            document.getElementById('editar-perfil-form').classList.add('hidden');
+            const form = document.getElementById('editar-perfil-form');
+            if (form) {
+                form.classList.add('hidden');
+            }
         },
 
         guardarEditarPerfil() {
@@ -1559,10 +1549,8 @@
         // Inicializar método de pago por defecto
         App.selectPaymentMethod('pm_bdv');
 
-        // Inicializar Google Identity Services
-        App.initGoogle();
-
         console.log('🚀 Atrévete HealthTech App inicializada');
+        console.log('👤 Usuario:', App.state.user);
     });
 
     // Exponer App globalmente para el HTML
