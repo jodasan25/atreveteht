@@ -286,24 +286,58 @@
             text-overflow: ellipsis;
             white-space: nowrap;
         }
+
+        /* Botones de acción en header */
+        .header-action-btn {
+            padding: 8px 16px;
+            border-radius: 9999px;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+        }
+        .header-action-btn:hover {
+            transform: translateY(-1px);
+        }
+        .btn-login {
+            background: #E27D60;
+            color: white;
+            box-shadow: 3px 3px 8px rgba(226, 125, 96, 0.3);
+        }
+        .btn-login:hover {
+            box-shadow: 5px 5px 12px rgba(226, 125, 96, 0.4);
+        }
+        .btn-register {
+            background: transparent;
+            color: #7A8A7C;
+            border: 1.5px solid #7A8A7C;
+        }
+        .btn-register:hover {
+            background: #7A8A7C;
+            color: white;
+        }
     </style>
 </head>
 <body class="pb-28">
 
-  <!-- ================= CABECERA CON BOTÓN DE LOGIN/PERFIL ================= -->
+  <!-- ================= CABECERA CON BOTONES DE LOGIN Y REGISTRO ================= -->
   <header class="pt-3 pb-1 px-6 max-w-md mx-auto">
     <div class="flex items-center justify-between">
       <!-- Logo -->
       <div class="cursor-pointer" onclick="App.switchView('view-home')">
-        <img id="app-logo-img" src="atrevetehtlogo.png" alt="Atrévete HealthTech - Logotipo" class="h-20 w-auto object-contain">
+        <img id="app-logo-img" src="atrevetehtlogo.png" alt="Atrévete HealthTech - Logotipo" class="h-16 w-auto object-contain">
       </div>
 
-      <!-- Botón de Login / Perfil -->
-      <div id="header-auth-container">
+      <!-- Botones de autenticación / Perfil -->
+      <div id="header-auth-container" class="flex items-center gap-2">
         <!-- Cuando NO está autenticado -->
-        <div id="header-login-btn" class="flex items-center gap-2">
-          <button onclick="App.switchView('view-auth')" class="clay-btn-primary text-xs font-bold py-2 px-5 focus-visible">
+        <div id="header-login-btns" class="flex items-center gap-2">
+          <button onclick="App.abrirLogin()" class="header-action-btn btn-login focus-visible">
             🔑 Iniciar Sesión
+          </button>
+          <button onclick="App.abrirRegistro()" class="header-action-btn btn-register focus-visible">
+            ✨ Registrarse
           </button>
         </div>
 
@@ -421,7 +455,7 @@
       </button>
     </div>
 
-    <!-- Botón de Google SIMULADO (funcional sin OAuth) -->
+    <!-- Botón de Google SIMULADO -->
     <button onclick="App.iniciarRegistroGoogleSimulado()" class="google-btn focus-visible" aria-label="Registrarse con Google">
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -847,16 +881,29 @@
         },
 
         // ============================================
+        // FUNCIONES DE HEADER
+        // ============================================
+        abrirLogin() {
+            this.switchAuthMode('login');
+            this.switchView('view-auth');
+        },
+
+        abrirRegistro() {
+            this.switchAuthMode('register');
+            this.switchView('view-auth');
+        },
+
+        // ============================================
         // ACTUALIZAR HEADER (Login/Perfil)
         // ============================================
         actualizarHeader() {
-            const loginBtn = document.getElementById('header-login-btn');
+            const loginBtns = document.getElementById('header-login-btns');
             const profileBtn = document.getElementById('header-profile-btn');
             const headerName = document.getElementById('header-name');
             const headerAvatar = document.getElementById('header-avatar');
 
             if (this.state.isAuthenticated && this.state.user.name) {
-                loginBtn.classList.add('hidden');
+                loginBtns.classList.add('hidden');
                 profileBtn.classList.remove('hidden');
                 if (headerName) headerName.textContent = this.state.user.name;
                 if (headerAvatar) {
@@ -864,7 +911,7 @@
                     headerAvatar.textContent = initials;
                 }
             } else {
-                loginBtn.classList.remove('hidden');
+                loginBtns.classList.remove('hidden');
                 profileBtn.classList.add('hidden');
             }
         },
@@ -1064,7 +1111,6 @@
             if (editTelefono) editTelefono.value = this.state.user.telefono || '';
             if (editFechaNac) editFechaNac.value = this.state.user.fechaNac || '';
 
-            // Actualizar header
             this.actualizarHeader();
         },
 
