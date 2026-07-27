@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atrévete HealthTech - Plataforma Integrativa</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root {
@@ -19,14 +18,10 @@
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
         }
 
-        /* ESTILOS CLAYMORFISMO */
         .clay-card {
             background: #FFFFFF;
             border-radius: 28px;
-            box-shadow: 8px 8px 16px #e0deda, 
-                        -8px -8px 16px #ffffff, 
-                        inset 3px 3px 6px #ffffff, 
-                        inset -3px -3px 6px #e0deda;
+            box-shadow: 8px 8px 16px #e0deda, -8px -8px 16px #ffffff, inset 3px 3px 6px #ffffff, inset -3px -3px 6px #e0deda;
         }
 
         .clay-input {
@@ -40,11 +35,9 @@
             background: var(--color-primary);
             color: #FFFFFF;
             border-radius: 9999px;
-            box-shadow: 6px 6px 12px #c06a51, 
-                        -6px -6px 12px #ffffff, 
-                        inset 3px 3px 6px #ff906e, 
-                        inset -3px -3px 6px #c06a51;
+            box-shadow: 6px 6px 12px #c06a51, -6px -6px 12px #ffffff, inset 3px 3px 6px #ff906e, inset -3px -3px 6px #c06a51;
             transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
         }
         .clay-btn-primary:hover {
             transform: translateY(-2px);
@@ -58,11 +51,9 @@
             background: #F0B7A1;
             color: var(--color-secondary);
             border-radius: 9999px;
-            box-shadow: 6px 6px 12px #cc9b89, 
-                        -6px -6px 12px #ffffff, 
-                        inset 3px 3px 6px #ffd3bd, 
-                        inset -3px -3px 6px #cc9b89;
+            box-shadow: 6px 6px 12px #cc9b89, -6px -6px 12px #ffffff, inset 3px 3px 6px #ffd3bd, inset -3px -3px 6px #cc9b89;
             transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
         }
         .clay-btn-secondary:hover {
             transform: translateY(-2px);
@@ -103,7 +94,6 @@
             box-shadow: inset 2px 2px 4px rgba(226, 125, 96, 0.15), inset -2px -2px 4px #ffffff;
         }
 
-        /* Navegación inferior mejorada */
         .clay-nav {
             background: rgba(253, 251, 247, 0.95);
             backdrop-filter: blur(12px);
@@ -158,7 +148,6 @@
             text-align: center;
         }
 
-        /* Toast notifications */
         .toast {
             position: fixed;
             top: 20px;
@@ -174,23 +163,12 @@
             transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             max-width: 90%;
         }
-        .toast.show {
-            transform: translateX(0);
-        }
-        .toast-success {
-            background: #4CAF50;
-        }
-        .toast-error {
-            background: #f44336;
-        }
-        .toast-info {
-            background: #2196F3;
-        }
-        .toast-warning {
-            background: #FF9800;
-        }
+        .toast.show { transform: translateX(0); }
+        .toast-success { background: #4CAF50; }
+        .toast-error { background: #f44336; }
+        .toast-info { background: #2196F3; }
+        .toast-warning { background: #FF9800; }
 
-        /* Loading spinner */
         .spinner {
             border: 3px solid rgba(255,255,255,0.3);
             border-top: 3px solid #ffffff;
@@ -206,13 +184,11 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Mejoras de accesibilidad */
         .focus-visible:focus-visible {
             outline: 2px solid var(--color-primary);
             outline-offset: 2px;
         }
 
-        /* Modal de confirmación de Google */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -248,7 +224,6 @@
             transform: scale(1) translateY(0);
         }
 
-        /* Badge de verificación */
         .verified-badge {
             display: inline-flex;
             align-items: center;
@@ -272,7 +247,6 @@
             font-weight: bold;
         }
 
-        /* Botón Google estilo personalizado */
         .google-btn {
             display: flex;
             align-items: center;
@@ -300,7 +274,6 @@
             height: 20px;
         }
 
-        /* Botón de perfil en header */
         .header-profile-btn {
             display: flex;
             align-items: center;
@@ -340,7 +313,6 @@
             white-space: nowrap;
         }
 
-        /* Botones de acción en header */
         .header-action-btn {
             padding: 8px 16px;
             border-radius: 9999px;
@@ -350,16 +322,11 @@
             cursor: pointer;
             border: none;
         }
-        .header-action-btn:hover {
-            transform: translateY(-1px);
-        }
+        .header-action-btn:hover { transform: translateY(-1px); }
         .btn-login {
             background: var(--color-primary);
             color: white;
             box-shadow: 3px 3px 8px rgba(226, 125, 96, 0.3);
-        }
-        .btn-login:hover {
-            box-shadow: 5px 5px 12px rgba(226, 125, 96, 0.4);
         }
         .btn-register {
             background: transparent;
@@ -371,7 +338,6 @@
             color: white;
         }
 
-        /* Estilos del perfil */
         .profile-card {
             background: linear-gradient(135deg, #FFFFFF 0%, #F8F5F2 100%);
         }
@@ -399,64 +365,266 @@
             font-weight: 500;
         }
 
-        /* Animación de entrada del modal */
         @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px) scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+            from { opacity: 0; transform: translateY(30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
         .modal-legal-content {
             animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        /* Estilos del Asistente Virtual Mejorado */
+        .chatbot-container {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            z-index: 50;
+            width: 380px;
+            max-width: 90vw;
+            height: 520px;
+            max-height: 70vh;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform: translateY(20px) scale(0.95);
+            opacity: 0;
+            pointer-events: none;
+        }
+        .chatbot-container.open {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+            pointer-events: all;
+        }
+        .chatbot-header {
+            background: linear-gradient(135deg, var(--color-primary), #c06a51);
+            color: white;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .chatbot-header-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .chatbot-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        .chatbot-status {
+            width: 10px;
+            height: 10px;
+            background: #4CAF50;
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .chatbot-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            background: #F8F6F3;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .chatbot-message {
+            display: flex;
+            gap: 8px;
+            animation: fadeInUp 0.3s ease;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .chatbot-message.bot {
+            align-items: flex-start;
+        }
+        .chatbot-message.user {
+            align-items: flex-start;
+            flex-direction: row-reverse;
+        }
+        .chatbot-bubble {
+            padding: 12px 16px;
+            border-radius: 18px;
+            font-size: 13px;
+            line-height: 1.5;
+            max-width: 85%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        .chatbot-message.bot .chatbot-bubble {
+            background: white;
+            color: #4A5D4E;
+            border-bottom-left-radius: 4px;
+        }
+        .chatbot-message.user .chatbot-bubble {
+            background: var(--color-primary);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+        .chatbot-typing {
+            display: flex;
+            gap: 4px;
+            padding: 12px 16px;
+        }
+        .chatbot-typing span {
+            width: 8px;
+            height: 8px;
+            background: #999;
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+        .chatbot-typing span:nth-child(2) { animation-delay: 0.2s; }
+        .chatbot-typing span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-8px); }
+        }
+        .chatbot-options {
+            padding: 8px 16px;
+            background: white;
+            border-top: 1px solid #eee;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            max-height: 80px;
+            overflow-y: auto;
+        }
+        .chatbot-option-btn {
+            font-size: 11px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1.5px solid var(--color-primary);
+            color: var(--color-primary);
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+            font-weight: 500;
+        }
+        .chatbot-option-btn:hover {
+            background: var(--color-primary);
+            color: white;
+        }
+        .chatbot-input-area {
+            padding: 12px 16px;
+            background: white;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 8px;
+        }
+        .chatbot-input {
+            flex: 1;
+            padding: 10px 16px;
+            border-radius: 24px;
+            border: 1.5px solid #e0deda;
+            font-size: 13px;
+            background: #F8F6F3;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .chatbot-input:focus {
+            border-color: var(--color-primary);
+        }
+        .chatbot-send-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .chatbot-send-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(226, 125, 96, 0.4);
+        }
+        .chatbot-floating-btn {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 51;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--color-primary), #c06a51);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 26px;
+            box-shadow: 0 8px 24px rgba(226, 125, 96, 0.4);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .chatbot-floating-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 32px rgba(226, 125, 96, 0.5);
+        }
+        .chatbot-floating-btn .badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: #f44336;
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
 
-  <!-- ==================== BARRERA LEGAL COMPLETA E INTEGRADA ==================== -->
+  <!-- ==================== BARRERA LEGAL ==================== -->
   <div id="modal-legal-gate" class="fixed inset-0 bg-black/60 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-    
     <div class="bg-[#F9F6F0] w-full max-w-lg rounded-3xl p-6 shadow-[8px_8px_16px_#d1cdc7,-8px_-8px_16px_#ffffff] border border-white/60 flex flex-col max-h-[90vh] modal-legal-content">
-      
-      <!-- Encabezado -->
       <div class="text-center pb-3 border-b border-gray-200">
         <span class="text-[10px] uppercase font-bold tracking-widest text-[var(--color-primary)]">Requisito Legal de Ingreso</span>
         <h3 class="text-base font-bold text-[var(--color-secondary)] mt-1">Términos, Privacidad y Blindaje Legal</h3>
       </div>
-
-      <!-- Contenido Legal Unificado Escroleable -->
       <div class="overflow-y-auto my-4 pr-2 space-y-4 text-xs text-gray-600 text-justify max-h-[60vh] leading-relaxed">
-        
         <p class="font-bold text-center text-[var(--color-primary)]">Atrévete HealthTech — Versión Unificada 2026</p>
-        
-        <!-- Cuadro de Alerta Médica -->
         <div class="bg-amber-50 p-3 border-l-4 border-amber-400 rounded-r-lg text-[11px] text-amber-900">
           <strong>AVISO CRÍTICO DE DESLINDE MÉDICO Y CLÍNICO:</strong><br>
           Atrévete HealthTech, sus propietarios y la herramienta "Escáner Cuántico" ofrecen evaluaciones bioenergéticas holísticas y de regulación somática. <strong>NO constituyen diagnóstico médico, tratamiento psiquiátrico ni prescripción farmacológica.</strong>
         </div>
-
         <h4 class="font-bold text-[var(--color-secondary)]">1. Aceptación por Adhesión</h4>
         <p>Al hacer clic en "Acepto", confirmas ser mayor de edad y aceptas el uso de LA PLATAFORMA bajo la Ley de Mensajes de Datos y Firmas Electrónicas de la República Bolivariana de Venezuela.</p>
-
         <h4 class="font-bold text-[var(--color-secondary)]">2. Protección de Datos Personales y Sensibles</h4>
         <p>Tus datos de bienestar se procesan bajo estricta confidencialidad (Art. 60 CRBV / RGPD). No se transfieren a terceros ni almacenamos claves o datos bancarios directos.</p>
-
         <h4 class="font-bold text-[var(--color-secondary)]">3. Eventos Presenciales y Campamentos</h4>
         <p>La asistencia a actividades presenciales (ej. "Adultas en Fuga") se realiza bajo propio riesgo del participante. Los organizadores quedan exonerados de responsabilidad por eventualidades o fuerza mayor.</p>
-
         <h4 class="font-bold text-[var(--color-secondary)]">4. Límite de Responsabilidad Financiera y Pagos</h4>
         <p>Los pagos por reservaciones y evaluaciones no son reembolsables. La responsabilidad legal máxima acumulada de LOS PROPIETARIOS queda limitada estrictamente al monto pagado por el usuario en los últimos 30 días.</p>
-
         <h4 class="font-bold text-[var(--color-secondary)]">5. Jurisdicción y Ley Aplicable</h4>
         <p>Este acuerdo se rige bajo las leyes de la República Bolivariana de Venezuela y cualquier disputa se someterá de manera exclusiva a los Tribunales Ordinarios competentes.</p>
-
       </div>
-
-      <!-- Botones de Acción -->
       <div class="pt-3 border-t border-gray-200 space-y-2">
         <button onclick="App.aceptarLegalYContinuar()" class="w-full py-3.5 bg-[var(--color-primary)] text-white font-bold rounded-2xl shadow-[4px_4px_8px_#d1cdc7,-4px_-4px_8px_#ffffff] hover:opacity-95 transition-all text-xs tracking-wide">
           Acepto Términos, Políticas y Acelero mi Ingreso
@@ -465,31 +633,20 @@
           Cancelar y Volver al Inicio
         </button>
       </div>
-
     </div>
   </div>
 
-  <!-- ================= CABECERA CON BOTONES DE LOGIN Y REGISTRO ================= -->
+  <!-- ================= CABECERA ================= -->
   <header class="pt-3 pb-1 px-6 max-w-md mx-auto">
     <div class="flex items-center justify-between">
-      <!-- Logo -->
       <div class="cursor-pointer" onclick="App.switchView('view-home')">
-        <img id="app-logo-img" src="atrevetehtlogo.png" alt="Atrévete HealthTech - Logotipo" class="h-16 w-auto object-contain">
+        <img id="app-logo-img" src="atrevetehtlogo.png" alt="Atrévete HealthTech" class="h-16 w-auto object-contain">
       </div>
-
-      <!-- Botones de autenticación / Perfil -->
       <div id="header-auth-container" class="flex items-center gap-2">
-        <!-- Cuando NO está autenticado -->
         <div id="header-login-btns" class="flex items-center gap-2">
-          <button onclick="App.abrirLogin()" class="header-action-btn btn-login focus-visible">
-            🔑 Iniciar Sesión
-          </button>
-          <button onclick="App.abrirRegistro()" class="header-action-btn btn-register focus-visible">
-            ✨ Registrarse
-          </button>
+          <button onclick="App.abrirLogin()" class="header-action-btn btn-login focus-visible">🔑 Iniciar Sesión</button>
+          <button onclick="App.abrirRegistro()" class="header-action-btn btn-register focus-visible">✨ Registrarse</button>
         </div>
-
-        <!-- Cuando SÍ está autenticado -->
         <div id="header-profile-btn" class="hidden">
           <div onclick="App.switchView('view-perfil-usuario')" class="header-profile-btn">
             <div id="header-avatar" class="header-profile-avatar">US</div>
@@ -500,27 +657,20 @@
     </div>
   </header>
 
-  <!-- ================= TOAST NOTIFICATIONS ================= -->
+  <!-- Toast -->
   <div id="toast" class="toast"></div>
 
-  <!-- ================= MODAL DE CONFIRMACIÓN DE GOOGLE ================= -->
+  <!-- Modal Google -->
   <div id="google-modal" class="modal-overlay">
     <div class="modal-content">
       <div class="text-center space-y-4">
         <div class="flex justify-center">
           <div class="w-20 h-20 rounded-full bg-[var(--color-primary)]/10 flex items-center justify-center">
-            <svg class="w-12 h-12" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-            </svg>
+            <svg class="w-12 h-12" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
           </div>
         </div>
-        
         <h3 class="text-2xl font-bold text-[var(--color-secondary)]">Confirmar Registro</h3>
         <p class="text-sm text-[var(--color-secondary)]/70">Confirma tus datos para continuar</p>
-        
         <div id="google-user-info" class="bg-stone-50 rounded-2xl p-4 space-y-2 text-left">
           <div class="flex items-center gap-3">
             <div id="google-avatar-modal" class="w-12 h-12 rounded-full bg-[var(--color-primary)] text-white flex items-center justify-center text-lg font-bold">G</div>
@@ -533,42 +683,32 @@
             <span class="text-xs text-[var(--color-secondary)]/60">✅ Verificado por Google</span>
           </div>
         </div>
-
         <div class="flex flex-col gap-3">
           <button onclick="App.confirmarRegistroGoogle()" id="btn-confirmar-google" class="clay-btn-primary w-full py-3.5 text-sm font-bold flex items-center justify-center gap-2">
             <span id="btn-google-text">✅ Confirmar y Continuar</span>
             <span id="btn-google-spinner" class="hidden"><span class="spinner"></span></span>
           </button>
-          <button onclick="App.cancelarRegistroGoogle()" class="w-full py-2.5 text-sm text-[var(--color-secondary)]/60 hover:text-[var(--color-secondary)] transition font-medium">
-            Cancelar
-          </button>
+          <button onclick="App.cancelarRegistroGoogle()" class="w-full py-2.5 text-sm text-[var(--color-secondary)]/60 hover:text-[var(--color-secondary)] transition font-medium">Cancelar</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ================= 1. HOME (PANTALLA INICIAL) ================= -->
+  <!-- ================= VISTAS PRINCIPALES ================= -->
   <main id="view-home" class="app-view max-w-md mx-auto px-5 space-y-5 pb-24">
     <div class="text-center space-y-1">
       <h2 class="text-3xl font-extrabold text-[var(--color-secondary)] leading-tight">Habita Tu Cuerpo</h2>
       <p class="text-xs text-[var(--color-secondary)]/80 px-2">Ecosistema somático integrativo para la regulación del sistema nervioso y acompañamiento clínico.</p>
     </div>
-
     <div id="home-hero-banner" class="relative rounded-[32px] overflow-hidden shadow-md h-52 bg-cover bg-center clay-card" style="background-image: url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=800&q=80');">
       <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-6">
         <span id="home-banner-text" class="text-white font-semibold text-base drop-shadow">Calibra tu calma somática hoy</span>
       </div>
     </div>
-
     <div class="grid grid-cols-2 gap-3">
-      <button onclick="App.switchView('view-regulacion')" class="clay-btn-primary py-3.5 text-center font-bold text-xs focus-visible" aria-label="Ir a Regulación Somática">
-        🫁 Regulación Somática
-      </button>
-      <button onclick="App.switchView('view-citas')" class="clay-btn-secondary py-3.5 text-center font-bold text-xs focus-visible" aria-label="Agendar Sesión">
-        📅 Agendar Sesión
-      </button>
+      <button onclick="App.switchView('view-regulacion')" class="clay-btn-primary py-3.5 text-center font-bold text-xs focus-visible">🫁 Regulación Somática</button>
+      <button onclick="App.switchView('view-citas')" class="clay-btn-secondary py-3.5 text-center font-bold text-xs focus-visible">📅 Agendar Sesión</button>
     </div>
-
     <section class="space-y-3">
       <div class="clay-card p-6 border-2 border-[var(--color-primary)] bg-orange-50/20">
         <span class="bg-[var(--color-primary)] text-white text-[9px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">Preventa Exclusiva 🔥</span>
@@ -581,144 +721,88 @@
         <button onclick="App.switchView('view-pagos')" class="clay-btn-primary w-full py-3 font-bold text-sm focus-visible">Reservar Mi Cupo ($120)</button>
       </div>
     </section>
-
     <div class="text-center pt-1">
       <button onclick="App.switchView('view-admin-dashboard')" class="text-[10px] text-stone-400 hover:text-[var(--color-secondary)] transition focus-visible">⚙️ Panel Administrativo</button>
     </div>
   </main>
 
-  <!-- ================= 2. AUTENTICACIÓN (LOGIN / REGISTRO) ================= -->
   <main id="view-auth" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
     <div class="text-center space-y-1">
       <h2 id="auth-title" class="text-2xl font-bold text-[var(--color-secondary)]">Iniciar Sesión</h2>
       <p id="auth-subtitle" class="text-xs text-[var(--color-secondary)]/70">Accede a tu cuenta de Atrévete HealthTech</p>
     </div>
-
-    <div class="flex p-1 bg-stone-200/60 rounded-2xl" role="tablist">
-      <button id="tab-login" onclick="App.switchAuthMode('login')" class="flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[var(--color-secondary)] shadow-sm transition focus-visible" role="tab" aria-selected="true">
-        🔑 Iniciar Sesión
-      </button>
-      <button id="tab-register" onclick="App.switchAuthMode('register')" class="flex-1 py-2.5 text-xs font-bold rounded-xl text-[var(--color-secondary)] transition focus-visible" role="tab" aria-selected="false">
-        ✨ Registrarse
-      </button>
+    <div class="flex p-1 bg-stone-200/60 rounded-2xl">
+      <button id="tab-login" onclick="App.switchAuthMode('login')" class="flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[var(--color-secondary)] shadow-sm transition">🔑 Iniciar Sesión</button>
+      <button id="tab-register" onclick="App.switchAuthMode('register')" class="flex-1 py-2.5 text-xs font-bold rounded-xl text-[var(--color-secondary)] transition">✨ Registrarse</button>
     </div>
-
-    <!-- Botón de Google SIMULADO -->
-    <button onclick="App.iniciarRegistroGoogleSimulado()" class="google-btn focus-visible" aria-label="Registrarse con Google">
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-      </svg>
+    <button onclick="App.iniciarRegistroGoogleSimulado()" class="google-btn focus-visible">
+      <svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
       <span>Registrarse con Google</span>
     </button>
-
     <div class="relative flex items-center py-1">
       <div class="flex-grow border-t border-stone-300"></div>
       <span class="flex-shrink-0 mx-4 text-stone-400 text-[11px]">o con tu correo electrónico</span>
       <div class="flex-grow border-t border-stone-300"></div>
     </div>
-
     <form onsubmit="event.preventDefault(); App.procesarAuthEmail();" class="clay-card p-6 space-y-4" novalidate>
       <div id="field-nombre" class="hidden">
         <label class="block text-xs font-bold text-[var(--color-secondary)] mb-1" for="input-nombre">Nombre Completo</label>
-        <input type="text" id="input-nombre" placeholder="Ej. Ana Mendoza" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible" aria-required="true">
+        <input type="text" id="input-nombre" placeholder="Ej. Ana Mendoza" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible">
       </div>
-
       <div>
         <label class="block text-xs font-bold text-[var(--color-secondary)] mb-1" for="input-email">Correo Electrónico</label>
-        <input type="email" id="input-email" placeholder="correo@ejemplo.com" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible" required aria-required="true">
+        <input type="email" id="input-email" placeholder="correo@ejemplo.com" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible" required>
         <div id="email-error" class="text-red-500 text-xs mt-1 hidden">Por favor ingresa un correo válido</div>
       </div>
-
       <div>
         <label class="block text-xs font-bold text-[var(--color-secondary)] mb-1" for="input-password">Contraseña</label>
-        <input type="password" id="input-password" placeholder="••••••••" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible" required minlength="6" aria-required="true">
+        <input type="password" id="input-password" placeholder="••••••••" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible" required minlength="6">
         <div id="password-error" class="text-red-500 text-xs mt-1 hidden">La contraseña debe tener al menos 6 caracteres</div>
       </div>
-
       <div id="field-rol" class="hidden space-y-2 border-t border-[var(--color-secondary)]/20 pt-3">
         <label class="block text-xs font-bold text-[var(--color-secondary)]">Tipo de Cuenta:</label>
         <div class="flex gap-2">
-          <button type="button" id="btn-role-user" onclick="App.setAuthRole('user')" class="flex-1 py-2 text-xs font-bold rounded-xl bg-orange-100 text-[var(--color-primary)] border border-[var(--color-primary)]/30 transition focus-visible" aria-pressed="true">
-            Usuario / Paciente
-          </button>
-          <button type="button" id="btn-role-spec" onclick="App.setAuthRole('spec')" class="flex-1 py-2 text-xs font-bold rounded-xl bg-stone-100 text-[var(--color-secondary)] transition focus-visible" aria-pressed="false">
-            Especialista
-          </button>
+          <button type="button" id="btn-role-user" onclick="App.setAuthRole('user')" class="flex-1 py-2 text-xs font-bold rounded-xl bg-orange-100 text-[var(--color-primary)] border border-[var(--color-primary)]/30 transition">Usuario / Paciente</button>
+          <button type="button" id="btn-role-spec" onclick="App.setAuthRole('spec')" class="flex-1 py-2 text-xs font-bold rounded-xl bg-stone-100 text-[var(--color-secondary)] transition">Especialista</button>
         </div>
       </div>
-
       <div id="link-forgot-container" class="text-right">
-        <button type="button" onclick="App.switchView('view-recovery')" class="text-[11px] text-[var(--color-primary)] font-semibold hover:underline focus-visible">
-          ¿Olvidaste tu contraseña?
-        </button>
+        <button type="button" onclick="App.switchView('view-recovery')" class="text-[11px] text-[var(--color-primary)] font-semibold hover:underline focus-visible">¿Olvidaste tu contraseña?</button>
       </div>
-
-      <button type="submit" id="auth-submit-btn" class="clay-btn-primary w-full py-3.5 text-xs font-bold mt-2 focus-visible">
-        Iniciar Sesión
-      </button>
-      
-      <!-- BOTÓN DE CANCELAR AGREGADO -->
-      <button type="button" onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold focus-visible">
-        Cancelar
-      </button>
+      <button type="submit" id="auth-submit-btn" class="clay-btn-primary w-full py-3.5 text-xs font-bold mt-2 focus-visible">Iniciar Sesión</button>
+      <button type="button" onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold focus-visible">Cancelar</button>
     </form>
-
     <p class="text-[10px] text-center text-[var(--color-secondary)]/70 mt-4">
       Al registrarte o agendar, aceptas nuestras 
-      <button onclick="App.switchView('view-privacidad')" class="underline font-semibold text-[var(--color-primary)] focus-visible">
-        Políticas de Privacidad y Términos Legalmente Vinculantes
-      </button>.
+      <button onclick="App.switchView('view-privacidad')" class="underline font-semibold text-[var(--color-primary)] focus-visible">Políticas de Privacidad y Términos Legalmente Vinculantes</button>.
     </p>
-
-    <button onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold focus-visible">Volver al Inicio</button>
   </main>
 
-  <!-- ================= 3. RECUPERACIÓN DE CONTRASEÑA ================= -->
   <main id="view-recovery" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
     <div class="text-center space-y-1">
       <h2 class="text-2xl font-bold text-[var(--color-secondary)]">Recuperar Contraseña</h2>
       <p class="text-xs text-[var(--color-secondary)]/70">Ingresa tu correo electrónico registrado y te enviaremos las instrucciones.</p>
     </div>
-
     <form onsubmit="event.preventDefault(); App.procesarRecuperacion();" class="clay-card p-6 space-y-4">
       <div>
         <label class="block text-xs font-bold text-[var(--color-secondary)] mb-1" for="recovery-email">Correo Electrónico</label>
         <input type="email" id="recovery-email" placeholder="correo@ejemplo.com" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible" required>
       </div>
-
-      <button type="submit" class="clay-btn-primary w-full py-3.5 text-xs font-bold mt-2 focus-visible">
-        Enviar Enlace de Recuperación
-      </button>
+      <button type="submit" class="clay-btn-primary w-full py-3.5 text-xs font-bold mt-2 focus-visible">Enviar Enlace de Recuperación</button>
     </form>
-
     <button onclick="App.switchView('view-auth')" class="clay-btn-secondary w-full py-3 text-xs font-bold focus-visible">← Volver al Ingreso</button>
   </main>
 
-  <!-- ================= 4. PERFIL DE USUARIO MEJORADO ================= -->
   <main id="view-perfil-usuario" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
-    <!-- Tarjeta de perfil principal -->
     <div class="clay-card profile-card p-6 text-center space-y-4 relative overflow-hidden">
-      <!-- Decoración de fondo -->
       <div class="absolute top-0 right-0 w-40 h-40 bg-[var(--color-primary)]/5 rounded-full -translate-y-20 translate-x-20"></div>
       <div class="absolute bottom-0 left-0 w-32 h-32 bg-[var(--color-primary)]/5 rounded-full translate-y-16 -translate-x-16"></div>
-      
-      <!-- Avatar -->
       <div class="relative z-10">
-        <div id="profile-avatar" class="profile-avatar-large mx-auto bg-[var(--color-primary)] text-white flex items-center justify-center text-4xl font-bold" aria-label="Avatar de usuario">
-          US
-        </div>
+        <div id="profile-avatar" class="profile-avatar-large mx-auto bg-[var(--color-primary)] text-white flex items-center justify-center text-4xl font-bold">US</div>
         <button onclick="App.cambiarFotoPerfil()" class="absolute bottom-0 right-1/3 bg-white rounded-full p-1.5 shadow-md hover:shadow-lg transition-all z-20">
-          <svg class="w-4 h-4 text-[var(--color-secondary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
-          </svg>
+          <svg class="w-4 h-4 text-[var(--color-secondary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
         </button>
       </div>
-      
-      <!-- Información del usuario -->
       <div class="relative z-10">
         <h3 id="profile-name" class="text-xl font-bold text-[var(--color-secondary)]">Usuario</h3>
         <p id="profile-email" class="text-sm text-[var(--color-secondary)]/70">correo@ejemplo.com</p>
@@ -731,376 +815,215 @@
         </div>
       </div>
     </div>
-
-    <!-- Estadísticas -->
     <div class="grid grid-cols-3 gap-3">
-      <div class="profile-stat">
-        <div class="number" id="profile-sesiones">0</div>
-        <div class="label">Sesiones</div>
-      </div>
-      <div class="profile-stat">
-        <div class="number" id="profile-ejercicios">0</div>
-        <div class="label">Ejercicios</div>
-      </div>
-      <div class="profile-stat">
-        <div class="number" id="profile-dias">0</div>
-        <div class="label">Días Activo</div>
-      </div>
+      <div class="profile-stat"><div class="number" id="profile-sesiones">0</div><div class="label">Sesiones</div></div>
+      <div class="profile-stat"><div class="number" id="profile-ejercicios">0</div><div class="label">Ejercicios</div></div>
+      <div class="profile-stat"><div class="number" id="profile-dias">0</div><div class="label">Días Activo</div></div>
     </div>
-
-    <!-- Información personal -->
     <div class="clay-card p-5 space-y-3">
-      <h4 class="font-bold text-sm text-[var(--color-secondary)] flex items-center gap-2">
-        <span>📋</span> Información Personal
-      </h4>
+      <h4 class="font-bold text-sm text-[var(--color-secondary)] flex items-center gap-2"><span>📋</span> Información Personal</h4>
       <div class="space-y-2 text-xs">
-        <div class="flex justify-between py-2 border-b border-stone-100">
-          <span class="text-[var(--color-secondary)]/60">📱 Teléfono</span>
-          <span id="profile-telefono-display" class="text-[var(--color-secondary)] font-medium">No registrado</span>
-        </div>
-        <div class="flex justify-between py-2 border-b border-stone-100">
-          <span class="text-[var(--color-secondary)]/60">🎂 Fecha de Nacimiento</span>
-          <span id="profile-fecha-display" class="text-[var(--color-secondary)] font-medium">No registrada</span>
-        </div>
-        <div class="flex justify-between py-2">
-          <span class="text-[var(--color-secondary)]/60">📅 Miembro desde</span>
-          <span id="profile-miembro-desde" class="text-[var(--color-secondary)] font-medium">Hoy</span>
-        </div>
+        <div class="flex justify-between py-2 border-b border-stone-100"><span class="text-[var(--color-secondary)]/60">📱 Teléfono</span><span id="profile-telefono-display" class="text-[var(--color-secondary)] font-medium">No registrado</span></div>
+        <div class="flex justify-between py-2 border-b border-stone-100"><span class="text-[var(--color-secondary)]/60">🎂 Fecha de Nacimiento</span><span id="profile-fecha-display" class="text-[var(--color-secondary)] font-medium">No registrada</span></div>
+        <div class="flex justify-between py-2"><span class="text-[var(--color-secondary)]/60">📅 Miembro desde</span><span id="profile-miembro-desde" class="text-[var(--color-secondary)] font-medium">Hoy</span></div>
       </div>
     </div>
-
-    <!-- Acciones del perfil -->
     <div class="space-y-3">
-      <button onclick="App.mostrarEditarPerfil()" class="clay-btn-primary w-full py-3.5 text-sm font-bold flex items-center justify-center gap-2 focus-visible">
-        <span>✏️</span> Editar Perfil
-      </button>
-      <button onclick="App.cerrarSesion()" class="w-full py-3.5 text-sm font-medium text-[var(--color-primary)] border-2 border-[var(--color-primary)]/30 rounded-full hover:bg-[var(--color-primary)]/5 hover:border-[var(--color-primary)] transition-all focus-visible">
-        Cerrar Sesión
-      </button>
+      <button onclick="App.mostrarEditarPerfil()" class="clay-btn-primary w-full py-3.5 text-sm font-bold flex items-center justify-center gap-2"><span>✏️</span> Editar Perfil</button>
+      <button onclick="App.cerrarSesion()" class="w-full py-3.5 text-sm font-medium text-[var(--color-primary)] border-2 border-[var(--color-primary)]/30 rounded-full hover:bg-[var(--color-primary)]/5 hover:border-[var(--color-primary)] transition-all">Cerrar Sesión</button>
     </div>
-
-    <!-- Formulario de Edición de Perfil (oculto) -->
     <div id="editar-perfil-form" class="clay-card p-5 space-y-4 hidden">
-      <h4 class="font-bold text-sm text-[var(--color-secondary)] flex items-center gap-2">
-        <span>✏️</span> Editar Datos Personales
-      </h4>
-      <div>
-        <label class="block text-xs font-bold text-[var(--color-secondary)] mb-1" for="edit-nombre">Nombre Completo</label>
-        <input type="text" id="edit-nombre" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible">
-      </div>
-      <div>
-        <label class="block text-xs font-bold text-[var(--color-secondary)] mb-1" for="edit-telefono">Teléfono</label>
-        <input type="tel" id="edit-telefono" placeholder="0414-1234567" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible">
-      </div>
-      <div>
-        <label class="block text-xs font-bold text-[var(--color-secondary)] mb-1" for="edit-fecha-nac">Fecha de Nacimiento</label>
-        <input type="date" id="edit-fecha-nac" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible">
-      </div>
+      <h4 class="font-bold text-sm text-[var(--color-secondary)] flex items-center gap-2"><span>✏️</span> Editar Datos Personales</h4>
+      <div><label class="block text-xs font-bold text-[var(--color-secondary)] mb-1" for="edit-nombre">Nombre Completo</label><input type="text" id="edit-nombre" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible"></div>
+      <div><label class="block text-xs font-bold text-[var(--color-secondary)] mb-1" for="edit-telefono">Teléfono</label><input type="tel" id="edit-telefono" placeholder="0414-1234567" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible"></div>
+      <div><label class="block text-xs font-bold text-[var(--color-secondary)] mb-1" for="edit-fecha-nac">Fecha de Nacimiento</label><input type="date" id="edit-fecha-nac" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible"></div>
       <div class="flex gap-3">
-        <button onclick="App.guardarEditarPerfil()" class="clay-btn-primary flex-1 py-3 text-xs font-bold focus-visible">
-          💾 Guardar Cambios
-        </button>
-        <button onclick="App.cancelarEditarPerfil()" class="clay-btn-secondary flex-1 py-3 text-xs font-bold focus-visible">
-          Cancelar
-        </button>
+        <button onclick="App.guardarEditarPerfil()" class="clay-btn-primary flex-1 py-3 text-xs font-bold">💾 Guardar Cambios</button>
+        <button onclick="App.cancelarEditarPerfil()" class="clay-btn-secondary flex-1 py-3 text-xs font-bold">Cancelar</button>
       </div>
     </div>
   </main>
 
-  <!-- ================= 5. MÉTODOS DE PAGO ================= -->
   <main id="view-pagos" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
     <h2 class="text-2xl font-bold text-[var(--color-secondary)] text-center">Pasarela de Pago</h2>
-
     <div class="clay-card p-4 bg-orange-50/30 border border-[var(--color-primary)]/20 flex justify-between items-center">
-      <div>
-        <h4 class="font-bold text-xs text-[var(--color-secondary)]">Reserva Campamento Adultas en Fuga</h4>
-        <p class="text-[10px] text-[var(--color-secondary)]/70">26 de Septiembre, Maracay</p>
-      </div>
+      <div><h4 class="font-bold text-xs text-[var(--color-secondary)]">Reserva Campamento Adultas en Fuga</h4><p class="text-[10px] text-[var(--color-secondary)]/70">26 de Septiembre, Maracay</p></div>
       <span class="text-base font-extrabold text-[var(--color-primary)]">$120.00</span>
     </div>
-
     <div class="clay-card p-5 space-y-4">
       <label class="block text-xs font-bold text-[var(--color-secondary)]">Selecciona Método de Pago:</label>
-      
-      <div class="grid grid-cols-2 gap-2.5" role="radiogroup" aria-label="Métodos de pago">
-        <button type="button" id="pay-bdv" onclick="App.selectPaymentMethod('pm_bdv')" class="clay-btn-pay active-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1 focus-visible" role="radio" aria-checked="true" aria-label="Pago Móvil Banco de Venezuela">
-          <span class="text-base">🇻🇪</span>
-          <span>Pago Móvil BDV</span>
-        </button>
-        
-        <button type="button" id="pay-bnc" onclick="App.selectPaymentMethod('pm_bnc')" class="clay-btn-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1 focus-visible" role="radio" aria-checked="false" aria-label="Pago Móvil Banco Nacional de Crédito">
-          <span class="text-base">🇻🇪</span>
-          <span>Pago Móvil BNC</span>
-        </button>
-
-        <button type="button" id="pay-zelle" onclick="App.selectPaymentMethod('zelle')" class="clay-btn-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1 focus-visible" role="radio" aria-checked="false" aria-label="Zelle">
-          <span class="text-base">🇺🇸</span>
-          <span>Zelle</span>
-          <span class="text-[8px] text-amber-600 font-normal">(Próximamente)</span>
-        </button>
-        
-        <button type="button" id="pay-binance" onclick="App.selectPaymentMethod('binance')" class="clay-btn-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1 focus-visible" role="radio" aria-checked="false" aria-label="Binance Pay">
-          <span class="text-base">🟡</span>
-          <span>Binance Pay</span>
-          <span class="text-[8px] text-green-600 font-normal">(USDT)</span>
-        </button>
+      <div class="grid grid-cols-2 gap-2.5">
+        <button type="button" id="pay-bdv" onclick="App.selectPaymentMethod('pm_bdv')" class="clay-btn-pay active-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1"><span class="text-base">🇻🇪</span><span>Pago Móvil BDV</span></button>
+        <button type="button" id="pay-bnc" onclick="App.selectPaymentMethod('pm_bnc')" class="clay-btn-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1"><span class="text-base">🇻🇪</span><span>Pago Móvil BNC</span></button>
+        <button type="button" id="pay-zelle" onclick="App.selectPaymentMethod('zelle')" class="clay-btn-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1"><span class="text-base">🇺🇸</span><span>Zelle</span><span class="text-[8px] text-amber-600 font-normal">(Próximamente)</span></button>
+        <button type="button" id="pay-binance" onclick="App.selectPaymentMethod('binance')" class="clay-btn-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1"><span class="text-base">🟡</span><span>Binance Pay</span><span class="text-[8px] text-green-600 font-normal">(USDT)</span></button>
       </div>
-
-      <div id="datos-pago-box" class="bg-stone-100/90 p-4 rounded-2xl border border-stone-200/80 space-y-1.5 text-xs text-[var(--color-secondary)] min-h-[80px]">
-        <!-- Dinámico -->
-        <p class="text-center text-stone-400">Selecciona un método de pago</p>
-      </div>
-
+      <div id="datos-pago-box" class="bg-stone-100/90 p-4 rounded-2xl border border-stone-200/80 space-y-1.5 text-xs text-[var(--color-secondary)] min-h-[80px]"><p class="text-center text-stone-400">Selecciona un método de pago</p></div>
       <div id="container-ref-pago" class="space-y-2">
         <label class="block text-xs font-bold text-[var(--color-secondary)] mb-1" for="input-ref-pago">Número de Referencia / Hash / Comprobante</label>
         <input id="input-ref-pago" type="text" placeholder="Ej. #849204 o Hash de transferencia" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible">
         <p id="ref-pago-helper" class="text-[10px] text-stone-400 hidden">Ingresa el código de tu transferencia para verificar el pago.</p>
       </div>
-
-      <button id="btn-enviar-pago" onclick="App.confirmarPagoMock()" class="clay-btn-primary w-full py-3.5 text-xs font-bold focus-visible">
-        Reportar / Enviar Comprobante
-      </button>
+      <button id="btn-enviar-pago" onclick="App.confirmarPagoMock()" class="clay-btn-primary w-full py-3.5 text-xs font-bold">Reportar / Enviar Comprobante</button>
     </div>
-
-    <p class="text-[10px] text-center text-[var(--color-secondary)]/70 mt-2">
-      Al registrarte o agendar, aceptas nuestras 
-      <button onclick="App.switchView('view-privacidad')" class="underline font-semibold text-[var(--color-primary)] focus-visible">
-        Políticas de Privacidad y Términos Legalmente Vinculantes
-      </button>.
-    </p>
-
-    <button onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold focus-visible">Cancelar</button>
+    <p class="text-[10px] text-center text-[var(--color-secondary)]/70 mt-2">Al registrarte o agendar, aceptas nuestras <button onclick="App.switchView('view-privacidad')" class="underline font-semibold text-[var(--color-primary)]">Políticas de Privacidad</button>.</p>
+    <button onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold">Cancelar</button>
   </main>
 
-  <!-- ================= 6. REGULACIÓN SOMÁTICA ================= -->
   <main id="view-regulacion" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
     <div class="text-center space-y-1">
       <h2 class="text-2xl font-bold text-[var(--color-secondary)]">Gimnasio Emocional</h2>
       <p class="text-xs text-[var(--color-secondary)]/80">Diagnóstico Somático & Técnicas de Regulación</p>
     </div>
-
     <div class="clay-card p-5 space-y-4 border border-[var(--color-primary)]/20">
       <div class="flex justify-between items-center border-b border-stone-200 pb-2">
         <span class="text-xs font-bold text-[var(--color-primary)] uppercase tracking-wider">🔍 Chequeo Corporal</span>
         <span id="quiz-step-indicator" class="text-[10px] font-bold text-[var(--color-secondary)] bg-stone-100 px-2 py-0.5 rounded-full">Paso 1 de 3</span>
       </div>
-
       <div id="quiz-step-1" class="space-y-3">
         <p class="text-xs font-bold text-[var(--color-secondary)]">1. ¿Cómo sientes tu estado corporal / emocional en este momento?</p>
         <div class="space-y-2">
-          <button onclick="App.answerQuiz(1, 'ansiedad')" class="clay-btn-option w-full text-xs focus-visible" aria-label="Ansioso o Acelerado">
-            🔴 <strong>Ansioso / Acelerado:</strong> Siento inquietud, taquicardia o mente saturada.
-          </button>
-          <button onclick="App.answerQuiz(1, 'bloqueo')" class="clay-btn-option w-full text-xs focus-visible" aria-label="Agotado o Desconectado">
-            🟡 <strong>Agotado / Desconectado:</strong> Siento pesadez, parálisis o desmotivación.
-          </button>
-          <button onclick="App.answerQuiz(1, 'calma')" class="clay-btn-option w-full text-xs focus-visible" aria-label="Estable o en Calma">
-            🟢 <strong>Estable / En Calma:</strong> Quiero mantener mi balance y centrar mi mente.
-          </button>
+          <button onclick="App.answerQuiz(1, 'ansiedad')" class="clay-btn-option w-full text-xs">🔴 <strong>Ansioso / Acelerado:</strong> Siento inquietud, taquicardia o mente saturada.</button>
+          <button onclick="App.answerQuiz(1, 'bloqueo')" class="clay-btn-option w-full text-xs">🟡 <strong>Agotado / Desconectado:</strong> Siento pesadez, parálisis o desmotivación.</button>
+          <button onclick="App.answerQuiz(1, 'calma')" class="clay-btn-option w-full text-xs">🟢 <strong>Estable / En Calma:</strong> Quiero mantener mi balance y centrar mi mente.</button>
         </div>
       </div>
-
       <div id="quiz-step-2" class="space-y-3 hidden">
         <p class="text-xs font-bold text-[var(--color-secondary)]">2. ¿Dónde se concentra la mayor tensión física?</p>
         <div class="space-y-2">
-          <button onclick="App.answerQuiz(2, 'pecho')" class="clay-btn-option w-full text-xs focus-visible">
-            🫁 <strong>Pecho / Respiración:</strong> Siento opresión al inhalar o aire entrecortado.
-          </button>
-          <button onclick="App.answerQuiz(2, 'cuello')" class="clay-btn-option w-full text-xs focus-visible">
-            💆 <strong>Cuello / Mandíbula:</strong> Dientes apretados, hombros rígidos o cefalea.
-          </button>
-          <button onclick="App.answerQuiz(2, 'estomago')" class="clay-btn-option w-full text-xs focus-visible">
-            🫃 <strong>Estómago / Plexo:</strong> Sensación de nudo en el abdomen o digestión lenta.
-          </button>
+          <button onclick="App.answerQuiz(2, 'pecho')" class="clay-btn-option w-full text-xs">🫁 <strong>Pecho / Respiración:</strong> Siento opresión al inhalar o aire entrecortado.</button>
+          <button onclick="App.answerQuiz(2, 'cuello')" class="clay-btn-option w-full text-xs">💆 <strong>Cuello / Mandíbula:</strong> Dientes apretados, hombros rígidos o cefalea.</button>
+          <button onclick="App.answerQuiz(2, 'estomago')" class="clay-btn-option w-full text-xs">🫃 <strong>Estómago / Plexo:</strong> Sensación de nudo en el abdomen o digestión lenta.</button>
         </div>
       </div>
-
       <div id="quiz-step-3" class="space-y-3 hidden">
         <p class="text-xs font-bold text-[var(--color-secondary)]">3. ¿Qué necesita tu cuerpo en este instante?</p>
         <div class="space-y-2">
-          <button onclick="App.answerQuiz(3, 'bajar')" class="clay-btn-option w-full text-xs focus-visible">
-            ⚓ <strong>Bajar revoluciones:</strong> Calmar la aceleración y soltar el control.
-          </button>
-          <button onclick="App.answerQuiz(3, 'activar')" class="clay-btn-option w-full text-xs focus-visible">
-            ⚡ <strong>Salir del aletargamiento:</strong> Movilizar la energía estancada.
-          </button>
-          <button onclick="App.answerQuiz(3, 'liberar')" class="clay-btn-option w-full text-xs focus-visible">
-            🕊️ <strong>Descargar tensión:</strong> Soltar cargas emocionales del día.
-          </button>
+          <button onclick="App.answerQuiz(3, 'bajar')" class="clay-btn-option w-full text-xs">⚓ <strong>Bajar revoluciones:</strong> Calmar la aceleración y soltar el control.</button>
+          <button onclick="App.answerQuiz(3, 'activar')" class="clay-btn-option w-full text-xs">⚡ <strong>Salir del aletargamiento:</strong> Movilizar la energía estancada.</button>
+          <button onclick="App.answerQuiz(3, 'liberar')" class="clay-btn-option w-full text-xs">🕊️ <strong>Descargar tensión:</strong> Soltar cargas emocionales del día.</button>
         </div>
       </div>
-
       <div id="quiz-result" class="space-y-4 hidden">
         <div class="p-3 rounded-2xl bg-orange-100/50 text-xs text-[var(--color-secondary)]">
           <p id="quiz-diagnosis-title" class="font-bold text-[var(--color-primary)] text-sm mb-1"></p>
           <p id="quiz-diagnosis-desc"></p>
         </div>
         <div id="recommended-technique-card" class="p-4 rounded-2xl bg-white border border-[var(--color-primary)]/30 shadow-sm space-y-2"></div>
-        <button onclick="App.resetQuiz()" class="text-xs font-bold text-[var(--color-primary)] underline text-center w-full block focus-visible">
-          🔄 Repetir Evaluación
-        </button>
+        <button onclick="App.resetQuiz()" class="text-xs font-bold text-[var(--color-primary)] underline text-center w-full block">🔄 Repetir Evaluación</button>
       </div>
     </div>
-
     <div class="clay-card p-6 text-center space-y-4">
       <h3 class="font-bold text-sm text-[var(--color-secondary)]">Práctica Guiada: Calibrador de Respiración</h3>
       <p class="text-[11px] text-[var(--color-secondary)]/80">Acompasa tu ritmo respiratorio con el círculo para activar el nervio vago ventral.</p>
       <div class="flex flex-col items-center justify-center py-4">
-        <div id="breath-circle" class="w-40 h-40 rounded-full bg-[#F0B7A1] flex items-center justify-center text-white font-bold text-base shadow-lg border-4 border-white transition-all duration-1000" role="img" aria-label="Círculo de respiración guiada">
-          Inhala...
-        </div>
+        <div id="breath-circle" class="w-40 h-40 rounded-full bg-[#F0B7A1] flex items-center justify-center text-white font-bold text-base shadow-lg border-4 border-white transition-all duration-1000">Inhala...</div>
       </div>
     </div>
-
-    <button onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold text-xs focus-visible">Volver al Inicio</button>
+    <button onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold text-xs">Volver al Inicio</button>
   </main>
 
-  <!-- ================= 7. AGENDAMIENTO DE CITAS ================= -->
   <main id="view-citas" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
     <h2 class="text-2xl font-bold text-[var(--color-secondary)] text-center">Agendar tu Sesión</h2>
     <div class="clay-card p-5 space-y-4">
       <label class="block text-xs font-bold text-[var(--color-secondary)]" for="select-terapeuta">Especialista:</label>
-      <select id="select-terapeuta" class="w-full p-3 rounded-xl border border-[var(--color-secondary)]/20 bg-white text-xs text-[var(--color-secondary)] focus-visible">
-        <option value="Dra. Carla Rodríguez">Dra. Carla Rodríguez</option>
-        <option value="Dra. María González">Dra. María González</option>
-        <option value="Lic. Ana Pérez">Lic. Ana Pérez</option>
-      </select>
-      
-      <div>
-        <label class="block text-xs font-bold text-[var(--color-secondary)] mb-1" for="fecha-cita">Fecha de la Cita:</label>
-        <input type="date" id="fecha-cita" class="w-full p-3 rounded-xl border border-[var(--color-secondary)]/20 bg-white text-xs text-[var(--color-secondary)] focus-visible">
-      </div>
-      
-      <div>
-        <label class="block text-xs font-bold text-[var(--color-secondary)] mb-1" for="hora-cita">Hora de la Cita:</label>
-        <input type="time" id="hora-cita" class="w-full p-3 rounded-xl border border-[var(--color-secondary)]/20 bg-white text-xs text-[var(--color-secondary)] focus-visible">
-      </div>
-      
-      <button onclick="App.procesarCitaWhatsApp()" class="clay-btn-primary w-full py-3.5 font-bold text-xs focus-visible">Confirmar Cita vía WhatsApp</button>
+      <select id="select-terapeuta" class="w-full p-3 rounded-xl border border-[var(--color-secondary)]/20 bg-white text-xs text-[var(--color-secondary)]"><option value="Dra. Carla Rodríguez">Dra. Carla Rodríguez</option><option value="Dra. María González">Dra. María González</option><option value="Lic. Ana Pérez">Lic. Ana Pérez</option></select>
+      <div><label class="block text-xs font-bold text-[var(--color-secondary)] mb-1" for="fecha-cita">Fecha de la Cita:</label><input type="date" id="fecha-cita" class="w-full p-3 rounded-xl border border-[var(--color-secondary)]/20 bg-white text-xs text-[var(--color-secondary)]"></div>
+      <div><label class="block text-xs font-bold text-[var(--color-secondary)] mb-1" for="hora-cita">Hora de la Cita:</label><input type="time" id="hora-cita" class="w-full p-3 rounded-xl border border-[var(--color-secondary)]/20 bg-white text-xs text-[var(--color-secondary)]"></div>
+      <button onclick="App.procesarCitaWhatsApp()" class="clay-btn-primary w-full py-3.5 font-bold text-xs">Confirmar Cita vía WhatsApp</button>
     </div>
-    <button onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold text-xs focus-visible">Volver</button>
+    <button onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold text-xs">Volver</button>
   </main>
 
-  <!-- ================= 8. POLÍTICAS DE PRIVACIDAD ================= -->
   <main id="view-privacidad" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
-    <div class="text-center space-y-1">
-      <h2 class="text-2xl font-bold text-[var(--color-secondary)]">Políticas de Privacidad</h2>
-      <p class="text-xs text-[var(--color-secondary)]/70">Términos Legalmente Vinculantes • Atrévete HealthTech</p>
-    </div>
-
+    <div class="text-center space-y-1"><h2 class="text-2xl font-bold text-[var(--color-secondary)]">Políticas de Privacidad</h2><p class="text-xs text-[var(--color-secondary)]/70">Términos Legalmente Vinculantes • Atrévete HealthTech</p></div>
     <div class="clay-card p-5 space-y-4 text-xs text-[var(--color-secondary)] leading-relaxed max-h-[60vh] overflow-y-auto">
-      <section class="space-y-1.5">
-        <h3 class="font-extrabold text-[var(--color-primary)] text-sm">1. Protección de Datos Personales</h3>
-        <p>En Atrévete HealthTech valoramos y resguardamos tu privacidad. Los datos personales, registros de pagos móviles o transacciones en criptomonedas (Binance Pay) recopilados son utilizados exclusivamente para la validación de membresías, gestión de cupos en eventos y acompañamiento clínico somático.</p>
-      </section>
-      <section class="space-y-1.5">
-        <h3 class="font-extrabold text-[var(--color-primary)] text-sm">2. Confidencialidad Clínica y Somática</h3>
-        <p>Toda la información obtenida a través de nuestros test de regulación somática, interacciones y sesiones agendadas se rige bajo estricta confidencialidad profesional médico-paciente.</p>
-      </section>
-      <section class="space-y-1.5">
-        <h3 class="font-extrabold text-[var(--color-primary)] text-sm">3. Condiciones de Reserva y Pagos</h3>
-        <p>Las reservas para campamentos, eventos presenciales o consultas quedan sujetas a la verificación exitosa de los comprobantes de pago reportados mediante nuestros canales oficiales.</p>
-      </section>
+      <section class="space-y-1.5"><h3 class="font-extrabold text-[var(--color-primary)] text-sm">1. Protección de Datos Personales</h3><p>En Atrévete HealthTech valoramos y resguardamos tu privacidad...</p></section>
+      <section class="space-y-1.5"><h3 class="font-extrabold text-[var(--color-primary)] text-sm">2. Confidencialidad Clínica y Somática</h3><p>Toda la información se rige bajo estricta confidencialidad profesional.</p></section>
+      <section class="space-y-1.5"><h3 class="font-extrabold text-[var(--color-primary)] text-sm">3. Condiciones de Reserva y Pagos</h3><p>Las reservas quedan sujetas a la verificación exitosa de los comprobantes.</p></section>
     </div>
-
-    <button onclick="App.switchView('view-auth')" class="clay-btn-primary w-full py-3.5 font-bold text-xs focus-visible">Entendido / Volver</button>
+    <button onclick="App.switchView('view-auth')" class="clay-btn-primary w-full py-3.5 font-bold text-xs">Entendido / Volver</button>
   </main>
 
-  <!-- ================= 9. PANEL ADMINISTRATIVO DASHBOARD ================= -->
   <main id="view-admin-dashboard" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
     <div class="flex justify-between items-center border-b border-stone-200 pb-3">
-      <div>
-        <h2 class="text-xl font-bold text-[var(--color-secondary)]">Gestor Visual Admin</h2>
-        <p class="text-[10px] text-[var(--color-secondary)]/70">Actualiza logotipos e imágenes en tiempo real</p>
-      </div>
-      <button onclick="App.switchView('view-home')" class="px-3 py-1.5 bg-stone-200 text-[var(--color-secondary)] text-xs font-bold rounded-xl focus-visible">Salir</button>
+      <div><h2 class="text-xl font-bold text-[var(--color-secondary)]">Gestor Visual Admin</h2><p class="text-[10px] text-[var(--color-secondary)]/70">Actualiza logotipos e imágenes en tiempo real</p></div>
+      <button onclick="App.switchView('view-home')" class="px-3 py-1.5 bg-stone-200 text-[var(--color-secondary)] text-xs font-bold rounded-xl">Salir</button>
     </div>
-
     <form onsubmit="event.preventDefault(); App.guardarCambiosAdmin();" class="clay-card p-5 space-y-4">
-      <div>
-        <label class="block text-xs font-bold text-[var(--color-secondary)] mb-1">URL del Logotipo (Header)</label>
-        <input type="url" id="admin-logo-url" placeholder="https://ejemplo.com/logo.png" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible">
-      </div>
-
-      <div>
-        <label class="block text-xs font-bold text-[var(--color-secondary)] mb-1">URL de la Imagen Banner Principal (Home)</label>
-        <input type="url" id="admin-banner-img-url" placeholder="https://images.unsplash.com/..." class="w-full p-3 text-xs clay-input focus:outline-none focus-visible">
-      </div>
-
-      <div>
-        <label class="block text-xs font-bold text-[var(--color-secondary)] mb-1">Texto Destacado del Banner Principal</label>
-        <input type="text" id="admin-banner-text" placeholder="Ej. Calibra tu calma somática hoy" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible">
-      </div>
-
-      <!-- Nuevos campos de color -->
+      <div><label class="block text-xs font-bold text-[var(--color-secondary)] mb-1">URL del Logotipo (Header)</label><input type="url" id="admin-logo-url" placeholder="https://ejemplo.com/logo.png" class="w-full p-3 text-xs clay-input focus:outline-none"></div>
+      <div><label class="block text-xs font-bold text-[var(--color-secondary)] mb-1">URL de la Imagen Banner Principal (Home)</label><input type="url" id="admin-banner-img-url" placeholder="https://images.unsplash.com/..." class="w-full p-3 text-xs clay-input focus:outline-none"></div>
+      <div><label class="block text-xs font-bold text-[var(--color-secondary)] mb-1">Texto Destacado del Banner Principal</label><input type="text" id="admin-banner-text" placeholder="Ej. Calibra tu calma somática hoy" class="w-full p-3 text-xs clay-input focus:outline-none"></div>
       <div class="space-y-3 border-t border-stone-200 pt-3">
         <label class="block text-xs font-bold text-[var(--color-secondary)]">🎨 Colores Personalizados</label>
         <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="text-[10px] text-[var(--color-secondary)]">Color Primario</label>
-            <input type="color" id="admin-color-primary" value="#E27D60" class="w-full h-10 rounded-xl cursor-pointer">
-          </div>
-          <div>
-            <label class="text-[10px] text-[var(--color-secondary)]">Color Secundario</label>
-            <input type="color" id="admin-color-secondary" value="#7A8A7C" class="w-full h-10 rounded-xl cursor-pointer">
-          </div>
+          <div><label class="text-[10px] text-[var(--color-secondary)]">Color Primario</label><input type="color" id="admin-color-primary" value="#E27D60" class="w-full h-10 rounded-xl cursor-pointer"></div>
+          <div><label class="text-[10px] text-[var(--color-secondary)]">Color Secundario</label><input type="color" id="admin-color-secondary" value="#7A8A7C" class="w-full h-10 rounded-xl cursor-pointer"></div>
         </div>
       </div>
-
-      <button type="submit" class="clay-btn-primary w-full py-3.5 font-bold text-xs mt-2 focus-visible">
-        💾 Guardar y Aplicar Cambios
-      </button>
+      <button type="submit" class="clay-btn-primary w-full py-3.5 font-bold text-xs mt-2">💾 Guardar y Aplicar Cambios</button>
     </form>
-
-    <div class="clay-card p-4 bg-orange-50/40 text-[11px] text-[var(--color-secondary)] space-y-1">
-      <p class="font-bold text-[var(--color-primary)]">💡 Nota de Seguridad:</p>
-      <p>Los cambios realizados se aplican de inmediato en la aplicación y se guardan en el almacenamiento local del navegador.</p>
-    </div>
   </main>
 
-  <!-- ================= BARRA DE NAVEGACIÓN INFERIOR ================= -->
+  <!-- Barra de navegación -->
   <nav class="clay-nav fixed bottom-0 inset-x-0 max-w-md mx-auto z-50">
     <div class="flex justify-around items-center">
-      <!-- Inicio -->
-      <div onclick="App.switchView('view-home')" class="nav-item active" data-view="view-home">
-        <span class="nav-icon">🏠</span>
-        <span class="nav-label">Inicio</span>
-      </div>
-
-      <!-- Gimnasio -->
-      <div onclick="App.switchView('view-regulacion')" class="nav-item" data-view="view-regulacion">
-        <span class="nav-icon">🫁</span>
-        <span class="nav-label">Gimnasio</span>
-      </div>
-
-      <!-- Citas -->
-      <div onclick="App.switchView('view-citas')" class="nav-item" data-view="view-citas">
-        <span class="nav-icon">📅</span>
-        <span class="nav-label">Citas</span>
-        <span class="nav-badge">1</span>
-      </div>
-
-      <!-- Pagos -->
-      <div onclick="App.switchView('view-pagos')" class="nav-item" data-view="view-pagos">
-        <span class="nav-icon">💳</span>
-        <span class="nav-label">Pagos</span>
-      </div>
-
-      <!-- Perfil - Cambia según autenticación -->
-      <div onclick="App.irAPerfil()" class="nav-item" data-view="view-perfil-usuario" id="nav-perfil">
-        <span class="nav-icon" id="nav-perfil-icon">👤</span>
-        <span class="nav-label" id="nav-perfil-label">Perfil</span>
-      </div>
+      <div onclick="App.switchView('view-home')" class="nav-item active" data-view="view-home"><span class="nav-icon">🏠</span><span class="nav-label">Inicio</span></div>
+      <div onclick="App.switchView('view-regulacion')" class="nav-item" data-view="view-regulacion"><span class="nav-icon">🫁</span><span class="nav-label">Gimnasio</span></div>
+      <div onclick="App.switchView('view-citas')" class="nav-item" data-view="view-citas"><span class="nav-icon">📅</span><span class="nav-label">Citas</span><span class="nav-badge">1</span></div>
+      <div onclick="App.switchView('view-pagos')" class="nav-item" data-view="view-pagos"><span class="nav-icon">💳</span><span class="nav-label">Pagos</span></div>
+      <div onclick="App.irAPerfil()" class="nav-item" data-view="view-perfil-usuario" id="nav-perfil"><span class="nav-icon" id="nav-perfil-icon">👤</span><span class="nav-label" id="nav-perfil-label">Perfil</span></div>
     </div>
   </nav>
 
-  <!-- ================= JAVASCRIPT COMPLETO ================= -->
+  <!-- ================= ASISTENTE VIRTUAL IA - CERRADOR DE VENTAS ================= -->
+  <button id="chatbot-floating-btn" onclick="Chatbot.toggle()" class="chatbot-floating-btn" aria-label="Abrir asistente virtual">
+    🤖
+    <span id="chatbot-badge" class="badge hidden">1</span>
+  </button>
+
+  <div id="chatbot-container" class="chatbot-container">
+    <div class="chatbot-header">
+      <div class="chatbot-header-info">
+        <div class="chatbot-avatar">🧠</div>
+        <div>
+          <h3 class="font-bold text-sm">Sofía - Asesora Atrévete</h3>
+          <p class="text-[10px] opacity-90 flex items-center gap-1"><span class="chatbot-status"></span> Experta en Escáner Cuántico</p>
+        </div>
+      </div>
+      <button onclick="Chatbot.toggle()" class="text-white hover:bg-white/20 rounded-full w-7 h-7 flex items-center justify-center text-sm transition">✕</button>
+    </div>
+    
+    <div id="chatbot-messages" class="chatbot-messages">
+      <div class="chatbot-message bot">
+        <div class="chatbot-bubble">
+          ¡Hola! 👋 Soy <strong>Sofía</strong>, asesora integral de <strong>Atrévete HealthTech</strong> y experta en <strong>Escáner Cuántico</strong>. 
+          <br><br>Estoy aquí para guiarte hacia tu mejor versión. ¿Te gustaría conocer cómo el <strong>Escáner Cuántico</strong> puede revelar lo que tu cuerpo realmente necesita? 
+          <br><br>También tengo información exclusiva sobre nuestros <strong>eventos y campamentos</strong>. ¿Por dónde empezamos? 😊
+        </div>
+      </div>
+    </div>
+
+    <div id="chatbot-options" class="chatbot-options">
+      <button onclick="Chatbot.sendQuickReply('Escáner Cuántico')" class="chatbot-option-btn">🔮 Escáner Cuántico</button>
+      <button onclick="Chatbot.sendQuickReply('Campamento Adultas en Fuga')" class="chatbot-option-btn">🏕️ Campamento</button>
+      <button onclick="Chatbot.sendQuickReply('Agendar cita')" class="chatbot-option-btn">📅 Agendar Cita</button>
+      <button onclick="Chatbot.sendQuickReply('Precios y pagos')" class="chatbot-option-btn">💳 Precios</button>
+    </div>
+
+    <div class="chatbot-input-area">
+      <input id="chatbot-input" type="text" placeholder="Escribe tu consulta aquí..." class="chatbot-input" onkeypress="if(event.key==='Enter') Chatbot.sendMessage()">
+      <button onclick="Chatbot.sendMessage()" class="chatbot-send-btn">
+        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+      </button>
+    </div>
+  </div>
+
   <script>
     // ============================================
-    // APP - Objeto principal
+    // APP PRINCIPAL
     // ============================================
     const App = {
-        // Estado de la aplicación
         state: {
             authMode: 'login',
             quizAnswers: {},
@@ -1124,102 +1047,50 @@
             breathInterval: null,
             currentView: 'view-home'
         },
-
-        // ============================================
-        // FUNCIONES DE BARRERA LEGAL
-        // ============================================
         verificarLegal() {
-            if (this.state.legalAceptado) {
-                return true;
-            }
-            const modal = document.getElementById('modal-legal-gate');
-            if (modal) {
-                modal.classList.remove('hidden');
-            }
+            if (this.state.legalAceptado) return true;
+            document.getElementById('modal-legal-gate').classList.remove('hidden');
             return false;
         },
-
         aceptarLegalYContinuar() {
             localStorage.setItem('legal_aceptado', 'true');
             this.state.legalAceptado = true;
             document.getElementById('modal-legal-gate').classList.add('hidden');
             this.switchView('view-auth');
         },
-
         cancelarLegal() {
             document.getElementById('modal-legal-gate').classList.add('hidden');
             this.switchView('view-home');
         },
-
-        // ============================================
-        // FUNCIONES DE NAVEGACIÓN MEJORADAS
-        // ============================================
         irAPerfil() {
-            if (this.state.isAuthenticated) {
-                this.switchView('view-perfil-usuario');
-            } else {
-                this.abrirLogin();
-            }
+            this.state.isAuthenticated ? this.switchView('view-perfil-usuario') : this.abrirLogin();
         },
-
         abrirLogin() {
-            if (!this.verificarLegal()) {
-                return;
-            }
+            if (!this.verificarLegal()) return;
             this.switchAuthMode('login');
             this.switchView('view-auth');
         },
-
         abrirRegistro() {
-            if (!this.verificarLegal()) {
-                return;
-            }
+            if (!this.verificarLegal()) return;
             this.switchAuthMode('register');
             this.switchView('view-auth');
         },
-
         switchView(viewId) {
             document.querySelectorAll('.app-view').forEach(v => v.classList.add('hidden'));
-            
             const target = document.getElementById(viewId);
-            if (target) {
-                target.classList.remove('hidden');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-
+            if (target) { target.classList.remove('hidden'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
             this.state.currentView = viewId;
-
             document.querySelectorAll('.nav-item').forEach(item => {
                 item.classList.remove('active');
-                if (item.dataset.view === viewId) {
-                    item.classList.add('active');
-                }
+                if (item.dataset.view === viewId) item.classList.add('active');
             });
-
-            // Prevenir acceso a perfil sin autenticación
-            if (viewId === 'view-perfil-usuario' && !this.state.isAuthenticated) {
-                this.switchView('view-auth');
-                return;
-            }
-
-            // Manejar respiración guiada
-            if (viewId !== 'view-regulacion' && this.state.breathInterval) {
-                clearInterval(this.state.breathInterval);
-                this.state.breathInterval = null;
-            }
-            if (viewId === 'view-regulacion') {
-                this.iniciarRespiración();
-            }
+            if (viewId === 'view-perfil-usuario' && !this.state.isAuthenticated) { this.switchView('view-auth'); return; }
+            if (viewId !== 'view-regulacion' && this.state.breathInterval) { clearInterval(this.state.breathInterval); this.state.breathInterval = null; }
+            if (viewId === 'view-regulacion') this.iniciarRespiración();
         },
-
-        // ============================================
-        // ACTUALIZAR NAVEGACIÓN Y HEADER
-        // ============================================
         actualizarNav() {
-            const navPerfil = document.getElementById('nav-perfil');
             const perfilIcon = document.getElementById('nav-perfil-icon');
             const perfilLabel = document.getElementById('nav-perfil-label');
-
             if (this.state.isAuthenticated) {
                 if (perfilIcon) perfilIcon.textContent = '👤';
                 if (perfilLabel) perfilLabel.textContent = 'Perfil';
@@ -1228,333 +1099,136 @@
                 if (perfilLabel) perfilLabel.textContent = 'Login';
             }
         },
-
         actualizarHeader() {
             const loginBtns = document.getElementById('header-login-btns');
             const profileBtn = document.getElementById('header-profile-btn');
             const headerName = document.getElementById('header-name');
             const headerAvatar = document.getElementById('header-avatar');
-
             if (this.state.isAuthenticated && this.state.user.name) {
                 loginBtns.classList.add('hidden');
                 profileBtn.classList.remove('hidden');
                 if (headerName) headerName.textContent = this.state.user.name;
-                if (headerAvatar) {
-                    const initials = this.state.user.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'US';
-                    headerAvatar.textContent = initials;
-                }
+                if (headerAvatar) headerAvatar.textContent = this.state.user.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'US';
             } else {
                 loginBtns.classList.remove('hidden');
                 profileBtn.classList.add('hidden');
             }
         },
-
-        // ============================================
-        // REGISTRO CON GOOGLE
-        // ============================================
         iniciarRegistroGoogleSimulado() {
-            if (!this.verificarLegal()) {
-                return;
-            }
-            
+            if (!this.verificarLegal()) return;
             const googleUser = {
                 name: prompt('👤 Ingresa tu nombre completo:', 'Ana María Rodríguez') || 'Usuario Google',
                 email: prompt('📧 Ingresa tu correo electrónico:', 'usuario@gmail.com') || 'usuario@gmail.com',
-                picture: '',
-                email_verified: true,
-                id: 'google_' + Date.now()
+                picture: '', email_verified: true, id: 'google_' + Date.now()
             };
-
-            if (!googleUser.email || !googleUser.email.includes('@')) {
-                this.showToast('⚠️ Por favor ingresa un correo válido', 'warning');
-                return;
-            }
-
-            const existingUser = localStorage.getItem('user_email');
-            if (existingUser && existingUser === googleUser.email) {
-                this.showToast('⚠️ Este correo ya está registrado. Por favor inicia sesión.', 'warning');
+            if (!googleUser.email || !googleUser.email.includes('@')) { this.showToast('⚠️ Correo inválido', 'warning'); return; }
+            if (localStorage.getItem('user_email') === googleUser.email) {
+                this.showToast('⚠️ Este correo ya está registrado', 'warning');
                 this.switchAuthMode('login');
                 document.getElementById('input-email').value = googleUser.email;
                 this.switchView('view-auth');
                 return;
             }
-
             this.state.googleUserData = googleUser;
             this.mostrarModalConfirmacionGoogle(googleUser);
         },
-
-        // ============================================
-        // MODAL DE CONFIRMACIÓN DE GOOGLE
-        // ============================================
         mostrarModalConfirmacionGoogle(userData) {
             const modal = document.getElementById('google-modal');
-            if (!modal) {
-                console.error('Modal de Google no encontrado');
-                return;
-            }
-            
-            const avatar = document.getElementById('google-avatar-modal');
-            const nameEl = document.getElementById('google-name-modal');
-            const emailEl = document.getElementById('google-email-modal');
-            
-            const initials = userData.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'G';
-            if (avatar) avatar.textContent = initials;
-            if (nameEl) nameEl.textContent = userData.name;
-            if (emailEl) emailEl.textContent = userData.email;
-            
+            if (!modal) return;
+            document.getElementById('google-avatar-modal').textContent = userData.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+            document.getElementById('google-name-modal').textContent = userData.name;
+            document.getElementById('google-email-modal').textContent = userData.email;
             modal.classList.add('active');
-            
-            const btnText = document.getElementById('btn-google-text');
-            const btnSpinner = document.getElementById('btn-google-spinner');
-            if (btnText) btnText.textContent = '✅ Confirmar y Continuar';
-            if (btnSpinner) btnSpinner.classList.add('hidden');
-            
-            const confirmBtn = document.getElementById('btn-confirmar-google');
-            if (confirmBtn) confirmBtn.disabled = false;
+            document.getElementById('btn-google-text').textContent = '✅ Confirmar y Continuar';
+            document.getElementById('btn-google-spinner').classList.add('hidden');
+            document.getElementById('btn-confirmar-google').disabled = false;
         },
-
-        // ============================================
-        // CONFIRMAR REGISTRO CON GOOGLE
-        // ============================================
         confirmarRegistroGoogle() {
-            if (!this.state.googleUserData) {
-                this.showToast('❌ No hay datos de Google para confirmar', 'error');
-                return;
-            }
-
-            const btnText = document.getElementById('btn-google-text');
-            const btnSpinner = document.getElementById('btn-google-spinner');
-            const confirmBtn = document.getElementById('btn-confirmar-google');
-            
-            if (btnText) btnText.textContent = 'Registrando...';
-            if (btnSpinner) btnSpinner.classList.remove('hidden');
-            if (confirmBtn) confirmBtn.disabled = true;
-
+            if (!this.state.googleUserData) return;
+            document.getElementById('btn-google-text').textContent = 'Registrando...';
+            document.getElementById('btn-google-spinner').classList.remove('hidden');
+            document.getElementById('btn-confirmar-google').disabled = true;
             setTimeout(() => {
-                try {
-                    const userData = this.state.googleUserData;
-                    const fechaRegistro = new Date().toLocaleDateString('es-ES', { 
-                        day: '2-digit', 
-                        month: 'long', 
-                        year: 'numeric' 
-                    });
-                    
-                    localStorage.setItem('user_name', userData.name);
-                    localStorage.setItem('user_email', userData.email);
-                    localStorage.setItem('user_role', 'user');
-                    localStorage.setItem('register_method', 'google');
-                    localStorage.setItem('email_verified', 'true');
-                    localStorage.setItem('google_picture', userData.picture || '');
-                    localStorage.setItem('fecha_registro', fechaRegistro);
-                    localStorage.setItem('user_telefono', '');
-                    localStorage.setItem('user_fecha_nac', '');
-                    
-                    this.state.user = {
-                        ...this.state.user,
-                        name: userData.name,
-                        email: userData.email,
-                        role: 'user',
-                        registerMethod: 'google',
-                        emailVerified: true,
-                        fechaRegistro: fechaRegistro,
-                        telefono: '',
-                        fechaNac: ''
-                    };
-                    this.state.isAuthenticated = true;
-                    
-                    const modal = document.getElementById('google-modal');
-                    if (modal) modal.classList.remove('active');
-                    
-                    this.actualizarPerfilUI();
-                    this.actualizarHeader();
-                    this.actualizarNav();
-                    
-                    this.showToast('✅ ¡Registro con Google exitoso! Bienvenido a Atrévete HealthTech', 'success');
-                    this.switchView('view-perfil-usuario');
-                    
-                    setTimeout(() => {
-                        this.mostrarEditarPerfil();
-                    }, 500);
-                    
-                } catch (error) {
-                    console.error('Error en registro con Google:', error);
-                    this.showToast('❌ Error al registrar con Google. Intenta nuevamente.', 'error');
-                } finally {
-                    if (btnText) btnText.textContent = '✅ Confirmar y Continuar';
-                    if (btnSpinner) btnSpinner.classList.add('hidden');
-                    if (confirmBtn) confirmBtn.disabled = false;
-                    this.state.googleUserData = null;
-                }
+                const userData = this.state.googleUserData;
+                const fechaRegistro = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' });
+                localStorage.setItem('user_name', userData.name);
+                localStorage.setItem('user_email', userData.email);
+                localStorage.setItem('user_role', 'user');
+                localStorage.setItem('register_method', 'google');
+                localStorage.setItem('email_verified', 'true');
+                localStorage.setItem('fecha_registro', fechaRegistro);
+                this.state.user = { ...this.state.user, name: userData.name, email: userData.email, registerMethod: 'google', emailVerified: true, fechaRegistro };
+                this.state.isAuthenticated = true;
+                document.getElementById('google-modal').classList.remove('active');
+                this.actualizarPerfilUI();
+                this.actualizarHeader();
+                this.actualizarNav();
+                this.showToast('✅ ¡Registro con Google exitoso!', 'success');
+                this.switchView('view-perfil-usuario');
+                setTimeout(() => this.mostrarEditarPerfil(), 500);
+                document.getElementById('btn-google-text').textContent = '✅ Confirmar y Continuar';
+                document.getElementById('btn-google-spinner').classList.add('hidden');
+                document.getElementById('btn-confirmar-google').disabled = false;
+                this.state.googleUserData = null;
             }, 1500);
         },
-
-        // ============================================
-        // CANCELAR REGISTRO CON GOOGLE
-        // ============================================
         cancelarRegistroGoogle() {
-            const modal = document.getElementById('google-modal');
-            if (modal) modal.classList.remove('active');
+            document.getElementById('google-modal').classList.remove('active');
             this.state.googleUserData = null;
-            this.showToast('Registro con Google cancelado', 'info');
         },
-
-        // ============================================
-        // TOAST NOTIFICATIONS
-        // ============================================
         showToast(message, type = 'success') {
             const toast = document.getElementById('toast');
-            if (!toast) return;
-            
             toast.className = `toast toast-${type}`;
             toast.textContent = message;
             toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 4000);
+            setTimeout(() => toast.classList.remove('show'), 4000);
         },
-
-        // ============================================
-        // PERFIL - ACTUALIZAR UI
-        // ============================================
         actualizarPerfilUI() {
-            const name = this.state.user.name || 'Invitado Atrévete';
+            const name = this.state.user.name || 'Invitado';
             const email = this.state.user.email || 'correo@ejemplo.com';
-            const role = this.state.user.role || 'user';
-            const registerMethod = this.state.user.registerMethod || 'email';
-            const emailVerified = this.state.user.emailVerified || false;
-            const telefono = this.state.user.telefono || 'No registrado';
-            const fechaNac = this.state.user.fechaNac || 'No registrada';
-            const fechaRegistro = this.state.user.fechaRegistro || 'Hoy';
-            const sesiones = this.state.user.sesiones || 0;
-            const ejercicios = this.state.user.ejercicios || 0;
-            const diasActivo = this.state.user.diasActivo || 0;
-            
-            const profileName = document.getElementById('profile-name');
-            const profileEmail = document.getElementById('profile-email');
-            const profileAvatar = document.getElementById('profile-avatar');
-            const profileRole = document.getElementById('profile-role');
-            const profileRegisterMethod = document.getElementById('profile-register-method');
-            const profileVerifiedContainer = document.getElementById('profile-verified-container');
-            const profileTelefono = document.getElementById('profile-telefono-display');
-            const profileFecha = document.getElementById('profile-fecha-display');
-            const profileMiembroDesde = document.getElementById('profile-miembro-desde');
-            const profileSesiones = document.getElementById('profile-sesiones');
-            const profileEjercicios = document.getElementById('profile-ejercicios');
-            const profileDias = document.getElementById('profile-dias');
-
-            if (profileName) profileName.innerText = name;
-            if (profileEmail) profileEmail.innerText = email;
-            if (profileRole) {
-                const roleText = role === 'spec' ? '👩‍⚕️ Especialista' : '👤 Usuario';
-                profileRole.innerText = roleText;
-            }
-            if (profileRegisterMethod) {
-                const methodText = registerMethod === 'google' ? '🟢 Registrado con Google' : '📧 Registrado con Email';
-                profileRegisterMethod.innerText = methodText;
-            }
-            
-            if (profileVerifiedContainer) {
-                if (emailVerified) {
-                    profileVerifiedContainer.innerHTML = '<span class="verified-badge">✅ Correo verificado</span>';
-                } else {
-                    profileVerifiedContainer.innerHTML = '<span class="unverified-badge">⏳ Correo no verificado</span>';
-                }
-            }
-
-            if (profileTelefono) profileTelefono.innerText = telefono;
-            if (profileFecha) profileFecha.innerText = fechaNac;
-            if (profileMiembroDesde) profileMiembroDesde.innerText = fechaRegistro;
-            if (profileSesiones) profileSesiones.innerText = sesiones;
-            if (profileEjercicios) profileEjercicios.innerText = ejercicios;
-            if (profileDias) profileDias.innerText = diasActivo;
-            
-            if (profileAvatar) {
-                const googlePicture = localStorage.getItem('google_picture');
-                if (googlePicture && googlePicture !== '') {
-                    profileAvatar.style.backgroundImage = `url('${googlePicture}')`;
-                    profileAvatar.style.backgroundSize = 'cover';
-                    profileAvatar.style.backgroundPosition = 'center';
-                    profileAvatar.textContent = '';
-                } else {
-                    profileAvatar.style.backgroundImage = 'none';
-                    const initials = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'AT';
-                    profileAvatar.textContent = initials;
-                }
-            }
-
-            const editNombre = document.getElementById('edit-nombre');
-            const editTelefono = document.getElementById('edit-telefono');
-            const editFechaNac = document.getElementById('edit-fecha-nac');
-            if (editNombre) editNombre.value = name;
-            if (editTelefono) editTelefono.value = this.state.user.telefono || '';
-            if (editFechaNac) editFechaNac.value = this.state.user.fechaNac || '';
-
+            document.getElementById('profile-name').innerText = name;
+            document.getElementById('profile-email').innerText = email;
+            document.getElementById('profile-role').innerText = this.state.user.role === 'spec' ? '👩‍⚕️ Especialista' : '👤 Usuario';
+            document.getElementById('profile-register-method').innerText = this.state.user.registerMethod === 'google' ? '🟢 Google' : '📧 Email';
+            document.getElementById('profile-verified-container').innerHTML = this.state.user.emailVerified ? '<span class="verified-badge">✅ Correo verificado</span>' : '<span class="unverified-badge">⏳ No verificado</span>';
+            document.getElementById('profile-telefono-display').innerText = this.state.user.telefono || 'No registrado';
+            document.getElementById('profile-fecha-display').innerText = this.state.user.fechaNac || 'No registrada';
+            document.getElementById('profile-miembro-desde').innerText = this.state.user.fechaRegistro || 'Hoy';
+            document.getElementById('profile-sesiones').innerText = this.state.user.sesiones;
+            document.getElementById('profile-ejercicios').innerText = this.state.user.ejercicios;
+            document.getElementById('profile-dias').innerText = this.state.user.diasActivo;
+            const avatar = document.getElementById('profile-avatar');
+            avatar.style.backgroundImage = 'none';
+            avatar.textContent = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'AT';
+            document.getElementById('edit-nombre').value = name;
+            document.getElementById('edit-telefono').value = this.state.user.telefono || '';
+            document.getElementById('edit-fecha-nac').value = this.state.user.fechaNac || '';
             this.actualizarHeader();
             this.actualizarNav();
         },
-
-        // ============================================
-        // AUTH EMAIL
-        // ============================================
         procesarAuthEmail() {
             const email = document.getElementById('input-email').value;
             const password = document.getElementById('input-password').value;
-            const nombreInput = document.getElementById('input-nombre');
-            const emailError = document.getElementById('email-error');
-            const passwordError = document.getElementById('password-error');
-            
-            if (!email || !email.includes('@')) {
-                if (emailError) emailError.classList.remove('hidden');
-                return;
-            }
-            if (emailError) emailError.classList.add('hidden');
-            
-            if (password.length < 6) {
-                if (passwordError) passwordError.classList.remove('hidden');
-                return;
-            }
-            if (passwordError) passwordError.classList.add('hidden');
-
-            let nombre = 'Usuario Atrévete';
-            if (this.state.authMode === 'register' && nombreInput && nombreInput.value.trim() !== '') {
-                nombre = nombreInput.value.trim();
-            } else {
-                nombre = email.split('@')[0];
-            }
-
+            if (!email || !email.includes('@')) { document.getElementById('email-error').classList.remove('hidden'); return; }
+            document.getElementById('email-error').classList.add('hidden');
+            if (password.length < 6) { document.getElementById('password-error').classList.remove('hidden'); return; }
+            document.getElementById('password-error').classList.add('hidden');
+            let nombre = this.state.authMode === 'register' && document.getElementById('input-nombre').value.trim() ? document.getElementById('input-nombre').value.trim() : email.split('@')[0];
             const fechaRegistro = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' });
-
             localStorage.setItem('user_name', nombre);
             localStorage.setItem('user_email', email);
             localStorage.setItem('user_role', this.state.user.role || 'user');
             localStorage.setItem('register_method', 'email');
             localStorage.setItem('email_verified', 'false');
             localStorage.setItem('fecha_registro', fechaRegistro);
-            
-            this.state.user = {
-                ...this.state.user,
-                name: nombre,
-                email: email,
-                registerMethod: 'email',
-                emailVerified: false,
-                fechaRegistro: fechaRegistro
-            };
+            this.state.user = { ...this.state.user, name: nombre, email, registerMethod: 'email', emailVerified: false, fechaRegistro };
             this.state.isAuthenticated = true;
-            
             this.actualizarPerfilUI();
             this.actualizarHeader();
             this.actualizarNav();
-            this.showToast('✅ ¡Bienvenido a Atrévete HealthTech!', 'info');
+            this.showToast('✅ ¡Bienvenido!', 'info');
             this.switchView('view-perfil-usuario');
-            
-            setTimeout(() => {
-                this.showToast('📧 Se ha enviado un correo de verificación a tu cuenta', 'info');
-            }, 2000);
         },
-
-        // ============================================
-        // AUTH MODE
-        // ============================================
         switchAuthMode(mode) {
             this.state.authMode = mode;
             const tabLogin = document.getElementById('tab-login');
@@ -1563,243 +1237,90 @@
             const fieldRol = document.getElementById('field-rol');
             const linkForgot = document.getElementById('link-forgot-container');
             const submitBtn = document.getElementById('auth-submit-btn');
-            const title = document.getElementById('auth-title');
-            const subtitle = document.getElementById('auth-subtitle');
-
             if (mode === 'login') {
-                if (tabLogin) tabLogin.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[var(--color-secondary)] shadow-sm transition';
-                if (tabRegister) tabRegister.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl text-[var(--color-secondary)] transition';
-                if (fieldNombre) fieldNombre.classList.add('hidden');
-                if (fieldRol) fieldRol.classList.add('hidden');
-                if (linkForgot) linkForgot.classList.remove('hidden');
-                if (submitBtn) submitBtn.innerText = 'Iniciar Sesión';
-                if (title) title.innerText = 'Iniciar Sesión';
-                if (subtitle) subtitle.innerText = 'Accede a tu cuenta de Atrévete HealthTech';
+                tabLogin.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[var(--color-secondary)] shadow-sm transition';
+                tabRegister.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl text-[var(--color-secondary)] transition';
+                fieldNombre.classList.add('hidden');
+                fieldRol.classList.add('hidden');
+                linkForgot.classList.remove('hidden');
+                submitBtn.innerText = 'Iniciar Sesión';
+                document.getElementById('auth-title').innerText = 'Iniciar Sesión';
             } else {
-                if (tabRegister) tabRegister.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[var(--color-secondary)] shadow-sm transition';
-                if (tabLogin) tabLogin.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl text-[var(--color-secondary)] transition';
-                if (fieldNombre) fieldNombre.classList.remove('hidden');
-                if (fieldRol) fieldRol.classList.remove('hidden');
-                if (linkForgot) linkForgot.classList.add('hidden');
-                if (submitBtn) submitBtn.innerText = 'Crear Mi Cuenta';
-                if (title) title.innerText = 'Crea tu Cuenta';
-                if (subtitle) subtitle.innerText = 'Únete a nuestra plataforma somática';
+                tabRegister.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[var(--color-secondary)] shadow-sm transition';
+                tabLogin.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl text-[var(--color-secondary)] transition';
+                fieldNombre.classList.remove('hidden');
+                fieldRol.classList.remove('hidden');
+                linkForgot.classList.add('hidden');
+                submitBtn.innerText = 'Crear Mi Cuenta';
+                document.getElementById('auth-title').innerText = 'Crea tu Cuenta';
             }
         },
-
-        // ============================================
-        // SET ROLE
-        // ============================================
         setAuthRole(role) {
-            const btnUser = document.getElementById('btn-role-user');
-            const btnSpec = document.getElementById('btn-role-spec');
             this.state.user.role = role;
             localStorage.setItem('user_role', role);
-            
-            if (role === 'user') {
-                if (btnUser) btnUser.className = 'flex-1 py-2 text-xs font-bold rounded-xl bg-orange-100 text-[var(--color-primary)] border border-[var(--color-primary)]/30 transition';
-                if (btnSpec) btnSpec.className = 'flex-1 py-2 text-xs font-bold rounded-xl bg-stone-100 text-[var(--color-secondary)] transition';
-            } else {
-                if (btnSpec) btnSpec.className = 'flex-1 py-2 text-xs font-bold rounded-xl bg-orange-100 text-[var(--color-primary)] border border-[var(--color-primary)]/30 transition';
-                if (btnUser) btnUser.className = 'flex-1 py-2 text-xs font-bold rounded-xl bg-stone-100 text-[var(--color-secondary)] transition';
-            }
+            document.getElementById('btn-role-user').className = role === 'user' ? 'flex-1 py-2 text-xs font-bold rounded-xl bg-orange-100 text-[var(--color-primary)] border border-[var(--color-primary)]/30 transition' : 'flex-1 py-2 text-xs font-bold rounded-xl bg-stone-100 text-[var(--color-secondary)] transition';
+            document.getElementById('btn-role-spec').className = role === 'spec' ? 'flex-1 py-2 text-xs font-bold rounded-xl bg-orange-100 text-[var(--color-primary)] border border-[var(--color-primary)]/30 transition' : 'flex-1 py-2 text-xs font-bold rounded-xl bg-stone-100 text-[var(--color-secondary)] transition';
         },
-
-        // ============================================
-        // RECUPERACIÓN
-        // ============================================
         procesarRecuperacion() {
             const email = document.getElementById('recovery-email').value;
-            if (!email) {
-                this.showToast('Por favor ingresa tu correo electrónico.', 'error');
-                return;
-            }
+            if (!email) { this.showToast('Ingresa tu correo', 'error'); return; }
             this.showToast(`📧 Instrucciones enviadas a: ${email}`, 'success');
             this.switchView('view-auth');
         },
-
-        // ============================================
-        // CERRAR SESIÓN
-        // ============================================
         cerrarSesion() {
-            localStorage.removeItem('user_name');
-            localStorage.removeItem('user_email');
-            localStorage.removeItem('user_role');
-            localStorage.removeItem('register_method');
-            localStorage.removeItem('user_telefono');
-            localStorage.removeItem('user_fecha_nac');
-            localStorage.removeItem('email_verified');
-            localStorage.removeItem('google_picture');
-            localStorage.removeItem('fecha_registro');
-            localStorage.removeItem('user_sesiones');
-            localStorage.removeItem('user_ejercicios');
-            localStorage.removeItem('user_dias_activo');
-            
+            ['user_name','user_email','user_role','register_method','user_telefono','user_fecha_nac','email_verified','google_picture','fecha_registro','user_sesiones','user_ejercicios','user_dias_activo'].forEach(k => localStorage.removeItem(k));
             this.state.isAuthenticated = false;
-            this.state.user = {
-                name: '',
-                email: '',
-                role: 'user',
-                registerMethod: 'email',
-                telefono: '',
-                fechaNac: '',
-                emailVerified: false,
-                fechaRegistro: '',
-                sesiones: 0,
-                ejercicios: 0,
-                diasActivo: 0
-            };
-            
+            this.state.user = { name: '', email: '', role: 'user', registerMethod: 'email', telefono: '', fechaNac: '', emailVerified: false, fechaRegistro: '', sesiones: 0, ejercicios: 0, diasActivo: 0 };
             this.actualizarPerfilUI();
             this.actualizarHeader();
             this.actualizarNav();
-            this.showToast('👋 Sesión cerrada exitosamente', 'info');
+            this.showToast('👋 Sesión cerrada', 'info');
             this.switchView('view-home');
         },
-
-        // ============================================
-        // EDITAR PERFIL
-        // ============================================
         mostrarEditarPerfil() {
-            const form = document.getElementById('editar-perfil-form');
-            if (form) {
-                form.classList.remove('hidden');
-                document.getElementById('edit-nombre').value = this.state.user.name || '';
-                document.getElementById('edit-telefono').value = this.state.user.telefono || '';
-                document.getElementById('edit-fecha-nac').value = this.state.user.fechaNac || '';
-            }
+            document.getElementById('editar-perfil-form').classList.remove('hidden');
+            document.getElementById('edit-nombre').value = this.state.user.name || '';
+            document.getElementById('edit-telefono').value = this.state.user.telefono || '';
+            document.getElementById('edit-fecha-nac').value = this.state.user.fechaNac || '';
         },
-
-        cancelarEditarPerfil() {
-            const form = document.getElementById('editar-perfil-form');
-            if (form) {
-                form.classList.add('hidden');
-            }
-        },
-
+        cancelarEditarPerfil() { document.getElementById('editar-perfil-form').classList.add('hidden'); },
         guardarEditarPerfil() {
             const nombre = document.getElementById('edit-nombre').value.trim();
-            const telefono = document.getElementById('edit-telefono').value.trim();
-            const fechaNac = document.getElementById('edit-fecha-nac').value;
-
-            if (!nombre) {
-                this.showToast('⚠️ El nombre es obligatorio', 'error');
-                return;
-            }
-
+            if (!nombre) { this.showToast('⚠️ El nombre es obligatorio', 'error'); return; }
             localStorage.setItem('user_name', nombre);
-            localStorage.setItem('user_telefono', telefono);
-            localStorage.setItem('user_fecha_nac', fechaNac);
-            
+            localStorage.setItem('user_telefono', document.getElementById('edit-telefono').value.trim());
+            localStorage.setItem('user_fecha_nac', document.getElementById('edit-fecha-nac').value);
             this.state.user.name = nombre;
-            this.state.user.telefono = telefono;
-            this.state.user.fechaNac = fechaNac;
-            
+            this.state.user.telefono = document.getElementById('edit-telefono').value.trim();
+            this.state.user.fechaNac = document.getElementById('edit-fecha-nac').value;
             document.getElementById('editar-perfil-form').classList.add('hidden');
             this.actualizarPerfilUI();
             this.actualizarHeader();
             this.actualizarNav();
-            this.showToast('✅ Perfil actualizado exitosamente', 'success');
+            this.showToast('✅ Perfil actualizado', 'success');
         },
-
-        cambiarFotoPerfil() {
-            this.showToast('📸 Función de cambio de foto en desarrollo', 'info');
-        },
-
-        // ============================================
-        // PAGOS
-        // ============================================
+        cambiarFotoPerfil() { this.showToast('📸 Función en desarrollo', 'info'); },
         selectPaymentMethod(method) {
             this.state.selectedPayment = method;
             document.querySelectorAll('.clay-btn-pay').forEach(btn => btn.classList.remove('active-pay'));
-            
-            const btnMap = {
-                'pm_bdv': 'pay-bdv',
-                'pm_bnc': 'pay-bnc',
-                'zelle': 'pay-zelle',
-                'binance': 'pay-binance'
-            };
-            
-            const targetBtn = document.getElementById(btnMap[method]);
-            if (targetBtn) targetBtn.classList.add('active-pay');
-
+            const btnMap = { 'pm_bdv': 'pay-bdv', 'pm_bnc': 'pay-bnc', 'zelle': 'pay-zelle', 'binance': 'pay-binance' };
+            document.getElementById(btnMap[method]).classList.add('active-pay');
             const box = document.getElementById('datos-pago-box');
             const containerRef = document.getElementById('container-ref-pago');
             const btnEnviar = document.getElementById('btn-enviar-pago');
-            const helperRef = document.getElementById('ref-pago-helper');
-
             containerRef.style.display = 'block';
             btnEnviar.style.display = 'block';
-            btnEnviar.disabled = false;
-            btnEnviar.classList.remove('opacity-50', 'cursor-not-allowed');
-            if (helperRef) helperRef.classList.add('hidden');
-
-            if (method === 'pm_bdv') {
-                box.innerHTML = `
-                    <p class="font-bold text-[var(--color-primary)]">🇻🇪 Pago Móvil - Banco de Venezuela (0102)</p>
-                    <p>Teléfono: <strong>0414-4031678</strong></p>
-                    <p>C.I: <strong>18.478.170</strong></p>
-                    <p class="text-[10px] text-gray-500 mt-1">Monto: Equivalente en Bs. a la tasa BCV del día ($120.00)</p>
-                `;
-                if (helperRef) {
-                    helperRef.textContent = 'Ingresa el número de referencia de tu Pago Móvil.';
-                    helperRef.classList.remove('hidden');
-                }
-            } else if (method === 'pm_bnc') {
-                box.innerHTML = `
-                    <p class="font-bold text-[var(--color-primary)]">🇻🇪 Pago Móvil - Banco Nacional de Crédito (0191)</p>
-                    <p>Teléfono: <strong>0414-4187215</strong></p>
-                    <p>C.I: <strong>13.518.664</strong></p>
-                    <p class="text-[10px] text-gray-500 mt-1">Monto: Equivalente en Bs. a la tasa BCV del día ($120.00)</p>
-                `;
-                if (helperRef) {
-                    helperRef.textContent = 'Ingresa el número de referencia de tu Pago Móvil.';
-                    helperRef.classList.remove('hidden');
-                }
-            } else if (method === 'zelle') {
-                containerRef.style.display = 'none';
-                btnEnviar.style.display = 'none';
-                box.innerHTML = `
-                    <p class="font-bold text-[var(--color-primary)]">🇺🇸 Zelle (Divisas)</p>
-                    <p class="text-sm font-semibold mt-2 text-[var(--color-secondary)]">⏳ Próximamente disponible</p>
-                    <p class="text-[10px] text-gray-500 mt-1">Este método de pago se habilitará muy pronto. Mientras tanto, utiliza Pago Móvil o Binance Pay.</p>
-                `;
-            } else if (method === 'binance') {
-                box.innerHTML = `
-                    <p class="font-bold text-[var(--color-primary)]">🟡 Binance Pay (USDT)</p>
-                    <p>Binance Pay ID: <strong>163305332</strong></p>
-                    <p class="text-[10px] text-gray-500 mt-1">Monto exacto: <strong>$120.00 USDT</strong> (red BEP-20)</p>
-                `;
-                if (helperRef) {
-                    helperRef.textContent = 'Ingresa el ID de la transacción o el hash de tu pago en Binance Pay.';
-                    helperRef.classList.remove('hidden');
-                }
-            }
+            if (method === 'pm_bdv') box.innerHTML = '<p class="font-bold text-[var(--color-primary)]">🇻🇪 Pago Móvil BDV (0102)</p><p>Tel: <strong>0414-4031678</strong></p><p>C.I: <strong>18.478.170</strong></p>';
+            else if (method === 'pm_bnc') box.innerHTML = '<p class="font-bold text-[var(--color-primary)]">🇻🇪 Pago Móvil BNC (0191)</p><p>Tel: <strong>0414-4187215</strong></p><p>C.I: <strong>13.518.664</strong></p>';
+            else if (method === 'zelle') { containerRef.style.display = 'none'; btnEnviar.style.display = 'none'; box.innerHTML = '<p class="font-bold text-[var(--color-primary)]">🇺🇸 Zelle</p><p>⏳ Próximamente</p>'; }
+            else if (method === 'binance') box.innerHTML = '<p class="font-bold text-[var(--color-primary)]">🟡 Binance Pay (USDT)</p><p>ID: <strong>163305332</strong></p>';
         },
-
         confirmarPagoMock() {
-            if (this.state.selectedPayment === 'zelle') {
-                this.showToast('⏳ El método de pago Zelle aún no está disponible.', 'warning');
-                return;
-            }
-
-            const ref = document.getElementById('input-ref-pago').value;
-            if (!ref) {
-                this.showToast('⚠️ Por favor ingresa el número de referencia o comprobante.', 'error');
-                document.getElementById('input-ref-pago').classList.add('border-red-400', 'border-2');
-                setTimeout(() => {
-                    document.getElementById('input-ref-pago').classList.remove('border-red-400', 'border-2');
-                }, 3000);
-                return;
-            }
-            
-            this.showToast('✅ ¡Comprobante reportado con éxito! Nuestro equipo lo verificará.', 'success');
+            if (this.state.selectedPayment === 'zelle') { this.showToast('⏳ Zelle no disponible aún', 'warning'); return; }
+            if (!document.getElementById('input-ref-pago').value) { this.showToast('⚠️ Ingresa el comprobante', 'error'); return; }
+            this.showToast('✅ Comprobante reportado con éxito', 'success');
             this.switchView('view-perfil-usuario');
         },
-
-        // ============================================
-        // QUIZ DE REGULACIÓN SOMÁTICA
-        // ============================================
         answerQuiz(step, choice) {
             this.state.quizAnswers[`step${step}`] = choice;
             if (step < 3) {
@@ -1809,18 +1330,12 @@
             } else {
                 document.getElementById('quiz-step-3').classList.add('hidden');
                 document.getElementById('quiz-result').classList.remove('hidden');
-                document.getElementById('quiz-step-indicator').innerText = `Completado ✅`;
-
-                document.getElementById('quiz-diagnosis-title').innerText = "Diagnóstico Somático Detectado";
-                document.getElementById('quiz-diagnosis-desc').innerText = "Tu sistema nervioso muestra acumulación de tensión corporal. Te recomendamos la siguiente técnica:";
-                
-                document.getElementById('recommended-technique-card').innerHTML = `
-                    <h5 class="font-bold text-xs text-[var(--color-secondary)]">🌟 Técnica Recomendada: Descarga Vagal</h5>
-                    <p class="text-[11px] text-gray-600">Realiza 3 ciclos de respiración profunda con exhalación prolongada y sacudida corporal.</p>
-                `;
+                document.getElementById('quiz-step-indicator').innerText = 'Completado ✅';
+                document.getElementById('quiz-diagnosis-title').innerText = 'Diagnóstico Somático Detectado';
+                document.getElementById('quiz-diagnosis-desc').innerText = 'Tu sistema nervioso muestra acumulación de tensión.';
+                document.getElementById('recommended-technique-card').innerHTML = '<h5 class="font-bold text-xs">🌟 Descarga Vagal</h5><p class="text-[11px]">Realiza 3 ciclos de respiración profunda.</p>';
             }
         },
-
         resetQuiz() {
             this.state.quizAnswers = {};
             document.getElementById('quiz-result').classList.add('hidden');
@@ -1829,137 +1344,328 @@
             document.getElementById('quiz-step-3').classList.add('hidden');
             document.getElementById('quiz-step-indicator').innerText = 'Paso 1 de 3';
         },
-
-        // ============================================
-        // RESPIRACIÓN GUIADA
-        // ============================================
         iniciarRespiración() {
-            if (this.state.breathInterval) {
-                clearInterval(this.state.breathInterval);
-            }
+            if (this.state.breathInterval) clearInterval(this.state.breathInterval);
             const circle = document.getElementById('breath-circle');
             if (!circle) return;
-            
             let breathState = 0;
-            circle.innerText = "Inhala...";
-            circle.style.transform = "scale(1.0)";
-            
+            circle.innerText = 'Inhala...';
+            circle.style.transform = 'scale(1.0)';
             this.state.breathInterval = setInterval(() => {
-                if (breathState === 0) {
-                    circle.innerText = "Sostén...";
-                    circle.style.transform = "scale(1.3)";
-                    breathState = 1;
-                } else if (breathState === 1) {
-                    circle.innerText = "Exhala...";
-                    circle.style.transform = "scale(0.8)";
-                    breathState = 2;
-                } else {
-                    circle.innerText = "Inhala...";
-                    circle.style.transform = "scale(1.0)";
-                    breathState = 0;
-                }
+                if (breathState === 0) { circle.innerText = 'Sostén...'; circle.style.transform = 'scale(1.3)'; breathState = 1; }
+                else if (breathState === 1) { circle.innerText = 'Exhala...'; circle.style.transform = 'scale(0.8)'; breathState = 2; }
+                else { circle.innerText = 'Inhala...'; circle.style.transform = 'scale(1.0)'; breathState = 0; }
             }, 3500);
         },
-
-        // ============================================
-        // CITAS
-        // ============================================
         procesarCitaWhatsApp() {
             const terapeuta = document.getElementById('select-terapeuta').value;
             const fecha = document.getElementById('fecha-cita').value || 'Sin fecha';
             const hora = document.getElementById('hora-cita').value || 'Sin hora';
-            
-            if (!fecha || !hora) {
-                this.showToast('⚠️ Por favor selecciona fecha y hora', 'error');
-                return;
-            }
-            
-            const mensaje = encodeURIComponent(
-                `Hola, deseo confirmar mi cita con ${terapeuta}.\n📅 Fecha: ${fecha}\n🕐 Hora: ${hora}`
-            );
-            window.open(`https://wa.me/584140000000?text=${mensaje}`, '_blank');
+            if (!fecha || !hora) { this.showToast('⚠️ Selecciona fecha y hora', 'error'); return; }
+            window.open(`https://wa.me/584140000000?text=${encodeURIComponent(`Hola, deseo confirmar mi cita con ${terapeuta}.\n📅 ${fecha}\n🕐 ${hora}`)}`, '_blank');
         },
-
-        // ============================================
-        // ADMIN - MODIFICADO SIN PIN Y CON COLORES
-        // ============================================
         guardarCambiosAdmin() {
-            const newLogo = document.getElementById('admin-logo-url').value;
-            const newBannerImg = document.getElementById('admin-banner-img-url').value;
-            const newBannerText = document.getElementById('admin-banner-text').value;
-            const newColorPrimary = document.getElementById('admin-color-primary').value;
-            const newColorSecondary = document.getElementById('admin-color-secondary').value;
-
-            if (newLogo) {
-                localStorage.setItem('app_logo', newLogo);
-                document.getElementById('app-logo-img').src = newLogo;
-            }
-            if (newBannerImg) {
-                localStorage.setItem('app_banner_img', newBannerImg);
-                document.getElementById('home-hero-banner').style.backgroundImage = `url('${newBannerImg}')`;
-            }
-            if (newBannerText) {
-                localStorage.setItem('app_banner_text', newBannerText);
-                document.getElementById('home-banner-text').innerText = newBannerText;
-            }
-            if (newColorPrimary) {
-                localStorage.setItem('app_color_primary', newColorPrimary);
-                document.documentElement.style.setProperty('--color-primary', newColorPrimary);
-            }
-            if (newColorSecondary) {
-                localStorage.setItem('app_color_secondary', newColorSecondary);
-                document.documentElement.style.setProperty('--color-secondary', newColorSecondary);
-            }
-
-            this.showToast('✅ ¡Cambios guardados y aplicados con éxito!', 'success');
+            const logo = document.getElementById('admin-logo-url').value;
+            const bannerImg = document.getElementById('admin-banner-img-url').value;
+            const bannerText = document.getElementById('admin-banner-text').value;
+            const colorPrimary = document.getElementById('admin-color-primary').value;
+            const colorSecondary = document.getElementById('admin-color-secondary').value;
+            if (logo) { localStorage.setItem('app_logo', logo); document.getElementById('app-logo-img').src = logo; }
+            if (bannerImg) { localStorage.setItem('app_banner_img', bannerImg); document.getElementById('home-hero-banner').style.backgroundImage = `url('${bannerImg}')`; }
+            if (bannerText) { localStorage.setItem('app_banner_text', bannerText); document.getElementById('home-banner-text').innerText = bannerText; }
+            if (colorPrimary) { localStorage.setItem('app_color_primary', colorPrimary); document.documentElement.style.setProperty('--color-primary', colorPrimary); }
+            if (colorSecondary) { localStorage.setItem('app_color_secondary', colorSecondary); document.documentElement.style.setProperty('--color-secondary', colorSecondary); }
+            this.showToast('✅ Cambios guardados', 'success');
             this.switchView('view-home');
         }
+    };
+
+    // ============================================
+    // ASISTENTE VIRTUAL SOFÍA - CERRADOR DE VENTAS
+    // ============================================
+    const Chatbot = {
+        isOpen: false,
+        conversation: [],
+        userName: localStorage.getItem('user_name') || '',
+
+        toggle() {
+            this.isOpen = !this.isOpen;
+            const container = document.getElementById('chatbot-container');
+            const badge = document.getElementById('chatbot-badge');
+            if (this.isOpen) {
+                container.classList.add('open');
+                badge.classList.add('hidden');
+                setTimeout(() => document.getElementById('chatbot-input').focus(), 500);
+            } else {
+                container.classList.remove('open');
+            }
+        },
+
+        addMessage(text, sender = 'bot') {
+            const messagesContainer = document.getElementById('chatbot-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chatbot-message ${sender}`;
+            messageDiv.innerHTML = `<div class="chatbot-bubble">${text}</div>`;
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            this.conversation.push({ sender, text });
+        },
+
+        showTyping() {
+            const messagesContainer = document.getElementById('chatbot-messages');
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'chatbot-message bot';
+            typingDiv.id = 'typing-indicator';
+            typingDiv.innerHTML = '<div class="chatbot-bubble"><div class="chatbot-typing"><span></span><span></span><span></span></div></div>';
+            messagesContainer.appendChild(typingDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        },
+
+        removeTyping() {
+            const typing = document.getElementById('typing-indicator');
+            if (typing) typing.remove();
+        },
+
+        sendMessage() {
+            const input = document.getElementById('chatbot-input');
+            const message = input.value.trim();
+            if (!message) return;
+            this.addMessage(message, 'user');
+            input.value = '';
+            this.processAI(message);
+        },
+
+        sendQuickReply(message) {
+            this.addMessage(message, 'user');
+            this.processAI(message);
+        },
+
+        processAI(userMessage) {
+            this.showTyping();
+            const msg = userMessage.toLowerCase();
+            const userName = this.userName ? this.userName.split(' ')[0] : '';
+            const saludo = userName ? ` ${userName}` : '';
+
+            setTimeout(() => {
+                this.removeTyping();
+                let response = '';
+                let followUp = '';
+
+                // ===== ESCÁNER CUÁNTICO =====
+                if (msg.includes('escáner') || msg.includes('escaner') || msg.includes('cuántico') || msg.includes('cuantico') || msg.includes('bioenergético') || msg.includes('bioenergetico')) {
+                    response = `🔮 <strong>¡El Escáner Cuántico es revolucionario${saludo}!</strong><br><br>
+                    Es una tecnología <strong>bioenergética de última generación</strong> que en <strong>solo 3 minutos</strong> realiza un mapeo completo de:<br><br>
+                    ✨ <strong>9 sistemas corporales</strong><br>
+                    🧬 <strong>39 órganos vitales</strong><br>
+                    ⚡ <strong>Campos energéticos y chakras</strong><br>
+                    🧠 <strong>Niveles de estrés celular</strong><br><br>
+                    <em>Es como un "GPS" de tu salud integral que revela desequilibrios ANTES de que se manifiesten físicamente.</em><br><br>
+                    🎯 <strong>Beneficio directo:</strong> En tu primera sesión recibes un <strong>informe detallado de 20+ páginas</strong> con recomendaciones personalizadas.<br><br>
+                    ¿Quieres que te cuente sobre los <strong>paquetes especiales</strong> que tenemos esta temporada? 🌟`;
+
+                    followUp = 'Paquetes del Escáner Cuántico';
+                }
+
+                // ===== CAMPAMENTO =====
+                else if (msg.includes('campamento') || msg.includes('adultas en fuga') || msg.includes('evento') || msg.includes('retiro')) {
+                    response = `🏕️ <strong>¡Adultas en Fuga es EL evento del año${saludo}!</strong><br><br>
+                    📅 <strong>26 de Septiembre, 2026</strong><br>
+                    📍 <strong>Maracay, Venezuela</strong> (lugar exclusivo revelado al reservar)<br>
+                    💰 <strong>Inversión: $120.00</strong> (precio de preventa 🔥)<br><br>
+                    <strong>¿Qué incluye?</strong><br>
+                    🌿 <strong>3 sesiones de regulación somática</strong> guiadas<br>
+                    🔮 <strong>1 Escáner Cuántico</strong> individual con informe<br>
+                    🧘 <strong>Talleres de respiración y movimiento</strong><br>
+                    🍃 <strong>Alimentación consciente</strong> incluida<br>
+                    🤝 <strong>Red de apoyo femenino</strong> y círculo de cierre<br><br>
+                    <em>Imagina un día completo dedicado a TI, donde tu cuerpo finalmente suelta todo lo que ha cargado...</em><br><br>
+                    ¿Te gustaría asegurar tu cupo ahora? Solo quedan <strong>12 espacios disponibles</strong>. 🎯`;
+
+                    followUp = 'Quiero reservar mi cupo';
+                }
+
+                // ===== AGENDAR CITA =====
+                else if (msg.includes('agendar') || msg.includes('cita') || msg.includes('sesión') || msg.includes('sesion') || msg.includes('consulta')) {
+                    response = `📅 <strong>¡Agendar es muy fácil${saludo}!</strong><br><br>
+                    Contamos con <strong>3 especialistas</strong> certificadas en regulación somática y escáner cuántico:<br><br>
+                    👩‍⚕️ <strong>Dra. Carla Rodríguez</strong> - Regulación somática avanzada<br>
+                    👩‍⚕️ <strong>Dra. María González</strong> - Escáner cuántico y bioenergética<br>
+                    👩‍⚕️ <strong>Lic. Ana Pérez</strong> - Terapia integrativa y trauma<br><br>
+                    📍 <strong>Tipos de sesión:</strong><br>
+                    • Virtual (Zoom) - $45<br>
+                    • Presencial (Maracay) - $65<br>
+                    • Escáner Cuántico + Consulta - $85<br><br>
+                    ¿Quieres que te guíe al calendario de citas ahora mismo?`;
+
+                    followUp = 'Ir a agendar cita';
+                }
+
+                // ===== PRECIOS Y PAGOS =====
+                else if (msg.includes('precio') || msg.includes('pago') || msg.includes('costo') || msg.includes('inversión') || msg.includes('inversion') || msg.includes('cuánto') || msg.includes('cuanto')) {
+                    response = `💳 <strong>Inversión en tu bienestar${saludo}:</strong><br><br>
+                    🔮 <strong>Escáner Cuántico:</strong> $45 (informe detallado)<br>
+                    🧘 <strong>Sesión de Regulación Somática:</strong> $45 virtual / $65 presencial<br>
+                    🏕️ <strong>Campamento Adultas en Fuga:</strong> $120 (preventa)<br>
+                    📦 <strong>Pack Bienestar Completo:</strong> $150 (escáner + 3 sesiones)<br><br>
+                    <strong>Métodos de pago disponibles:</strong><br>
+                    🇻🇪 Pago Móvil BDV y BNC<br>
+                    🟡 Binance Pay (USDT)<br>
+                    🇺🇸 Zelle (próximamente)<br><br>
+                    <em>Invertir en tu salud hoy es el mejor regalo que puedes hacerte.</em> ¿Te ayudo a elegir el plan ideal para ti? ✨`;
+
+                    followUp = 'Pack Bienestar Completo';
+                }
+
+                // ===== REGULACIÓN SOMÁTICA =====
+                else if (msg.includes('regulación') || msg.includes('regulacion') || msg.includes('somática') || msg.includes('somatica') || msg.includes('gimnasio emocional')) {
+                    response = `🧘 <strong>La Regulación Somática es tu puerta a la calma interior${saludo}.</strong><br><br>
+                    Es un método <strong>científicamente respaldado</strong> que trabaja directamente con tu <strong>sistema nervioso</strong> para:<br><br>
+                    🧠 <strong>Reducir ansiedad y estrés crónico</strong><br>
+                    💪 <strong>Liberar tensiones acumuladas en el cuerpo</strong><br>
+                    😴 <strong>Mejorar la calidad del sueño</strong><br>
+                    ❤️ <strong>Regular el sistema nervioso autónomo</strong><br><br>
+                    En nuestro <strong>Gimnasio Emocional</strong> puedes hacer un <strong>chequeo corporal gratuito</strong> ahora mismo y recibir una técnica personalizada.<br><br>
+                    ¿Probamos juntos? Solo toma 2 minutos. 🎯`;
+
+                    followUp = 'Ir al Gimnasio Emocional';
+                }
+
+                // ===== PACK BIENESTAR =====
+                else if (msg.includes('pack') || msg.includes('paquete') || msg.includes('completo')) {
+                    response = `📦 <strong>¡El Pack Bienestar Completo es nuestra oferta estrella${saludo}!</strong><br><br>
+                    Por solo <strong>$150</strong> (valor real $195), obtienes:<br><br>
+                    🔮 <strong>1 Escáner Cuántico</strong> completo con informe de 20+ páginas<br>
+                    🧘 <strong>3 Sesiones de Regulación Somática</strong> personalizadas<br>
+                    📱 <strong>Acceso al Gimnasio Emocional</strong> premium<br>
+                    🎁 <strong>BONUS:</strong> Guía digital "Habita tu Cuerpo"<br><br>
+                    <em>Es el camino más completo para transformar tu bienestar en 30 días.</em><br><br>
+                    ¿Lo reservamos juntos? Puedes pagar con Pago Móvil o Binance. 🚀`;
+
+                    followUp = 'Quiero el Pack Completo';
+                }
+
+                // ===== HABLAR CON HUMANO =====
+                else if (msg.includes('humano') || msg.includes('persona') || msg.includes('especialista') || msg.includes('whatsapp') || msg.includes('contacto')) {
+                    response = `📞 <strong>¡Claro que sí${saludo}!</strong> Nada reemplaza el contacto humano cuando se trata de tu bienestar.<br><br>
+                    Puedes contactarnos directamente:<br><br>
+                    📱 <strong>WhatsApp:</strong> <a href="https://wa.me/584140000000" target="_blank" style="color:var(--color-primary);text-decoration:underline;">+58 414-0000000</a><br>
+                    📧 <strong>Email:</strong> hola@atrevetehealthtech.com<br>
+                    📍 <strong>Consultorio:</strong> Maracay, Venezuela (prev cita)<br><br>
+                    ¿Prefieres que te llamemos nosotros? Déjame tu nombre y te contacto en minutos. 💚`;
+                }
+
+                // ===== RESERVAR =====
+                else if (msg.includes('reservar') || msg.includes('cupo') || msg.includes('comprar') || msg.includes('asegurar')) {
+                    response = `🎯 <strong>¡Excelente decisión${saludo}!</strong> Estás a un paso de transformar tu bienestar.<br><br>
+                    Para asegurar tu cupo en el <strong>Campamento Adultas en Fuga</strong>:<br><br>
+                    1️⃣ Ve a la sección <strong>Pagos</strong> (botón 💳 abajo)<br>
+                    2️⃣ Selecciona tu método de pago preferido<br>
+                    3️⃣ Reporta tu comprobante<br><br>
+                    <strong>Solo quedan 12 cupos</strong> y la preventa termina pronto. Las que ya reservaron están emocionadas. ¿Te acompaño a la pasarela de pago? 🏃‍♀️`;
+
+                    followUp = 'Ir a Pagos';
+                }
+
+                // ===== SALUDOS =====
+                else if (msg.includes('hola') || msg.includes('buenos') || msg.includes('saludos') || msg.includes('buenas')) {
+                    response = `¡Hola${saludo}! 👋 Soy <strong>Sofía</strong>, tu asesora de bienestar en <strong>Atrévete HealthTech</strong>.<br><br>
+                    Estoy aquí para guiarte hacia tu mejor versión. Cuéntame:<br><br>
+                    🔮 ¿Te interesa el <strong>Escáner Cuántico</strong>?<br>
+                    🏕️ ¿Quieres saber del <strong>Campamento Adultas en Fuga</strong>?<br>
+                    📅 ¿Necesitas <strong>agendar una sesión</strong>?<br>
+                    💰 ¿Consultas sobre <strong>precios y paquetes</strong>?<br><br>
+                    <em>Estoy aquí para ti. ¿Por dónde empezamos?</em> ✨`;
+                }
+
+                // ===== GRACIAS =====
+                else if (msg.includes('gracias') || msg.includes('excelente') || msg.includes('genial')) {
+                    response = `¡A ti por confiar${saludo}! 💚<br><br>
+                    Recuerda que en <strong>Atrévete HealthTech</strong> estamos para acompañarte en cada paso de tu viaje de bienestar.<br><br>
+                    <em>"El cuerpo escucha lo que la mente calla."</em> - ¿Hay algo más en lo que pueda ayudarte hoy? 🌟`;
+                }
+
+                // ===== DEFAULT =====
+                else {
+                    response = `Excelente pregunta${saludo}. Permíteme ayudarte de la mejor manera:<br><br>
+                    Estos son los temas en los que soy <strong>experta</strong>:<br><br>
+                    🔮 <strong>Escáner Cuántico</strong> - Tecnología bioenergética avanzada<br>
+                    🏕️ <strong>Campamento Adultas en Fuga</strong> - 26 Sep, Maracay<br>
+                    📅 <strong>Agendar sesiones</strong> - Virtuales y presenciales<br>
+                    💳 <strong>Planes y precios</strong> - Desde $45<br>
+                    🧘 <strong>Regulación Somática</strong> - Técnicas personalizadas<br><br>
+                    ¿Cuál de estos temas te gustaría explorar? ¡Estoy aquí para ti! ✨`;
+                }
+
+                this.addMessage(response, 'bot');
+
+                // Agregar opción de seguimiento
+                if (followUp) {
+                    setTimeout(() => {
+                        this.addMessage(`¿Quieres que te lleve a <strong>"${followUp}"</strong>? Solo dime "sí" y te guío. 😊`, 'bot');
+                    }, 500);
+                }
+            }, 1200);
+        },
+
+        // Manejar navegación desde el chat
+        navigateTo(viewId) {
+            App.switchView(viewId);
+            this.addMessage('¡Perfecto! Te he llevado a la sección solicitada. ¿Necesitas algo más? 😊', 'bot');
+        }
+    };
+
+    // Escuchar respuestas del usuario para navegación
+    const originalProcessAI = Chatbot.processAI;
+    Chatbot.processAI = function(userMessage) {
+        const msg = userMessage.toLowerCase();
+        if (msg.includes('sí') || msg.includes('si') || msg.includes('claro') || msg.includes('vamos') || msg.includes('dale')) {
+            if (this.conversation.length > 0) {
+                const lastBotMsg = this.conversation.filter(m => m.sender === 'bot').pop();
+                if (lastBotMsg) {
+                    if (lastBotMsg.text.includes('Ir a agendar cita') || lastBotMsg.text.includes('calendario')) {
+                        this.addMessage('¡Vamos! Te llevo a la sección de citas. 📅', 'bot');
+                        setTimeout(() => App.switchView('view-citas'), 800);
+                        return;
+                    }
+                    if (lastBotMsg.text.includes('Ir a Pagos') || lastBotMsg.text.includes('pasarela')) {
+                        this.addMessage('¡Perfecto! Vamos a asegurar tu cupo. 💳', 'bot');
+                        setTimeout(() => App.switchView('view-pagos'), 800);
+                        return;
+                    }
+                    if (lastBotMsg.text.includes('Gimnasio Emocional')) {
+                        this.addMessage('¡Excelente elección! Vamos a chequear tu cuerpo. 🧘', 'bot');
+                        setTimeout(() => App.switchView('view-regulacion'), 800);
+                        return;
+                    }
+                    if (lastBotMsg.text.includes('Pack Completo') || lastBotMsg.text.includes('Pack Bienestar')) {
+                        this.addMessage('¡Vamos por ese Pack Completo! Te llevo a pagos. 💳', 'bot');
+                        setTimeout(() => App.switchView('view-pagos'), 800);
+                        return;
+                    }
+                }
+            }
+        }
+        originalProcessAI.call(this, userMessage);
     };
 
     // ============================================
     // INICIALIZACIÓN
     // ============================================
     document.addEventListener('DOMContentLoaded', function() {
-        // Cargar configuraciones visuales
         const savedLogo = localStorage.getItem('app_logo');
         const savedBannerImg = localStorage.getItem('app_banner_img');
         const savedBannerText = localStorage.getItem('app_banner_text');
         const savedColorPrimary = localStorage.getItem('app_color_primary');
         const savedColorSecondary = localStorage.getItem('app_color_secondary');
 
-        // Aplicar colores personalizados
-        if (savedColorPrimary) {
-            document.documentElement.style.setProperty('--color-primary', savedColorPrimary);
-        }
-        if (savedColorSecondary) {
-            document.documentElement.style.setProperty('--color-secondary', savedColorSecondary);
-        }
+        if (savedColorPrimary) document.documentElement.style.setProperty('--color-primary', savedColorPrimary);
+        if (savedColorSecondary) document.documentElement.style.setProperty('--color-secondary', savedColorSecondary);
+        if (savedLogo) { document.getElementById('app-logo-img').src = savedLogo; const al = document.getElementById('admin-logo-url'); if (al) al.value = savedLogo; }
+        if (savedBannerImg) { document.getElementById('home-hero-banner').style.backgroundImage = `url('${savedBannerImg}')`; const ab = document.getElementById('admin-banner-img-url'); if (ab) ab.value = savedBannerImg; }
+        if (savedBannerText) { document.getElementById('home-banner-text').innerText = savedBannerText; const at = document.getElementById('admin-banner-text'); if (at) at.value = savedBannerText; }
+        if (savedColorPrimary) { const acp = document.getElementById('admin-color-primary'); if (acp) acp.value = savedColorPrimary; }
+        if (savedColorSecondary) { const acs = document.getElementById('admin-color-secondary'); if (acs) acs.value = savedColorSecondary; }
 
-        if (savedLogo) {
-            document.getElementById('app-logo-img').src = savedLogo;
-            const adminLogo = document.getElementById('admin-logo-url');
-            if (adminLogo) adminLogo.value = savedLogo;
-        }
-        if (savedBannerImg) {
-            document.getElementById('home-hero-banner').style.backgroundImage = `url('${savedBannerImg}')`;
-            const adminBanner = document.getElementById('admin-banner-img-url');
-            if (adminBanner) adminBanner.value = savedBannerImg;
-        }
-        if (savedBannerText) {
-            document.getElementById('home-banner-text').innerText = savedBannerText;
-            const adminText = document.getElementById('admin-banner-text');
-            if (adminText) adminText.value = savedBannerText;
-        }
-        if (savedColorPrimary) {
-            const adminColorPrimary = document.getElementById('admin-color-primary');
-            if (adminColorPrimary) adminColorPrimary.value = savedColorPrimary;
-        }
-        if (savedColorSecondary) {
-            const adminColorSecondary = document.getElementById('admin-color-secondary');
-            if (adminColorSecondary) adminColorSecondary.value = savedColorSecondary;
-        }
-
-        // Cargar datos del usuario
         App.state.user.name = localStorage.getItem('user_name') || '';
         App.state.user.email = localStorage.getItem('user_email') || '';
         App.state.user.role = localStorage.getItem('user_role') || 'user';
@@ -1974,35 +1680,37 @@
         App.state.legalAceptado = localStorage.getItem('legal_aceptado') === 'true';
         App.state.isAuthenticated = !!localStorage.getItem('user_email');
 
-        // Actualizar UI
+        Chatbot.userName = App.state.user.name;
+
         App.actualizarPerfilUI();
         App.actualizarHeader();
         App.actualizarNav();
-
-        // Seleccionar vista inicial
         App.switchView('view-home');
-
-        // Seleccionar método de pago por defecto
         App.selectPaymentMethod('pm_bdv');
 
-        // Validación de contraseña en tiempo real
         const passwordInput = document.getElementById('input-password');
         const passwordError = document.getElementById('password-error');
         if (passwordInput && passwordError) {
             passwordInput.addEventListener('input', function() {
-                if (this.value.length > 0 && this.value.length < 6) {
-                    passwordError.classList.remove('hidden');
-                } else {
-                    passwordError.classList.add('hidden');
-                }
+                if (this.value.length > 0 && this.value.length < 6) passwordError.classList.remove('hidden');
+                else passwordError.classList.add('hidden');
             });
         }
 
-        console.log('🚀 Atrévete HealthTech App inicializada correctamente');
-        console.log('👤 Usuario autenticado:', App.state.isAuthenticated);
+        // Mostrar notificación del chatbot después de 5 segundos
+        setTimeout(() => {
+            const badge = document.getElementById('chatbot-badge');
+            if (badge && !Chatbot.isOpen) {
+                badge.classList.remove('hidden');
+                badge.textContent = '1';
+            }
+        }, 5000);
+
+        console.log('🚀 Atrévete HealthTech con Asistente IA Sofía inicializado');
     });
 
     window.App = App;
+    window.Chatbot = Chatbot;
   </script>
 </body>
 </html>
