@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atrévete HealthTech - Plataforma Integrativa</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Identity Services -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <style>
         :root {
             --color-primary: #E27D60;
@@ -55,9 +57,7 @@
             transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
             cursor: pointer;
         }
-        .clay-btn-secondary:hover {
-            transform: translateY(-2px);
-        }
+        .clay-btn-secondary:hover { transform: translateY(-2px); }
 
         .clay-btn-option {
             background: #FFFFFF;
@@ -70,10 +70,7 @@
             padding: 12px 16px;
             cursor: pointer;
         }
-        .clay-btn-option:hover {
-            transform: translateY(-2px);
-            border-color: rgba(226, 125, 96, 0.4);
-        }
+        .clay-btn-option:hover { transform: translateY(-2px); border-color: rgba(226, 125, 96, 0.4); }
 
         .clay-btn-pay {
             background: #FFFFFF;
@@ -84,9 +81,7 @@
             transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
             cursor: pointer;
         }
-        .clay-btn-pay:hover {
-            transform: translateY(-2px);
-        }
+        .clay-btn-pay:hover { transform: translateY(-2px); }
         .clay-btn-pay.active-pay {
             border-color: var(--color-primary);
             background: #FFF8F6;
@@ -103,56 +98,25 @@
         }
 
         .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2px;
-            padding: 6px 10px;
-            border-radius: 16px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-decoration: none;
-            min-width: 48px;
-            position: relative;
+            display: flex; flex-direction: column; align-items: center; gap: 2px;
+            padding: 6px 10px; border-radius: 16px; cursor: pointer; transition: all 0.2s ease;
+            text-decoration: none; min-width: 48px; position: relative;
         }
         .nav-item:hover { background: rgba(226, 125, 96, 0.08); }
         .nav-item.active { background: rgba(226, 125, 96, 0.15); }
         .nav-item .nav-icon { font-size: 20px; line-height: 1; }
-        .nav-item .nav-label {
-            font-size: 9px;
-            font-weight: 600;
-            color: var(--color-secondary);
-            transition: color 0.2s ease;
-        }
+        .nav-item .nav-label { font-size: 9px; font-weight: 600; color: var(--color-secondary); transition: color 0.2s ease; }
         .nav-item.active .nav-label { color: var(--color-primary); }
         .nav-item .nav-badge {
-            position: absolute;
-            top: 2px;
-            right: 4px;
-            background: var(--color-primary);
-            color: white;
-            font-size: 8px;
-            font-weight: bold;
-            padding: 1px 5px;
-            border-radius: 9999px;
-            min-width: 16px;
-            text-align: center;
+            position: absolute; top: 2px; right: 4px; background: var(--color-primary); color: white;
+            font-size: 8px; font-weight: bold; padding: 1px 5px; border-radius: 9999px; min-width: 16px; text-align: center;
         }
 
         .toast {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 9999;
-            padding: 16px 24px;
-            border-radius: 16px;
-            color: white;
-            font-weight: bold;
-            font-size: 14px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-            transform: translateX(120%);
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            max-width: 90%;
+            position: fixed; top: 20px; right: 20px; z-index: 9999; padding: 16px 24px;
+            border-radius: 16px; color: white; font-weight: bold; font-size: 14px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2); transform: translateX(120%);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); max-width: 90%;
         }
         .toast.show { transform: translateX(0); }
         .toast-success { background: #4CAF50; }
@@ -161,405 +125,163 @@
         .toast-warning { background: #FF9800; }
 
         .spinner {
-            border: 3px solid rgba(255,255,255,0.3);
-            border-top: 3px solid #ffffff;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            animation: spin 0.8s linear infinite;
-            display: inline-block;
-            margin-right: 8px;
+            border: 3px solid rgba(255,255,255,0.3); border-top: 3px solid #ffffff;
+            border-radius: 50%; width: 20px; height: 20px; animation: spin 0.8s linear infinite;
+            display: inline-block; margin-right: 8px;
         }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        .focus-visible:focus-visible {
-            outline: 2px solid var(--color-primary);
-            outline-offset: 2px;
-        }
+        .focus-visible:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }
 
         .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(8px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10000;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center;
+            z-index: 10000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
         }
         .modal-overlay.active { opacity: 1; pointer-events: all; }
         .modal-content {
-            background: white;
-            border-radius: 32px;
-            padding: 32px;
-            max-width: 420px;
-            width: 92%;
-            transform: scale(0.9) translateY(20px);
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            max-height: 90vh;
-            overflow-y: auto;
+            background: white; border-radius: 32px; padding: 32px; max-width: 420px; width: 92%;
+            transform: scale(0.9) translateY(20px); transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            max-height: 90vh; overflow-y: auto;
         }
         .modal-overlay.active .modal-content { transform: scale(1) translateY(0); }
 
         .verified-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: #E8F5E9;
-            color: #2E7D32;
-            padding: 4px 12px;
-            border-radius: 9999px;
-            font-size: 11px;
-            font-weight: bold;
+            display: inline-flex; align-items: center; gap: 6px; background: #E8F5E9;
+            color: #2E7D32; padding: 4px 12px; border-radius: 9999px; font-size: 11px; font-weight: bold;
         }
         .unverified-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: #FFF3E0;
-            color: #E65100;
-            padding: 4px 12px;
-            border-radius: 9999px;
-            font-size: 11px;
-            font-weight: bold;
+            display: inline-flex; align-items: center; gap: 6px; background: #FFF3E0;
+            color: #E65100; padding: 4px 12px; border-radius: 9999px; font-size: 11px; font-weight: bold;
         }
 
         .google-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            background: white;
-            border: 1px solid #DADCE0;
-            border-radius: 9999px;
-            padding: 12px 24px;
-            font-size: 14px;
-            font-weight: 500;
-            color: #3C4043;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            width: 100%;
-            max-width: 340px;
-            margin: 0 auto;
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+            background: white; border: 1px solid #DADCE0; border-radius: 9999px; padding: 12px 24px;
+            font-size: 14px; font-weight: 500; color: #3C4043; cursor: pointer; transition: all 0.2s ease;
+            width: 100%; max-width: 340px; margin: 0 auto;
         }
-        .google-btn:hover {
-            background: #F8F9FA;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
-        }
+        .google-btn:hover { background: #F8F9FA; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
         .google-btn svg { width: 20px; height: 20px; }
 
         .header-profile-btn {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px 14px 6px 6px;
-            border-radius: 9999px;
-            background: white;
-            border: 1px solid var(--color-primary)/30;
-            box-shadow: 2px 2px 8px rgba(0,0,0,0.05);
-            transition: all 0.2s ease;
-            cursor: pointer;
+            display: flex; align-items: center; gap: 8px; padding: 6px 14px 6px 6px;
+            border-radius: 9999px; background: white; border: 1px solid var(--color-primary)/30;
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.05); transition: all 0.2s ease; cursor: pointer;
         }
-        .header-profile-btn:hover {
-            border-color: var(--color-primary);
-            box-shadow: 4px 4px 12px rgba(0,0,0,0.1);
-            transform: translateY(-1px);
-        }
+        .header-profile-btn:hover { border-color: var(--color-primary); box-shadow: 4px 4px 12px rgba(0,0,0,0.1); transform: translateY(-1px); }
         .header-profile-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 9999px;
-            background: var(--color-primary);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 12px;
+            width: 32px; height: 32px; border-radius: 9999px; background: var(--color-primary);
+            color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px;
         }
         .header-profile-name {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--color-secondary);
-            max-width: 80px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+            font-size: 12px; font-weight: 600; color: var(--color-secondary);
+            max-width: 80px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
         }
 
         .header-action-btn {
-            padding: 8px 16px;
-            border-radius: 9999px;
-            font-size: 12px;
-            font-weight: 600;
-            transition: all 0.2s ease;
-            cursor: pointer;
-            border: none;
+            padding: 8px 16px; border-radius: 9999px; font-size: 12px; font-weight: 600;
+            transition: all 0.2s ease; cursor: pointer; border: none;
         }
         .header-action-btn:hover { transform: translateY(-1px); }
-        .btn-login {
-            background: var(--color-primary);
-            color: white;
-            box-shadow: 3px 3px 8px rgba(226, 125, 96, 0.3);
-        }
-        .btn-register {
-            background: transparent;
-            color: var(--color-secondary);
-            border: 1.5px solid var(--color-secondary);
-        }
+        .btn-login { background: var(--color-primary); color: white; box-shadow: 3px 3px 8px rgba(226, 125, 96, 0.3); }
+        .btn-register { background: transparent; color: var(--color-secondary); border: 1.5px solid var(--color-secondary); }
         .btn-register:hover { background: var(--color-secondary); color: white; }
 
-        .profile-card {
-            background: linear-gradient(135deg, #FFFFFF 0%, #F8F5F2 100%);
-        }
+        .profile-card { background: linear-gradient(135deg, #FFFFFF 0%, #F8F5F2 100%); }
         .profile-avatar-large {
-            width: 100px;
-            height: 100px;
-            border-radius: 9999px;
-            border: 4px solid white;
+            width: 100px; height: 100px; border-radius: 9999px; border: 4px solid white;
             box-shadow: 0 8px 24px rgba(226, 125, 96, 0.2);
         }
-        .profile-stat {
-            background: rgba(226, 125, 96, 0.06);
-            border-radius: 16px;
-            padding: 12px 16px;
-            text-align: center;
-        }
-        .profile-stat .number {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--color-primary);
-        }
-        .profile-stat .label {
-            font-size: 10px;
-            color: var(--color-secondary);
-            font-weight: 500;
-        }
+        .profile-stat { background: rgba(226, 125, 96, 0.06); border-radius: 16px; padding: 12px 16px; text-align: center; }
+        .profile-stat .number { font-size: 20px; font-weight: 700; color: var(--color-primary); }
+        .profile-stat .label { font-size: 10px; color: var(--color-secondary); font-weight: 500; }
 
         @keyframes slideUp {
             from { opacity: 0; transform: translateY(30px) scale(0.95); }
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
-        .modal-legal-content {
-            animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
         }
+        .animate-in { animation: fadeInScale 0.3s ease forwards; }
+        .modal-legal-content { animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
 
-        /* Estilos del Asistente Virtual */
+        /* Chatbot styles */
         .chatbot-container {
-            position: fixed;
-            bottom: 100px;
-            right: 20px;
-            z-index: 50;
-            width: 380px;
-            max-width: 90vw;
-            height: 520px;
-            max-height: 70vh;
-            background: white;
-            border-radius: 24px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
+            position: fixed; bottom: 100px; right: 20px; z-index: 50; width: 380px; max-width: 90vw;
+            height: 520px; max-height: 70vh; background: white; border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3); display: flex; flex-direction: column; overflow: hidden;
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            transform: translateY(20px) scale(0.95);
-            opacity: 0;
-            pointer-events: none;
+            transform: translateY(20px) scale(0.95); opacity: 0; pointer-events: none;
         }
-        .chatbot-container.open {
-            transform: translateY(0) scale(1);
-            opacity: 1;
-            pointer-events: all;
-        }
+        .chatbot-container.open { transform: translateY(0) scale(1); opacity: 1; pointer-events: all; }
         .chatbot-header {
             background: linear-gradient(135deg, var(--color-primary), #c06a51);
-            color: white;
-            padding: 16px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            color: white; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between;
         }
         .chatbot-header-info { display: flex; align-items: center; gap: 12px; }
         .chatbot-avatar {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            width: 44px; height: 44px; border-radius: 50%; background: white;
+            display: flex; align-items: center; justify-content: center; font-size: 22px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
-        .chatbot-status {
-            width: 10px;
-            height: 10px;
-            background: #4CAF50;
-            border-radius: 50%;
-            display: inline-block;
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-        .chatbot-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 16px;
-            background: #F8F6F3;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
+        .chatbot-status { width: 10px; height: 10px; background: #4CAF50; border-radius: 50%; display: inline-block; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .chatbot-messages { flex: 1; overflow-y: auto; padding: 16px; background: #F8F6F3; display: flex; flex-direction: column; gap: 12px; }
         .chatbot-message { display: flex; gap: 8px; animation: fadeInUp 0.3s ease; }
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .chatbot-message.bot { align-items: flex-start; }
         .chatbot-message.user { align-items: flex-start; flex-direction: row-reverse; }
         .chatbot-bubble {
-            padding: 12px 16px;
-            border-radius: 18px;
-            font-size: 13px;
-            line-height: 1.5;
-            max-width: 85%;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            padding: 12px 16px; border-radius: 18px; font-size: 13px; line-height: 1.5;
+            max-width: 85%; box-shadow: 0 2px 8px rgba(0,0,0,0.06);
         }
-        .chatbot-message.bot .chatbot-bubble {
-            background: white;
-            color: #4A5D4E;
-            border-bottom-left-radius: 4px;
-        }
-        .chatbot-message.user .chatbot-bubble {
-            background: var(--color-primary);
-            color: white;
-            border-bottom-right-radius: 4px;
-        }
+        .chatbot-message.bot .chatbot-bubble { background: white; color: #4A5D4E; border-bottom-left-radius: 4px; }
+        .chatbot-message.user .chatbot-bubble { background: var(--color-primary); color: white; border-bottom-right-radius: 4px; }
         .chatbot-typing { display: flex; gap: 4px; padding: 12px 16px; }
-        .chatbot-typing span {
-            width: 8px;
-            height: 8px;
-            background: #999;
-            border-radius: 50%;
-            animation: typing 1.4s infinite;
-        }
+        .chatbot-typing span { width: 8px; height: 8px; background: #999; border-radius: 50%; animation: typing 1.4s infinite; }
         .chatbot-typing span:nth-child(2) { animation-delay: 0.2s; }
         .chatbot-typing span:nth-child(3) { animation-delay: 0.4s; }
-        @keyframes typing {
-            0%, 60%, 100% { transform: translateY(0); }
-            30% { transform: translateY(-8px); }
-        }
+        @keyframes typing { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-8px); } }
         .chatbot-options {
-            padding: 8px 16px;
-            background: white;
-            border-top: 1px solid #eee;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            max-height: 80px;
-            overflow-y: auto;
+            padding: 8px 16px; background: white; border-top: 1px solid #eee;
+            display: flex; flex-wrap: wrap; gap: 6px; max-height: 80px; overflow-y: auto;
         }
         .chatbot-option-btn {
-            font-size: 11px;
-            padding: 6px 14px;
-            border-radius: 20px;
-            border: 1.5px solid var(--color-primary);
-            color: var(--color-primary);
-            background: white;
-            cursor: pointer;
-            transition: all 0.2s;
-            white-space: nowrap;
-            font-weight: 500;
+            font-size: 11px; padding: 6px 14px; border-radius: 20px; border: 1.5px solid var(--color-primary);
+            color: var(--color-primary); background: white; cursor: pointer; transition: all 0.2s; white-space: nowrap; font-weight: 500;
         }
         .chatbot-option-btn:hover { background: var(--color-primary); color: white; }
-        .chatbot-input-area {
-            padding: 12px 16px;
-            background: white;
-            border-top: 1px solid #eee;
-            display: flex;
-            gap: 8px;
-        }
+        .chatbot-input-area { padding: 12px 16px; background: white; border-top: 1px solid #eee; display: flex; gap: 8px; }
         .chatbot-input {
-            flex: 1;
-            padding: 10px 16px;
-            border-radius: 24px;
-            border: 1.5px solid #e0deda;
-            font-size: 13px;
-            background: #F8F6F3;
-            outline: none;
-            transition: border-color 0.2s;
+            flex: 1; padding: 10px 16px; border-radius: 24px; border: 1.5px solid #e0deda;
+            font-size: 13px; background: #F8F6F3; outline: none; transition: border-color 0.2s;
         }
         .chatbot-input:focus { border-color: var(--color-primary); }
         .chatbot-send-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--color-primary);
-            color: white;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
+            width: 40px; height: 40px; border-radius: 50%; background: var(--color-primary);
+            color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s;
         }
-        .chatbot-send-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(226, 125, 96, 0.4);
-        }
+        .chatbot-send-btn:hover { transform: scale(1.05); box-shadow: 0 4px 12px rgba(226, 125, 96, 0.4); }
         .chatbot-floating-btn {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            z-index: 51;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--color-primary), #c06a51);
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 26px;
-            box-shadow: 0 8px 24px rgba(226, 125, 96, 0.4);
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            position: fixed; bottom: 24px; right: 24px; z-index: 51; width: 60px; height: 60px;
+            border-radius: 50%; background: linear-gradient(135deg, var(--color-primary), #c06a51);
+            color: white; border: none; cursor: pointer; font-size: 26px;
+            box-shadow: 0 8px 24px rgba(226, 125, 96, 0.4); transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: flex; align-items: center; justify-content: center;
         }
-        .chatbot-floating-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 12px 32px rgba(226, 125, 96, 0.5);
-        }
+        .chatbot-floating-btn:hover { transform: scale(1.1); box-shadow: 0 12px 32px rgba(226, 125, 96, 0.5); }
         .chatbot-floating-btn .badge {
-            position: absolute;
-            top: -4px;
-            right: -4px;
-            background: #f44336;
-            color: white;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            font-size: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
+            position: absolute; top: -4px; right: -4px; background: #f44336; color: white;
+            width: 20px; height: 20px; border-radius: 50%; font-size: 10px;
+            display: flex; align-items: center; justify-content: center; font-weight: bold;
         }
     </style>
 </head>
 <body>
 
-  <!-- ==================== BARRERA LEGAL ==================== -->
+  <!-- BARRERA LEGAL -->
   <div id="modal-legal-gate" class="fixed inset-0 bg-black/60 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
     <div class="bg-[#F9F6F0] w-full max-w-lg rounded-3xl p-6 shadow-[8px_8px_16px_#d1cdc7,-8px_-8px_16px_#ffffff] border border-white/60 flex flex-col max-h-[90vh] modal-legal-content">
       <div class="text-center pb-3 border-b border-gray-200">
@@ -569,32 +291,22 @@
       <div class="overflow-y-auto my-4 pr-2 space-y-4 text-xs text-gray-600 text-justify max-h-[60vh] leading-relaxed">
         <p class="font-bold text-center text-[var(--color-primary)]">Atrévete HealthTech — Versión Unificada 2026</p>
         <div class="bg-amber-50 p-3 border-l-4 border-amber-400 rounded-r-lg text-[11px] text-amber-900">
-          <strong>AVISO CRÍTICO DE DESLINDE MÉDICO Y CLÍNICO:</strong><br>
-          Atrévete HealthTech, sus propietarios y la herramienta "Escáner Cuántico" ofrecen evaluaciones bioenergéticas holísticas y de regulación somática. <strong>NO constituyen diagnóstico médico, tratamiento psiquiátrico ni prescripción farmacológica.</strong>
+          <strong>AVISO CRÍTICO:</strong> El "Escáner Cuántico" ofrece evaluaciones bioenergéticas. <strong>NO constituyen diagnóstico médico.</strong>
         </div>
-        <h4 class="font-bold text-[var(--color-secondary)]">1. Aceptación por Adhesión</h4>
-        <p>Al hacer clic en "Acepto", confirmas ser mayor de edad y aceptas el uso de LA PLATAFORMA bajo la Ley de Mensajes de Datos y Firmas Electrónicas de la República Bolivariana de Venezuela.</p>
-        <h4 class="font-bold text-[var(--color-secondary)]">2. Protección de Datos Personales</h4>
-        <p>Tus datos de bienestar se procesan bajo estricta confidencialidad.</p>
-        <h4 class="font-bold text-[var(--color-secondary)]">3. Eventos Presenciales</h4>
-        <p>La asistencia se realiza bajo propio riesgo del participante.</p>
-        <h4 class="font-bold text-[var(--color-secondary)]">4. Límite de Responsabilidad</h4>
-        <p>Los pagos no son reembolsables. Responsabilidad limitada al monto pagado.</p>
-        <h4 class="font-bold text-[var(--color-secondary)]">5. Jurisdicción</h4>
-        <p>Este acuerdo se rige bajo las leyes de Venezuela.</p>
+        <h4 class="font-bold text-[var(--color-secondary)]">1. Aceptación</h4><p>Al hacer clic en "Acepto", confirmas ser mayor de edad.</p>
+        <h4 class="font-bold text-[var(--color-secondary)]">2. Protección de Datos</h4><p>Tus datos se procesan bajo estricta confidencialidad.</p>
+        <h4 class="font-bold text-[var(--color-secondary)]">3. Eventos</h4><p>Asistencia bajo propio riesgo.</p>
+        <h4 class="font-bold text-[var(--color-secondary)]">4. Pagos</h4><p>No reembolsables. Responsabilidad limitada.</p>
+        <h4 class="font-bold text-[var(--color-secondary)]">5. Jurisdicción</h4><p>Leyes de Venezuela.</p>
       </div>
       <div class="pt-3 border-t border-gray-200 space-y-2">
-        <button onclick="App.aceptarLegalYContinuar()" class="w-full py-3.5 bg-[var(--color-primary)] text-white font-bold rounded-2xl shadow-[4px_4px_8px_#d1cdc7,-4px_-4px_8px_#ffffff] hover:opacity-95 transition-all text-xs tracking-wide">
-          Acepto Términos y Continuar
-        </button>
-        <button onclick="App.cancelarLegal()" class="w-full py-2 text-[11px] text-gray-400 hover:text-gray-600 font-medium">
-          Cancelar y Volver al Inicio
-        </button>
+        <button onclick="App.aceptarLegalYContinuar()" class="w-full py-3.5 bg-[var(--color-primary)] text-white font-bold rounded-2xl shadow-[4px_4px_8px_#d1cdc7,-4px_-4px_8px_#ffffff] hover:opacity-95 transition-all text-xs tracking-wide">Acepto Términos y Continuar</button>
+        <button onclick="App.cancelarLegal()" class="w-full py-2 text-[11px] text-gray-400 hover:text-gray-600 font-medium">Cancelar</button>
       </div>
     </div>
   </div>
 
-  <!-- ================= CABECERA ================= -->
+  <!-- CABECERA -->
   <header class="pt-3 pb-1 px-6 max-w-md mx-auto">
     <div class="flex items-center justify-between">
       <div class="cursor-pointer" onclick="App.switchView('view-home')">
@@ -615,10 +327,9 @@
     </div>
   </header>
 
-  <!-- Toast -->
   <div id="toast" class="toast"></div>
 
-  <!-- ================= VISTAS PRINCIPALES ================= -->
+  <!-- VISTAS PRINCIPALES -->
   <main id="view-home" class="app-view max-w-md mx-auto px-5 space-y-5 pb-24">
     <div class="text-center space-y-1">
       <h2 class="text-3xl font-extrabold text-[var(--color-secondary)] leading-tight">Habita Tu Cuerpo</h2>
@@ -637,10 +348,9 @@
       <div class="clay-card p-6 border-2 border-[var(--color-primary)] bg-orange-50/20">
         <span class="bg-[var(--color-primary)] text-white text-[9px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">Preventa Exclusiva 🔥</span>
         <h3 class="text-2xl font-extrabold text-[var(--color-secondary)] mt-2">Campamento Adultas en Fuga</h3>
-        <p class="text-xs text-[var(--color-secondary)]/80 mt-1 mb-3">Una experiencia inmersiva para desconectarte del estrés corporal y reconectarte en comunidad.</p>
+        <p class="text-xs text-[var(--color-secondary)]/80 mt-1 mb-3">Experiencia inmersiva para desconectarte del estrés y reconectar en comunidad.</p>
         <div class="flex justify-between items-center text-xs text-[var(--color-secondary)] font-semibold mb-4 bg-white/60 p-2.5 rounded-xl">
-          <span>📍 Maracay, Venezuela</span>
-          <span>📅 26 Sep, 2026</span>
+          <span>📍 Maracay, Venezuela</span><span>📅 26 Sep, 2026</span>
         </div>
         <button onclick="App.switchView('view-pagos')" class="clay-btn-primary w-full py-3 font-bold text-sm focus-visible">Reservar Mi Cupo ($120)</button>
       </div>
@@ -660,7 +370,7 @@
       <button id="tab-register" onclick="App.switchAuthMode('register')" class="flex-1 py-2.5 text-xs font-bold rounded-xl text-[var(--color-secondary)] transition">✨ Registrarse</button>
     </div>
     
-    <!-- Botón de Google - AHORA INICIA SESIÓN DIRECTA -->
+    <!-- Botón Google con selector de cuentas -->
     <button onclick="App.iniciarSesionGoogleDirecta()" class="google-btn focus-visible" aria-label="Iniciar Sesión con Google">
       <svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
       <span>Iniciar Sesión con Google</span>
@@ -706,24 +416,19 @@
   </main>
 
   <main id="view-recovery" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
-    <div class="text-center space-y-1">
-      <h2 class="text-2xl font-bold text-[var(--color-secondary)]">Recuperar Contraseña</h2>
-      <p class="text-xs text-[var(--color-secondary)]/70">Ingresa tu correo y te enviaremos las instrucciones.</p>
-    </div>
+    <div class="text-center space-y-1"><h2 class="text-2xl font-bold text-[var(--color-secondary)]">Recuperar Contraseña</h2><p class="text-xs">Ingresa tu correo y te enviaremos instrucciones.</p></div>
     <form onsubmit="event.preventDefault(); App.procesarRecuperacion();" class="clay-card p-6 space-y-4">
-      <div><label class="block text-xs font-bold text-[var(--color-secondary)] mb-1" for="recovery-email">Correo Electrónico</label><input type="email" id="recovery-email" placeholder="correo@ejemplo.com" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible" required></div>
-      <button type="submit" class="clay-btn-primary w-full py-3.5 text-xs font-bold mt-2 focus-visible">Enviar Enlace</button>
+      <div><label class="block text-xs font-bold mb-1" for="recovery-email">Correo Electrónico</label><input type="email" id="recovery-email" class="w-full p-3 text-xs clay-input" required></div>
+      <button type="submit" class="clay-btn-primary w-full py-3.5 text-xs font-bold">Enviar Enlace</button>
     </form>
-    <button onclick="App.switchView('view-auth')" class="clay-btn-secondary w-full py-3 text-xs font-bold focus-visible">← Volver</button>
+    <button onclick="App.switchView('view-auth')" class="clay-btn-secondary w-full py-3 text-xs font-bold">← Volver</button>
   </main>
 
   <main id="view-perfil-usuario" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
     <div class="clay-card profile-card p-6 text-center space-y-4 relative overflow-hidden">
       <div class="absolute top-0 right-0 w-40 h-40 bg-[var(--color-primary)]/5 rounded-full -translate-y-20 translate-x-20"></div>
       <div class="absolute bottom-0 left-0 w-32 h-32 bg-[var(--color-primary)]/5 rounded-full translate-y-16 -translate-x-16"></div>
-      <div class="relative z-10">
-        <div id="profile-avatar" class="profile-avatar-large mx-auto bg-[var(--color-primary)] text-white flex items-center justify-center text-4xl font-bold">US</div>
-      </div>
+      <div class="relative z-10"><div id="profile-avatar" class="profile-avatar-large mx-auto bg-[var(--color-primary)] text-white flex items-center justify-center text-4xl font-bold">US</div></div>
       <div class="relative z-10">
         <h3 id="profile-name" class="text-xl font-bold text-[var(--color-secondary)]">Usuario</h3>
         <p id="profile-email" class="text-sm text-[var(--color-secondary)]/70">correo@ejemplo.com</p>
@@ -740,11 +445,11 @@
       <div class="profile-stat"><div class="number" id="profile-dias">0</div><div class="label">Días Activo</div></div>
     </div>
     <div class="clay-card p-5 space-y-3">
-      <h4 class="font-bold text-sm text-[var(--color-secondary)]">📋 Información Personal</h4>
+      <h4 class="font-bold text-sm">📋 Información Personal</h4>
       <div class="space-y-2 text-xs">
-        <div class="flex justify-between py-2 border-b"><span class="text-[var(--color-secondary)]/60">📱 Teléfono</span><span id="profile-telefono-display" class="text-[var(--color-secondary)] font-medium">No registrado</span></div>
-        <div class="flex justify-between py-2 border-b"><span class="text-[var(--color-secondary)]/60">🎂 Fecha Nac.</span><span id="profile-fecha-display" class="text-[var(--color-secondary)] font-medium">No registrada</span></div>
-        <div class="flex justify-between py-2"><span class="text-[var(--color-secondary)]/60">📅 Miembro desde</span><span id="profile-miembro-desde" class="text-[var(--color-secondary)] font-medium">Hoy</span></div>
+        <div class="flex justify-between py-2 border-b"><span class="text-[var(--color-secondary)]/60">📱 Teléfono</span><span id="profile-telefono-display" class="font-medium">No registrado</span></div>
+        <div class="flex justify-between py-2 border-b"><span class="text-[var(--color-secondary)]/60">🎂 Fecha Nac.</span><span id="profile-fecha-display" class="font-medium">No registrada</span></div>
+        <div class="flex justify-between py-2"><span class="text-[var(--color-secondary)]/60">📅 Miembro desde</span><span id="profile-miembro-desde" class="font-medium">Hoy</span></div>
       </div>
     </div>
     <div class="space-y-3">
@@ -752,10 +457,10 @@
       <button onclick="App.cerrarSesion()" class="w-full py-3.5 text-sm font-medium text-[var(--color-primary)] border-2 border-[var(--color-primary)]/30 rounded-full hover:bg-[var(--color-primary)]/5 transition-all">Cerrar Sesión</button>
     </div>
     <div id="editar-perfil-form" class="clay-card p-5 space-y-4 hidden">
-      <h4 class="font-bold text-sm text-[var(--color-secondary)]">✏️ Editar Datos Personales</h4>
-      <div><label class="block text-xs font-bold text-[var(--color-secondary)] mb-1" for="edit-nombre">Nombre Completo</label><input type="text" id="edit-nombre" class="w-full p-3 text-xs clay-input focus:outline-none"></div>
-      <div><label class="block text-xs font-bold text-[var(--color-secondary)] mb-1" for="edit-telefono">Teléfono</label><input type="tel" id="edit-telefono" class="w-full p-3 text-xs clay-input focus:outline-none"></div>
-      <div><label class="block text-xs font-bold text-[var(--color-secondary)] mb-1" for="edit-fecha-nac">Fecha Nac.</label><input type="date" id="edit-fecha-nac" class="w-full p-3 text-xs clay-input focus:outline-none"></div>
+      <h4 class="font-bold text-sm">✏️ Editar Datos</h4>
+      <div><label class="block text-xs font-bold mb-1" for="edit-nombre">Nombre</label><input type="text" id="edit-nombre" class="w-full p-3 text-xs clay-input"></div>
+      <div><label class="block text-xs font-bold mb-1" for="edit-telefono">Teléfono</label><input type="tel" id="edit-telefono" class="w-full p-3 text-xs clay-input"></div>
+      <div><label class="block text-xs font-bold mb-1" for="edit-fecha-nac">Fecha Nac.</label><input type="date" id="edit-fecha-nac" class="w-full p-3 text-xs clay-input"></div>
       <div class="flex gap-3">
         <button onclick="App.guardarEditarPerfil()" class="clay-btn-primary flex-1 py-3 text-xs font-bold">💾 Guardar</button>
         <button onclick="App.cancelarEditarPerfil()" class="clay-btn-secondary flex-1 py-3 text-xs font-bold">Cancelar</button>
@@ -766,21 +471,21 @@
   <main id="view-pagos" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
     <h2 class="text-2xl font-bold text-[var(--color-secondary)] text-center">Pasarela de Pago</h2>
     <div class="clay-card p-4 bg-orange-50/30 border border-[var(--color-primary)]/20 flex justify-between items-center">
-      <div><h4 class="font-bold text-xs text-[var(--color-secondary)]">Reserva Campamento</h4><p class="text-[10px]">26 Sep, Maracay</p></div>
+      <div><h4 class="font-bold text-xs">Reserva Campamento</h4><p class="text-[10px]">26 Sep, Maracay</p></div>
       <span class="text-base font-extrabold text-[var(--color-primary)]">$120.00</span>
     </div>
     <div class="clay-card p-5 space-y-4">
-      <label class="block text-xs font-bold text-[var(--color-secondary)]">Método de Pago:</label>
+      <label class="block text-xs font-bold">Método de Pago:</label>
       <div class="grid grid-cols-2 gap-2.5">
         <button type="button" id="pay-bdv" onclick="App.selectPaymentMethod('pm_bdv')" class="clay-btn-pay active-pay p-3 text-[11px] font-bold flex flex-col items-center gap-1">🇻🇪 Pago Móvil BDV</button>
         <button type="button" id="pay-bnc" onclick="App.selectPaymentMethod('pm_bnc')" class="clay-btn-pay p-3 text-[11px] font-bold flex flex-col items-center gap-1">🇻🇪 Pago Móvil BNC</button>
-        <button type="button" id="pay-zelle" onclick="App.selectPaymentMethod('zelle')" class="clay-btn-pay p-3 text-[11px] font-bold flex flex-col items-center gap-1">🇺🇸 Zelle <span class="text-[8px]">(Próximamente)</span></button>
+        <button type="button" id="pay-zelle" onclick="App.selectPaymentMethod('zelle')" class="clay-btn-pay p-3 text-[11px] font-bold flex flex-col items-center gap-1">🇺🇸 Zelle <span class="text-[8px]">(Próx.)</span></button>
         <button type="button" id="pay-binance" onclick="App.selectPaymentMethod('binance')" class="clay-btn-pay p-3 text-[11px] font-bold flex flex-col items-center gap-1">🟡 Binance Pay</button>
       </div>
       <div id="datos-pago-box" class="bg-stone-100/90 p-4 rounded-2xl text-xs min-h-[80px]"><p class="text-center text-stone-400">Selecciona un método</p></div>
       <div id="container-ref-pago" class="space-y-2">
-        <label class="block text-xs font-bold text-[var(--color-secondary)]" for="input-ref-pago">Referencia / Comprobante</label>
-        <input id="input-ref-pago" type="text" placeholder="Ej. #849204" class="w-full p-3 text-xs clay-input focus:outline-none">
+        <label class="block text-xs font-bold" for="input-ref-pago">Referencia</label>
+        <input id="input-ref-pago" type="text" placeholder="Ej. #849204" class="w-full p-3 text-xs clay-input">
       </div>
       <button id="btn-enviar-pago" onclick="App.confirmarPagoMock()" class="clay-btn-primary w-full py-3.5 text-xs font-bold">Reportar Comprobante</button>
     </div>
@@ -788,14 +493,11 @@
   </main>
 
   <main id="view-regulacion" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
-    <div class="text-center space-y-1">
-      <h2 class="text-2xl font-bold text-[var(--color-secondary)]">Gimnasio Emocional</h2>
-      <p class="text-xs text-[var(--color-secondary)]/80">Diagnóstico Somático & Técnicas de Regulación</p>
-    </div>
+    <div class="text-center"><h2 class="text-2xl font-bold text-[var(--color-secondary)]">Gimnasio Emocional</h2><p class="text-xs">Diagnóstico Somático</p></div>
     <div class="clay-card p-5 space-y-4 border border-[var(--color-primary)]/20">
       <div class="flex justify-between items-center border-b pb-2">
         <span class="text-xs font-bold text-[var(--color-primary)] uppercase">🔍 Chequeo Corporal</span>
-        <span id="quiz-step-indicator" class="text-[10px] font-bold text-[var(--color-secondary)] bg-stone-100 px-2 py-0.5 rounded-full">Paso 1 de 3</span>
+        <span id="quiz-step-indicator" class="text-[10px] font-bold bg-stone-100 px-2 py-0.5 rounded-full">Paso 1 de 3</span>
       </div>
       <div id="quiz-step-1" class="space-y-3">
         <p class="text-xs font-bold">1. ¿Cómo sientes tu estado corporal?</p>
@@ -822,12 +524,9 @@
         </div>
       </div>
       <div id="quiz-result" class="space-y-4 hidden">
-        <div class="p-3 rounded-2xl bg-orange-100/50 text-xs">
-          <p id="quiz-diagnosis-title" class="font-bold text-[var(--color-primary)] text-sm mb-1"></p>
-          <p id="quiz-diagnosis-desc"></p>
-        </div>
+        <div class="p-3 rounded-2xl bg-orange-100/50 text-xs"><p id="quiz-diagnosis-title" class="font-bold text-[var(--color-primary)] text-sm mb-1"></p><p id="quiz-diagnosis-desc"></p></div>
         <div id="recommended-technique-card" class="p-4 rounded-2xl bg-white border border-[var(--color-primary)]/30 shadow-sm space-y-2"></div>
-        <button onclick="App.resetQuiz()" class="text-xs font-bold text-[var(--color-primary)] underline w-full text-center">🔄 Repetir Evaluación</button>
+        <button onclick="App.resetQuiz()" class="text-xs font-bold text-[var(--color-primary)] underline w-full text-center">🔄 Repetir</button>
       </div>
     </div>
     <div class="clay-card p-6 text-center space-y-4">
@@ -840,11 +539,11 @@
   <main id="view-citas" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
     <h2 class="text-2xl font-bold text-[var(--color-secondary)] text-center">Agendar tu Sesión</h2>
     <div class="clay-card p-5 space-y-4">
-      <label class="block text-xs font-bold text-[var(--color-secondary)]" for="select-terapeuta">Especialista:</label>
+      <label class="block text-xs font-bold" for="select-terapeuta">Especialista:</label>
       <select id="select-terapeuta" class="w-full p-3 rounded-xl border text-xs"><option>Dra. Carla Rodríguez</option><option>Dra. María González</option><option>Lic. Ana Pérez</option></select>
       <div><label class="block text-xs font-bold mb-1" for="fecha-cita">Fecha:</label><input type="date" id="fecha-cita" class="w-full p-3 rounded-xl border text-xs"></div>
       <div><label class="block text-xs font-bold mb-1" for="hora-cita">Hora:</label><input type="time" id="hora-cita" class="w-full p-3 rounded-xl border text-xs"></div>
-      <button onclick="App.procesarCitaWhatsApp()" class="clay-btn-primary w-full py-3.5 font-bold text-xs">Confirmar Cita vía WhatsApp</button>
+      <button onclick="App.procesarCitaWhatsApp()" class="clay-btn-primary w-full py-3.5 font-bold text-xs">Confirmar vía WhatsApp</button>
     </div>
     <button onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold text-xs">Volver</button>
   </main>
@@ -852,9 +551,9 @@
   <main id="view-privacidad" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
     <div class="text-center"><h2 class="text-2xl font-bold text-[var(--color-secondary)]">Políticas de Privacidad</h2></div>
     <div class="clay-card p-5 text-xs leading-relaxed max-h-[60vh] overflow-y-auto">
-      <h3 class="font-extrabold text-[var(--color-primary)] text-sm">1. Protección de Datos</h3><p>Tus datos están protegidos bajo estricta confidencialidad.</p>
-      <h3 class="font-extrabold text-[var(--color-primary)] text-sm mt-3">2. Confidencialidad</h3><p>Información clínica bajo secreto profesional.</p>
-      <h3 class="font-extrabold text-[var(--color-primary)] text-sm mt-3">3. Reservas y Pagos</h3><p>Sujetas a verificación de comprobantes.</p>
+      <h3 class="font-extrabold text-[var(--color-primary)] text-sm">1. Protección de Datos</h3><p>Confidencialidad estricta.</p>
+      <h3 class="font-extrabold text-[var(--color-primary)] text-sm mt-3">2. Confidencialidad</h3><p>Secreto profesional.</p>
+      <h3 class="font-extrabold text-[var(--color-primary)] text-sm mt-3">3. Pagos</h3><p>Sujetos a verificación.</p>
     </div>
     <button onclick="App.switchView('view-auth')" class="clay-btn-primary w-full py-3.5 font-bold text-xs">Entendido</button>
   </main>
@@ -876,7 +575,7 @@
     </form>
   </main>
 
-  <!-- Barra de navegación -->
+  <!-- BARRA DE NAVEGACIÓN -->
   <nav class="clay-nav fixed bottom-0 inset-x-0 max-w-md mx-auto z-50">
     <div class="flex justify-around items-center">
       <div onclick="App.switchView('view-home')" class="nav-item active" data-view="view-home"><span class="nav-icon">🏠</span><span class="nav-label">Inicio</span></div>
@@ -887,71 +586,46 @@
     </div>
   </nav>
 
-  <!-- ================= ASISTENTE VIRTUAL SOFÍA ================= -->
-  <button id="chatbot-floating-btn" onclick="Chatbot.toggle()" class="chatbot-floating-btn">
-    🤖
-    <span id="chatbot-badge" class="badge hidden">1</span>
-  </button>
-
+  <!-- ASISTENTE VIRTUAL SOFÍA -->
+  <button id="chatbot-floating-btn" onclick="Chatbot.toggle()" class="chatbot-floating-btn">🤖<span id="chatbot-badge" class="badge hidden">1</span></button>
   <div id="chatbot-container" class="chatbot-container">
     <div class="chatbot-header">
       <div class="chatbot-header-info">
         <div class="chatbot-avatar">🧠</div>
-        <div>
-          <h3 class="font-bold text-sm">Sofía - Asesora Atrévete</h3>
-          <p class="text-[10px] opacity-90 flex items-center gap-1"><span class="chatbot-status"></span> Experta en Escáner Cuántico</p>
-        </div>
+        <div><h3 class="font-bold text-sm">Sofía - Asesora</h3><p class="text-[10px] opacity-90 flex items-center gap-1"><span class="chatbot-status"></span> Experta en Escáner Cuántico</p></div>
       </div>
       <button onclick="Chatbot.toggle()" class="text-white hover:bg-white/20 rounded-full w-7 h-7 flex items-center justify-center text-sm">✕</button>
     </div>
     <div id="chatbot-messages" class="chatbot-messages">
-      <div class="chatbot-message bot">
-        <div class="chatbot-bubble">
-          ¡Hola! 👋 Soy <strong>Sofía</strong>, asesora de <strong>Atrévete HealthTech</strong> y experta en <strong>Escáner Cuántico</strong>. ¿En qué puedo ayudarte hoy? 😊
-        </div>
-      </div>
+      <div class="chatbot-message bot"><div class="chatbot-bubble">¡Hola! 👋 Soy <strong>Sofía</strong>, experta en <strong>Escáner Cuántico</strong>. ¿En qué puedo ayudarte? 😊</div></div>
     </div>
     <div id="chatbot-options" class="chatbot-options">
-      <button onclick="Chatbot.sendQuickReply('Escáner Cuántico')" class="chatbot-option-btn">🔮 Escáner Cuántico</button>
-      <button onclick="Chatbot.sendQuickReply('Campamento Adultas en Fuga')" class="chatbot-option-btn">🏕️ Campamento</button>
-      <button onclick="Chatbot.sendQuickReply('Agendar cita')" class="chatbot-option-btn">📅 Agendar Cita</button>
-      <button onclick="Chatbot.sendQuickReply('Precios y pagos')" class="chatbot-option-btn">💳 Precios</button>
+      <button onclick="Chatbot.sendQuickReply('Escáner Cuántico')" class="chatbot-option-btn">🔮 Escáner</button>
+      <button onclick="Chatbot.sendQuickReply('Campamento')" class="chatbot-option-btn">🏕️ Campamento</button>
+      <button onclick="Chatbot.sendQuickReply('Agendar cita')" class="chatbot-option-btn">📅 Cita</button>
+      <button onclick="Chatbot.sendQuickReply('Precios')" class="chatbot-option-btn">💳 Precios</button>
     </div>
     <div class="chatbot-input-area">
       <input id="chatbot-input" type="text" placeholder="Escribe tu consulta..." class="chatbot-input" onkeypress="if(event.key==='Enter') Chatbot.sendMessage()">
-      <button onclick="Chatbot.sendMessage()" class="chatbot-send-btn">
-        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
-      </button>
+      <button onclick="Chatbot.sendMessage()" class="chatbot-send-btn"><svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg></button>
     </div>
   </div>
 
   <script>
-    // ============================================
-    // APP PRINCIPAL
-    // ============================================
     const App = {
         state: {
-            authMode: 'login',
-            quizAnswers: {},
-            selectedPayment: 'pm_bdv',
-            googleUserData: null,
+            authMode: 'login', quizAnswers: {}, selectedPayment: 'pm_bdv', googleUserData: null,
             legalAceptado: localStorage.getItem('legal_aceptado') === 'true',
             user: {
-                name: localStorage.getItem('user_name') || '',
-                email: localStorage.getItem('user_email') || '',
-                role: localStorage.getItem('user_role') || 'user',
-                registerMethod: localStorage.getItem('register_method') || 'email',
-                telefono: localStorage.getItem('user_telefono') || '',
-                fechaNac: localStorage.getItem('user_fecha_nac') || '',
+                name: localStorage.getItem('user_name') || '', email: localStorage.getItem('user_email') || '',
+                role: localStorage.getItem('user_role') || 'user', registerMethod: localStorage.getItem('register_method') || 'email',
+                telefono: localStorage.getItem('user_telefono') || '', fechaNac: localStorage.getItem('user_fecha_nac') || '',
                 emailVerified: localStorage.getItem('email_verified') === 'true',
                 fechaRegistro: localStorage.getItem('fecha_registro') || new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' }),
-                sesiones: parseInt(localStorage.getItem('user_sesiones')) || 0,
-                ejercicios: parseInt(localStorage.getItem('user_ejercicios')) || 0,
+                sesiones: parseInt(localStorage.getItem('user_sesiones')) || 0, ejercicios: parseInt(localStorage.getItem('user_ejercicios')) || 0,
                 diasActivo: parseInt(localStorage.getItem('user_dias_activo')) || 0
             },
-            isAuthenticated: !!localStorage.getItem('user_email'),
-            breathInterval: null,
-            currentView: 'view-home'
+            isAuthenticated: !!localStorage.getItem('user_email'), breathInterval: null, currentView: 'view-home'
         },
         verificarLegal() { if (this.state.legalAceptado) return true; document.getElementById('modal-legal-gate').classList.remove('hidden'); return false; },
         aceptarLegalYContinuar() { localStorage.setItem('legal_aceptado', 'true'); this.state.legalAceptado = true; document.getElementById('modal-legal-gate').classList.add('hidden'); this.switchView('view-auth'); },
@@ -984,66 +658,140 @@
         },
 
         // ============================================
-        // INICIAR SESIÓN CON GOOGLE - ¡SIN PREGUNTAR NADA!
+        // INICIAR SESIÓN CON GOOGLE - SELECTOR DE CUENTAS
         // ============================================
         iniciarSesionGoogleDirecta() {
             if (!this.verificarLegal()) return;
-            
-            // Generar datos automáticos de Google
-            const googleUser = {
-                name: 'Usuario Atrévete',
-                email: 'usuario' + Date.now() + '@gmail.com',
-                picture: '',
-                email_verified: true,
-                id: 'google_' + Date.now()
-            };
+            if (window.google && google.accounts) {
+                this.iniciarGoogleReal();
+            } else {
+                this.iniciarGoogleSimuladoConSelector();
+            }
+        },
 
-            // Registrar automáticamente sin confirmación
+        iniciarGoogleReal() {
+            const clientId = 'TU_CLIENT_ID.apps.googleusercontent.com';
+            const tokenClient = google.accounts.oauth2.initTokenClient({
+                client_id: clientId,
+                scope: 'email profile openid',
+                callback: (response) => {
+                    if (response.access_token) {
+                        fetch(`https://www.googleapis.com/oauth2/v3/userinfo?access_token=${response.access_token}`)
+                            .then(res => res.json())
+                            .then(data => this.registrarUsuarioGoogle(data.name, data.email, data.picture || ''))
+                            .catch(() => this.iniciarGoogleSimuladoConSelector());
+                    }
+                },
+            });
+            tokenClient.requestAccessToken({ prompt: 'select_account' });
+        },
+
+        iniciarGoogleSimuladoConSelector() {
+            this.mostrarSelectorCuentas();
+        },
+
+        mostrarSelectorCuentas() {
+            const correosGuardados = this.obtenerCorreosDispositivo();
+            const modalHTML = `
+                <div id="modal-selector-google" class="fixed inset-0 bg-black/60 backdrop-blur-md z-[10001] flex items-center justify-center p-4">
+                    <div class="bg-white w-full max-w-sm rounded-3xl p-6 shadow-2xl animate-in">
+                        <div class="text-center space-y-3">
+                            <div class="flex justify-center"><svg class="w-12 h-12" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg></div>
+                            <h3 class="text-xl font-bold text-[#7A8A7C]">Elige una cuenta</h3>
+                            <p class="text-xs text-gray-500">Selecciona la cuenta de Google para continuar</p>
+                        </div>
+                        <div class="space-y-2 mt-4 max-h-60 overflow-y-auto">
+                            ${correosGuardados.length > 0 ? correosGuardados.map(c => `
+                                <button onclick="App.seleccionarCuentaGoogle('${c.email}', '${c.name}', '${c.avatar}')" class="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-stone-100 transition border border-stone-200">
+                                    <div class="w-10 h-10 rounded-full bg-[var(--color-primary)] text-white flex items-center justify-center font-bold text-sm">${c.avatar}</div>
+                                    <div class="text-left"><p class="text-sm font-semibold text-[#7A8A7C]">${c.name}</p><p class="text-xs text-gray-500">${c.email}</p></div>
+                                </button>
+                            `).join('') : '<p class="text-center text-gray-400 text-sm py-4">No se encontraron cuentas guardadas</p>'}
+                            <button onclick="App.agregarOtraCuenta()" class="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-stone-100 transition border border-dashed border-stone-300">
+                                <div class="w-10 h-10 rounded-full bg-stone-200 flex items-center justify-center text-lg">＋</div>
+                                <div class="text-left"><p class="text-sm font-semibold text-[var(--color-primary)]">Usar otra cuenta</p><p class="text-xs text-gray-500">Ingresar correo manualmente</p></div>
+                            </button>
+                        </div>
+                        <button onclick="document.getElementById('modal-selector-google').remove()" class="w-full mt-3 py-2.5 text-sm text-gray-400 hover:text-gray-600 transition font-medium">Cancelar</button>
+                    </div>
+                </div>`;
+            const oldModal = document.getElementById('modal-selector-google');
+            if (oldModal) oldModal.remove();
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+        },
+
+        obtenerCorreosDispositivo() {
+            const cuentas = [];
+            const emailGuardado = localStorage.getItem('user_email');
+            const nombreGuardado = localStorage.getItem('user_name');
+            const metodoRegistro = localStorage.getItem('register_method');
+            if (emailGuardado && metodoRegistro === 'google') {
+                cuentas.push({ email: emailGuardado, name: nombreGuardado || 'Usuario', avatar: (nombreGuardado || 'U').charAt(0).toUpperCase() });
+            }
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key.startsWith('google_account_')) {
+                    try {
+                        const data = JSON.parse(localStorage.getItem(key));
+                        if (data.email && !cuentas.find(c => c.email === data.email)) {
+                            cuentas.push({ email: data.email, name: data.name || 'Usuario', avatar: (data.name || 'U').charAt(0).toUpperCase() });
+                        }
+                    } catch(e) {}
+                }
+            }
+            return cuentas;
+        },
+
+        seleccionarCuentaGoogle(email, name, avatar) {
+            const modal = document.getElementById('modal-selector-google');
+            if (modal) modal.remove();
+            this.registrarUsuarioGoogle(name, email, '');
+        },
+
+        agregarOtraCuenta() {
+            const modal = document.getElementById('modal-selector-google');
+            if (modal) modal.remove();
+            const email = prompt('📧 Ingresa tu correo de Google:', 'usuario@gmail.com');
+            if (!email || !email.includes('@')) { this.showToast('⚠️ Correo inválido', 'warning'); return; }
+            const name = prompt('👤 Ingresa tu nombre:', email.split('@')[0]);
+            if (!name) { this.showToast('⚠️ Nombre inválido', 'warning'); return; }
+            try { localStorage.setItem('google_account_' + Date.now(), JSON.stringify({ email, name })); } catch(e) {}
+            this.registrarUsuarioGoogle(name, email, '');
+        },
+
+        registrarUsuarioGoogle(name, email, picture) {
             const fechaRegistro = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' });
-            
-            localStorage.setItem('user_name', googleUser.name);
-            localStorage.setItem('user_email', googleUser.email);
-            localStorage.setItem('user_role', 'user');
-            localStorage.setItem('register_method', 'google');
-            localStorage.setItem('email_verified', 'true');
-            localStorage.setItem('google_picture', '');
+            localStorage.setItem('user_name', name); localStorage.setItem('user_email', email);
+            localStorage.setItem('user_role', 'user'); localStorage.setItem('register_method', 'google');
+            localStorage.setItem('email_verified', 'true'); localStorage.setItem('google_picture', picture || '');
             localStorage.setItem('fecha_registro', fechaRegistro);
-            
-            this.state.user = { ...this.state.user, name: googleUser.name, email: googleUser.email, role: 'user', registerMethod: 'google', emailVerified: true, fechaRegistro };
+            this.state.user = { ...this.state.user, name, email, role: 'user', registerMethod: 'google', emailVerified: true, fechaRegistro };
             this.state.isAuthenticated = true;
-            
-            this.actualizarPerfilUI();
-            this.actualizarHeader();
-            this.actualizarNav();
-            this.showToast('✅ ¡Bienvenido a Atrévete HealthTech!', 'success');
+            this.actualizarPerfilUI(); this.actualizarHeader(); this.actualizarNav();
+            this.showToast(`✅ ¡Bienvenido${name ? ' ' + name.split(' ')[0] : ''}!`, 'success');
             this.switchView('view-perfil-usuario');
-            
-            setTimeout(() => { this.showToast('📝 Completa tu perfil para personalizar tu experiencia', 'info'); this.mostrarEditarPerfil(); }, 1500);
+            setTimeout(() => { this.showToast('📝 Completa tu perfil', 'info'); this.mostrarEditarPerfil(); }, 1500);
         },
 
         showToast(message, type = 'success') {
-            const toast = document.getElementById('toast');
-            toast.className = `toast toast-${type}`; toast.textContent = message; toast.classList.add('show');
+            const toast = document.getElementById('toast'); toast.className = `toast toast-${type}`; toast.textContent = message; toast.classList.add('show');
             setTimeout(() => toast.classList.remove('show'), 4000);
         },
         actualizarPerfilUI() {
             const name = this.state.user.name || 'Invitado', email = this.state.user.email || 'correo@ejemplo.com';
-            document.getElementById('profile-name').innerText = name;
-            document.getElementById('profile-email').innerText = email;
+            document.getElementById('profile-name').innerText = name; document.getElementById('profile-email').innerText = email;
             document.getElementById('profile-role').innerText = this.state.user.role === 'spec' ? '👩‍⚕️ Especialista' : '👤 Usuario';
             document.getElementById('profile-register-method').innerText = this.state.user.registerMethod === 'google' ? '🟢 Google' : '📧 Email';
-            document.getElementById('profile-verified-container').innerHTML = this.state.user.emailVerified ? '<span class="verified-badge">✅ Correo verificado</span>' : '<span class="unverified-badge">⏳ No verificado</span>';
+            document.getElementById('profile-verified-container').innerHTML = this.state.user.emailVerified ? '<span class="verified-badge">✅ Verificado</span>' : '<span class="unverified-badge">⏳ No verificado</span>';
             document.getElementById('profile-telefono-display').innerText = this.state.user.telefono || 'No registrado';
             document.getElementById('profile-fecha-display').innerText = this.state.user.fechaNac || 'No registrada';
             document.getElementById('profile-miembro-desde').innerText = this.state.user.fechaRegistro || 'Hoy';
             document.getElementById('profile-sesiones').innerText = this.state.user.sesiones;
             document.getElementById('profile-ejercicios').innerText = this.state.user.ejercicios;
             document.getElementById('profile-dias').innerText = this.state.user.diasActivo;
-            const avatar = document.getElementById('profile-avatar');
-            avatar.style.backgroundImage = 'none';
+            const avatar = document.getElementById('profile-avatar'); avatar.style.backgroundImage = 'none';
             avatar.textContent = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'AT';
-            document.getElementById('edit-nombre').value = name;
-            document.getElementById('edit-telefono').value = this.state.user.telefono || '';
+            document.getElementById('edit-nombre').value = name; document.getElementById('edit-telefono').value = this.state.user.telefono || '';
             document.getElementById('edit-fecha-nac').value = this.state.user.fechaNac || '';
             this.actualizarHeader(); this.actualizarNav();
         },
@@ -1055,7 +803,8 @@
             document.getElementById('password-error').classList.add('hidden');
             let nombre = this.state.authMode === 'register' && document.getElementById('input-nombre').value.trim() ? document.getElementById('input-nombre').value.trim() : email.split('@')[0];
             const fechaRegistro = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' });
-            localStorage.setItem('user_name', nombre); localStorage.setItem('user_email', email); localStorage.setItem('user_role', this.state.user.role || 'user'); localStorage.setItem('register_method', 'email'); localStorage.setItem('email_verified', 'false'); localStorage.setItem('fecha_registro', fechaRegistro);
+            localStorage.setItem('user_name', nombre); localStorage.setItem('user_email', email); localStorage.setItem('user_role', this.state.user.role || 'user');
+            localStorage.setItem('register_method', 'email'); localStorage.setItem('email_verified', 'false'); localStorage.setItem('fecha_registro', fechaRegistro);
             this.state.user = { ...this.state.user, name: nombre, email, registerMethod: 'email', emailVerified: false, fechaRegistro };
             this.state.isAuthenticated = true;
             this.actualizarPerfilUI(); this.actualizarHeader(); this.actualizarNav();
@@ -1067,25 +816,21 @@
             if (mode === 'login') { tl.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[var(--color-secondary)] shadow-sm transition'; tr.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl text-[var(--color-secondary)] transition'; fn.classList.add('hidden'); fr.classList.add('hidden'); lf.classList.remove('hidden'); sb.innerText = 'Iniciar Sesión'; document.getElementById('auth-title').innerText = 'Iniciar Sesión'; }
             else { tr.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[var(--color-secondary)] shadow-sm transition'; tl.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl text-[var(--color-secondary)] transition'; fn.classList.remove('hidden'); fr.classList.remove('hidden'); lf.classList.add('hidden'); sb.innerText = 'Crear Mi Cuenta'; document.getElementById('auth-title').innerText = 'Crea tu Cuenta'; }
         },
-        setAuthRole(role) { this.state.user.role = role; localStorage.setItem('user_role', role); document.getElementById('btn-role-user').className = role === 'user' ? 'flex-1 py-2 text-xs font-bold rounded-xl bg-orange-100 text-[var(--color-primary)] border border-[var(--color-primary)]/30 transition' : 'flex-1 py-2 text-xs font-bold rounded-xl bg-stone-100 text-[var(--color-secondary)] transition'; document.getElementById('btn-role-spec').className = role === 'spec' ? 'flex-1 py-2 text-xs font-bold rounded-xl bg-orange-100 text-[var(--color-primary)] border border-[var(--color-primary)]/30 transition' : 'flex-1 py-2 text-xs font-bold rounded-xl bg-stone-100 text-[var(--color-secondary)] transition'; },
+        setAuthRole(role) { this.state.user.role = role; localStorage.setItem('user_role', role); },
         procesarRecuperacion() { const email = document.getElementById('recovery-email').value; if (!email) { this.showToast('Ingresa tu correo', 'error'); return; } this.showToast(`📧 Instrucciones enviadas a: ${email}`, 'success'); this.switchView('view-auth'); },
-        cerrarSesion() { ['user_name','user_email','user_role','register_method','user_telefono','user_fecha_nac','email_verified','google_picture','fecha_registro','user_sesiones','user_ejercicios','user_dias_activo'].forEach(k => localStorage.removeItem(k)); this.state.isAuthenticated = false; this.state.user = { name: '', email: '', role: 'user', registerMethod: 'email', telefono: '', fechaNac: '', emailVerified: false, fechaRegistro: '', sesiones: 0, ejercicios: 0, diasActivo: 0 }; this.actualizarPerfilUI(); this.actualizarHeader(); this.actualizarNav(); this.showToast('👋 Sesión cerrada', 'info'); this.switchView('view-home'); },
+        cerrarSesion() { ['user_name','user_email','user_role','register_method','user_telefono','user_fecha_nac','email_verified','google_picture','fecha_registro'].forEach(k => localStorage.removeItem(k)); this.state.isAuthenticated = false; this.state.user = { name: '', email: '', role: 'user', registerMethod: 'email', telefono: '', fechaNac: '', emailVerified: false, fechaRegistro: '', sesiones: 0, ejercicios: 0, diasActivo: 0 }; this.actualizarPerfilUI(); this.actualizarHeader(); this.actualizarNav(); this.showToast('👋 Sesión cerrada', 'info'); this.switchView('view-home'); },
         mostrarEditarPerfil() { document.getElementById('editar-perfil-form').classList.remove('hidden'); document.getElementById('edit-nombre').value = this.state.user.name || ''; document.getElementById('edit-telefono').value = this.state.user.telefono || ''; document.getElementById('edit-fecha-nac').value = this.state.user.fechaNac || ''; },
         cancelarEditarPerfil() { document.getElementById('editar-perfil-form').classList.add('hidden'); },
         guardarEditarPerfil() { const nombre = document.getElementById('edit-nombre').value.trim(); if (!nombre) { this.showToast('⚠️ El nombre es obligatorio', 'error'); return; } localStorage.setItem('user_name', nombre); localStorage.setItem('user_telefono', document.getElementById('edit-telefono').value.trim()); localStorage.setItem('user_fecha_nac', document.getElementById('edit-fecha-nac').value); this.state.user.name = nombre; this.state.user.telefono = document.getElementById('edit-telefono').value.trim(); this.state.user.fechaNac = document.getElementById('edit-fecha-nac').value; document.getElementById('editar-perfil-form').classList.add('hidden'); this.actualizarPerfilUI(); this.actualizarHeader(); this.actualizarNav(); this.showToast('✅ Perfil actualizado', 'success'); },
-        cambiarFotoPerfil() { this.showToast('📸 Función en desarrollo', 'info'); },
         selectPaymentMethod(method) { this.state.selectedPayment = method; document.querySelectorAll('.clay-btn-pay').forEach(btn => btn.classList.remove('active-pay')); const btnMap = { 'pm_bdv': 'pay-bdv', 'pm_bnc': 'pay-bnc', 'zelle': 'pay-zelle', 'binance': 'pay-binance' }; document.getElementById(btnMap[method]).classList.add('active-pay'); const box = document.getElementById('datos-pago-box'), cr = document.getElementById('container-ref-pago'), be = document.getElementById('btn-enviar-pago'); cr.style.display = 'block'; be.style.display = 'block'; if (method === 'pm_bdv') box.innerHTML = '<p class="font-bold text-[var(--color-primary)]">🇻🇪 Pago Móvil BDV (0102)</p><p>Tel: <strong>0414-4031678</strong></p><p>C.I: <strong>18.478.170</strong></p>'; else if (method === 'pm_bnc') box.innerHTML = '<p class="font-bold text-[var(--color-primary)]">🇻🇪 Pago Móvil BNC (0191)</p><p>Tel: <strong>0414-4187215</strong></p><p>C.I: <strong>13.518.664</strong></p>'; else if (method === 'zelle') { cr.style.display = 'none'; be.style.display = 'none'; box.innerHTML = '<p class="font-bold text-[var(--color-primary)]">🇺🇸 Zelle</p><p>⏳ Próximamente</p>'; } else if (method === 'binance') box.innerHTML = '<p class="font-bold text-[var(--color-primary)]">🟡 Binance Pay (USDT)</p><p>ID: <strong>163305332</strong></p>'; },
-        confirmarPagoMock() { if (this.state.selectedPayment === 'zelle') { this.showToast('⏳ Zelle no disponible aún', 'warning'); return; } if (!document.getElementById('input-ref-pago').value) { this.showToast('⚠️ Ingresa el comprobante', 'error'); return; } this.showToast('✅ Comprobante reportado con éxito', 'success'); this.switchView('view-perfil-usuario'); },
-        answerQuiz(step, choice) { this.state.quizAnswers[`step${step}`] = choice; if (step < 3) { document.getElementById(`quiz-step-${step}`).classList.add('hidden'); document.getElementById(`quiz-step-${step + 1}`).classList.remove('hidden'); document.getElementById('quiz-step-indicator').innerText = `Paso ${step + 1} de 3`; } else { document.getElementById('quiz-step-3').classList.add('hidden'); document.getElementById('quiz-result').classList.remove('hidden'); document.getElementById('quiz-step-indicator').innerText = 'Completado ✅'; document.getElementById('quiz-diagnosis-title').innerText = 'Diagnóstico Somático Detectado'; document.getElementById('quiz-diagnosis-desc').innerText = 'Tu sistema nervioso muestra acumulación de tensión.'; document.getElementById('recommended-technique-card').innerHTML = '<h5 class="font-bold text-xs">🌟 Descarga Vagal</h5><p class="text-[11px]">Realiza 3 ciclos de respiración profunda.</p>'; } },
+        confirmarPagoMock() { if (this.state.selectedPayment === 'zelle') { this.showToast('⏳ Zelle no disponible', 'warning'); return; } if (!document.getElementById('input-ref-pago').value) { this.showToast('⚠️ Ingresa el comprobante', 'error'); return; } this.showToast('✅ Comprobante reportado', 'success'); this.switchView('view-perfil-usuario'); },
+        answerQuiz(step, choice) { this.state.quizAnswers[`step${step}`] = choice; if (step < 3) { document.getElementById(`quiz-step-${step}`).classList.add('hidden'); document.getElementById(`quiz-step-${step + 1}`).classList.remove('hidden'); document.getElementById('quiz-step-indicator').innerText = `Paso ${step + 1} de 3`; } else { document.getElementById('quiz-step-3').classList.add('hidden'); document.getElementById('quiz-result').classList.remove('hidden'); document.getElementById('quiz-step-indicator').innerText = 'Completado ✅'; document.getElementById('quiz-diagnosis-title').innerText = 'Diagnóstico Somático'; document.getElementById('quiz-diagnosis-desc').innerText = 'Tensión corporal acumulada.'; document.getElementById('recommended-technique-card').innerHTML = '<h5 class="font-bold text-xs">🌟 Descarga Vagal</h5><p class="text-[11px]">3 ciclos de respiración profunda.</p>'; } },
         resetQuiz() { this.state.quizAnswers = {}; document.getElementById('quiz-result').classList.add('hidden'); document.getElementById('quiz-step-1').classList.remove('hidden'); document.getElementById('quiz-step-2').classList.add('hidden'); document.getElementById('quiz-step-3').classList.add('hidden'); document.getElementById('quiz-step-indicator').innerText = 'Paso 1 de 3'; },
-        iniciarRespiración() { if (this.state.breathInterval) clearInterval(this.state.breathInterval); const circle = document.getElementById('breath-circle'); if (!circle) return; let breathState = 0; circle.innerText = 'Inhala...'; circle.style.transform = 'scale(1.0)'; this.state.breathInterval = setInterval(() => { if (breathState === 0) { circle.innerText = 'Sostén...'; circle.style.transform = 'scale(1.3)'; breathState = 1; } else if (breathState === 1) { circle.innerText = 'Exhala...'; circle.style.transform = 'scale(0.8)'; breathState = 2; } else { circle.innerText = 'Inhala...'; circle.style.transform = 'scale(1.0)'; breathState = 0; } }, 3500); },
-        procesarCitaWhatsApp() { const terapeuta = document.getElementById('select-terapeuta').value, fecha = document.getElementById('fecha-cita').value || 'Sin fecha', hora = document.getElementById('hora-cita').value || 'Sin hora'; if (!fecha || !hora) { this.showToast('⚠️ Selecciona fecha y hora', 'error'); return; } window.open(`https://wa.me/584140000000?text=${encodeURIComponent(`Hola, deseo confirmar mi cita con ${terapeuta}.\n📅 ${fecha}\n🕐 ${hora}`)}`, '_blank'); },
-        guardarCambiosAdmin() { const logo = document.getElementById('admin-logo-url').value, bannerImg = document.getElementById('admin-banner-img-url').value, bannerText = document.getElementById('admin-banner-text').value, colorPrimary = document.getElementById('admin-color-primary').value, colorSecondary = document.getElementById('admin-color-secondary').value; if (logo) { localStorage.setItem('app_logo', logo); document.getElementById('app-logo-img').src = logo; } if (bannerImg) { localStorage.setItem('app_banner_img', bannerImg); document.getElementById('home-hero-banner').style.backgroundImage = `url('${bannerImg}')`; } if (bannerText) { localStorage.setItem('app_banner_text', bannerText); document.getElementById('home-banner-text').innerText = bannerText; } if (colorPrimary) { localStorage.setItem('app_color_primary', colorPrimary); document.documentElement.style.setProperty('--color-primary', colorPrimary); } if (colorSecondary) { localStorage.setItem('app_color_secondary', colorSecondary); document.documentElement.style.setProperty('--color-secondary', colorSecondary); } this.showToast('✅ Cambios guardados', 'success'); this.switchView('view-home'); }
+        iniciarRespiración() { if (this.state.breathInterval) clearInterval(this.state.breathInterval); const circle = document.getElementById('breath-circle'); if (!circle) return; let bs = 0; circle.innerText = 'Inhala...'; circle.style.transform = 'scale(1.0)'; this.state.breathInterval = setInterval(() => { if (bs === 0) { circle.innerText = 'Sostén...'; circle.style.transform = 'scale(1.3)'; bs = 1; } else if (bs === 1) { circle.innerText = 'Exhala...'; circle.style.transform = 'scale(0.8)'; bs = 2; } else { circle.innerText = 'Inhala...'; circle.style.transform = 'scale(1.0)'; bs = 0; } }, 3500); },
+        procesarCitaWhatsApp() { const t = document.getElementById('select-terapeuta').value, f = document.getElementById('fecha-cita').value || 'Sin fecha', h = document.getElementById('hora-cita').value || 'Sin hora'; if (!f || !h) { this.showToast('⚠️ Selecciona fecha y hora', 'error'); return; } window.open(`https://wa.me/584140000000?text=${encodeURIComponent(`Hola, deseo confirmar mi cita con ${t}.\n📅 ${f}\n🕐 ${h}`)}`, '_blank'); },
+        guardarCambiosAdmin() { const l = document.getElementById('admin-logo-url').value, bi = document.getElementById('admin-banner-img-url').value, bt = document.getElementById('admin-banner-text').value, cp = document.getElementById('admin-color-primary').value, cs = document.getElementById('admin-color-secondary').value; if (l) { localStorage.setItem('app_logo', l); document.getElementById('app-logo-img').src = l; } if (bi) { localStorage.setItem('app_banner_img', bi); document.getElementById('home-hero-banner').style.backgroundImage = `url('${bi}')`; } if (bt) { localStorage.setItem('app_banner_text', bt); document.getElementById('home-banner-text').innerText = bt; } if (cp) { localStorage.setItem('app_color_primary', cp); document.documentElement.style.setProperty('--color-primary', cp); } if (cs) { localStorage.setItem('app_color_secondary', cs); document.documentElement.style.setProperty('--color-secondary', cs); } this.showToast('✅ Cambios guardados', 'success'); this.switchView('view-home'); }
     };
 
-    // ============================================
-    // CHATBOT SOFÍA
-    // ============================================
     const Chatbot = {
         isOpen: false, conversation: [], userName: localStorage.getItem('user_name') || '',
         toggle() { this.isOpen = !this.isOpen; const c = document.getElementById('chatbot-container'), b = document.getElementById('chatbot-badge'); if (this.isOpen) { c.classList.add('open'); b.classList.add('hidden'); setTimeout(() => document.getElementById('chatbot-input').focus(), 500); } else { c.classList.remove('open'); } },
@@ -1094,7 +839,7 @@
         removeTyping() { const t = document.getElementById('typing-indicator'); if (t) t.remove(); },
         sendMessage() { const input = document.getElementById('chatbot-input'), msg = input.value.trim(); if (!msg) return; this.addMessage(msg, 'user'); input.value = ''; this.processAI(msg); },
         sendQuickReply(msg) { this.addMessage(msg, 'user'); this.processAI(msg); },
-        processAI(msg) { this.showTyping(); const un = this.userName ? ' ' + this.userName.split(' ')[0] : ''; setTimeout(() => { this.removeTyping(); let r = ''; const m = msg.toLowerCase(); if (m.includes('escáner') || m.includes('cuántico')) r = `🔮 <strong>¡El Escáner Cuántico es revolucionario${un}!</strong><br><br>Mapea <strong>9 sistemas y 39 órganos</strong> en solo 3 minutos. Incluye informe de 20+ páginas. ¿Quieres conocer nuestros paquetes especiales? 🌟`; else if (m.includes('campamento') || m.includes('adultas')) r = `🏕️ <strong>¡Adultas en Fuga${un}!</strong><br><br>📅 26 Sep, 2026 | 📍 Maracay<br>💰 $120 (preventa)<br><br>Incluye escáner cuántico, regulación somática y más. ¡Solo 12 cupos! 🎯`; else if (m.includes('agendar') || m.includes('cita')) r = `📅 <strong>Agendar es fácil${un}!</strong><br><br>Contamos con 3 especialistas. Sesiones desde $45. Ve a la sección Citas (📅) en el menú inferior.`; else if (m.includes('precio') || m.includes('pago') || m.includes('cuánto')) r = `💳 <strong>Inversión${un}:</strong><br><br>🔮 Escáner: $45<br>🧘 Sesión: $45-65<br>🏕️ Campamento: $120<br>📦 Pack Completo: $150<br><br>Aceptamos Pago Móvil y Binance.`; else if (m.includes('hola') || m.includes('buenos')) r = `¡Hola${un}! 👋 Soy <strong>Sofía</strong>, tu asesora de bienestar. ¿En qué puedo ayudarte?`; else r = `Excelente pregunta${un}. Puedo ayudarte con: 🔮 Escáner Cuántico, 🏕️ Campamento, 📅 Citas, 💳 Precios. ¿Qué te interesa?`; this.addMessage(r, 'bot'); }, 1000); }
+        processAI(msg) { this.showTyping(); const un = this.userName ? ' ' + this.userName.split(' ')[0] : ''; setTimeout(() => { this.removeTyping(); let r = ''; const m = msg.toLowerCase(); if (m.includes('escáner') || m.includes('cuántico')) r = `🔮 <strong>Escáner Cuántico${un}:</strong> Mapea 9 sistemas y 39 órganos en 3 minutos. Informe de 20+ páginas. ¿Quieres conocer nuestros paquetes?`; else if (m.includes('campamento')) r = `🏕️ <strong>Adultas en Fuga${un}:</strong> 26 Sep, Maracay. $120. Incluye escáner y regulación somática. ¡Solo 12 cupos!`; else if (m.includes('cita') || m.includes('agendar')) r = `📅 Ve a la sección <strong>Citas</strong> (📅) en el menú inferior para agendar con nuestras especialistas.`; else if (m.includes('precio') || m.includes('pago')) r = `💳 <strong>Inversión:</strong> Escáner $45 | Sesión $45-65 | Campamento $120 | Pack Completo $150. Aceptamos Pago Móvil y Binance.`; else r = `¡Hola${un}! 👋 Soy <strong>Sofía</strong>. Puedo ayudarte con: 🔮 Escáner Cuántico, 🏕️ Campamento, 📅 Citas, 💳 Precios. ¿Qué te interesa?`; this.addMessage(r, 'bot'); }, 1000); }
     };
 
     document.addEventListener('DOMContentLoaded', function() {
