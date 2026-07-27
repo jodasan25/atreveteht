@@ -86,10 +86,6 @@
         .nav-item .nav-icon { font-size: 20px; line-height: 1; }
         .nav-item .nav-label { font-size: 9px; font-weight: 600; color: var(--color-secondary); transition: color 0.2s ease; }
         .nav-item.active .nav-label { color: var(--color-primary); }
-        .nav-item .nav-badge {
-            position: absolute; top: 2px; right: 4px; background: var(--color-primary); color: white;
-            font-size: 8px; font-weight: bold; padding: 1px 5px; border-radius: 9999px; min-width: 16px; text-align: center;
-        }
 
         .toast {
             position: fixed; top: 20px; right: 20px; z-index: 9999; padding: 16px 24px;
@@ -103,8 +99,6 @@
         .toast-info { background: #2196F3; }
         .toast-warning { background: #FF9800; }
 
-        .focus-visible:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }
-
         .google-btn {
             display: flex; align-items: center; justify-content: center; gap: 12px;
             background: white; border: 1px solid #DADCE0; border-radius: 9999px; padding: 12px 24px;
@@ -114,12 +108,16 @@
         .google-btn:hover { background: #F8F9FA; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
         .google-btn svg { width: 20px; height: 20px; }
 
+        .header-action-btn { padding: 8px 16px; border-radius: 9999px; font-size: 12px; font-weight: 600; transition: all 0.2s ease; cursor: pointer; border: none; }
+        .header-action-btn:hover { transform: translateY(-1px); }
+        .btn-login { background: var(--color-primary); color: white; box-shadow: 3px 3px 8px rgba(226, 125, 96, 0.3); }
+        .btn-register { background: transparent; color: var(--color-secondary); border: 1.5px solid var(--color-secondary); }
+
         .header-profile-btn {
             display: flex; align-items: center; gap: 8px; padding: 6px 14px 6px 6px;
-            border-radius: 9999px; background: white; border: 1px solid var(--color-primary)/30;
+            border-radius: 9999px; background: white; border: 1px solid rgba(226, 125, 96, 0.3);
             box-shadow: 2px 2px 8px rgba(0,0,0,0.05); transition: all 0.2s ease; cursor: pointer;
         }
-        .header-profile-btn:hover { border-color: var(--color-primary); transform: translateY(-1px); }
         .header-profile-avatar {
             width: 32px; height: 32px; border-radius: 9999px; background: var(--color-primary);
             color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px;
@@ -129,57 +127,11 @@
             max-width: 80px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
         }
 
-        .header-action-btn { padding: 8px 16px; border-radius: 9999px; font-size: 12px; font-weight: 600; transition: all 0.2s ease; cursor: pointer; border: none; }
-        .header-action-btn:hover { transform: translateY(-1px); }
-        .btn-login { background: var(--color-primary); color: white; box-shadow: 3px 3px 8px rgba(226, 125, 96, 0.3); }
-        .btn-register { background: transparent; color: var(--color-secondary); border: 1.5px solid var(--color-secondary); }
-        .btn-register:hover { background: var(--color-secondary); color: white; }
-
         .profile-card { background: linear-gradient(135deg, #FFFFFF 0%, #F8F5F2 100%); }
         .profile-avatar-large { width: 100px; height: 100px; border-radius: 9999px; border: 4px solid white; box-shadow: 0 8px 24px rgba(226, 125, 96, 0.2); }
         .profile-stat { background: rgba(226, 125, 96, 0.06); border-radius: 16px; padding: 12px 16px; text-align: center; }
         .profile-stat .number { font-size: 20px; font-weight: 700; color: var(--color-primary); }
         .profile-stat .label { font-size: 10px; color: var(--color-secondary); font-weight: 500; }
-
-        @keyframes fadeInScale { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
-        .animate-in { animation: fadeInScale 0.3s ease forwards; }
-
-        /* Chatbot */
-        .chatbot-container {
-            position: fixed; bottom: 100px; right: 20px; z-index: 50; width: 380px; max-width: 90vw;
-            height: 520px; max-height: 70vh; background: white; border-radius: 24px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3); display: flex; flex-direction: column; overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            transform: translateY(20px) scale(0.95); opacity: 0; pointer-events: none;
-        }
-        .chatbot-container.open { transform: translateY(0) scale(1); opacity: 1; pointer-events: all; }
-        .chatbot-header { background: linear-gradient(135deg, var(--color-primary), #c06a51); color: white; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; }
-        .chatbot-header-info { display: flex; align-items: center; gap: 12px; }
-        .chatbot-avatar { width: 44px; height: 44px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; font-size: 22px; }
-        .chatbot-status { width: 10px; height: 10px; background: #4CAF50; border-radius: 50%; display: inline-block; animation: pulse 2s infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-        .chatbot-messages { flex: 1; overflow-y: auto; padding: 16px; background: #F8F6F3; display: flex; flex-direction: column; gap: 12px; }
-        .chatbot-message { display: flex; gap: 8px; animation: fadeInUp 0.3s ease; }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .chatbot-message.bot { align-items: flex-start; }
-        .chatbot-message.user { align-items: flex-start; flex-direction: row-reverse; }
-        .chatbot-bubble { padding: 12px 16px; border-radius: 18px; font-size: 13px; line-height: 1.5; max-width: 85%; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-        .chatbot-message.bot .chatbot-bubble { background: white; color: #4A5D4E; border-bottom-left-radius: 4px; }
-        .chatbot-message.user .chatbot-bubble { background: var(--color-primary); color: white; border-bottom-right-radius: 4px; }
-        .chatbot-typing { display: flex; gap: 4px; padding: 12px 16px; }
-        .chatbot-typing span { width: 8px; height: 8px; background: #999; border-radius: 50%; animation: typing 1.4s infinite; }
-        .chatbot-typing span:nth-child(2) { animation-delay: 0.2s; }
-        .chatbot-typing span:nth-child(3) { animation-delay: 0.4s; }
-        @keyframes typing { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-8px); } }
-        .chatbot-options { padding: 8px 16px; background: white; border-top: 1px solid #eee; display: flex; flex-wrap: wrap; gap: 6px; }
-        .chatbot-option-btn { font-size: 11px; padding: 6px 14px; border-radius: 20px; border: 1.5px solid var(--color-primary); color: var(--color-primary); background: white; cursor: pointer; transition: all 0.2s; white-space: nowrap; font-weight: 500; }
-        .chatbot-option-btn:hover { background: var(--color-primary); color: white; }
-        .chatbot-input-area { padding: 12px 16px; background: white; border-top: 1px solid #eee; display: flex; gap: 8px; }
-        .chatbot-input { flex: 1; padding: 10px 16px; border-radius: 24px; border: 1.5px solid #e0deda; font-size: 13px; background: #F8F6F3; outline: none; }
-        .chatbot-input:focus { border-color: var(--color-primary); }
-        .chatbot-send-btn { width: 40px; height: 40px; border-radius: 50%; background: var(--color-primary); color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-        .chatbot-floating-btn { position: fixed; bottom: 24px; right: 24px; z-index: 51; width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, var(--color-primary), #c06a51); color: white; border: none; cursor: pointer; font-size: 26px; box-shadow: 0 8px 24px rgba(226, 125, 96, 0.4); display: flex; align-items: center; justify-content: center; }
-        .chatbot-floating-btn .badge { position: absolute; top: -4px; right: -4px; background: #f44336; color: white; width: 20px; height: 20px; border-radius: 50%; font-size: 10px; display: flex; align-items: center; justify-content: center; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -245,284 +197,194 @@
       <button id="tab-login" onclick="App.switchAuthMode('login')" class="flex-1 py-2.5 text-xs font-bold rounded-xl bg-white shadow-sm">🔑 Iniciar Sesión</button>
       <button id="tab-register" onclick="App.switchAuthMode('register')" class="flex-1 py-2.5 text-xs font-bold rounded-xl">✨ Registrarse</button>
     </div>
-    <button onclick="App.iniciarSesionGoogleDirecta()" class="google-btn">
+    <button type="button" onclick="App.iniciarSesionGoogleDirecta()" class="google-btn">
       <svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
       <span>Iniciar Sesión con Google</span>
     </button>
     <div class="relative flex items-center py-1"><div class="flex-grow border-t"></div><span class="mx-4 text-stone-400 text-[11px]">o con correo</span><div class="flex-grow border-t"></div></div>
     <form onsubmit="event.preventDefault(); App.procesarAuthEmail();" class="clay-card p-6 space-y-4">
       <div id="field-nombre" class="hidden"><label class="block text-xs font-bold mb-1">Nombre</label><input type="text" id="input-nombre" class="w-full p-3 text-xs clay-input"></div>
-      <div><label class="block text-xs font-bold mb-1">Correo</label><input type="email" id="input-email" class="w-full p-3 text-xs clay-input" required><div id="email-error" class="text-red-500 text-xs mt-1 hidden">Correo inválido</div></div>
-      <div><label class="block text-xs font-bold mb-1">Contraseña</label><input type="password" id="input-password" class="w-full p-3 text-xs clay-input" required minlength="6"><div id="password-error" class="text-red-500 text-xs mt-1 hidden">Mínimo 6 caracteres</div></div>
-      <div id="field-rol" class="hidden space-y-2 border-t pt-3"><label class="block text-xs font-bold">Tipo de Cuenta:</label><div class="flex gap-2"><button type="button" id="btn-role-user" onclick="App.setAuthRole('user')" class="flex-1 py-2 text-xs font-bold rounded-xl bg-orange-100 text-[var(--color-primary)]">Usuario</button><button type="button" id="btn-role-spec" onclick="App.setAuthRole('spec')" class="flex-1 py-2 text-xs font-bold rounded-xl bg-stone-100">Especialista</button></div></div>
-      <div id="link-forgot-container" class="text-right"><button type="button" onclick="App.switchView('view-recovery')" class="text-[11px] text-[var(--color-primary)] font-semibold">¿Olvidaste tu contraseña?</button></div>
+      <div><label class="block text-xs font-bold mb-1">Correo</label><input type="email" id="input-email" class="w-full p-3 text-xs clay-input" required></div>
+      <div><label class="block text-xs font-bold mb-1">Contraseña</label><input type="password" id="input-password" class="w-full p-3 text-xs clay-input" required minlength="6"></div>
       <button type="submit" id="auth-submit-btn" class="clay-btn-primary w-full py-3.5 text-xs font-bold">Iniciar Sesión</button>
       <button type="button" onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold">Cancelar</button>
     </form>
   </main>
 
-  <main id="view-recovery" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
-    <div class="text-center"><h2 class="text-2xl font-bold text-[var(--color-secondary)]">Recuperar Contraseña</h2></div>
-    <form onsubmit="event.preventDefault(); App.procesarRecuperacion();" class="clay-card p-6 space-y-4"><div><label class="block text-xs font-bold mb-1">Correo</label><input type="email" id="recovery-email" class="w-full p-3 text-xs clay-input" required></div><button type="submit" class="clay-btn-primary w-full py-3.5 text-xs font-bold">Enviar</button></form>
-    <button onclick="App.switchView('view-auth')" class="clay-btn-secondary w-full py-3 text-xs font-bold">← Volver</button>
-  </main>
-
   <main id="view-perfil-usuario" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
     <div class="clay-card profile-card p-6 text-center space-y-4 relative overflow-hidden">
-      <div class="absolute top-0 right-0 w-40 h-40 bg-[var(--color-primary)]/5 rounded-full -translate-y-20 translate-x-20"></div>
-      <div class="relative z-10"><div id="profile-avatar" class="profile-avatar-large mx-auto bg-[var(--color-primary)] text-white flex items-center justify-center text-4xl font-bold">US</div></div>
-      <div class="relative z-10"><h3 id="profile-name" class="text-xl font-bold text-[var(--color-secondary)]">Usuario</h3><p id="profile-email" class="text-sm">correo@ejemplo.com</p>
-        <div class="flex items-center justify-center gap-2 mt-1"><span id="profile-role" class="text-xs bg-[var(--color-primary)]/10 text-[var(--color-primary)] px-3 py-1 rounded-full">👤 Usuario</span><span id="profile-register-method" class="text-[10px]">Email</span></div>
-        <div id="profile-verified-container" class="mt-2"><span class="verified-badge" style="display:inline-flex;align-items:center;gap:6px;background:#E8F5E9;color:#2E7D32;padding:4px 12px;border-radius:9999px;font-size:11px;font-weight:bold;">✅ Verificado</span></div>
+      <div id="profile-avatar" class="profile-avatar-large mx-auto bg-[var(--color-primary)] text-white flex items-center justify-center text-4xl font-bold">US</div>
+      <div>
+        <h3 id="profile-name" class="text-xl font-bold text-[var(--color-secondary)]">Usuario</h3>
+        <p id="profile-email" class="text-sm">correo@ejemplo.com</p>
       </div>
     </div>
-    <div class="grid grid-cols-3 gap-3"><div class="profile-stat"><div class="number" id="profile-sesiones">0</div><div class="label">Sesiones</div></div><div class="profile-stat"><div class="number" id="profile-ejercicios">0</div><div class="label">Ejercicios</div></div><div class="profile-stat"><div class="number" id="profile-dias">0</div><div class="label">Días</div></div></div>
-    <div class="clay-card p-5 space-y-3"><h4 class="font-bold text-sm">📋 Información</h4><div class="space-y-2 text-xs"><div class="flex justify-between py-2 border-b"><span>📱 Teléfono</span><span id="profile-telefono-display">-</span></div><div class="flex justify-between py-2 border-b"><span>🎂 Fecha Nac.</span><span id="profile-fecha-display">-</span></div><div class="flex justify-between py-2"><span>📅 Miembro</span><span id="profile-miembro-desde">Hoy</span></div></div></div>
-    <div class="space-y-3"><button onclick="App.mostrarEditarPerfil()" class="clay-btn-primary w-full py-3.5 text-sm font-bold">✏️ Editar Perfil</button><button onclick="App.cerrarSesion()" class="w-full py-3.5 text-sm font-medium text-[var(--color-primary)] border-2 border-[var(--color-primary)]/30 rounded-full">Cerrar Sesión</button></div>
-    <div id="editar-perfil-form" class="clay-card p-5 space-y-4 hidden"><h4 class="font-bold text-sm">✏️ Editar</h4><div><label class="block text-xs font-bold mb-1">Nombre</label><input type="text" id="edit-nombre" class="w-full p-3 text-xs clay-input"></div><div><label class="block text-xs font-bold mb-1">Teléfono</label><input type="tel" id="edit-telefono" class="w-full p-3 text-xs clay-input"></div><div><label class="block text-xs font-bold mb-1">Fecha Nac.</label><input type="date" id="edit-fecha-nac" class="w-full p-3 text-xs clay-input"></div><div class="flex gap-3"><button onclick="App.guardarEditarPerfil()" class="clay-btn-primary flex-1 py-3 text-xs font-bold">💾 Guardar</button><button onclick="App.cancelarEditarPerfil()" class="clay-btn-secondary flex-1 py-3 text-xs font-bold">Cancelar</button></div></div>
+    <button onclick="App.cerrarSesion()" class="w-full py-3.5 text-sm font-medium text-[var(--color-primary)] border-2 border-[var(--color-primary)]/30 rounded-full">Cerrar Sesión</button>
   </main>
 
-  <main id="view-pagos" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
-    <h2 class="text-2xl font-bold text-center">Pasarela de Pago</h2>
-    <div class="clay-card p-4 bg-orange-50/30 flex justify-between items-center"><div><h4 class="font-bold text-xs">Reserva Campamento</h4><p class="text-[10px]">26 Sep, Maracay</p></div><span class="font-extrabold text-[var(--color-primary)]">$120.00</span></div>
-    <div class="clay-card p-5 space-y-4"><label class="block text-xs font-bold">Método:</label><div class="grid grid-cols-2 gap-2.5"><button id="pay-bdv" onclick="App.selectPaymentMethod('pm_bdv')" class="clay-btn-pay active-pay p-3 text-[11px] font-bold">🇻🇪 BDV</button><button id="pay-bnc" onclick="App.selectPaymentMethod('pm_bnc')" class="clay-btn-pay p-3 text-[11px] font-bold">🇻🇪 BNC</button><button id="pay-zelle" onclick="App.selectPaymentMethod('zelle')" class="clay-btn-pay p-3 text-[11px] font-bold">🇺🇸 Zelle</button><button id="pay-binance" onclick="App.selectPaymentMethod('binance')" class="clay-btn-pay p-3 text-[11px] font-bold">🟡 Binance</button></div>
-    <div id="datos-pago-box" class="bg-stone-100 p-4 rounded-2xl text-xs min-h-[80px]"><p class="text-center text-stone-400">Selecciona método</p></div>
-    <div id="container-ref-pago"><label class="block text-xs font-bold mb-1">Referencia</label><input id="input-ref-pago" class="w-full p-3 text-xs clay-input"></div>
-    <button onclick="App.confirmarPagoMock()" class="clay-btn-primary w-full py-3.5 text-xs font-bold">Reportar</button></div>
-    <button onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold">Cancelar</button>
-  </main>
-
-  <main id="view-regulacion" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
-    <div class="text-center"><h2 class="text-2xl font-bold text-[var(--color-secondary)]">Gimnasio Emocional</h2></div>
-    <div class="clay-card p-5 space-y-4 border border-[var(--color-primary)]/20"><div class="flex justify-between border-b pb-2"><span class="text-xs font-bold text-[var(--color-primary)]">🔍 Chequeo</span><span id="quiz-step-indicator" class="text-[10px] bg-stone-100 px-2 py-0.5 rounded-full">Paso 1/3</span></div>
-    <div id="quiz-step-1" class="space-y-3"><p class="text-xs font-bold">1. ¿Cómo te sientes?</p><button onclick="App.answerQuiz(1,'ansiedad')" class="clay-btn-option w-full text-xs">🔴 Ansioso</button><button onclick="App.answerQuiz(1,'bloqueo')" class="clay-btn-option w-full text-xs">🟡 Agotado</button><button onclick="App.answerQuiz(1,'calma')" class="clay-btn-option w-full text-xs">🟢 Estable</button></div>
-    <div id="quiz-step-2" class="space-y-3 hidden"><p class="text-xs font-bold">2. ¿Dónde hay tensión?</p><button onclick="App.answerQuiz(2,'pecho')" class="clay-btn-option w-full text-xs">🫁 Pecho</button><button onclick="App.answerQuiz(2,'cuello')" class="clay-btn-option w-full text-xs">💆 Cuello</button><button onclick="App.answerQuiz(2,'estomago')" class="clay-btn-option w-full text-xs">🫃 Estómago</button></div>
-    <div id="quiz-step-3" class="space-y-3 hidden"><p class="text-xs font-bold">3. ¿Qué necesitas?</p><button onclick="App.answerQuiz(3,'bajar')" class="clay-btn-option w-full text-xs">⚓ Bajar revoluciones</button><button onclick="App.answerQuiz(3,'activar')" class="clay-btn-option w-full text-xs">⚡ Activarme</button><button onclick="App.answerQuiz(3,'liberar')" class="clay-btn-option w-full text-xs">🕊️ Liberar</button></div>
-    <div id="quiz-result" class="space-y-4 hidden"><div class="p-3 bg-orange-100/50 rounded-2xl text-xs"><p id="quiz-diagnosis-title" class="font-bold text-sm"></p><p id="quiz-diagnosis-desc"></p></div><div id="recommended-technique-card" class="p-4 bg-white rounded-2xl border shadow-sm"></div><button onclick="App.resetQuiz()" class="text-xs font-bold text-[var(--color-primary)] underline">🔄 Repetir</button></div></div>
-    <div class="clay-card p-6 text-center"><h3 class="font-bold text-sm">Calibrador de Respiración</h3><div id="breath-circle" class="w-40 h-40 rounded-full bg-[#F0B7A1] flex items-center justify-center text-white font-bold mx-auto transition-all duration-1000">Inhala...</div></div>
-  </main>
-
-  <main id="view-citas" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
-    <h2 class="text-2xl font-bold text-center">Agendar Sesión</h2>
-    <div class="clay-card p-5 space-y-4"><label class="block text-xs font-bold">Especialista:</label><select id="select-terapeuta" class="w-full p-3 rounded-xl border text-xs"><option>Dra. Carla Rodríguez</option><option>Dra. María González</option><option>Lic. Ana Pérez</option></select>
-    <div><label class="block text-xs font-bold mb-1">Fecha:</label><input type="date" id="fecha-cita" class="w-full p-3 rounded-xl border text-xs"></div>
-    <div><label class="block text-xs font-bold mb-1">Hora:</label><input type="time" id="hora-cita" class="w-full p-3 rounded-xl border text-xs"></div>
-    <button onclick="App.procesarCitaWhatsApp()" class="clay-btn-primary w-full py-3.5 font-bold text-xs">Confirmar vía WhatsApp</button></div>
-  </main>
-
-  <main id="view-privacidad" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24"><div class="text-center"><h2 class="text-2xl font-bold">Políticas</h2></div><div class="clay-card p-5 text-xs"><p>Confidencialidad y protección de datos.</p></div><button onclick="App.switchView('view-auth')" class="clay-btn-primary w-full py-3.5 font-bold text-xs">Entendido</button></main>
-
-  <main id="view-admin-dashboard" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
-    <div class="flex justify-between border-b pb-3"><div><h2 class="text-xl font-bold">Gestor Admin</h2></div><button onclick="App.switchView('view-home')" class="px-3 py-1.5 bg-stone-200 text-xs font-bold rounded-xl">Salir</button></div>
-    <form onsubmit="event.preventDefault(); App.guardarCambiosAdmin();" class="clay-card p-5 space-y-4"><div><label class="block text-xs font-bold mb-1">URL Logo</label><input type="url" id="admin-logo-url" class="w-full p-3 text-xs clay-input"></div><div><label class="block text-xs font-bold mb-1">URL Banner</label><input type="url" id="admin-banner-img-url" class="w-full p-3 text-xs clay-input"></div><div><label class="block text-xs font-bold mb-1">Texto Banner</label><input type="text" id="admin-banner-text" class="w-full p-3 text-xs clay-input"></div><div class="grid grid-cols-2 gap-3 pt-3 border-t"><div><label class="text-[10px]">Color 1</label><input type="color" id="admin-color-primary" value="#E27D60" class="w-full h-10 rounded-xl"></div><div><label class="text-[10px]">Color 2</label><input type="color" id="admin-color-secondary" value="#7A8A7C" class="w-full h-10 rounded-xl"></div></div><button type="submit" class="clay-btn-primary w-full py-3.5 font-bold text-xs">💾 Guardar</button></form>
-  </main>
+  <main id="view-regulacion" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24"></main>
+  <main id="view-citas" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24"></main>
+  <main id="view-pagos" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24"></main>
+  <main id="view-admin-dashboard" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24"></main>
 
   <!-- NAV -->
-  <nav class="clay-nav fixed bottom-0 inset-x-0 max-w-md mx-auto z-50"><div class="flex justify-around"><div onclick="App.switchView('view-home')" class="nav-item active" data-view="view-home"><span class="nav-icon">🏠</span><span class="nav-label">Inicio</span></div><div onclick="App.switchView('view-regulacion')" class="nav-item" data-view="view-regulacion"><span class="nav-icon">🫁</span><span class="nav-label">Gimnasio</span></div><div onclick="App.switchView('view-citas')" class="nav-item" data-view="view-citas"><span class="nav-icon">📅</span><span class="nav-label">Citas</span></div><div onclick="App.switchView('view-pagos')" class="nav-item" data-view="view-pagos"><span class="nav-icon">💳</span><span class="nav-label">Pagos</span></div><div onclick="App.irAPerfil()" class="nav-item" id="nav-perfil"><span class="nav-icon" id="nav-perfil-icon">👤</span><span class="nav-label" id="nav-perfil-label">Perfil</span></div></div></nav>
+  <nav class="clay-nav fixed bottom-0 inset-x-0 max-w-md mx-auto z-50">
+    <div class="flex justify-around">
+      <div onclick="App.switchView('view-home')" class="nav-item active" data-view="view-home"><span class="nav-icon">🏠</span><span class="nav-label">Inicio</span></div>
+      <div onclick="App.switchView('view-regulacion')" class="nav-item" data-view="view-regulacion"><span class="nav-icon">🫁</span><span class="nav-label">Gimnasio</span></div>
+      <div onclick="App.switchView('view-citas')" class="nav-item" data-view="view-citas"><span class="nav-icon">📅</span><span class="nav-label">Citas</span></div>
+      <div onclick="App.switchView('view-pagos')" class="nav-item" data-view="view-pagos"><span class="nav-icon">💳</span><span class="nav-label">Pagos</span></div>
+      <div onclick="App.irAPerfil()" class="nav-item" id="nav-perfil"><span class="nav-icon" id="nav-perfil-icon">👤</span><span class="nav-label" id="nav-perfil-label">Perfil</span></div>
+    </div>
+  </nav>
 
-  <!-- CHATBOT -->
-  <button id="chatbot-floating-btn" onclick="Chatbot.toggle()" class="chatbot-floating-btn">🤖<span id="chatbot-badge" class="badge hidden">1</span></button>
-  <div id="chatbot-container" class="chatbot-container"><div class="chatbot-header"><div class="chatbot-header-info"><div class="chatbot-avatar">🧠</div><div><h3 class="font-bold text-sm">Sofía</h3><p class="text-[10px]"><span class="chatbot-status"></span> Asesora</p></div></div><button onclick="Chatbot.toggle()" class="text-white w-7 h-7 rounded-full flex items-center justify-center">✕</button></div>
-  <div id="chatbot-messages" class="chatbot-messages"><div class="chatbot-message bot"><div class="chatbot-bubble">¡Hola! 👋 Soy <strong>Sofía</strong>. ¿En qué puedo ayudarte?</div></div></div>
-  <div class="chatbot-options"><button onclick="Chatbot.sendQuickReply('Escáner')" class="chatbot-option-btn">🔮 Escáner</button><button onclick="Chatbot.sendQuickReply('Campamento')" class="chatbot-option-btn">🏕️ Campamento</button><button onclick="Chatbot.sendQuickReply('Cita')" class="chatbot-option-btn">📅 Cita</button><button onclick="Chatbot.sendQuickReply('Precios')" class="chatbot-option-btn">💳 Precios</button></div>
-  <div class="chatbot-input-area"><input id="chatbot-input" type="text" placeholder="Escribe..." class="chatbot-input" onkeypress="if(event.key==='Enter') Chatbot.sendMessage()"><button onclick="Chatbot.sendMessage()" class="chatbot-send-btn"><svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg></button></div></div>
-
+  <!-- LÓGICA DE LA APLICACIÓN -->
   <script>
+    // ⚠️ REEMPLAZA ESTA CADENA POR TU CLIENT ID OAUTH DE GOOGLE CLOUD
+    const GOOGLE_CLIENT_ID = "TU_CLIENT_ID_DE_GOOGLE.apps.googleusercontent.com";
+
     const App = {
-        state: {
-            authMode: 'login', quizAnswers: {}, selectedPayment: 'pm_bdv', googleUserData: null,
-            legalAceptado: localStorage.getItem('legal_aceptado') === 'true',
-            user: {
-                name: localStorage.getItem('user_name') || '', email: localStorage.getItem('user_email') || '',
-                role: localStorage.getItem('user_role') || 'user', registerMethod: localStorage.getItem('register_method') || 'email',
-                telefono: localStorage.getItem('user_telefono') || '', fechaNac: localStorage.getItem('user_fecha_nac') || '',
-                emailVerified: localStorage.getItem('email_verified') === 'true',
-                fechaRegistro: localStorage.getItem('fecha_registro') || new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' }),
-                sesiones: parseInt(localStorage.getItem('user_sesiones')) || 0, ejercicios: parseInt(localStorage.getItem('user_ejercicios')) || 0,
-                diasActivo: parseInt(localStorage.getItem('user_dias_activo')) || 0
-            },
-            isAuthenticated: !!localStorage.getItem('user_email'), breathInterval: null, currentView: 'view-home'
-        },
-        verificarLegal() { if (this.state.legalAceptado) return true; document.getElementById('modal-legal-gate').classList.remove('hidden'); return false; },
-        aceptarLegalYContinuar() { localStorage.setItem('legal_aceptado', 'true'); this.state.legalAceptado = true; document.getElementById('modal-legal-gate').classList.add('hidden'); this.switchView('view-auth'); },
-        cancelarLegal() { document.getElementById('modal-legal-gate').classList.add('hidden'); this.switchView('view-home'); },
-        irAPerfil() { this.state.isAuthenticated ? this.switchView('view-perfil-usuario') : this.abrirLogin(); },
-        abrirLogin() { if (!this.verificarLegal()) return; this.switchAuthMode('login'); this.switchView('view-auth'); },
-        abrirRegistro() { if (!this.verificarLegal()) return; this.switchAuthMode('register'); this.switchView('view-auth'); },
-        switchView(viewId) {
-            document.querySelectorAll('.app-view').forEach(v => v.classList.add('hidden'));
-            const target = document.getElementById(viewId);
-            if (target) { target.classList.remove('hidden'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
-            this.state.currentView = viewId;
-            document.querySelectorAll('.nav-item').forEach(item => { item.classList.remove('active'); if (item.dataset.view === viewId) item.classList.add('active'); });
-            if (viewId === 'view-perfil-usuario' && !this.state.isAuthenticated) { this.switchView('view-auth'); return; }
-            if (viewId !== 'view-regulacion' && this.state.breathInterval) { clearInterval(this.state.breathInterval); this.state.breathInterval = null; }
-            if (viewId === 'view-regulacion') this.iniciarRespiración();
-        },
-        actualizarNav() { const pi = document.getElementById('nav-perfil-icon'), pl = document.getElementById('nav-perfil-label'); if (this.state.isAuthenticated) { pi.textContent = '👤'; pl.textContent = 'Perfil'; } else { pi.textContent = '🔑'; pl.textContent = 'Login'; } },
-        actualizarHeader() {
-            const lb = document.getElementById('header-login-btns'), pb = document.getElementById('header-profile-btn'), hn = document.getElementById('header-name'), ha = document.getElementById('header-avatar');
-            if (this.state.isAuthenticated && this.state.user.name) { lb.classList.add('hidden'); pb.classList.remove('hidden'); hn.textContent = this.state.user.name; ha.textContent = this.state.user.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'US'; }
-            else { lb.classList.remove('hidden'); pb.classList.add('hidden'); }
-        },
-        iniciarSesionGoogleDirecta() { if (!this.verificarLegal()) return; window.google && google.accounts ? this.iniciarGoogleReal() : this.iniciarGoogleSimuladoConSelector(); },
-        iniciarGoogleReal() {
-            const clientId = 'TU_CLIENT_ID.apps.googleusercontent.com';
-            const tokenClient = google.accounts.oauth2.initTokenClient({ client_id: clientId, scope: 'email profile openid', callback: (r) => { if (r.access_token) fetch(`https://www.googleapis.com/oauth2/v3/userinfo?access_token=${r.access_token}`).then(res => res.json()).then(d => this.registrarUsuarioGoogle(d.name, d.email, d.picture || '')).catch(() => this.iniciarGoogleSimuladoConSelector()); } });
-            tokenClient.requestAccessToken({ prompt: 'select_account' });
-        },
-        iniciarGoogleSimuladoConSelector() { this.mostrarSelectorCuentas(); },
-        mostrarSelectorCuentas() {
-            const correos = this.obtenerCorreosDispositivo();
-            const modalHTML = `<div id="modal-selector-google" class="fixed inset-0 bg-black/60 backdrop-blur-md z-[10001] flex items-center justify-center p-4"><div class="bg-white w-full max-w-sm rounded-3xl p-6 shadow-2xl animate-in"><div class="text-center space-y-3"><div class="flex justify-center"><svg class="w-12 h-12" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg></div><h3 class="text-xl font-bold text-[#7A8A7C]">Elige una cuenta</h3></div>
-            <div class="space-y-2 mt-4 max-h-60 overflow-y-auto">${correos.length > 0 ? correos.map(c => `<button onclick="App.seleccionarCuentaGoogle('${c.email}','${c.name}')" class="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-stone-100 border"><div class="w-10 h-10 rounded-full bg-[var(--color-primary)] text-white flex items-center justify-center font-bold">${c.avatar}</div><div class="text-left"><p class="text-sm font-semibold">${c.name}</p><p class="text-xs text-gray-500">${c.email}</p></div></button>`).join('') : '<p class="text-center text-gray-400 py-4">No hay cuentas guardadas</p>'}<button onclick="App.agregarOtraCuenta()" class="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-stone-100 border border-dashed"><div class="w-10 h-10 rounded-full bg-stone-200 flex items-center justify-center">＋</div><div class="text-left"><p class="text-sm font-semibold text-[var(--color-primary)]">Usar otra cuenta</p></div></button></div>
-            <button onclick="document.getElementById('modal-selector-google').remove()" class="w-full mt-3 py-2.5 text-sm text-gray-400">Cancelar</button></div></div>`;
-            const old = document.getElementById('modal-selector-google'); if (old) old.remove();
-            document.body.insertAdjacentHTML('beforeend', modalHTML);
-        },
-        obtenerCorreosDispositivo() {
-            const cuentas = [];
-            const eg = localStorage.getItem('user_email'), ng = localStorage.getItem('user_name'), mr = localStorage.getItem('register_method');
-            if (eg && mr === 'google') cuentas.push({ email: eg, name: ng || 'Usuario', avatar: (ng || 'U').charAt(0).toUpperCase() });
-            for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (k.startsWith('google_account_')) { try { const d = JSON.parse(localStorage.getItem(k)); if (d.email && !cuentas.find(c => c.email === d.email)) cuentas.push({ email: d.email, name: d.name || 'Usuario', avatar: (d.name || 'U').charAt(0).toUpperCase() }); } catch(e) {} } }
-            return cuentas;
-        },
-        seleccionarCuentaGoogle(email, name) { const m = document.getElementById('modal-selector-google'); if (m) m.remove(); this.registrarUsuarioGoogle(name, email, ''); },
-        agregarOtraCuenta() { const m = document.getElementById('modal-selector-google'); if (m) m.remove(); const email = prompt('📧 Correo Google:', 'usuario@gmail.com'); if (!email || !email.includes('@')) { this.showToast('⚠️ Correo inválido', 'warning'); return; } const name = prompt('👤 Nombre:', email.split('@')[0]); if (!name) return; try { localStorage.setItem('google_account_' + Date.now(), JSON.stringify({ email, name })); } catch(e) {} this.registrarUsuarioGoogle(name, email, ''); },
+      currentUser: null,
 
-        // ===== VERIFICACIÓN POR CORREO =====
-        registrarUsuarioGoogle(name, email, picture) {
-            this.state.googleUserData = { name, email, picture };
-            const codigo = Math.floor(100000 + Math.random() * 900000).toString();
-            localStorage.setItem('google_verification_code', codigo);
-            localStorage.setItem('google_verification_email', email);
-            localStorage.setItem('google_verification_expires', Date.now() + 600000);
-            this.mostrarModalVerificacion(email, codigo);
-        },
-        mostrarModalVerificacion(email, codigo) {
-            const modalHTML = `<div id="modal-verificacion-google" class="fixed inset-0 bg-black/60 backdrop-blur-md z-[10002] flex items-center justify-center p-4"><div class="bg-white w-full max-w-sm rounded-3xl p-6 shadow-2xl animate-in"><div class="text-center space-y-3"><div class="flex justify-center"><div class="w-16 h-16 rounded-full bg-[var(--color-primary)]/10 flex items-center justify-center text-3xl">📧</div></div><h3 class="text-xl font-bold text-[#7A8A7C]">Verifica tu correo</h3><p class="text-xs text-gray-500">Código enviado a:</p><p class="text-sm font-bold text-[var(--color-primary)]">${email}</p><div class="bg-blue-50 p-3 rounded-xl text-[10px] text-blue-700">💡 <strong>Código:</strong> <span class="text-lg font-bold">${codigo}</span></div></div><div class="space-y-3 mt-4"><div><label class="block text-xs font-bold mb-1">Código</label><input type="text" id="input-codigo-verificacion" placeholder="000000" maxlength="6" class="w-full p-3 text-center text-2xl font-bold tracking-widest clay-input" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,6)"></div><div id="codigo-error" class="text-red-500 text-xs text-center hidden">❌ Código incorrecto</div><div id="codigo-expirado" class="text-amber-600 text-xs text-center hidden">⏰ Código expirado</div><button onclick="App.verificarCodigoGoogle()" class="clay-btn-primary w-full py-3.5 text-sm font-bold">✅ Verificar y Entrar</button><button onclick="App.reenviarCodigo()" class="text-[11px] text-[var(--color-primary)] font-semibold hover:underline w-full text-center block">📤 Reenviar</button><button onclick="App.cancelarVerificacion()" class="text-[11px] text-gray-400 w-full text-center block">Cancelar</button></div></div></div>`;
-            const old = document.getElementById('modal-verificacion-google'); if (old) old.remove();
-            document.body.insertAdjacentHTML('beforeend', modalHTML);
-            setTimeout(() => { const inp = document.getElementById('input-codigo-verificacion'); if (inp) inp.focus(); }, 500);
-        },
-        verificarCodigoGoogle() {
-            const ingresado = document.getElementById('input-codigo-verificacion').value;
-            const guardado = localStorage.getItem('google_verification_code');
-            const expiracion = parseInt(localStorage.getItem('google_verification_expires'));
-            const err = document.getElementById('codigo-error'), exp = document.getElementById('codigo-expirado');
-            if (Date.now() > expiracion) { if (err) err.classList.add('hidden'); if (exp) exp.classList.remove('hidden'); return; }
-            if (ingresado === guardado) {
-                const m = document.getElementById('modal-verificacion-google'); if (m) m.remove();
-                localStorage.removeItem('google_verification_code'); localStorage.removeItem('google_verification_email'); localStorage.removeItem('google_verification_expires');
-                const ud = this.state.googleUserData;
-                const fr = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' });
-                localStorage.setItem('user_name', ud.name); localStorage.setItem('user_email', ud.email); localStorage.setItem('user_role', 'user'); localStorage.setItem('register_method', 'google'); localStorage.setItem('email_verified', 'true'); localStorage.setItem('google_picture', ud.picture || ''); localStorage.setItem('fecha_registro', fr);
-                this.state.user = { ...this.state.user, name: ud.name, email: ud.email, role: 'user', registerMethod: 'google', emailVerified: true, fechaRegistro: fr };
-                this.state.isAuthenticated = true;
-                this.actualizarPerfilUI(); this.actualizarHeader(); this.actualizarNav();
-                this.showToast(`✅ ¡Bienvenido${ud.name ? ' ' + ud.name.split(' ')[0] : ''}!`, 'success');
-                this.switchView('view-perfil-usuario');
-                setTimeout(() => { this.showToast('📝 Completa tu perfil', 'info'); this.mostrarEditarPerfil(); }, 1500);
-            } else { if (exp) exp.classList.add('hidden'); if (err) err.classList.remove('hidden'); document.getElementById('input-codigo-verificacion').value = ''; document.getElementById('input-codigo-verificacion').focus(); }
-        },
-        reenviarCodigo() {
-            const email = localStorage.getItem('google_verification_email'); if (!email) return;
-            const nuevo = Math.floor(100000 + Math.random() * 900000).toString();
-            localStorage.setItem('google_verification_code', nuevo); localStorage.setItem('google_verification_expires', Date.now() + 600000);
-            const m = document.getElementById('modal-verificacion-google'); if (m) m.remove();
-            this.mostrarModalVerificacion(email, nuevo); this.showToast('📤 Código reenviado', 'info');
-        },
-        cancelarVerificacion() {
-            const m = document.getElementById('modal-verificacion-google'); if (m) m.remove();
-            localStorage.removeItem('google_verification_code'); localStorage.removeItem('google_verification_email'); localStorage.removeItem('google_verification_expires');
-            this.state.googleUserData = null; this.showToast('Verificación cancelada', 'info');
-        },
+      init() {
+        console.log("App inicializada");
+      },
 
-        showToast(m, t = 'success') { const toast = document.getElementById('toast'); toast.className = `toast toast-${t}`; toast.textContent = m; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 4000); },
-        actualizarPerfilUI() {
-            const n = this.state.user.name || 'Invitado', e = this.state.user.email || 'correo@ejemplo.com';
-            document.getElementById('profile-name').innerText = n; document.getElementById('profile-email').innerText = e;
-            document.getElementById('profile-role').innerText = this.state.user.role === 'spec' ? '👩‍⚕️ Especialista' : '👤 Usuario';
-            document.getElementById('profile-register-method').innerText = this.state.user.registerMethod === 'google' ? '🟢 Google' : '📧 Email';
-            document.getElementById('profile-verified-container').innerHTML = this.state.user.emailVerified ? '<span style="display:inline-flex;align-items:center;gap:6px;background:#E8F5E9;color:#2E7D32;padding:4px 12px;border-radius:9999px;font-size:11px;font-weight:bold;">✅ Verificado</span>' : '<span style="display:inline-flex;align-items:center;gap:6px;background:#FFF3E0;color:#E65100;padding:4px 12px;border-radius:9999px;font-size:11px;font-weight:bold;">⏳ No verificado</span>';
-            document.getElementById('profile-telefono-display').innerText = this.state.user.telefono || '-';
-            document.getElementById('profile-fecha-display').innerText = this.state.user.fechaNac || '-';
-            document.getElementById('profile-miembro-desde').innerText = this.state.user.fechaRegistro || 'Hoy';
-            document.getElementById('profile-sesiones').innerText = this.state.user.sesiones;
-            document.getElementById('profile-ejercicios').innerText = this.state.user.ejercicios;
-            document.getElementById('profile-dias').innerText = this.state.user.diasActivo;
-            const av = document.getElementById('profile-avatar'); av.style.backgroundImage = 'none';
-            av.textContent = n.split(' ').map(x => x[0]).join('').substring(0, 2).toUpperCase() || 'AT';
-            document.getElementById('edit-nombre').value = n; document.getElementById('edit-telefono').value = this.state.user.telefono || '';
-            document.getElementById('edit-fecha-nac').value = this.state.user.fechaNac || '';
-            this.actualizarHeader(); this.actualizarNav();
-        },
-        procesarAuthEmail() {
-            const email = document.getElementById('input-email').value, pass = document.getElementById('input-password').value;
-            if (!email || !email.includes('@')) { document.getElementById('email-error').classList.remove('hidden'); return; }
-            document.getElementById('email-error').classList.add('hidden');
-            if (pass.length < 6) { document.getElementById('password-error').classList.remove('hidden'); return; }
-            document.getElementById('password-error').classList.add('hidden');
-            let nombre = this.state.authMode === 'register' && document.getElementById('input-nombre').value.trim() ? document.getElementById('input-nombre').value.trim() : email.split('@')[0];
-            const fr = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' });
-            localStorage.setItem('user_name', nombre); localStorage.setItem('user_email', email); localStorage.setItem('user_role', this.state.user.role || 'user'); localStorage.setItem('register_method', 'email'); localStorage.setItem('email_verified', 'false'); localStorage.setItem('fecha_registro', fr);
-            this.state.user = { ...this.state.user, name: nombre, email, registerMethod: 'email', emailVerified: false, fechaRegistro: fr };
-            this.state.isAuthenticated = true;
-            this.actualizarPerfilUI(); this.actualizarHeader(); this.actualizarNav();
-            this.showToast('✅ ¡Bienvenido!', 'info'); this.switchView('view-perfil-usuario');
-        },
-        switchAuthMode(mode) {
-            this.state.authMode = mode;
-            const tl = document.getElementById('tab-login'), tr = document.getElementById('tab-register'), fn = document.getElementById('field-nombre'), fr = document.getElementById('field-rol'), lf = document.getElementById('link-forgot-container'), sb = document.getElementById('auth-submit-btn');
-            if (mode === 'login') { tl.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl bg-white shadow-sm'; tr.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl'; fn.classList.add('hidden'); fr.classList.add('hidden'); lf.classList.remove('hidden'); sb.innerText = 'Iniciar Sesión'; document.getElementById('auth-title').innerText = 'Iniciar Sesión'; }
-            else { tr.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl bg-white shadow-sm'; tl.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl'; fn.classList.remove('hidden'); fr.classList.remove('hidden'); lf.classList.add('hidden'); sb.innerText = 'Crear Cuenta'; document.getElementById('auth-title').innerText = 'Crear Cuenta'; }
-        },
-        setAuthRole(r) { this.state.user.role = r; localStorage.setItem('user_role', r); },
-        procesarRecuperacion() { const e = document.getElementById('recovery-email').value; if (!e) { this.showToast('Ingresa tu correo', 'error'); return; } this.showToast('📧 Instrucciones enviadas', 'success'); this.switchView('view-auth'); },
-        cerrarSesion() { ['user_name','user_email','user_role','register_method','user_telefono','user_fecha_nac','email_verified','google_picture','fecha_registro'].forEach(k => localStorage.removeItem(k)); this.state.isAuthenticated = false; this.state.user = { name: '', email: '', role: 'user', registerMethod: 'email', telefono: '', fechaNac: '', emailVerified: false, fechaRegistro: '', sesiones: 0, ejercicios: 0, diasActivo: 0 }; this.actualizarPerfilUI(); this.actualizarHeader(); this.actualizarNav(); this.showToast('👋 Sesión cerrada', 'info'); this.switchView('view-home'); },
-        mostrarEditarPerfil() { document.getElementById('editar-perfil-form').classList.remove('hidden'); document.getElementById('edit-nombre').value = this.state.user.name || ''; },
-        cancelarEditarPerfil() { document.getElementById('editar-perfil-form').classList.add('hidden'); },
-        guardarEditarPerfil() { const n = document.getElementById('edit-nombre').value.trim(); if (!n) { this.showToast('⚠️ Nombre obligatorio', 'error'); return; } localStorage.setItem('user_name', n); localStorage.setItem('user_telefono', document.getElementById('edit-telefono').value.trim()); localStorage.setItem('user_fecha_nac', document.getElementById('edit-fecha-nac').value); this.state.user.name = n; this.state.user.telefono = document.getElementById('edit-telefono').value.trim(); this.state.user.fechaNac = document.getElementById('edit-fecha-nac').value; document.getElementById('editar-perfil-form').classList.add('hidden'); this.actualizarPerfilUI(); this.actualizarHeader(); this.showToast('✅ Perfil actualizado', 'success'); },
-        selectPaymentMethod(m) { this.state.selectedPayment = m; document.querySelectorAll('.clay-btn-pay').forEach(b => b.classList.remove('active-pay')); const bm = { 'pm_bdv': 'pay-bdv', 'pm_bnc': 'pay-bnc', 'zelle': 'pay-zelle', 'binance': 'pay-binance' }; document.getElementById(bm[m]).classList.add('active-pay'); const box = document.getElementById('datos-pago-box'), cr = document.getElementById('container-ref-pago'), be = document.getElementById('btn-enviar-pago'); cr.style.display = 'block'; be.style.display = 'block'; if (m === 'pm_bdv') box.innerHTML = '<p class="font-bold">🇻🇪 BDV (0102)</p><p>0414-4031678</p>'; else if (m === 'pm_bnc') box.innerHTML = '<p class="font-bold">🇻🇪 BNC (0191)</p><p>0414-4187215</p>'; else if (m === 'zelle') { cr.style.display = 'none'; be.style.display = 'none'; box.innerHTML = '<p>⏳ Próximamente</p>'; } else box.innerHTML = '<p class="font-bold">🟡 Binance</p><p>ID: 163305332</p>'; },
-        confirmarPagoMock() { if (this.state.selectedPayment === 'zelle') { this.showToast('⏳ No disponible', 'warning'); return; } if (!document.getElementById('input-ref-pago').value) { this.showToast('⚠️ Ingresa comprobante', 'error'); return; } this.showToast('✅ Reportado', 'success'); this.switchView('view-perfil-usuario'); },
-        answerQuiz(s, c) { this.state.quizAnswers[`step${s}`] = c; if (s < 3) { document.getElementById(`quiz-step-${s}`).classList.add('hidden'); document.getElementById(`quiz-step-${s+1}`).classList.remove('hidden'); document.getElementById('quiz-step-indicator').innerText = `Paso ${s+1}/3`; } else { document.getElementById('quiz-step-3').classList.add('hidden'); document.getElementById('quiz-result').classList.remove('hidden'); document.getElementById('quiz-step-indicator').innerText = '✅'; document.getElementById('quiz-diagnosis-title').innerText = 'Diagnóstico'; document.getElementById('quiz-diagnosis-desc').innerText = 'Tensión acumulada.'; document.getElementById('recommended-technique-card').innerHTML = '<h5 class="font-bold">🌟 Descarga Vagal</h5><p>3 ciclos de respiración.</p>'; } },
-        resetQuiz() { this.state.quizAnswers = {}; document.getElementById('quiz-result').classList.add('hidden'); document.getElementById('quiz-step-1').classList.remove('hidden'); document.getElementById('quiz-step-2').classList.add('hidden'); document.getElementById('quiz-step-3').classList.add('hidden'); document.getElementById('quiz-step-indicator').innerText = 'Paso 1/3'; },
-        iniciarRespiración() { if (this.state.breathInterval) clearInterval(this.state.breathInterval); const c = document.getElementById('breath-circle'); if (!c) return; let bs = 0; c.innerText = 'Inhala...'; c.style.transform = 'scale(1)'; this.state.breathInterval = setInterval(() => { if (bs === 0) { c.innerText = 'Sostén...'; c.style.transform = 'scale(1.3)'; bs = 1; } else if (bs === 1) { c.innerText = 'Exhala...'; c.style.transform = 'scale(0.8)'; bs = 2; } else { c.innerText = 'Inhala...'; c.style.transform = 'scale(1)'; bs = 0; } }, 3500); },
-        procesarCitaWhatsApp() { const t = document.getElementById('select-terapeuta').value, f = document.getElementById('fecha-cita').value || 'Sin fecha', h = document.getElementById('hora-cita').value || 'Sin hora'; if (!f || !h) { this.showToast('⚠️ Selecciona fecha y hora', 'error'); return; } window.open(`https://wa.me/584140000000?text=${encodeURIComponent(`Cita con ${t}\n📅 ${f}\n🕐 ${h}`)}`, '_blank'); },
-        guardarCambiosAdmin() { const l = document.getElementById('admin-logo-url').value, bi = document.getElementById('admin-banner-img-url').value, bt = document.getElementById('admin-banner-text').value, cp = document.getElementById('admin-color-primary').value, cs = document.getElementById('admin-color-secondary').value; if (l) { localStorage.setItem('app_logo', l); document.getElementById('app-logo-img').src = l; } if (bi) { localStorage.setItem('app_banner_img', bi); document.getElementById('home-hero-banner').style.backgroundImage = `url('${bi}')`; } if (bt) { localStorage.setItem('app_banner_text', bt); document.getElementById('home-banner-text').innerText = bt; } if (cp) { localStorage.setItem('app_color_primary', cp); document.documentElement.style.setProperty('--color-primary', cp); } if (cs) { localStorage.setItem('app_color_secondary', cs); document.documentElement.style.setProperty('--color-secondary', cs); } this.showToast('✅ Guardado', 'success'); this.switchView('view-home'); }
+      showToast(mensaje, tipo = "info") {
+        const toast = document.getElementById("toast");
+        toast.className = `toast toast-${tipo} show`;
+        toast.textContent = mensaje;
+        setTimeout(() => toast.classList.remove("show"), 3000);
+      },
+
+      switchView(viewId) {
+        document.querySelectorAll(".app-view").forEach(el => el.classList.add("hidden"));
+        const targetView = document.getElementById(viewId);
+        if (targetView) targetView.classList.remove("hidden");
+
+        document.querySelectorAll(".nav-item").forEach(el => el.classList.remove("active"));
+        const activeNav = document.querySelector(`.nav-item[data-view="${viewId}"]`);
+        if (activeNav) activeNav.classList.add("active");
+      },
+
+      abrirLogin() {
+        this.switchAuthMode('login');
+        this.switchView('view-auth');
+      },
+
+      abrirRegistro() {
+        this.switchAuthMode('register');
+        this.switchView('view-auth');
+      },
+
+      switchAuthMode(mode) {
+        const isLogin = mode === 'login';
+        document.getElementById('auth-title').textContent = isLogin ? 'Iniciar Sesión' : 'Registrarse';
+        document.getElementById('field-nombre').classList.toggle('hidden', isLogin);
+        document.getElementById('auth-submit-btn').textContent = isLogin ? 'Iniciar Sesión' : 'Crear Cuenta';
+      },
+
+      iniciarSesionGoogleDirecta() {
+        if (!GOOGLE_CLIENT_ID || GOOGLE_CLIENT_ID.includes("TU_CLIENT_ID_DE_GOOGLE")) {
+          this.showToast("Configura tu Client ID de Google en el código JS", "warning");
+          return;
+        }
+
+        if (typeof google === 'undefined' || !google.accounts) {
+          this.showToast("La librería de Google no ha cargado aún", "error");
+          return;
+        }
+
+        // Flujo OAuth2 mediante ventana emergente (Popup)
+        const client = google.accounts.oauth2.initTokenClient({
+          client_id: GOOGLE_CLIENT_ID,
+          scope: 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',
+          callback: async (response) => {
+            if (response.error) {
+              this.showToast("Error de autenticación con Google", "error");
+              return;
+            }
+            if (response.access_token) {
+              await this.obtenerDatosPerfilGoogle(response.access_token);
+            }
+          },
+        });
+
+        client.requestAccessToken();
+      },
+
+      async obtenerDatosPerfilGoogle(token) {
+        try {
+          const res = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+            headers: { Authorization: `Bearer ${token}` }
+          });
+          const userData = await res.json();
+
+          this.currentUser = {
+            nombre: userData.name,
+            email: userData.email,
+            avatar: userData.picture
+          };
+
+          this.loginExitoso();
+        } catch (e) {
+          this.showToast("No se pudieron obtener los datos de la cuenta", "error");
+        }
+      },
+
+      procesarAuthEmail() {
+        const email = document.getElementById('input-email').value;
+        this.currentUser = {
+          nombre: email.split('@')[0],
+          email: email,
+          avatar: null
+        };
+        this.loginExitoso();
+      },
+
+      loginExitoso() {
+        this.showToast(`Bienvenido ${this.currentUser.nombre}`, "success");
+
+        document.getElementById('header-login-btns').classList.add('hidden');
+        document.getElementById('header-profile-btn').classList.remove('hidden');
+        document.getElementById('header-name').textContent = this.currentUser.nombre;
+
+        document.getElementById('profile-name').textContent = this.currentUser.nombre;
+        document.getElementById('profile-email').textContent = this.currentUser.email;
+
+        if (this.currentUser.avatar) {
+          document.getElementById('profile-avatar').innerHTML = `<img src="${this.currentUser.avatar}" class="w-full h-full rounded-full object-cover">`;
+        }
+
+        this.switchView('view-home');
+      },
+
+      cerrarSesion() {
+        this.currentUser = null;
+        document.getElementById('header-login-btns').classList.remove('hidden');
+        document.getElementById('header-profile-btn').classList.add('hidden');
+        this.showToast("Sesión cerrada", "info");
+        this.switchView('view-home');
+      },
+
+      irAPerfil() {
+        if (!this.currentUser) {
+          this.abrirLogin();
+        } else {
+          this.switchView('view-perfil-usuario');
+        }
+      },
+
+      aceptarLegalYContinuar() {
+        document.getElementById('modal-legal-gate').classList.add('hidden');
+      },
+
+      cancelarLegal() {
+        document.getElementById('modal-legal-gate').classList.add('hidden');
+      }
     };
 
-    const Chatbot = {
-        isOpen: false, userName: localStorage.getItem('user_name') || '',
-        toggle() { this.isOpen = !this.isOpen; const c = document.getElementById('chatbot-container'), b = document.getElementById('chatbot-badge'); if (this.isOpen) { c.classList.add('open'); b.classList.add('hidden'); setTimeout(() => document.getElementById('chatbot-input').focus(), 500); } else { c.classList.remove('open'); } },
-        addMessage(t, s = 'bot') { const mc = document.getElementById('chatbot-messages'), md = document.createElement('div'); md.className = `chatbot-message ${s}`; md.innerHTML = `<div class="chatbot-bubble">${t}</div>`; mc.appendChild(md); mc.scrollTop = mc.scrollHeight; },
-        showTyping() { const mc = document.getElementById('chatbot-messages'), td = document.createElement('div'); td.className = 'chatbot-message bot'; td.id = 'typing-indicator'; td.innerHTML = '<div class="chatbot-bubble"><div class="chatbot-typing"><span></span><span></span><span></span></div></div>'; mc.appendChild(td); mc.scrollTop = mc.scrollHeight; },
-        removeTyping() { const t = document.getElementById('typing-indicator'); if (t) t.remove(); },
-        sendMessage() { const i = document.getElementById('chatbot-input'), m = i.value.trim(); if (!m) return; this.addMessage(m, 'user'); i.value = ''; this.processAI(m); },
-        sendQuickReply(m) { this.addMessage(m, 'user'); this.processAI(m); },
-        processAI(m) { this.showTyping(); const un = this.userName ? ' ' + this.userName.split(' ')[0] : ''; setTimeout(() => { this.removeTyping(); let r = ''; const msg = m.toLowerCase(); if (msg.includes('escáner')) r = `🔮 <strong>Escáner Cuántico${un}:</strong> Mapea 9 sistemas en 3 min.`; else if (msg.includes('campamento')) r = `🏕️ <strong>Adultas en Fuga:</strong> 26 Sep, $120.`; else if (msg.includes('cita')) r = `📅 Ve a <strong>Citas</strong> en el menú.`; else r = `¡Hola${un}! 👋 ¿En qué te ayudo?`; this.addMessage(r, 'bot'); }, 1000); }
-    };
-
-    document.addEventListener('DOMContentLoaded', () => {
-        const scp = localStorage.getItem('app_color_primary'), scs = localStorage.getItem('app_color_secondary');
-        if (scp) document.documentElement.style.setProperty('--color-primary', scp);
-        if (scs) document.documentElement.style.setProperty('--color-secondary', scs);
-        const sl = localStorage.getItem('app_logo'), sbi = localStorage.getItem('app_banner_img'), sbt = localStorage.getItem('app_banner_text');
-        if (sl) document.getElementById('app-logo-img').src = sl;
-        if (sbi) document.getElementById('home-hero-banner').style.backgroundImage = `url('${sbi}')`;
-        if (sbt) document.getElementById('home-banner-text').innerText = sbt;
-        App.state.user.name = localStorage.getItem('user_name') || ''; App.state.user.email = localStorage.getItem('user_email') || '';
-        App.state.user.role = localStorage.getItem('user_role') || 'user'; App.state.user.registerMethod = localStorage.getItem('register_method') || 'email';
-        App.state.user.emailVerified = localStorage.getItem('email_verified') === 'true';
-        App.state.user.fechaRegistro = localStorage.getItem('fecha_registro') || new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' });
-        App.state.legalAceptado = localStorage.getItem('legal_aceptado') === 'true';
-        App.state.isAuthenticated = !!localStorage.getItem('user_email');
-        Chatbot.userName = App.state.user.name;
-        App.actualizarPerfilUI(); App.actualizarHeader(); App.actualizarNav();
-        App.switchView('view-home'); App.selectPaymentMethod('pm_bdv');
-        setTimeout(() => { const badge = document.getElementById('chatbot-badge'); if (badge && !Chatbot.isOpen) { badge.classList.remove('hidden'); badge.textContent = '1'; } }, 5000);
-    });
-    window.App = App; window.Chatbot = Chatbot;
+    window.onload = () => App.init();
   </script>
 </body>
 </html>
