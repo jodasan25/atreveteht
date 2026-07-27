@@ -6,32 +6,77 @@
     <title>Panel Admin - Atrévete HealthTech</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        :root {
+            --color-primary: #E27D60;
+            --color-secondary: #7A8A7C;
+        }
+        
         body {
             background-color: #F4F1ED;
             font-family: 'Inter', system-ui, sans-serif;
         }
+        
         .clay-card {
             background: #FFFFFF;
             border-radius: 28px;
             box-shadow: 8px 8px 16px #e0deda, -8px -8px 16px #ffffff;
         }
+        
         .clay-input {
             background: #F4F1ED;
             border-radius: 16px;
             box-shadow: inset 4px 4px 8px #e0deda, inset -4px -4px 8px #ffffff;
             border: 1px solid rgba(122, 138, 124, 0.2);
+            padding: 12px 16px;
+            width: 100%;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.2s ease;
         }
+        .clay-input:focus {
+            border-color: var(--color-primary);
+            box-shadow: inset 4px 4px 8px #e0deda, inset -4px -4px 8px #ffffff, 0 0 0 3px rgba(226, 125, 96, 0.1);
+        }
+        
         .clay-btn-primary {
-            background: #E27D60;
+            background: var(--color-primary);
             color: #FFFFFF;
             border-radius: 9999px;
+            padding: 12px 24px;
+            font-weight: bold;
+            font-size: 14px;
             box-shadow: 6px 6px 12px #c06a51, -6px -6px 12px #ffffff;
             transition: all 0.2s ease;
             cursor: pointer;
+            border: none;
+            width: 100%;
         }
         .clay-btn-primary:hover {
             transform: translateY(-2px);
+            box-shadow: 8px 8px 16px #c06a51, -8px -8px 12px #ffffff;
         }
+        .clay-btn-primary:active {
+            transform: translateY(0);
+            box-shadow: 4px 4px 8px #c06a51, -4px -4px 8px #ffffff;
+        }
+        
+        .clay-btn-secondary {
+            background: #F0B7A1;
+            color: var(--color-secondary);
+            border-radius: 9999px;
+            padding: 12px 24px;
+            font-weight: bold;
+            font-size: 14px;
+            box-shadow: 6px 6px 12px #cc9b89, -6px -6px 12px #ffffff;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+            width: 100%;
+        }
+        .clay-btn-secondary:hover {
+            transform: translateY(-2px);
+        }
+        
         .toast {
             position: fixed;
             top: 20px;
@@ -49,113 +94,290 @@
         .toast.show { transform: translateX(0); }
         .toast-success { background: #4CAF50; }
         .toast-error { background: #f44336; }
+        .toast-warning { background: #FF9800; }
+        
+        .hidden { display: none !important; }
+        
+        /* Animación de entrada */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-in {
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        /* Botón de cerrar sesión */
+        .btn-logout {
+            background: transparent;
+            color: #f44336;
+            border: 2px solid #f44336;
+            border-radius: 9999px;
+            padding: 8px 16px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .btn-logout:hover {
+            background: #f44336;
+            color: white;
+        }
+
+        /* Input de contraseña con ojo */
+        .password-container {
+            position: relative;
+        }
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 18px;
+            user-select: none;
+        }
     </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-4">
     
     <div id="toast" class="toast"></div>
 
-    <main class="w-full max-w-lg space-y-6">
-        <!-- Header -->
-        <div class="text-center space-y-2">
+    <!-- ==================== PANTALLA DE LOGIN ==================== -->
+    <div id="login-screen" class="w-full max-w-md animate-in">
+        <div class="text-center space-y-3 mb-6">
             <div class="flex items-center justify-center gap-3">
-                <span class="text-3xl">⚙️</span>
-                <h1 class="text-3xl font-extrabold text-[#7A8A7C]">Panel Administrativo</h1>
+                <span class="text-4xl">🔐</span>
+                <h1 class="text-3xl font-extrabold text-[var(--color-secondary)]">Panel Admin</h1>
             </div>
-            <p class="text-xs text-[#7A8A7C]/70">Gestión visual de Atrévete HealthTech</p>
-            <div class="flex items-center justify-center gap-2 mt-2">
-                <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                <span class="text-[10px] text-green-600 font-semibold">Cambios en tiempo real</span>
+            <p class="text-sm text-[var(--color-secondary)]/70">Acceso restringido • Atrévete HealthTech</p>
+        </div>
+
+        <form onsubmit="event.preventDefault(); Admin.login();" class="clay-card p-6 space-y-4">
+            <div class="text-center pb-2">
+                <span class="text-xs uppercase font-bold tracking-widest text-[var(--color-primary)]">Iniciar Sesión</span>
             </div>
+
+            <div>
+                <label class="block text-xs font-bold text-[var(--color-secondary)] mb-1" for="login-usuario">
+                    👤 Usuario
+                </label>
+                <input type="text" id="login-usuario" placeholder="admin" 
+                       class="clay-input" required autocomplete="username">
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-[var(--color-secondary)] mb-1" for="login-password">
+                    🔒 Contraseña
+                </label>
+                <div class="password-container">
+                    <input type="password" id="login-password" placeholder="••••••••" 
+                           class="clay-input" required autocomplete="current-password">
+                    <span class="password-toggle" onclick="Admin.togglePassword()">👁️</span>
+                </div>
+            </div>
+
+            <div id="login-error" class="text-red-500 text-xs text-center hidden">
+                ❌ Usuario o contraseña incorrectos
+            </div>
+
+            <button type="submit" class="clay-btn-primary">
+                🔓 Ingresar al Panel
+            </button>
+
+            <div class="text-center text-[10px] text-[var(--color-secondary)]/50">
+                <p>Usuario predeterminado: <strong>admin</strong></p>
+                <p>Contraseña predeterminada: <strong>Atrevete2026!</strong></p>
+            </div>
+        </form>
+    </div>
+
+    <!-- ==================== PANEL DE ADMINISTRACIÓN ==================== -->
+    <main id="admin-panel" class="w-full max-w-lg space-y-6 hidden">
+        <!-- Header -->
+        <div class="flex items-center justify-between">
+            <div class="text-center flex-1">
+                <div class="flex items-center justify-center gap-3">
+                    <span class="text-3xl">⚙️</span>
+                    <h1 class="text-3xl font-extrabold text-[var(--color-secondary)]">Panel Administrativo</h1>
+                </div>
+                <p class="text-xs text-[var(--color-secondary)]/70">Gestión visual de Atrévete HealthTech</p>
+                <div class="flex items-center justify-center gap-2 mt-2">
+                    <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                    <span class="text-[10px] text-green-600 font-semibold">Sesión activa • Cambios en tiempo real</span>
+                </div>
+            </div>
+            <button onclick="Admin.logout()" class="btn-logout">🚪 Salir</button>
         </div>
 
         <!-- Formulario de Logo y Banner -->
-        <form onsubmit="event.preventDefault(); Admin.guardarCambios();" class="clay-card p-6 space-y-5">
+        <form onsubmit="event.preventDefault(); Admin.guardarCambios();" class="clay-card p-6 space-y-5 animate-in">
             
             <!-- LOGO -->
             <div class="space-y-2">
-                <label class="block text-xs font-bold text-[#7A8A7C] flex items-center gap-2">
+                <label class="block text-xs font-bold text-[var(--color-secondary)] flex items-center gap-2">
                     <span>🖼️</span> Logotipo Principal (Header)
                 </label>
                 <input type="url" id="admin-logo-url" placeholder="https://ejemplo.com/logo.png" 
-                       class="w-full p-3 text-xs clay-input focus:outline-none">
+                       class="clay-input">
                 <div class="flex items-center gap-2">
-                    <span class="text-[10px] text-[#7A8A7C]/60">Vista previa:</span>
-                    <img id="logo-preview" src="" alt="Logo preview" class="h-8 object-contain hidden">
+                    <span class="text-[10px] text-[var(--color-secondary)]/60">Vista previa:</span>
+                    <img id="logo-preview" src="" alt="Logo preview" class="h-10 object-contain hidden">
                 </div>
             </div>
 
             <!-- BANNER IMAGEN -->
             <div class="space-y-2">
-                <label class="block text-xs font-bold text-[#7A8A7C] flex items-center gap-2">
+                <label class="block text-xs font-bold text-[var(--color-secondary)] flex items-center gap-2">
                     <span>🖼️</span> Imagen del Banner Principal (Home)
                 </label>
                 <input type="url" id="admin-banner-img-url" placeholder="https://images.unsplash.com/..." 
-                       class="w-full p-3 text-xs clay-input focus:outline-none">
+                       class="clay-input">
                 <div id="banner-preview-container" class="hidden">
-                    <span class="text-[10px] text-[#7A8A7C]/60">Vista previa:</span>
-                    <img id="banner-preview" src="" alt="Banner preview" class="w-full h-24 object-cover rounded-xl mt-1">
+                    <span class="text-[10px] text-[var(--color-secondary)]/60">Vista previa:</span>
+                    <img id="banner-preview" src="" alt="Banner preview" class="w-full h-28 object-cover rounded-xl mt-1 shadow-md">
                 </div>
             </div>
 
             <!-- TEXTO BANNER -->
             <div class="space-y-2">
-                <label class="block text-xs font-bold text-[#7A8A7C] flex items-center gap-2">
+                <label class="block text-xs font-bold text-[var(--color-secondary)] flex items-center gap-2">
                     <span>📝</span> Texto del Banner
                 </label>
                 <input type="text" id="admin-banner-text" placeholder="Ej. Calibra tu calma somática hoy" 
-                       class="w-full p-3 text-xs clay-input focus:outline-none">
+                       class="clay-input">
             </div>
 
             <!-- COLORES PERSONALIZADOS -->
             <div class="space-y-3 border-t border-stone-200 pt-3">
-                <label class="block text-xs font-bold text-[#7A8A7C] flex items-center gap-2">
+                <label class="block text-xs font-bold text-[var(--color-secondary)] flex items-center gap-2">
                     <span>🎨</span> Colores Personalizados
                 </label>
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="text-[10px] text-[#7A8A7C]">Color Primario</label>
+                        <label class="text-[10px] text-[var(--color-secondary)] font-semibold">Color Primario</label>
                         <input type="color" id="admin-color-primary" value="#E27D60" 
-                               class="w-full h-10 rounded-xl cursor-pointer">
+                               class="w-full h-12 rounded-xl cursor-pointer border-2 border-stone-200">
+                        <p class="text-[9px] text-[var(--color-secondary)]/50 mt-1">Botones y acentos</p>
                     </div>
                     <div>
-                        <label class="text-[10px] text-[#7A8A7C]">Color Secundario</label>
+                        <label class="text-[10px] text-[var(--color-secondary)] font-semibold">Color Secundario</label>
                         <input type="color" id="admin-color-secondary" value="#7A8A7C" 
-                               class="w-full h-10 rounded-xl cursor-pointer">
+                               class="w-full h-12 rounded-xl cursor-pointer border-2 border-stone-200">
+                        <p class="text-[9px] text-[var(--color-secondary)]/50 mt-1">Textos y fondos</p>
                     </div>
                 </div>
             </div>
 
             <!-- BOTONES -->
             <div class="flex gap-3 pt-2">
-                <button type="submit" class="clay-btn-primary flex-1 py-3.5 text-xs font-bold">
+                <button type="submit" class="clay-btn-primary flex-1">
                     💾 Guardar Cambios
                 </button>
                 <button type="button" onclick="Admin.resetearValores()" 
-                        class="flex-1 py-3.5 text-xs font-bold text-[#7A8A7C] bg-stone-200 rounded-full hover:bg-stone-300 transition">
+                        class="clay-btn-secondary flex-1">
                     🔄 Restaurar
                 </button>
             </div>
         </form>
 
         <!-- Info -->
-        <div class="clay-card p-4 bg-orange-50/40 text-[11px] text-[#7A8A7C] space-y-1">
-            <p class="font-bold text-[#E27D60]">💡 ¿Cómo funciona?</p>
+        <div class="clay-card p-4 bg-orange-50/40 text-[11px] text-[var(--color-secondary)] space-y-1">
+            <p class="font-bold text-[var(--color-primary)]">💡 ¿Cómo funciona?</p>
             <p>Los cambios se guardan en el almacenamiento local y se reflejan automáticamente en la app principal.</p>
             <p class="text-[10px] mt-2">📍 Archivo: <code class="bg-stone-200 px-2 py-0.5 rounded">admin.html</code> (independiente)</p>
         </div>
 
         <!-- Botón para abrir la app -->
         <button onclick="window.open('index.html', '_blank')" 
-                class="w-full py-3 text-xs font-bold text-[#E27D60] border-2 border-[#E27D60]/30 rounded-full hover:bg-[#E27D60]/5 transition">
-            🔗 Abrir App Principal
+                class="w-full py-3 text-sm font-bold text-[var(--color-primary)] border-2 border-[var(--color-primary)]/30 rounded-full hover:bg-[var(--color-primary)]/5 transition">
+            🔗 Abrir App Principal en Nueva Pestaña
         </button>
     </main>
 
     <script>
+        // ============================================
+        // ADMIN - CON SISTEMA DE LOGIN
+        // ============================================
         const Admin = {
+            // Credenciales predeterminadas
+            credentials: {
+                usuario: 'admin',
+                password: 'Atrevete2026!'
+            },
+
+            // Verificar si ya hay sesión iniciada
+            verificarSesion() {
+                const sesionActiva = sessionStorage.getItem('admin_sesion');
+                if (sesionActiva === 'true') {
+                    this.mostrarPanel();
+                } else {
+                    this.mostrarLogin();
+                }
+            },
+
+            // Mostrar pantalla de login
+            mostrarLogin() {
+                document.getElementById('login-screen').classList.remove('hidden');
+                document.getElementById('admin-panel').classList.add('hidden');
+                document.getElementById('login-error').classList.add('hidden');
+                document.getElementById('login-usuario').value = '';
+                document.getElementById('login-password').value = '';
+            },
+
+            // Mostrar panel de administración
+            mostrarPanel() {
+                document.getElementById('login-screen').classList.add('hidden');
+                document.getElementById('admin-panel').classList.remove('hidden');
+                this.cargarValoresGuardados();
+            },
+
+            // Iniciar sesión
+            login() {
+                const usuario = document.getElementById('login-usuario').value.trim();
+                const password = document.getElementById('login-password').value;
+                const errorDiv = document.getElementById('login-error');
+
+                if (usuario === this.credentials.usuario && password === this.credentials.password) {
+                    sessionStorage.setItem('admin_sesion', 'true');
+                    errorDiv.classList.add('hidden');
+                    this.mostrarToast('✅ ¡Bienvenido al Panel Administrativo!', 'success');
+                    this.mostrarPanel();
+                } else {
+                    errorDiv.classList.remove('hidden');
+                    this.mostrarToast('❌ Usuario o contraseña incorrectos', 'error');
+                    document.getElementById('login-password').value = '';
+                }
+            },
+
+            // Cerrar sesión
+            logout() {
+                sessionStorage.removeItem('admin_sesion');
+                this.mostrarToast('👋 Sesión cerrada correctamente', 'success');
+                this.mostrarLogin();
+            },
+
+            // Mostrar/ocultar contraseña
+            togglePassword() {
+                const passwordInput = document.getElementById('login-password');
+                const toggleBtn = document.querySelector('.password-toggle');
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    toggleBtn.textContent = '🙈';
+                } else {
+                    passwordInput.type = 'password';
+                    toggleBtn.textContent = '👁️';
+                }
+            },
+
             // Cargar valores guardados
-            init() {
+            cargarValoresGuardados() {
                 const logo = localStorage.getItem('app_logo');
                 const bannerImg = localStorage.getItem('app_banner_img');
                 const bannerText = localStorage.getItem('app_banner_text');
@@ -171,8 +393,14 @@
                     this.mostrarPreviewBanner(bannerImg);
                 }
                 if (bannerText) document.getElementById('admin-banner-text').value = bannerText;
-                if (colorPrimary) document.getElementById('admin-color-primary').value = colorPrimary;
-                if (colorSecondary) document.getElementById('admin-color-secondary').value = colorSecondary;
+                if (colorPrimary) {
+                    document.getElementById('admin-color-primary').value = colorPrimary;
+                    document.documentElement.style.setProperty('--color-primary', colorPrimary);
+                }
+                if (colorSecondary) {
+                    document.getElementById('admin-color-secondary').value = colorSecondary;
+                    document.documentElement.style.setProperty('--color-secondary', colorSecondary);
+                }
 
                 // Eventos de preview
                 document.getElementById('admin-logo-url').addEventListener('input', (e) => {
@@ -185,7 +413,7 @@
 
             mostrarPreviewLogo(url) {
                 const preview = document.getElementById('logo-preview');
-                if (url && url.startsWith('http')) {
+                if (url && (url.startsWith('http') || url.startsWith('data:') || url.startsWith('./') || url.startsWith('../'))) {
                     preview.src = url;
                     preview.classList.remove('hidden');
                 } else {
@@ -196,7 +424,7 @@
             mostrarPreviewBanner(url) {
                 const container = document.getElementById('banner-preview-container');
                 const preview = document.getElementById('banner-preview');
-                if (url && url.startsWith('http')) {
+                if (url && (url.startsWith('http') || url.startsWith('data:') || url.startsWith('./') || url.startsWith('../'))) {
                     preview.src = url;
                     container.classList.remove('hidden');
                 } else {
@@ -211,31 +439,59 @@
                 const colorPrimary = document.getElementById('admin-color-primary').value;
                 const colorSecondary = document.getElementById('admin-color-secondary').value;
 
-                if (logo) localStorage.setItem('app_logo', logo);
-                if (bannerImg) localStorage.setItem('app_banner_img', bannerImg);
-                if (bannerText) localStorage.setItem('app_banner_text', bannerText);
-                if (colorPrimary) localStorage.setItem('app_color_primary', colorPrimary);
-                if (colorSecondary) localStorage.setItem('app_color_secondary', colorSecondary);
+                let cambios = false;
 
-                this.mostrarToast('✅ Cambios guardados exitosamente', 'success');
+                if (logo) {
+                    localStorage.setItem('app_logo', logo);
+                    cambios = true;
+                }
+                if (bannerImg) {
+                    localStorage.setItem('app_banner_img', bannerImg);
+                    cambios = true;
+                }
+                if (bannerText) {
+                    localStorage.setItem('app_banner_text', bannerText);
+                    cambios = true;
+                }
+                if (colorPrimary) {
+                    localStorage.setItem('app_color_primary', colorPrimary);
+                    document.documentElement.style.setProperty('--color-primary', colorPrimary);
+                    cambios = true;
+                }
+                if (colorSecondary) {
+                    localStorage.setItem('app_color_secondary', colorSecondary);
+                    document.documentElement.style.setProperty('--color-secondary', colorSecondary);
+                    cambios = true;
+                }
+
+                if (cambios) {
+                    this.mostrarToast('✅ Cambios guardados exitosamente', 'success');
+                } else {
+                    this.mostrarToast('⚠️ No se detectaron cambios para guardar', 'warning');
+                }
             },
 
             resetearValores() {
-                localStorage.removeItem('app_logo');
-                localStorage.removeItem('app_banner_img');
-                localStorage.removeItem('app_banner_text');
-                localStorage.removeItem('app_color_primary');
-                localStorage.removeItem('app_color_secondary');
+                if (confirm('¿Estás seguro de restaurar todos los valores predeterminados? Esta acción no se puede deshacer.')) {
+                    localStorage.removeItem('app_logo');
+                    localStorage.removeItem('app_banner_img');
+                    localStorage.removeItem('app_banner_text');
+                    localStorage.removeItem('app_color_primary');
+                    localStorage.removeItem('app_color_secondary');
 
-                document.getElementById('admin-logo-url').value = '';
-                document.getElementById('admin-banner-img-url').value = '';
-                document.getElementById('admin-banner-text').value = '';
-                document.getElementById('admin-color-primary').value = '#E27D60';
-                document.getElementById('admin-color-secondary').value = '#7A8A7C';
-                document.getElementById('logo-preview').classList.add('hidden');
-                document.getElementById('banner-preview-container').classList.add('hidden');
+                    document.getElementById('admin-logo-url').value = '';
+                    document.getElementById('admin-banner-img-url').value = '';
+                    document.getElementById('admin-banner-text').value = '';
+                    document.getElementById('admin-color-primary').value = '#E27D60';
+                    document.getElementById('admin-color-secondary').value = '#7A8A7C';
+                    document.getElementById('logo-preview').classList.add('hidden');
+                    document.getElementById('banner-preview-container').classList.add('hidden');
 
-                this.mostrarToast('🔄 Valores restaurados a predeterminados', 'success');
+                    document.documentElement.style.setProperty('--color-primary', '#E27D60');
+                    document.documentElement.style.setProperty('--color-secondary', '#7A8A7C');
+
+                    this.mostrarToast('🔄 Valores restaurados a predeterminados', 'success');
+                }
             },
 
             mostrarToast(mensaje, tipo) {
@@ -247,7 +503,19 @@
             }
         };
 
-        document.addEventListener('DOMContentLoaded', () => Admin.init());
+        // Inicializar al cargar la página
+        document.addEventListener('DOMContentLoaded', () => {
+            Admin.verificarSesion();
+        });
+
+        // Permitir cerrar sesión con Escape (solo en el panel)
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !document.getElementById('admin-panel').classList.contains('hidden')) {
+                if (confirm('¿Cerrar sesión del panel administrativo?')) {
+                    Admin.logout();
+                }
+            }
+        });
     </script>
 </body>
 </html>
