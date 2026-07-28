@@ -385,6 +385,253 @@
         .role-option.selected .role-name {
             color: #E27D60;
         }
+
+        /* ==================== ASISTENTE VIRTUAL ==================== */
+        .assistant-toggle {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            z-index: 999;
+            width: 56px;
+            height: 56px;
+            border-radius: 9999px;
+            background: #E27D60;
+            color: white;
+            border: none;
+            box-shadow: 0 8px 24px rgba(226, 125, 96, 0.4);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        .assistant-toggle:hover {
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 12px 32px rgba(226, 125, 96, 0.5);
+        }
+        .assistant-toggle.active {
+            transform: rotate(90deg);
+        }
+
+        .assistant-chat {
+            position: fixed;
+            bottom: 170px;
+            right: 20px;
+            z-index: 999;
+            width: 340px;
+            max-width: calc(100vw - 40px);
+            height: 420px;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid rgba(226, 125, 96, 0.1);
+            animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+        .assistant-chat.open {
+            display: flex;
+        }
+        .assistant-header {
+            background: #E27D60;
+            color: white;
+            padding: 14px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        .assistant-header-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .assistant-header-title .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 9999px;
+            background: #4ade80;
+            animation: pulse-dot 1.5s infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+        .assistant-close {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 9999px;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .assistant-close:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        .assistant-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: #F9F6F0;
+        }
+        .assistant-messages::-webkit-scrollbar {
+            width: 4px;
+        }
+        .assistant-messages::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .assistant-messages::-webkit-scrollbar-thumb {
+            background: #E27D60/30;
+            border-radius: 10px;
+        }
+        .message {
+            max-width: 85%;
+            padding: 10px 14px;
+            border-radius: 16px;
+            font-size: 13px;
+            line-height: 1.5;
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .message.bot {
+            background: white;
+            color: #4A5D4E;
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .message.bot .typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: 4px 0;
+        }
+        .message.bot .typing-indicator span {
+            width: 6px;
+            height: 6px;
+            background: #E27D60/50;
+            border-radius: 9999px;
+            animation: typing 1.4s infinite;
+        }
+        .message.bot .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .message.bot .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+            30% { transform: translateY(-6px); opacity: 1; }
+        }
+        .message.user {
+            background: #E27D60;
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+        .assistant-input-area {
+            display: flex;
+            gap: 8px;
+            padding: 12px 16px;
+            background: white;
+            border-top: 1px solid #f0ece8;
+            flex-shrink: 0;
+        }
+        .assistant-input-area input {
+            flex: 1;
+            padding: 10px 14px;
+            border: 1px solid #e5e0db;
+            border-radius: 9999px;
+            font-size: 13px;
+            outline: none;
+            background: #F9F6F0;
+            transition: border-color 0.2s;
+        }
+        .assistant-input-area input:focus {
+            border-color: #E27D60;
+        }
+        .assistant-input-area button {
+            width: 40px;
+            height: 40px;
+            border-radius: 9999px;
+            background: #E27D60;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.2s;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .assistant-input-area button:hover {
+            background: #c06a51;
+            transform: scale(1.05);
+        }
+        .assistant-input-area button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Quick actions */
+        .quick-actions {
+            display: flex;
+            gap: 6px;
+            padding: 8px 16px 4px 16px;
+            flex-wrap: wrap;
+            background: white;
+            flex-shrink: 0;
+        }
+        .quick-actions button {
+            padding: 4px 12px;
+            border-radius: 9999px;
+            border: 1px solid #e5e0db;
+            background: white;
+            font-size: 10px;
+            color: #7A8A7C;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+        .quick-actions button:hover {
+            border-color: #E27D60;
+            color: #E27D60;
+            background: #FFF8F6;
+        }
+
+        /* Responsive */
+        @media (max-width: 400px) {
+            .assistant-chat {
+                width: calc(100vw - 32px);
+                height: 380px;
+                right: 16px;
+                bottom: 160px;
+            }
+            .assistant-toggle {
+                width: 48px;
+                height: 48px;
+                font-size: 20px;
+                bottom: 90px;
+                right: 16px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -448,6 +695,39 @@
   <!-- ================= TOAST ================= -->
   <div id="toast" class="toast"></div>
 
+  <!-- ================= ASISTENTE VIRTUAL ================= -->
+  <button id="assistant-toggle" class="assistant-toggle" onclick="App.toggleAssistant()" aria-label="Asistente Virtual">
+    💬
+  </button>
+
+  <div id="assistant-chat" class="assistant-chat">
+    <div class="assistant-header">
+      <div class="assistant-header-title">
+        <span class="dot"></span>
+        <span>Asistente Atrévete</span>
+      </div>
+      <button class="assistant-close" onclick="App.toggleAssistant()">✕</button>
+    </div>
+
+    <div class="assistant-messages" id="assistant-messages">
+      <div class="message bot">
+        ¡Hola! 🌿 Soy tu asistente de Atrévete HealthTech. ¿En qué puedo ayudarte hoy?
+      </div>
+    </div>
+
+    <div class="quick-actions" id="quick-actions">
+      <button onclick="App.sendQuickMessage('¿Qué es Atrévete HealthTech?')">📖 ¿Qué es?</button>
+      <button onclick="App.sendQuickMessage('¿Cómo agendo una cita?')">📅 Agendar cita</button>
+      <button onclick="App.sendQuickMessage('¿Qué es la regulación somática?')">🧘 Regulación</button>
+      <button onclick="App.sendQuickMessage('Contacto')">📞 Contacto</button>
+    </div>
+
+    <div class="assistant-input-area">
+      <input type="text" id="assistant-input" placeholder="Escribe tu mensaje..." onkeypress="if(event.key==='Enter') App.sendMessage()">
+      <button onclick="App.sendMessage()" id="assistant-send-btn">➤</button>
+    </div>
+  </div>
+
   <!-- ================= 1. HOME ================= -->
   <main id="view-home" class="app-view max-w-md mx-auto px-5 space-y-5">
     <div class="text-center space-y-1">
@@ -484,7 +764,7 @@
     </div>
   </main>
 
-  <!-- ================= 2. AUTENTICACIÓN (LOGIN / REGISTRO) ================= -->
+  <!-- ================= 2. AUTENTICACIÓN ================= -->
   <main id="view-auth" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
     <div class="text-center space-y-1">
       <h2 id="auth-title" class="text-2xl font-bold text-[#7A8A7C]">Iniciar Sesión</h2>
@@ -514,7 +794,6 @@
         <div id="password-error" class="text-red-500 text-xs mt-1 hidden">La contraseña debe tener al menos 6 caracteres</div>
       </div>
 
-      <!-- Selector de Rol (visible solo en registro) -->
       <div id="field-rol" class="hidden space-y-3 border-t border-[#7A8A7C]/20 pt-4">
         <label class="block text-xs font-bold text-[#7A8A7C]">Tipo de Cuenta:</label>
         <div class="role-selector">
@@ -846,7 +1125,130 @@
             isAuthenticated: !!localStorage.getItem('user_email'),
             legalAceptado: localStorage.getItem('legal_aceptado') === 'true',
             breathInterval: null,
-            currentView: 'view-home'
+            currentView: 'view-home',
+            assistantOpen: false,
+            isProcessing: false
+        },
+
+        // ============================================
+        // ASISTENTE VIRTUAL
+        // ============================================
+        toggleAssistant() {
+            const chat = document.getElementById('assistant-chat');
+            const toggle = document.getElementById('assistant-toggle');
+            this.state.assistantOpen = !this.state.assistantOpen;
+            
+            if (this.state.assistantOpen) {
+                chat.classList.add('open');
+                toggle.classList.add('active');
+                toggle.innerHTML = '✕';
+                setTimeout(() => {
+                    document.getElementById('assistant-input').focus();
+                }, 300);
+            } else {
+                chat.classList.remove('open');
+                toggle.classList.remove('active');
+                toggle.innerHTML = '💬';
+            }
+        },
+
+        sendMessage() {
+            const input = document.getElementById('assistant-input');
+            const message = input.value.trim();
+            if (!message || this.state.isProcessing) return;
+            
+            input.value = '';
+            this.addMessage(message, 'user');
+            this.state.isProcessing = true;
+            
+            // Mostrar indicador de escritura
+            this.showTypingIndicator();
+            
+            // Simular respuesta del asistente
+            setTimeout(() => {
+                this.hideTypingIndicator();
+                const response = this.getAssistantResponse(message);
+                this.addMessage(response, 'bot');
+                this.state.isProcessing = false;
+            }, 1000 + Math.random() * 1000);
+        },
+
+        sendQuickMessage(text) {
+            if (this.state.isProcessing) return;
+            if (!this.state.assistantOpen) {
+                this.toggleAssistant();
+                setTimeout(() => {
+                    document.getElementById('assistant-input').value = text;
+                    this.sendMessage();
+                }, 400);
+            } else {
+                document.getElementById('assistant-input').value = text;
+                this.sendMessage();
+            }
+        },
+
+        addMessage(text, type) {
+            const container = document.getElementById('assistant-messages');
+            const div = document.createElement('div');
+            div.className = `message ${type}`;
+            div.textContent = text;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+        },
+
+        showTypingIndicator() {
+            const container = document.getElementById('assistant-messages');
+            const div = document.createElement('div');
+            div.className = 'message bot';
+            div.id = 'typing-indicator';
+            div.innerHTML = `
+                <div class="typing-indicator">
+                    <span></span><span></span><span></span>
+                </div>
+            `;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+        },
+
+        hideTypingIndicator() {
+            const indicator = document.getElementById('typing-indicator');
+            if (indicator) indicator.remove();
+        },
+
+        getAssistantResponse(message) {
+            const msg = message.toLowerCase();
+            
+            // Respuestas predefinidas
+            if (msg.includes('qué es') || msg.includes('que es') || msg.includes('plataforma')) {
+                return '🌿 Atrévete HealthTech es un ecosistema somático integrativo que combina regulación del sistema nervioso, acompañamiento clínico y herramientas de bienestar emocional. Nuestra misión es ayudarte a habitar tu cuerpo con consciencia.';
+            }
+            
+            if (msg.includes('cita') || msg.includes('agendar') || msg.includes('sesión')) {
+                return '📅 Para agendar una sesión, ve a la sección "Citas" en el menú inferior. Allí podrás seleccionar a tu especialista, elegir fecha y hora, y confirmar tu cita vía WhatsApp. ¿Necesitas ayuda con algún paso específico?';
+            }
+            
+            if (msg.includes('regulación') || msg.includes('somática') || msg.includes('gimnasio')) {
+                return '🧘 La regulación somática es una práctica que te ayuda a conectar con las señales de tu cuerpo para regular el sistema nervioso. En nuestro "Gimnasio Emocional" encontrarás el "Chequeo Corporal", una herramienta de diagnóstico somático que te guiará hacia la técnica más adecuada para tu estado actual.';
+            }
+            
+            if (msg.includes('contacto') || msg.includes('contactar') || msg.includes('email')) {
+                return '📞 Puedes contactarnos a través de:\n📧 Email: hola@atrevetehealthtech.com\n📱 WhatsApp: +58 414-4031678\n🌐 Visita nuestra web para más información.';
+            }
+            
+            if (msg.includes('pago') || msg.includes('pagar') || msg.includes('precio') || msg.includes('costo')) {
+                return '💳 Nuestra pasarela de pago acepta Pago Móvil (BDV y BNC), Zelle (próximamente) y Binance Pay. Todos los pagos son seguros y se procesan bajo estricta confidencialidad.';
+            }
+            
+            if (msg.includes('hola') || msg.includes('buenas') || msg.includes('saludo')) {
+                return '¡Hola! 🌟 Es un placer saludarte. ¿Cómo puedo ayudarte hoy? Puedes preguntarme sobre la plataforma, citas, regulación somática o cualquier otra duda.';
+            }
+            
+            if (msg.includes('gracias') || msg.includes('gracias') || msg.includes('ok') || msg.includes('vale')) {
+                return '¡De nada! 🙏 Estoy aquí para lo que necesites. Recuerda que puedes escribirme en cualquier momento. ¡Que tengas un hermoso día! 🌸';
+            }
+            
+            // Respuesta por defecto
+            return '🤔 Gracias por tu mensaje. Estoy aquí para ayudarte con información sobre Atrévete HealthTech, citas, regulación somática, pagos o cualquier otra consulta. ¿Puedes ser más específico con tu pregunta?';
         },
 
         // ============================================
