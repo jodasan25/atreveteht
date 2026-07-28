@@ -4,14 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atrévete HealthTech - Plataforma Integrativa</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <style>
-        :root {
-            --color-primary: #E27D60;
-            --color-secondary: #7A8A7C;
-        }
-        
         .hidden { display: none !important; }
         
         body {
@@ -19,10 +14,14 @@
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
         }
 
+        /* ESTILOS CLAYMORFISMO */
         .clay-card {
             background: #FFFFFF;
             border-radius: 28px;
-            box-shadow: 8px 8px 16px #e0deda, -8px -8px 16px #ffffff, inset 3px 3px 6px #ffffff, inset -3px -3px 6px #e0deda;
+            box-shadow: 8px 8px 16px #e0deda, 
+                        -8px -8px 16px #ffffff, 
+                        inset 3px 3px 6px #ffffff, 
+                        inset -3px -3px 6px #e0deda;
         }
 
         .clay-input {
@@ -33,190 +32,389 @@
         }
 
         .clay-btn-primary {
-            background: var(--color-primary);
+            background: #E27D60;
             color: #FFFFFF;
             border-radius: 9999px;
-            box-shadow: 6px 6px 12px #c06a51, -6px -6px 12px #ffffff, inset 3px 3px 6px #ff906e, inset -3px -3px 6px #c06a51;
+            box-shadow: 6px 6px 12px #c06a51, 
+                        -6px -6px 12px #ffffff, 
+                        inset 3px 3px 6px #ff906e, 
+                        inset -3px -3px 6px #c06a51;
             transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-            cursor: pointer;
         }
-        .clay-btn-primary:hover { transform: translateY(-2px); box-shadow: 8px 8px 16px #c06a51, -8px -8px 16px #ffffff; }
-        .clay-btn-primary:active { transform: translateY(1px) scale(0.97); }
+        .clay-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 8px 8px 16px #c06a51, -8px -8px 16px #ffffff;
+        }
+        .clay-btn-primary:active {
+            transform: translateY(1px) scale(0.97);
+        }
 
         .clay-btn-secondary {
             background: #F0B7A1;
-            color: var(--color-secondary);
+            color: #7A8A7C;
             border-radius: 9999px;
-            box-shadow: 6px 6px 12px #cc9b89, -6px -6px 12px #ffffff, inset 3px 3px 6px #ffd3bd, inset -3px -3px 6px #cc9b89;
+            box-shadow: 6px 6px 12px #cc9b89, 
+                        -6px -6px 12px #ffffff, 
+                        inset 3px 3px 6px #ffd3bd, 
+                        inset -3px -3px 6px #cc9b89;
+            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .clay-btn-secondary:hover {
+            transform: translateY(-2px);
+        }
+
+        .clay-btn-option {
+            background: #FFFFFF;
+            color: #7A8A7C;
+            border-radius: 18px;
+            border: 2px solid transparent;
+            box-shadow: 4px 4px 10px #e0deda, -4px -4px 10px #ffffff;
+            transition: all 0.2s ease;
+            text-align: left;
+            padding: 12px 16px;
+            cursor: pointer;
+        }
+        .clay-btn-option:hover {
+            transform: translateY(-2px);
+            border-color: rgba(226, 125, 96, 0.4);
+        }
+
+        .clay-btn-pay {
+            background: #FFFFFF;
+            color: #7A8A7C;
+            border-radius: 16px;
+            border: 2px solid transparent;
+            box-shadow: 4px 4px 8px #e0deda, -4px -4px 8px #ffffff;
             transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
             cursor: pointer;
         }
-        .clay-btn-secondary:hover { transform: translateY(-2px); }
-
-        .clay-btn-option {
-            background: #FFFFFF; color: var(--color-secondary); border-radius: 18px; border: 2px solid transparent;
-            box-shadow: 4px 4px 10px #e0deda, -4px -4px 10px #ffffff; transition: all 0.2s ease;
-            text-align: left; padding: 12px 16px; cursor: pointer;
+        .clay-btn-pay:hover {
+            transform: translateY(-2px);
         }
-        .clay-btn-option:hover { transform: translateY(-2px); border-color: rgba(226, 125, 96, 0.4); }
-
-        .clay-btn-pay {
-            background: #FFFFFF; color: var(--color-secondary); border-radius: 16px; border: 2px solid transparent;
-            box-shadow: 4px 4px 8px #e0deda, -4px -4px 8px #ffffff; transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1); cursor: pointer;
-        }
-        .clay-btn-pay:hover { transform: translateY(-2px); }
         .clay-btn-pay.active-pay {
-            border-color: var(--color-primary); background: #FFF8F6; color: var(--color-primary);
+            border-color: #E27D60;
+            background: #FFF8F6;
+            color: #E27D60;
             box-shadow: inset 2px 2px 4px rgba(226, 125, 96, 0.15), inset -2px -2px 4px #ffffff;
         }
 
+        /* Navegación inferior */
         .clay-nav {
-            background: rgba(253, 251, 247, 0.95); backdrop-filter: blur(12px);
-            border-radius: 24px 24px 0 0; box-shadow: 0 -8px 16px rgba(0,0,0,0.04), inset 0 2px 4px #ffffff;
+            background: rgba(253, 251, 247, 0.95);
+            backdrop-filter: blur(12px);
+            border-radius: 24px 24px 0 0;
+            box-shadow: 0 -8px 16px rgba(0,0,0,0.04), inset 0 2px 4px #ffffff;
             padding: 8px 12px 12px 12px;
         }
 
         .nav-item {
-            display: flex; flex-direction: column; align-items: center; gap: 2px;
-            padding: 6px 10px; border-radius: 16px; cursor: pointer; transition: all 0.2s ease;
-            text-decoration: none; min-width: 48px; position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            padding: 6px 10px;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            min-width: 48px;
+            position: relative;
         }
-        .nav-item:hover { background: rgba(226, 125, 96, 0.08); }
-        .nav-item.active { background: rgba(226, 125, 96, 0.15); }
-        .nav-item .nav-icon { font-size: 20px; line-height: 1; }
-        .nav-item .nav-label { font-size: 9px; font-weight: 600; color: var(--color-secondary); transition: color 0.2s ease; }
-        .nav-item.active .nav-label { color: var(--color-primary); }
+        .nav-item:hover {
+            background: rgba(226, 125, 96, 0.08);
+        }
+        .nav-item.active {
+            background: rgba(226, 125, 96, 0.15);
+        }
+        .nav-item .nav-icon {
+            font-size: 20px;
+            line-height: 1;
+        }
+        .nav-item .nav-label {
+            font-size: 9px;
+            font-weight: 600;
+            color: #7A8A7C;
+            transition: color 0.2s ease;
+        }
+        .nav-item.active .nav-label {
+            color: #E27D60;
+        }
         .nav-item .nav-badge {
-            position: absolute; top: 2px; right: 4px; background: var(--color-primary); color: white;
-            font-size: 8px; font-weight: bold; padding: 1px 5px; border-radius: 9999px; min-width: 16px; text-align: center;
+            position: absolute;
+            top: 2px;
+            right: 4px;
+            background: #E27D60;
+            color: white;
+            font-size: 8px;
+            font-weight: bold;
+            padding: 1px 5px;
+            border-radius: 9999px;
+            min-width: 16px;
+            text-align: center;
         }
 
+        /* Toast notifications */
         .toast {
-            position: fixed; top: 20px; right: 20px; z-index: 9999; padding: 16px 24px;
-            border-radius: 16px; color: white; font-weight: bold; font-size: 14px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.2); transform: translateX(120%);
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); max-width: 90%;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            padding: 16px 24px;
+            border-radius: 16px;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            transform: translateX(120%);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            max-width: 90%;
         }
-        .toast.show { transform: translateX(0); }
-        .toast-success { background: #4CAF50; }
-        .toast-error { background: #f44336; }
-        .toast-info { background: #2196F3; }
-        .toast-warning { background: #FF9800; }
-
-        .focus-visible:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }
-
-        .google-btn {
-            display: flex; align-items: center; justify-content: center; gap: 12px;
-            background: white; border: 1px solid #DADCE0; border-radius: 9999px; padding: 12px 24px;
-            font-size: 14px; font-weight: 500; color: #3C4043; cursor: pointer; transition: all 0.2s ease;
-            width: 100%; max-width: 340px; margin: 0 auto;
+        .toast.show {
+            transform: translateX(0);
         }
-        .google-btn:hover { background: #F8F9FA; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
-        .google-btn svg { width: 20px; height: 20px; }
+        .toast-success {
+            background: #4CAF50;
+        }
+        .toast-error {
+            background: #f44336;
+        }
+        .toast-info {
+            background: #2196F3;
+        }
+        .toast-warning {
+            background: #FF9800;
+        }
 
+        /* Loading spinner */
+        .spinner {
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top: 3px solid #ffffff;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 0.8s linear infinite;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Mejoras de accesibilidad */
+        .focus-visible:focus-visible {
+            outline: 2px solid #E27D60;
+            outline-offset: 2px;
+        }
+
+        /* Badge de verificación */
+        .verified-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #E8F5E9;
+            color: #2E7D32;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        .unverified-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #FFF3E0;
+            color: #E65100;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        /* Botón de perfil en header */
         .header-profile-btn {
-            display: flex; align-items: center; gap: 8px; padding: 6px 14px 6px 6px;
-            border-radius: 9999px; background: white; border: 1px solid var(--color-primary)/30;
-            box-shadow: 2px 2px 8px rgba(0,0,0,0.05); transition: all 0.2s ease; cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px 6px 6px;
+            border-radius: 9999px;
+            background: white;
+            border: 1px solid #E27D60/30;
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.2s ease;
+            cursor: pointer;
         }
-        .header-profile-btn:hover { border-color: var(--color-primary); transform: translateY(-1px); }
+        .header-profile-btn:hover {
+            border-color: #E27D60;
+            box-shadow: 4px 4px 12px rgba(0,0,0,0.1);
+            transform: translateY(-1px);
+        }
         .header-profile-avatar {
-            width: 32px; height: 32px; border-radius: 9999px; background: var(--color-primary);
-            color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px;
+            width: 32px;
+            height: 32px;
+            border-radius: 9999px;
+            background: #E27D60;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 12px;
         }
         .header-profile-name {
-            font-size: 12px; font-weight: 600; color: var(--color-secondary);
-            max-width: 80px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+            font-size: 12px;
+            font-weight: 600;
+            color: #7A8A7C;
+            max-width: 80px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
-        .header-action-btn { padding: 8px 16px; border-radius: 9999px; font-size: 12px; font-weight: 600; transition: all 0.2s ease; cursor: pointer; border: none; }
-        .header-action-btn:hover { transform: translateY(-1px); }
-        .btn-login { background: var(--color-primary); color: white; box-shadow: 3px 3px 8px rgba(226, 125, 96, 0.3); }
-        .btn-register { background: transparent; color: var(--color-secondary); border: 1.5px solid var(--color-secondary); }
-        .btn-register:hover { background: var(--color-secondary); color: white; }
-
-        .profile-card { background: linear-gradient(135deg, #FFFFFF 0%, #F8F5F2 100%); }
-        .profile-avatar-large { width: 100px; height: 100px; border-radius: 9999px; border: 4px solid white; box-shadow: 0 8px 24px rgba(226, 125, 96, 0.2); }
-        .profile-stat { background: rgba(226, 125, 96, 0.06); border-radius: 16px; padding: 12px 16px; text-align: center; }
-        .profile-stat .number { font-size: 20px; font-weight: 700; color: var(--color-primary); }
-        .profile-stat .label { font-size: 10px; color: var(--color-secondary); font-weight: 500; }
-
-        @keyframes fadeInScale { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
-        .animate-in { animation: fadeInScale 0.3s ease forwards; }
-
-        /* Chatbot */
-        .chatbot-container {
-            position: fixed; bottom: 100px; right: 20px; z-index: 50; width: 380px; max-width: 90vw;
-            height: 520px; max-height: 70vh; background: white; border-radius: 24px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3); display: flex; flex-direction: column; overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            transform: translateY(20px) scale(0.95); opacity: 0; pointer-events: none;
+        /* Botones de acción en header */
+        .header-action-btn {
+            padding: 8px 16px;
+            border-radius: 9999px;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
         }
-        .chatbot-container.open { transform: translateY(0) scale(1); opacity: 1; pointer-events: all; }
-        .chatbot-header { background: linear-gradient(135deg, var(--color-primary), #c06a51); color: white; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; }
-        .chatbot-header-info { display: flex; align-items: center; gap: 12px; }
-        .chatbot-avatar { width: 44px; height: 44px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; font-size: 22px; }
-        .chatbot-status { width: 10px; height: 10px; background: #4CAF50; border-radius: 50%; display: inline-block; animation: pulse 2s infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-        .chatbot-messages { flex: 1; overflow-y: auto; padding: 16px; background: #F8F6F3; display: flex; flex-direction: column; gap: 12px; }
-        .chatbot-message { display: flex; gap: 8px; animation: fadeInUp 0.3s ease; }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .chatbot-message.bot { align-items: flex-start; }
-        .chatbot-message.user { align-items: flex-start; flex-direction: row-reverse; }
-        .chatbot-bubble { padding: 12px 16px; border-radius: 18px; font-size: 13px; line-height: 1.5; max-width: 85%; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-        .chatbot-message.bot .chatbot-bubble { background: white; color: #4A5D4E; border-bottom-left-radius: 4px; }
-        .chatbot-message.user .chatbot-bubble { background: var(--color-primary); color: white; border-bottom-right-radius: 4px; }
-        .chatbot-typing { display: flex; gap: 4px; padding: 12px 16px; }
-        .chatbot-typing span { width: 8px; height: 8px; background: #999; border-radius: 50%; animation: typing 1.4s infinite; }
-        .chatbot-typing span:nth-child(2) { animation-delay: 0.2s; }
-        .chatbot-typing span:nth-child(3) { animation-delay: 0.4s; }
-        @keyframes typing { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-8px); } }
-        .chatbot-options { padding: 8px 16px; background: white; border-top: 1px solid #eee; display: flex; flex-wrap: wrap; gap: 6px; }
-        .chatbot-option-btn { font-size: 11px; padding: 6px 14px; border-radius: 20px; border: 1.5px solid var(--color-primary); color: var(--color-primary); background: white; cursor: pointer; transition: all 0.2s; white-space: nowrap; font-weight: 500; }
-        .chatbot-option-btn:hover { background: var(--color-primary); color: white; }
-        .chatbot-input-area { padding: 12px 16px; background: white; border-top: 1px solid #eee; display: flex; gap: 8px; }
-        .chatbot-input { flex: 1; padding: 10px 16px; border-radius: 24px; border: 1.5px solid #e0deda; font-size: 13px; background: #F8F6F3; outline: none; }
-        .chatbot-input:focus { border-color: var(--color-primary); }
-        .chatbot-send-btn { width: 40px; height: 40px; border-radius: 50%; background: var(--color-primary); color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-        .chatbot-floating-btn { position: fixed; bottom: 24px; right: 24px; z-index: 51; width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, var(--color-primary), #c06a51); color: white; border: none; cursor: pointer; font-size: 26px; box-shadow: 0 8px 24px rgba(226, 125, 96, 0.4); display: flex; align-items: center; justify-content: center; }
-        .chatbot-floating-btn .badge { position: absolute; top: -4px; right: -4px; background: #f44336; color: white; width: 20px; height: 20px; border-radius: 50%; font-size: 10px; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+        .header-action-btn:hover {
+            transform: translateY(-1px);
+        }
+        .btn-login {
+            background: #E27D60;
+            color: white;
+            box-shadow: 3px 3px 8px rgba(226, 125, 96, 0.3);
+        }
+        .btn-login:hover {
+            box-shadow: 5px 5px 12px rgba(226, 125, 96, 0.4);
+        }
+        .btn-register {
+            background: transparent;
+            color: #7A8A7C;
+            border: 1.5px solid #7A8A7C;
+        }
+        .btn-register:hover {
+            background: #7A8A7C;
+            color: white;
+        }
+
+        /* Estilos del perfil */
+        .profile-card {
+            background: linear-gradient(135deg, #FFFFFF 0%, #F8F5F2 100%);
+        }
+        .profile-avatar-large {
+            width: 100px;
+            height: 100px;
+            border-radius: 9999px;
+            border: 4px solid white;
+            box-shadow: 0 8px 24px rgba(226, 125, 96, 0.2);
+        }
+        .profile-stat {
+            background: rgba(226, 125, 96, 0.06);
+            border-radius: 16px;
+            padding: 12px 16px;
+            text-align: center;
+        }
+        .profile-stat .number {
+            font-size: 20px;
+            font-weight: 700;
+            color: #E27D60;
+        }
+        .profile-stat .label {
+            font-size: 10px;
+            color: #7A8A7C;
+            font-weight: 500;
+        }
+
+        /* Animación de entrada del modal */
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        .modal-legal-content {
+            animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        /* Selector de rol estilizado */
+        .role-selector {
+            display: flex;
+            gap: 10px;
+        }
+        .role-option {
+            flex: 1;
+            padding: 12px;
+            border-radius: 16px;
+            border: 2px solid #e5e0db;
+            background: white;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .role-option:hover {
+            border-color: #E27D60;
+        }
+        .role-option.selected {
+            border-color: #E27D60;
+            background: #FFF8F6;
+            box-shadow: inset 0 0 0 2px #E27D60;
+        }
+        .role-option .role-icon {
+            font-size: 24px;
+            display: block;
+            margin-bottom: 4px;
+        }
+        .role-option .role-name {
+            font-size: 11px;
+            font-weight: 600;
+            color: #7A8A7C;
+        }
+        .role-option .role-desc {
+            font-size: 9px;
+            color: #7A8A7C/60;
+        }
+        .role-option.selected .role-name {
+            color: #E27D60;
+        }
     </style>
 </head>
 <body>
 
-  <!-- ==================== BARRERA LEGAL ACTUALIZADA ==================== -->
+  <!-- ================= BARRERA LEGAL ================= -->
   <div id="modal-legal-gate" class="fixed inset-0 bg-black/60 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-[#F9F6F0] w-full max-w-lg rounded-3xl p-6 shadow-lg border border-white/60 flex flex-col max-h-[90vh]">
+    <div class="bg-[#F9F6F0] w-full max-w-lg rounded-3xl p-6 shadow-[8px_8px_16px_#d1cdc7,-8px_-8px_16px_#ffffff] border border-white/60 flex flex-col max-h-[90vh] modal-legal-content">
       <div class="text-center pb-3 border-b border-gray-200">
-        <span class="text-[10px] uppercase font-bold tracking-widest text-[var(--color-primary)]">Requisito Legal de Ingreso</span>
-        <h3 class="text-base font-bold text-[var(--color-secondary)] mt-1">Términos, Privacidad y Blindaje Legal</h3>
+        <span class="text-[10px] uppercase font-bold tracking-widest text-[#E27D60]">Requisito Legal de Ingreso</span>
+        <h3 class="text-base font-bold text-[#4A5D4E] mt-1">Términos, Privacidad y Blindaje Legal</h3>
       </div>
-      
-      <div class="overflow-y-auto my-4 pr-2 space-y-3 text-xs text-gray-600 max-h-[50vh]">
-        <p class="font-bold text-center text-[var(--color-primary)]">Atrévete HealthTech — Términos y Privacidad</p>
-
-        <div class="bg-amber-50 p-3 border-l-4 border-amber-400 text-[11px] rounded-r-lg">
-          <strong>AVISO IMPORTANTE:</strong> El "Escáner Cuántico", las sesiones de regulación somática y los contenidos de esta app NO constituyen diagnóstico, tratamiento ni consulta médica profesional.
+      <div class="overflow-y-auto my-4 pr-2 space-y-4 text-xs text-gray-600 text-justify max-h-[60vh] leading-relaxed">
+        <p class="font-bold text-center text-[#E27D60]">Atrévete HealthTech — Versión Unificada 2026</p>
+        <div class="bg-amber-50 p-3 border-l-4 border-amber-400 rounded-r-lg text-[11px] text-amber-900">
+          <strong>AVISO CRÍTICO DE DESLINDE MÉDICO Y CLÍNICO:</strong><br>
+          Atrévete HealthTech, sus propietarios y la herramienta "Escáner Cuántico" ofrecen evaluaciones bioenergéticas holísticas y de regulación somática. <strong>NO constituyen diagnóstico médico, tratamiento psiquiátrico ni prescripción farmacológica.</strong>
         </div>
-
-        <h4 class="font-bold text-gray-800">1. Aceptación y Mayoría de Edad</h4>
-        <p>Al continuar, confirmas ser mayor de 18 años y aceptar estos términos en su totalidad.</p>
-
-        <h4 class="font-bold text-gray-800">2. Deslinde de Responsabilidad</h4>
-        <p>Los servicios tienen un enfoque integrativo y de bienestar holístico. Ante cualquier afección médica o de salud mental, debes acudir a un médico certificado.</p>
-
-        <h4 class="font-bold text-gray-800">3. Privacidad y Protección de Datos</h4>
-        <p>Tus datos personales y de autenticación se gestionan bajo confidencialidad estricta y solo para el funcionamiento interno de la plataforma.</p>
-
-        <h4 class="font-bold text-gray-800">4. Eventos y Experiencias Presenciales</h4>
-        <p>La participación en campamentos y talleres presenciales se realiza bajo tu propia responsabilidad física y emocional.</p>
-
-        <h4 class="font-bold text-gray-800">5. Pagos y Cancelaciones</h4>
-        <p>Las reservas y pagos de eventos o citas no son reembolsables, salvo cancelación imputable a la administración.</p>
+        <h4 class="font-bold text-[#4A5D4E]">1. Aceptación por Adhesión</h4>
+        <p>Al hacer clic en "Acepto", confirmas ser mayor de edad y aceptas el uso de LA PLATAFORMA bajo la Ley de Mensajes de Datos y Firmas Electrónicas de la República Bolivariana de Venezuela.</p>
+        <h4 class="font-bold text-[#4A5D4E]">2. Protección de Datos Personales y Sensibles</h4>
+        <p>Tus datos de bienestar se procesan bajo estricta confidencialidad (Art. 60 CRBV / RGPD). No se transfieren a terceros ni almacenamos claves o datos bancarios directos.</p>
+        <h4 class="font-bold text-[#4A5D4E]">3. Eventos Presenciales y Campamentos</h4>
+        <p>La asistencia a actividades presenciales (ej. "Adultas en Fuga") se realiza bajo propio riesgo del participante. Los organizadores quedan exonerados de responsabilidad por eventualidades o fuerza mayor.</p>
+        <h4 class="font-bold text-[#4A5D4E]">4. Límite de Responsabilidad Financiera y Pagos</h4>
+        <p>Los pagos por reservaciones y evaluaciones no son reembolsables. La responsabilidad legal máxima acumulada de LOS PROPIETARIOS queda limitada estrictamente al monto pagado por el usuario en los últimos 30 días.</p>
+        <h4 class="font-bold text-[#4A5D4E]">5. Jurisdicción y Ley Aplicable</h4>
+        <p>Este acuerdo se rige bajo las leyes de la República Bolivariana de Venezuela y cualquier disputa se someterá de manera exclusiva a los Tribunales Ordinarios competentes.</p>
       </div>
-      
       <div class="pt-3 border-t border-gray-200 space-y-2">
-        <button onclick="App.aceptarLegalYContinuar()" class="w-full py-3.5 bg-[var(--color-primary)] text-white font-bold rounded-2xl shadow-[4px_4px_8px_#d1cdc7,-4px_-4px_8px_#ffffff] hover:opacity-95 transition-all text-xs tracking-wide">
+        <button onclick="App.aceptarLegalYContinuar()" class="w-full py-3.5 bg-[#E27D60] text-white font-bold rounded-2xl shadow-[4px_4px_8px_#d1cdc7,-4px_-4px_8px_#ffffff] hover:opacity-95 transition-all text-xs tracking-wide">
           Acepto Términos, Políticas y Acelero mi Ingreso
         </button>
         <button onclick="App.cancelarLegal()" class="w-full py-2 text-[11px] text-gray-400 hover:text-gray-600 font-medium">
@@ -226,11 +424,11 @@
     </div>
   </div>
 
-  <!-- CABECERA -->
+  <!-- ================= CABECERA ================= -->
   <header class="pt-3 pb-1 px-6 max-w-md mx-auto">
     <div class="flex items-center justify-between">
       <div class="cursor-pointer" onclick="App.switchView('view-home')">
-        <img id="app-logo-img" src="atrevetehtlogo.png" alt="Atrévete HealthTech" class="h-16 w-auto object-contain">
+        <img id="app-logo-img" src="atrevetehtlogo.png" alt="Atrévete HealthTech - Logotipo" class="h-16 w-auto object-contain">
       </div>
       <div id="header-auth-container" class="flex items-center gap-2">
         <div id="header-login-btns" class="flex items-center gap-2">
@@ -247,144 +445,187 @@
     </div>
   </header>
 
+  <!-- ================= TOAST ================= -->
   <div id="toast" class="toast"></div>
 
-  <!-- VISTAS -->
-  <main id="view-home" class="app-view max-w-md mx-auto px-5 space-y-5 pb-24">
+  <!-- ================= 1. HOME ================= -->
+  <main id="view-home" class="app-view max-w-md mx-auto px-5 space-y-5">
     <div class="text-center space-y-1">
-      <h2 class="text-3xl font-extrabold text-[var(--color-secondary)] leading-tight">Habita Tu Cuerpo</h2>
-      <p class="text-xs text-[var(--color-secondary)]/80 px-2">Ecosistema somático integrativo para la regulación del sistema nervioso y acompañamiento clínico.</p>
+      <h2 class="text-3xl font-extrabold text-[#7A8A7C] leading-tight">Habita Tu Cuerpo</h2>
+      <p class="text-xs text-[#7A8A7C]/80 px-2">Ecosistema somático integrativo para la regulación del sistema nervioso y acompañamiento clínico.</p>
     </div>
+
     <div id="home-hero-banner" class="relative rounded-[32px] overflow-hidden shadow-md h-52 bg-cover bg-center clay-card" style="background-image: url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=800&q=80');">
       <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-6">
         <span id="home-banner-text" class="text-white font-semibold text-base drop-shadow">Calibra tu calma somática hoy</span>
       </div>
     </div>
+
     <div class="grid grid-cols-2 gap-3">
       <button onclick="App.switchView('view-regulacion')" class="clay-btn-primary py-3.5 text-center font-bold text-xs focus-visible">🫁 Regulación Somática</button>
       <button onclick="App.switchView('view-citas')" class="clay-btn-secondary py-3.5 text-center font-bold text-xs focus-visible">📅 Agendar Sesión</button>
     </div>
+
     <section class="space-y-3">
-      <div class="clay-card p-6 border-2 border-[var(--color-primary)] bg-orange-50/20">
-        <span class="bg-[var(--color-primary)] text-white text-[9px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">Preventa Exclusiva 🔥</span>
-        <h3 class="text-2xl font-extrabold text-[var(--color-secondary)] mt-2">Campamento Adultas en Fuga</h3>
-        <p class="text-xs text-[var(--color-secondary)]/80 mt-1 mb-3">Una experiencia inmersiva para desconectarte del estrés corporal y reconectarte en comunidad.</p>
-        <div class="flex justify-between items-center text-xs text-[var(--color-secondary)] font-semibold mb-4 bg-white/60 p-2.5 rounded-xl">
+      <div class="clay-card p-6 border-2 border-[#E27D60] bg-orange-50/20">
+        <span class="bg-[#E27D60] text-white text-[9px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">Preventa Exclusiva 🔥</span>
+        <h3 class="text-2xl font-extrabold text-[#7A8A7C] mt-2">Campamento Adultas en Fuga</h3>
+        <p class="text-xs text-[#7A8A7C]/80 mt-1 mb-3">Una experiencia inmersiva para desconectarte del estrés corporal y reconectarte en comunidad.</p>
+        <div class="flex justify-between items-center text-xs text-[#7A8A7C] font-semibold mb-4 bg-white/60 p-2.5 rounded-xl">
           <span>📍 Maracay, Venezuela</span>
           <span>📅 26 Sep, 2026</span>
         </div>
         <button onclick="App.switchView('view-pagos')" class="clay-btn-primary w-full py-3 font-bold text-sm focus-visible">Reservar Mi Cupo ($120)</button>
       </div>
     </section>
+
     <div class="text-center pt-1">
-      <button onclick="App.switchView('view-admin-dashboard')" class="text-[10px] text-stone-400 hover:text-[var(--color-secondary)] transition focus-visible">⚙️ Panel Administrativo</button>
+      <button onclick="App.abrirAdminLogin()" class="text-[10px] text-stone-400 hover:text-[#7A8A7C] transition focus-visible">⚙️ Panel Administrativo</button>
     </div>
   </main>
 
-  <main id="view-auth" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
+  <!-- ================= 2. AUTENTICACIÓN (LOGIN / REGISTRO) ================= -->
+  <main id="view-auth" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
     <div class="text-center space-y-1">
-      <h2 id="auth-title" class="text-2xl font-bold text-[var(--color-secondary)]">Iniciar Sesión</h2>
-      <p id="auth-subtitle" class="text-xs text-[var(--color-secondary)]/70">Accede a tu cuenta de Atrévete HealthTech</p>
+      <h2 id="auth-title" class="text-2xl font-bold text-[#7A8A7C]">Iniciar Sesión</h2>
+      <p id="auth-subtitle" class="text-xs text-[#7A8A7C]/70">Accede a tu cuenta de Atrévete HealthTech</p>
     </div>
-    <div class="flex p-1 bg-stone-200/60 rounded-2xl">
-      <button id="tab-login" onclick="App.switchAuthMode('login')" class="flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[var(--color-secondary)] shadow-sm transition">🔑 Iniciar Sesión</button>
-      <button id="tab-register" onclick="App.switchAuthMode('register')" class="flex-1 py-2.5 text-xs font-bold rounded-xl text-[var(--color-secondary)] transition">✨ Registrarse</button>
-    </div>
-    
-    <button onclick="App.iniciarSesionGoogleDirecta()" class="google-btn focus-visible" aria-label="Iniciar Sesión con Google">
-      <svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
-      <span>Iniciar Sesión con Google</span>
-    </button>
 
-    <div class="relative flex items-center py-1">
-      <div class="flex-grow border-t border-stone-300"></div>
-      <span class="flex-shrink-0 mx-4 text-stone-400 text-[11px]">o con tu correo electrónico</span>
-      <div class="flex-grow border-t border-stone-300"></div>
+    <div class="flex p-1 bg-stone-200/60 rounded-2xl" role="tablist">
+      <button id="tab-login" onclick="App.switchAuthMode('login')" class="flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[#7A8A7C] shadow-sm transition focus-visible" role="tab" aria-selected="true">🔑 Iniciar Sesión</button>
+      <button id="tab-register" onclick="App.switchAuthMode('register')" class="flex-1 py-2.5 text-xs font-bold rounded-xl text-[#7A8A7C] transition focus-visible" role="tab" aria-selected="false">✨ Registrarse</button>
     </div>
+
     <form onsubmit="event.preventDefault(); App.procesarAuthEmail();" class="clay-card p-6 space-y-4" novalidate>
       <div id="field-nombre" class="hidden">
-        <label class="block text-xs font-bold text-[var(--color-secondary)] mb-1" for="input-nombre">Nombre Completo</label>
-        <input type="text" id="input-nombre" placeholder="Ej. Ana Mendoza" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible">
+        <label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="input-nombre">Nombre Completo</label>
+        <input type="text" id="input-nombre" placeholder="Ej. Ana Mendoza" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible" required>
       </div>
+
       <div>
-        <label class="block text-xs font-bold text-[var(--color-secondary)] mb-1" for="input-email">Correo Electrónico</label>
+        <label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="input-email">Correo Electrónico</label>
         <input type="email" id="input-email" placeholder="correo@ejemplo.com" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible" required>
         <div id="email-error" class="text-red-500 text-xs mt-1 hidden">Por favor ingresa un correo válido</div>
       </div>
+
       <div>
-        <label class="block text-xs font-bold text-[var(--color-secondary)] mb-1" for="input-password">Contraseña</label>
+        <label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="input-password">Contraseña</label>
         <input type="password" id="input-password" placeholder="••••••••" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible" required minlength="6">
         <div id="password-error" class="text-red-500 text-xs mt-1 hidden">La contraseña debe tener al menos 6 caracteres</div>
       </div>
-      <div id="field-rol" class="hidden space-y-2 border-t border-[var(--color-secondary)]/20 pt-3">
-        <label class="block text-xs font-bold text-[var(--color-secondary)]">Tipo de Cuenta:</label>
-        <div class="flex gap-2">
-          <button type="button" id="btn-role-user" onclick="App.setAuthRole('user')" class="flex-1 py-2 text-xs font-bold rounded-xl bg-orange-100 text-[var(--color-primary)] border border-[var(--color-primary)]/30 transition">Usuario / Paciente</button>
-          <button type="button" id="btn-role-spec" onclick="App.setAuthRole('spec')" class="flex-1 py-2 text-xs font-bold rounded-xl bg-stone-100 text-[var(--color-secondary)] transition">Especialista</button>
+
+      <!-- Selector de Rol (visible solo en registro) -->
+      <div id="field-rol" class="hidden space-y-3 border-t border-[#7A8A7C]/20 pt-4">
+        <label class="block text-xs font-bold text-[#7A8A7C]">Tipo de Cuenta:</label>
+        <div class="role-selector">
+          <div id="role-user" onclick="App.selectRole('user')" class="role-option selected">
+            <span class="role-icon">👤</span>
+            <div class="role-name">Usuario</div>
+            <div class="role-desc">Paciente / Cliente</div>
+          </div>
+          <div id="role-spec" onclick="App.selectRole('spec')" class="role-option">
+            <span class="role-icon">👩‍⚕️</span>
+            <div class="role-name">Especialista</div>
+            <div class="role-desc">Terapeuta / Coach</div>
+          </div>
         </div>
       </div>
+
       <div id="link-forgot-container" class="text-right">
-        <button type="button" onclick="App.switchView('view-recovery')" class="text-[11px] text-[var(--color-primary)] font-semibold hover:underline focus-visible">¿Olvidaste tu contraseña?</button>
+        <button type="button" onclick="App.switchView('view-recovery')" class="text-[11px] text-[#E27D60] font-semibold hover:underline focus-visible">¿Olvidaste tu contraseña?</button>
       </div>
+
       <button type="submit" id="auth-submit-btn" class="clay-btn-primary w-full py-3.5 text-xs font-bold mt-2 focus-visible">Iniciar Sesión</button>
-      <button type="button" onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold focus-visible">Cancelar</button>
     </form>
-    <p class="text-[10px] text-center text-[var(--color-secondary)]/70 mt-4">
+
+    <p class="text-[10px] text-center text-[#7A8A7C]/70 mt-4">
       Al registrarte o agendar, aceptas nuestras 
-      <button onclick="App.switchView('view-privacidad')" class="underline font-semibold text-[var(--color-primary)] focus-visible">Políticas de Privacidad y Términos Legalmente Vinculantes</button>.
+      <button onclick="App.switchView('view-privacidad')" class="underline font-semibold text-[#E27D60] focus-visible">Políticas de Privacidad y Términos Legalmente Vinculantes</button>.
     </p>
+
     <button onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold focus-visible">Volver al Inicio</button>
   </main>
 
-  <main id="view-recovery" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
+  <!-- ================= 3. RECUPERACIÓN ================= -->
+  <main id="view-recovery" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
     <div class="text-center space-y-1">
-      <h2 class="text-2xl font-bold text-[var(--color-secondary)]">Recuperar Contraseña</h2>
-      <p class="text-xs text-[var(--color-secondary)]/70">Ingresa tu correo electrónico registrado y te enviaremos las instrucciones.</p>
+      <h2 class="text-2xl font-bold text-[#7A8A7C]">Recuperar Contraseña</h2>
+      <p class="text-xs text-[#7A8A7C]/70">Ingresa tu correo electrónico registrado y te enviaremos las instrucciones.</p>
     </div>
     <form onsubmit="event.preventDefault(); App.procesarRecuperacion();" class="clay-card p-6 space-y-4">
-      <div><label class="block text-xs font-bold text-[var(--color-secondary)] mb-1" for="recovery-email">Correo Electrónico</label><input type="email" id="recovery-email" placeholder="correo@ejemplo.com" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible" required></div>
+      <div>
+        <label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="recovery-email">Correo Electrónico</label>
+        <input type="email" id="recovery-email" placeholder="correo@ejemplo.com" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible" required>
+      </div>
       <button type="submit" class="clay-btn-primary w-full py-3.5 text-xs font-bold mt-2 focus-visible">Enviar Enlace de Recuperación</button>
     </form>
     <button onclick="App.switchView('view-auth')" class="clay-btn-secondary w-full py-3 text-xs font-bold focus-visible">← Volver al Ingreso</button>
   </main>
 
-  <main id="view-perfil-usuario" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
+  <!-- ================= 4. PERFIL ================= -->
+  <main id="view-perfil-usuario" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
     <div class="clay-card profile-card p-6 text-center space-y-4 relative overflow-hidden">
-      <div class="absolute top-0 right-0 w-40 h-40 bg-[var(--color-primary)]/5 rounded-full -translate-y-20 translate-x-20"></div>
-      <div class="absolute bottom-0 left-0 w-32 h-32 bg-[var(--color-primary)]/5 rounded-full translate-y-16 -translate-x-16"></div>
-      <div class="relative z-10"><div id="profile-avatar" class="profile-avatar-large mx-auto bg-[var(--color-primary)] text-white flex items-center justify-center text-4xl font-bold">US</div></div>
+      <div class="absolute top-0 right-0 w-40 h-40 bg-[#E27D60]/5 rounded-full -translate-y-20 translate-x-20"></div>
+      <div class="absolute bottom-0 left-0 w-32 h-32 bg-[#E27D60]/5 rounded-full translate-y-16 -translate-x-16"></div>
       <div class="relative z-10">
-        <h3 id="profile-name" class="text-xl font-bold text-[var(--color-secondary)]">Usuario</h3>
-        <p id="profile-email" class="text-sm text-[var(--color-secondary)]/70">correo@ejemplo.com</p>
+        <div id="profile-avatar" class="profile-avatar-large mx-auto bg-[#E27D60] text-white flex items-center justify-center text-4xl font-bold">US</div>
+      </div>
+      <div class="relative z-10">
+        <h3 id="profile-name" class="text-xl font-bold text-[#7A8A7C]">Usuario</h3>
+        <p id="profile-email" class="text-sm text-[#7A8A7C]/70">correo@ejemplo.com</p>
         <div class="flex items-center justify-center gap-2 mt-1 flex-wrap">
-          <span id="profile-role" class="text-xs bg-[var(--color-primary)]/10 text-[var(--color-primary)] font-semibold px-3 py-1 rounded-full">👤 Usuario</span>
-          <span id="profile-register-method" class="text-[10px] text-[var(--color-secondary)]/40">Registrado con: Email</span>
+          <span id="profile-role" class="text-xs bg-[#E27D60]/10 text-[#E27D60] font-semibold px-3 py-1 rounded-full">👤 Usuario</span>
+          <span id="profile-register-method" class="text-[10px] text-[#7A8A7C]/40">Registrado con: Email</span>
         </div>
-        <div id="profile-verified-container" class="mt-2 flex justify-center"><span class="verified-badge">✅ Correo verificado</span></div>
+        <div id="profile-verified-container" class="mt-2 flex justify-center">
+          <span class="unverified-badge">⏳ Correo no verificado</span>
+        </div>
       </div>
     </div>
+
     <div class="grid grid-cols-3 gap-3">
       <div class="profile-stat"><div class="number" id="profile-sesiones">0</div><div class="label">Sesiones</div></div>
       <div class="profile-stat"><div class="number" id="profile-ejercicios">0</div><div class="label">Ejercicios</div></div>
       <div class="profile-stat"><div class="number" id="profile-dias">0</div><div class="label">Días Activo</div></div>
     </div>
+
     <div class="clay-card p-5 space-y-3">
-      <h4 class="font-bold text-sm text-[var(--color-secondary)] flex items-center gap-2"><span>📋</span> Información Personal</h4>
+      <h4 class="font-bold text-sm text-[#7A8A7C] flex items-center gap-2">📋 Información Personal</h4>
       <div class="space-y-2 text-xs">
-        <div class="flex justify-between py-2 border-b border-stone-100"><span class="text-[var(--color-secondary)]/60">📱 Teléfono</span><span id="profile-telefono-display" class="text-[var(--color-secondary)] font-medium">No registrado</span></div>
-        <div class="flex justify-between py-2 border-b border-stone-100"><span class="text-[var(--color-secondary)]/60">🎂 Fecha de Nacimiento</span><span id="profile-fecha-display" class="text-[var(--color-secondary)] font-medium">No registrada</span></div>
-        <div class="flex justify-between py-2"><span class="text-[var(--color-secondary)]/60">📅 Miembro desde</span><span id="profile-miembro-desde" class="text-[var(--color-secondary)] font-medium">Hoy</span></div>
+        <div class="flex justify-between py-2 border-b border-stone-100">
+          <span class="text-[#7A8A7C]/60">📱 Teléfono</span>
+          <span id="profile-telefono-display" class="text-[#7A8A7C] font-medium">No registrado</span>
+        </div>
+        <div class="flex justify-between py-2 border-b border-stone-100">
+          <span class="text-[#7A8A7C]/60">🎂 Fecha de Nacimiento</span>
+          <span id="profile-fecha-display" class="text-[#7A8A7C] font-medium">No registrada</span>
+        </div>
+        <div class="flex justify-between py-2">
+          <span class="text-[#7A8A7C]/60">📅 Miembro desde</span>
+          <span id="profile-miembro-desde" class="text-[#7A8A7C] font-medium">Hoy</span>
+        </div>
       </div>
     </div>
+
     <div class="space-y-3">
-      <button onclick="App.mostrarEditarPerfil()" class="clay-btn-primary w-full py-3.5 text-sm font-bold flex items-center justify-center gap-2 focus-visible"><span>✏️</span> Editar Perfil</button>
-      <button onclick="App.cerrarSesion()" class="w-full py-3.5 text-sm font-medium text-[var(--color-primary)] border-2 border-[var(--color-primary)]/30 rounded-full hover:bg-[var(--color-primary)]/5 hover:border-[var(--color-primary)] transition-all focus-visible">Cerrar Sesión</button>
+      <button onclick="App.mostrarEditarPerfil()" class="clay-btn-primary w-full py-3.5 text-sm font-bold flex items-center justify-center gap-2 focus-visible">✏️ Editar Perfil</button>
+      <button onclick="App.cerrarSesion()" class="w-full py-3.5 text-sm font-medium text-[#E27D60] border-2 border-[#E27D60]/30 rounded-full hover:bg-[#E27D60]/5 hover:border-[#E27D60] transition-all focus-visible">Cerrar Sesión</button>
     </div>
+
     <div id="editar-perfil-form" class="clay-card p-5 space-y-4 hidden">
-      <h4 class="font-bold text-sm text-[var(--color-secondary)] flex items-center gap-2"><span>✏️</span> Editar Datos Personales</h4>
-      <div><label class="block text-xs font-bold text-[var(--color-secondary)] mb-1" for="edit-nombre">Nombre Completo</label><input type="text" id="edit-nombre" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible"></div>
-      <div><label class="block text-xs font-bold text-[var(--color-secondary)] mb-1" for="edit-telefono">Teléfono</label><input type="tel" id="edit-telefono" placeholder="0414-1234567" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible"></div>
-      <div><label class="block text-xs font-bold text-[var(--color-secondary)] mb-1" for="edit-fecha-nac">Fecha de Nacimiento</label><input type="date" id="edit-fecha-nac" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible"></div>
+      <h4 class="font-bold text-sm text-[#7A8A7C] flex items-center gap-2">✏️ Editar Datos Personales</h4>
+      <div>
+        <label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="edit-nombre">Nombre Completo</label>
+        <input type="text" id="edit-nombre" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible">
+      </div>
+      <div>
+        <label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="edit-telefono">Teléfono</label>
+        <input type="tel" id="edit-telefono" placeholder="0414-1234567" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible">
+      </div>
+      <div>
+        <label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="edit-fecha-nac">Fecha de Nacimiento</label>
+        <input type="date" id="edit-fecha-nac" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible">
+      </div>
       <div class="flex gap-3">
         <button onclick="App.guardarEditarPerfil()" class="clay-btn-primary flex-1 py-3 text-xs font-bold focus-visible">💾 Guardar Cambios</button>
         <button onclick="App.cancelarEditarPerfil()" class="clay-btn-secondary flex-1 py-3 text-xs font-bold focus-visible">Cancelar</button>
@@ -392,79 +633,182 @@
     </div>
   </main>
 
-  <main id="view-pagos" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
-    <h2 class="text-2xl font-bold text-[var(--color-secondary)] text-center">Pasarela de Pago</h2>
-    <div class="clay-card p-4 bg-orange-50/30 border border-[var(--color-primary)]/20 flex justify-between items-center">
-      <div><h4 class="font-bold text-xs text-[var(--color-secondary)]">Reserva Campamento Adultas en Fuga</h4><p class="text-[10px] text-[var(--color-secondary)]/70">26 de Septiembre, Maracay</p></div>
-      <span class="text-base font-extrabold text-[var(--color-primary)]">$120.00</span>
+  <!-- ================= 5. PAGOS ================= -->
+  <main id="view-pagos" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
+    <h2 class="text-2xl font-bold text-[#7A8A7C] text-center">Pasarela de Pago</h2>
+    <div class="clay-card p-4 bg-orange-50/30 border border-[#E27D60]/20 flex justify-between items-center">
+      <div>
+        <h4 class="font-bold text-xs text-[#7A8A7C]">Reserva Campamento Adultas en Fuga</h4>
+        <p class="text-[10px] text-[#7A8A7C]/70">26 de Septiembre, Maracay</p>
+      </div>
+      <span class="text-base font-extrabold text-[#E27D60]">$120.00</span>
     </div>
     <div class="clay-card p-5 space-y-4">
-      <label class="block text-xs font-bold text-[var(--color-secondary)]">Selecciona Método de Pago:</label>
-      <div class="grid grid-cols-2 gap-2.5" role="radiogroup" aria-label="Métodos de pago">
-        <button type="button" id="pay-bdv" onclick="App.selectPaymentMethod('pm_bdv')" class="clay-btn-pay active-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1 focus-visible" role="radio" aria-checked="true"><span class="text-base">🇻🇪</span><span>Pago Móvil BDV</span></button>
-        <button type="button" id="pay-bnc" onclick="App.selectPaymentMethod('pm_bnc')" class="clay-btn-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1 focus-visible" role="radio" aria-checked="false"><span class="text-base">🇻🇪</span><span>Pago Móvil BNC</span></button>
-        <button type="button" id="pay-zelle" onclick="App.selectPaymentMethod('zelle')" class="clay-btn-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1 focus-visible" role="radio" aria-checked="false"><span class="text-base">🇺🇸</span><span>Zelle</span><span class="text-[8px] text-amber-600 font-normal">(Próximamente)</span></button>
-        <button type="button" id="pay-binance" onclick="App.selectPaymentMethod('binance')" class="clay-btn-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1 focus-visible" role="radio" aria-checked="false"><span class="text-base">🟡</span><span>Binance Pay</span><span class="text-[8px] text-green-600 font-normal">(USDT)</span></button>
+      <label class="block text-xs font-bold text-[#7A8A7C]">Selecciona Método de Pago:</label>
+      <div class="grid grid-cols-2 gap-2.5">
+        <button type="button" id="pay-bdv" onclick="App.selectPaymentMethod('pm_bdv')" class="clay-btn-pay active-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1 focus-visible"><span class="text-base">🇻🇪</span><span>Pago Móvil BDV</span></button>
+        <button type="button" id="pay-bnc" onclick="App.selectPaymentMethod('pm_bnc')" class="clay-btn-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1 focus-visible"><span class="text-base">🇻🇪</span><span>Pago Móvil BNC</span></button>
+        <button type="button" id="pay-zelle" onclick="App.selectPaymentMethod('zelle')" class="clay-btn-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1 focus-visible"><span class="text-base">🇺🇸</span><span>Zelle (Próximamente)</span></button>
+        <button type="button" id="pay-binance" onclick="App.selectPaymentMethod('binance')" class="clay-btn-pay p-3 text-[11px] font-bold flex flex-col items-center justify-center gap-1 focus-visible"><span class="text-base">🟡</span><span>Binance Pay</span></button>
       </div>
-      <div id="datos-pago-box" class="bg-stone-100/90 p-4 rounded-2xl border border-stone-200/80 space-y-1.5 text-xs text-[var(--color-secondary)] min-h-[80px]"><p class="text-center text-stone-400">Selecciona un método de pago</p></div>
-      <div id="container-ref-pago" class="space-y-2">
-        <label class="block text-xs font-bold text-[var(--color-secondary)] mb-1" for="input-ref-pago">Número de Referencia / Hash / Comprobante</label>
+      <div id="datos-pago-box" class="bg-stone-100/90 p-4 rounded-2xl border border-stone-200/80 space-y-1.5 text-xs text-[#7A8A7C]"></div>
+      <div id="container-ref-pago">
+        <label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="input-ref-pago">Número de Referencia / Hash / Comprobante</label>
         <input id="input-ref-pago" type="text" placeholder="Ej. #849204 o Hash de transferencia" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible">
-        <p id="ref-pago-helper" class="text-[10px] text-stone-400 hidden">Ingresa el código de tu transferencia para verificar el pago.</p>
       </div>
       <button id="btn-enviar-pago" onclick="App.confirmarPagoMock()" class="clay-btn-primary w-full py-3.5 text-xs font-bold focus-visible">Reportar / Enviar Comprobante</button>
     </div>
-    <p class="text-[10px] text-center text-[var(--color-secondary)]/70 mt-2">Al registrarte o agendar, aceptas nuestras <button onclick="App.switchView('view-privacidad')" class="underline font-semibold text-[var(--color-primary)] focus-visible">Políticas de Privacidad</button>.</p>
+    <p class="text-[10px] text-center text-[#7A8A7C]/70 mt-2">Al registrarte o agendar, aceptas nuestras <button onclick="App.switchView('view-privacidad')" class="underline font-semibold text-[#E27D60] focus-visible">Políticas de Privacidad y Términos Legalmente Vinculantes</button>.</p>
     <button onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold focus-visible">Cancelar</button>
   </main>
 
-  <main id="view-regulacion" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
-    <div class="text-center space-y-1"><h2 class="text-2xl font-bold text-[var(--color-secondary)]">Gimnasio Emocional</h2><p class="text-xs text-[var(--color-secondary)]/80">Diagnóstico Somático & Técnicas de Regulación</p></div>
-    <div class="clay-card p-5 space-y-4 border border-[var(--color-primary)]/20">
-      <div class="flex justify-between items-center border-b border-stone-200 pb-2"><span class="text-xs font-bold text-[var(--color-primary)] uppercase tracking-wider">🔍 Chequeo Corporal</span><span id="quiz-step-indicator" class="text-[10px] font-bold text-[var(--color-secondary)] bg-stone-100 px-2 py-0.5 rounded-full">Paso 1 de 3</span></div>
-      <div id="quiz-step-1" class="space-y-3"><p class="text-xs font-bold text-[var(--color-secondary)]">1. ¿Cómo sientes tu estado corporal / emocional en este momento?</p><div class="space-y-2"><button onclick="App.answerQuiz(1, 'ansiedad')" class="clay-btn-option w-full text-xs focus-visible">🔴 <strong>Ansioso / Acelerado</strong></button><button onclick="App.answerQuiz(1, 'bloqueo')" class="clay-btn-option w-full text-xs focus-visible">🟡 <strong>Agotado / Desconectado</strong></button><button onclick="App.answerQuiz(1, 'calma')" class="clay-btn-option w-full text-xs focus-visible">🟢 <strong>Estable / En Calma</strong></button></div></div>
-      <div id="quiz-step-2" class="space-y-3 hidden"><p class="text-xs font-bold text-[var(--color-secondary)]">2. ¿Dónde se concentra la mayor tensión física?</p><div class="space-y-2"><button onclick="App.answerQuiz(2, 'pecho')" class="clay-btn-option w-full text-xs focus-visible">🫁 <strong>Pecho / Respiración</strong></button><button onclick="App.answerQuiz(2, 'cuello')" class="clay-btn-option w-full text-xs focus-visible">💆 <strong>Cuello / Mandíbula</strong></button><button onclick="App.answerQuiz(2, 'estomago')" class="clay-btn-option w-full text-xs focus-visible">🫃 <strong>Estómago / Plexo</strong></button></div></div>
-      <div id="quiz-step-3" class="space-y-3 hidden"><p class="text-xs font-bold text-[var(--color-secondary)]">3. ¿Qué necesita tu cuerpo en este instante?</p><div class="space-y-2"><button onclick="App.answerQuiz(3, 'bajar')" class="clay-btn-option w-full text-xs focus-visible">⚓ <strong>Bajar revoluciones</strong></button><button onclick="App.answerQuiz(3, 'activar')" class="clay-btn-option w-full text-xs focus-visible">⚡ <strong>Salir del aletargamiento</strong></button><button onclick="App.answerQuiz(3, 'liberar')" class="clay-btn-option w-full text-xs focus-visible">🕊️ <strong>Descargar tensión</strong></button></div></div>
-      <div id="quiz-result" class="space-y-4 hidden"><div class="p-3 rounded-2xl bg-orange-100/50 text-xs text-[var(--color-secondary)]"><p id="quiz-diagnosis-title" class="font-bold text-[var(--color-primary)] text-sm mb-1"></p><p id="quiz-diagnosis-desc"></p></div><div id="recommended-technique-card" class="p-4 rounded-2xl bg-white border border-[var(--color-primary)]/30 shadow-sm space-y-2"></div><button onclick="App.resetQuiz()" class="text-xs font-bold text-[var(--color-primary)] underline text-center w-full block focus-visible">🔄 Repetir Evaluación</button></div>
+  <!-- ================= 6. REGULACIÓN SOMÁTICA ================= -->
+  <main id="view-regulacion" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
+    <div class="text-center space-y-1">
+      <h2 class="text-2xl font-bold text-[#7A8A7C]">Gimnasio Emocional</h2>
+      <p class="text-xs text-[#7A8A7C]/80">Diagnóstico Somático & Técnicas de Regulación</p>
     </div>
-    <div class="clay-card p-6 text-center space-y-4"><h3 class="font-bold text-sm text-[var(--color-secondary)]">Práctica Guiada: Calibrador de Respiración</h3><div class="flex flex-col items-center justify-center py-4"><div id="breath-circle" class="w-40 h-40 rounded-full bg-[#F0B7A1] flex items-center justify-center text-white font-bold text-base shadow-lg border-4 border-white transition-all duration-1000" role="img" aria-label="Círculo de respiración guiada">Inhala...</div></div></div>
+    <div class="clay-card p-5 space-y-4 border border-[#E27D60]/20">
+      <div class="flex justify-between items-center border-b border-stone-200 pb-2">
+        <span class="text-xs font-bold text-[#E27D60] uppercase tracking-wider">🔍 Chequeo Corporal</span>
+        <span id="quiz-step-indicator" class="text-[10px] font-bold text-[#7A8A7C] bg-stone-100 px-2 py-0.5 rounded-full">Paso 1 de 3</span>
+      </div>
+      <div id="quiz-step-1" class="space-y-3">
+        <p class="text-xs font-bold text-[#7A8A7C]">1. ¿Cómo sientes tu estado corporal / emocional en este momento?</p>
+        <div class="space-y-2">
+          <button onclick="App.answerQuiz(1, 'ansiedad')" class="clay-btn-option w-full text-xs focus-visible">🔴 <strong>Ansioso / Acelerado:</strong> Siento inquietud, taquicardia o mente saturada.</button>
+          <button onclick="App.answerQuiz(1, 'bloqueo')" class="clay-btn-option w-full text-xs focus-visible">🟡 <strong>Agotado / Desconectado:</strong> Siento pesadez, parálisis o desmotivación.</button>
+          <button onclick="App.answerQuiz(1, 'calma')" class="clay-btn-option w-full text-xs focus-visible">🟢 <strong>Estable / En Calma:</strong> Quiero mantener mi balance y centrar mi mente.</button>
+        </div>
+      </div>
+      <div id="quiz-step-2" class="space-y-3 hidden">
+        <p class="text-xs font-bold text-[#7A8A7C]">2. ¿Dónde se concentra la mayor tensión física?</p>
+        <div class="space-y-2">
+          <button onclick="App.answerQuiz(2, 'pecho')" class="clay-btn-option w-full text-xs focus-visible">🫁 <strong>Pecho / Respiración:</strong> Siento opresión al inhalar o aire entrecortado.</button>
+          <button onclick="App.answerQuiz(2, 'cuello')" class="clay-btn-option w-full text-xs focus-visible">💆 <strong>Cuello / Mandíbula:</strong> Dientes apretados, hombros rígidos o cefalea.</button>
+          <button onclick="App.answerQuiz(2, 'estomago')" class="clay-btn-option w-full text-xs focus-visible">🫃 <strong>Estómago / Plexo:</strong> Sensación de nudo en el abdomen o digestión lenta.</button>
+        </div>
+      </div>
+      <div id="quiz-step-3" class="space-y-3 hidden">
+        <p class="text-xs font-bold text-[#7A8A7C]">3. ¿Qué necesita tu cuerpo en este instante?</p>
+        <div class="space-y-2">
+          <button onclick="App.answerQuiz(3, 'bajar')" class="clay-btn-option w-full text-xs focus-visible">⚓ <strong>Bajar revoluciones:</strong> Calmar la aceleración y soltar el control.</button>
+          <button onclick="App.answerQuiz(3, 'activar')" class="clay-btn-option w-full text-xs focus-visible">⚡ <strong>Salir del aletargamiento:</strong> Movilizar la energía estancada.</button>
+          <button onclick="App.answerQuiz(3, 'liberar')" class="clay-btn-option w-full text-xs focus-visible">🕊️ <strong>Descargar tensión:</strong> Soltar cargas emocionales del día.</button>
+        </div>
+      </div>
+      <div id="quiz-result" class="space-y-4 hidden">
+        <div class="p-3 rounded-2xl bg-orange-100/50 text-xs text-[#7A8A7C]">
+          <p id="quiz-diagnosis-title" class="font-bold text-[#E27D60] text-sm mb-1"></p>
+          <p id="quiz-diagnosis-desc"></p>
+        </div>
+        <div id="recommended-technique-card" class="p-4 rounded-2xl bg-white border border-[#E27D60]/30 shadow-sm space-y-2"></div>
+        <button onclick="App.resetQuiz()" class="text-xs font-bold text-[#E27D60] underline text-center w-full block focus-visible">🔄 Repetir Evaluación</button>
+      </div>
+    </div>
+    <div class="clay-card p-6 text-center space-y-4">
+      <h3 class="font-bold text-sm text-[#7A8A7C]">Práctica Guiada: Calibrador de Respiración</h3>
+      <p class="text-[11px] text-[#7A8A7C]/80">Acompasa tu ritmo respiratorio con el círculo para activar el nervio vago ventral.</p>
+      <div class="flex flex-col items-center justify-center py-4">
+        <div id="breath-circle" class="w-40 h-40 rounded-full bg-[#F0B7A1] flex items-center justify-center text-white font-bold text-base shadow-lg border-4 border-white transition-all duration-1000" role="img" aria-label="Círculo de respiración guiada">Inhala...</div>
+      </div>
+    </div>
     <button onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold text-xs focus-visible">Volver al Inicio</button>
   </main>
 
-  <main id="view-citas" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
-    <h2 class="text-2xl font-bold text-[var(--color-secondary)] text-center">Agendar tu Sesión</h2>
+  <!-- ================= 7. CITAS ================= -->
+  <main id="view-citas" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
+    <h2 class="text-2xl font-bold text-[#7A8A7C] text-center">Agendar tu Sesión</h2>
     <div class="clay-card p-5 space-y-4">
-      <label class="block text-xs font-bold text-[var(--color-secondary)]" for="select-terapeuta">Especialista:</label>
-      <select id="select-terapeuta" class="w-full p-3 rounded-xl border border-[var(--color-secondary)]/20 bg-white text-xs text-[var(--color-secondary)] focus-visible"><option value="Dra. Carla Rodríguez">Dra. Carla Rodríguez</option><option value="Dra. María González">Dra. María González</option><option value="Lic. Ana Pérez">Lic. Ana Pérez</option></select>
-      <div><label class="block text-xs font-bold text-[var(--color-secondary)] mb-1" for="fecha-cita">Fecha de la Cita:</label><input type="date" id="fecha-cita" class="w-full p-3 rounded-xl border border-[var(--color-secondary)]/20 bg-white text-xs text-[var(--color-secondary)] focus-visible"></div>
-      <div><label class="block text-xs font-bold text-[var(--color-secondary)] mb-1" for="hora-cita">Hora de la Cita:</label><input type="time" id="hora-cita" class="w-full p-3 rounded-xl border border-[var(--color-secondary)]/20 bg-white text-xs text-[var(--color-secondary)] focus-visible"></div>
+      <label class="block text-xs font-bold text-[#7A8A7C]" for="select-terapeuta">Especialista:</label>
+      <select id="select-terapeuta" class="w-full p-3 rounded-xl border border-[#7A8A7C]/20 bg-white text-xs text-[#7A8A7C] focus-visible">
+        <option value="Dra. Carla Rodríguez">Dra. Carla Rodríguez</option>
+        <option value="Dra. María González">Dra. María González</option>
+        <option value="Lic. Ana Pérez">Lic. Ana Pérez</option>
+      </select>
+      <div>
+        <label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="fecha-cita">Fecha de la Cita:</label>
+        <input type="date" id="fecha-cita" class="w-full p-3 rounded-xl border border-[#7A8A7C]/20 bg-white text-xs text-[#7A8A7C] focus-visible">
+      </div>
+      <div>
+        <label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="hora-cita">Hora de la Cita:</label>
+        <input type="time" id="hora-cita" class="w-full p-3 rounded-xl border border-[#7A8A7C]/20 bg-white text-xs text-[#7A8A7C] focus-visible">
+      </div>
       <button onclick="App.procesarCitaWhatsApp()" class="clay-btn-primary w-full py-3.5 font-bold text-xs focus-visible">Confirmar Cita vía WhatsApp</button>
     </div>
     <button onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold text-xs focus-visible">Volver</button>
   </main>
 
-  <main id="view-privacidad" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
-    <div class="text-center space-y-1"><h2 class="text-2xl font-bold text-[var(--color-secondary)]">Políticas de Privacidad</h2><p class="text-xs text-[var(--color-secondary)]/70">Términos Legalmente Vinculantes • Atrévete HealthTech</p></div>
-    <div class="clay-card p-5 space-y-4 text-xs text-[var(--color-secondary)] leading-relaxed max-h-[60vh] overflow-y-auto">
-      <section class="space-y-1.5"><h3 class="font-extrabold text-[var(--color-primary)] text-sm">1. Protección de Datos Personales</h3><p>En Atrévete HealthTech valoramos y resguardamos tu privacidad. Los datos personales, registros de pagos móviles o transacciones en criptomonedas (Binance Pay) recopilados son utilizados exclusivamente para la validación de membresías, gestión de cupos en eventos y acompañamiento clínico somático.</p></section>
-      <section class="space-y-1.5"><h3 class="font-extrabold text-[var(--color-primary)] text-sm">2. Confidencialidad Clínica y Somática</h3><p>Toda la información obtenida a través de nuestros test de regulación somática, interacciones y sesiones agendadas se rige bajo estricta confidencialidad profesional médico-paciente.</p></section>
-      <section class="space-y-1.5"><h3 class="font-extrabold text-[var(--color-primary)] text-sm">3. Condiciones de Reserva y Pagos</h3><p>Las reservas para campamentos, eventos presenciales o consultas quedan sujetas a la verificación exitosa de los comprobantes de pago reportados mediante nuestros canales oficiales.</p></section>
+  <!-- ================= 8. PRIVACIDAD ================= -->
+  <main id="view-privacidad" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
+    <div class="text-center space-y-1">
+      <h2 class="text-2xl font-bold text-[#7A8A7C]">Políticas de Privacidad</h2>
+      <p class="text-xs text-[#7A8A7C]/70">Términos Legalmente Vinculantes • Atrévete HealthTech</p>
+    </div>
+    <div class="clay-card p-5 space-y-4 text-xs text-[#7A8A7C] leading-relaxed max-h-[60vh] overflow-y-auto">
+      <section class="space-y-1.5">
+        <h3 class="font-extrabold text-[#E27D60] text-sm">1. Protección de Datos Personales</h3>
+        <p>En Atrévete HealthTech valoramos y resguardamos tu privacidad. Los datos personales, registros de pagos móviles o transacciones en criptomonedas (Binance Pay) recopilados son utilizados exclusivamente para la validación de membresías, gestión de cupos en eventos y acompañamiento clínico somático.</p>
+      </section>
+      <section class="space-y-1.5">
+        <h3 class="font-extrabold text-[#E27D60] text-sm">2. Confidencialidad Clínica y Somática</h3>
+        <p>Toda la información obtenida a través de nuestros test de regulación somática, interacciones y sesiones agendadas se rige bajo estricta confidencialidad profesional médico-paciente.</p>
+      </section>
+      <section class="space-y-1.5">
+        <h3 class="font-extrabold text-[#E27D60] text-sm">3. Condiciones de Reserva y Pagos</h3>
+        <p>Las reservas para campamentos, eventos presenciales o consultas quedan sujetas a la verificación exitosa de los comprobantes de pago reportados mediante nuestros canales oficiales.</p>
+      </section>
     </div>
     <button onclick="App.switchView('view-auth')" class="clay-btn-primary w-full py-3.5 font-bold text-xs focus-visible">Entendido / Volver</button>
   </main>
 
-  <main id="view-admin-dashboard" class="app-view max-w-md mx-auto px-5 space-y-6 hidden pb-24">
-    <div class="flex justify-between items-center border-b border-stone-200 pb-3"><div><h2 class="text-xl font-bold text-[var(--color-secondary)]">Gestor Visual Admin</h2><p class="text-[10px] text-[var(--color-secondary)]/70">Actualiza logotipos e imágenes en tiempo real</p></div><button onclick="App.switchView('view-home')" class="px-3 py-1.5 bg-stone-200 text-[var(--color-secondary)] text-xs font-bold rounded-xl focus-visible">Salir</button></div>
-    <form onsubmit="event.preventDefault(); App.guardarCambiosAdmin();" class="clay-card p-5 space-y-4">
-      <div><label class="block text-xs font-bold text-[var(--color-secondary)] mb-1">URL del Logotipo (Header)</label><input type="url" id="admin-logo-url" placeholder="https://ejemplo.com/logo.png" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible"></div>
-      <div><label class="block text-xs font-bold text-[var(--color-secondary)] mb-1">URL de la Imagen Banner Principal (Home)</label><input type="url" id="admin-banner-img-url" placeholder="https://images.unsplash.com/..." class="w-full p-3 text-xs clay-input focus:outline-none focus-visible"></div>
-      <div><label class="block text-xs font-bold text-[var(--color-secondary)] mb-1">Texto Destacado del Banner Principal</label><input type="text" id="admin-banner-text" placeholder="Ej. Calibra tu calma somática hoy" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible"></div>
-      <div class="space-y-3 border-t border-stone-200 pt-3"><label class="block text-xs font-bold text-[var(--color-secondary)]">🎨 Colores Personalizados</label><div class="grid grid-cols-2 gap-3"><div><label class="text-[10px] text-[var(--color-secondary)]">Color Primario</label><input type="color" id="admin-color-primary" value="#E27D60" class="w-full h-10 rounded-xl cursor-pointer"></div><div><label class="text-[10px] text-[var(--color-secondary)]">Color Secundario</label><input type="color" id="admin-color-secondary" value="#7A8A7C" class="w-full h-10 rounded-xl cursor-pointer"></div></div></div>
-      <button type="submit" class="clay-btn-primary w-full py-3.5 font-bold text-xs mt-2 focus-visible">💾 Guardar y Aplicar Cambios</button>
+  <!-- ================= 9. ADMIN - LOGIN ================= -->
+  <main id="view-admin-login" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
+    <div class="text-center space-y-1">
+      <h2 class="text-2xl font-bold text-[#E27D60]">Acceso Administrativo</h2>
+      <p class="text-xs text-[#7A8A7C]/70">Área restringida para gestión visual y banners.</p>
+    </div>
+    <form onsubmit="event.preventDefault(); App.verificarAdminPin();" class="clay-card p-6 space-y-4">
+      <div>
+        <label class="block text-xs font-bold text-[#7A8A7C] mb-1">Clave de Acceso</label>
+        <input type="password" id="admin-pin-input" placeholder="••••" class="w-full p-3 text-xs clay-input focus:outline-none text-center tracking-widest text-lg" required>
+      </div>
+      <button type="submit" class="clay-btn-primary w-full py-3.5 font-bold text-xs focus-visible">Desbloquear Panel</button>
     </form>
+    <button onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold text-xs focus-visible">Volver al Inicio</button>
   </main>
 
-  <!-- NAVEGACIÓN -->
+  <!-- ================= 10. ADMIN - DASHBOARD ================= -->
+  <main id="view-admin-dashboard" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
+    <div class="flex justify-between items-center border-b border-stone-200 pb-3">
+      <div>
+        <h2 class="text-xl font-bold text-[#7A8A7C]">Gestor Visual Admin</h2>
+        <p class="text-[10px] text-[#7A8A7C]/70">Actualiza logotipos e imágenes en tiempo real</p>
+      </div>
+      <button onclick="App.switchView('view-home')" class="px-3 py-1.5 bg-stone-200 text-[#7A8A7C] text-xs font-bold rounded-xl focus-visible">Salir</button>
+    </div>
+    <form onsubmit="event.preventDefault(); App.guardarCambiosAdmin();" class="clay-card p-5 space-y-4">
+      <div>
+        <label class="block text-xs font-bold text-[#7A8A7C] mb-1">URL del Logotipo (Header)</label>
+        <input type="url" id="admin-logo-url" placeholder="https://ejemplo.com/logo.png" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible">
+      </div>
+      <div>
+        <label class="block text-xs font-bold text-[#7A8A7C] mb-1">URL de la Imagen Banner Principal (Home)</label>
+        <input type="url" id="admin-banner-img-url" placeholder="https://images.unsplash.com/..." class="w-full p-3 text-xs clay-input focus:outline-none focus-visible">
+      </div>
+      <div>
+        <label class="block text-xs font-bold text-[#7A8A7C] mb-1">Texto Destacado del Banner Principal</label>
+        <input type="text" id="admin-banner-text" placeholder="Ej. Calibra tu calma somática hoy" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible">
+      </div>
+      <button type="submit" class="clay-btn-primary w-full py-3.5 font-bold text-xs mt-2 focus-visible">💾 Guardar y Aplicar Cambios</button>
+    </form>
+    <div class="clay-card p-4 bg-orange-50/40 text-[11px] text-[#7A8A7C] space-y-1">
+      <p class="font-bold text-[#E27D60]">💡 Nota de Seguridad:</p>
+      <p>Los cambios realizados se aplican de inmediato en la aplicación y se guardan en el almacenamiento local del navegador.</p>
+    </div>
+  </main>
+
+  <!-- ================= BARRA DE NAVEGACIÓN INFERIOR ================= -->
   <nav class="clay-nav fixed bottom-0 inset-x-0 max-w-md mx-auto z-50">
     <div class="flex justify-around items-center">
       <div onclick="App.switchView('view-home')" class="nav-item active" data-view="view-home"><span class="nav-icon">🏠</span><span class="nav-label">Inicio</span></div>
@@ -475,109 +819,619 @@
     </div>
   </nav>
 
-  <!-- ASISTENTE VIRTUAL -->
-  <button id="chatbot-floating-btn" onclick="Chatbot.toggle()" class="chatbot-floating-btn" aria-label="Abrir asistente virtual">🤖<span id="chatbot-badge" class="badge hidden">1</span></button>
-  <div id="chatbot-container" class="chatbot-container">
-    <div class="chatbot-header"><div class="chatbot-header-info"><div class="chatbot-avatar">🧠</div><div><h3 class="font-bold text-sm">Sofía - Asesora Atrévete</h3><p class="text-[10px] opacity-90 flex items-center gap-1"><span class="chatbot-status"></span> Experta en Escáner Cuántico</p></div></div><button onclick="Chatbot.toggle()" class="text-white hover:bg-white/20 rounded-full w-7 h-7 flex items-center justify-center text-sm transition">✕</button></div>
-    <div id="chatbot-messages" class="chatbot-messages"><div class="chatbot-message bot"><div class="chatbot-bubble">¡Hola! 👋 Soy <strong>Sofía</strong>, asesora integral de <strong>Atrévete HealthTech</strong> y experta en <strong>Escáner Cuántico</strong>. ¿En qué puedo ayudarte hoy? 😊</div></div></div>
-    <div id="chatbot-options" class="chatbot-options"><button onclick="Chatbot.sendQuickReply('Escáner Cuántico')" class="chatbot-option-btn">🔮 Escáner Cuántico</button><button onclick="Chatbot.sendQuickReply('Campamento Adultas en Fuga')" class="chatbot-option-btn">🏕️ Campamento</button><button onclick="Chatbot.sendQuickReply('Agendar cita')" class="chatbot-option-btn">📅 Agendar Cita</button><button onclick="Chatbot.sendQuickReply('Precios y pagos')" class="chatbot-option-btn">💳 Precios</button></div>
-    <div class="chatbot-input-area"><input id="chatbot-input" type="text" placeholder="Escribe tu consulta aquí..." class="chatbot-input" onkeypress="if(event.key==='Enter') Chatbot.sendMessage()"><button onclick="Chatbot.sendMessage()" class="chatbot-send-btn"><svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg></button></div>
-  </div>
-
+  <!-- ================= JAVASCRIPT ================= -->
   <script>
+    // ============================================
+    // APP - Objeto principal
+    // ============================================
     const App = {
         state: {
-            authMode: 'login', quizAnswers: {}, selectedPayment: 'pm_bdv', googleUserData: null,
+            authMode: 'login',
+            quizAnswers: {},
+            selectedPayment: 'pm_bdv',
+            selectedRole: 'user',
+            user: {
+                name: localStorage.getItem('user_name') || '',
+                email: localStorage.getItem('user_email') || '',
+                role: localStorage.getItem('user_role') || 'user',
+                registerMethod: localStorage.getItem('register_method') || 'email',
+                telefono: localStorage.getItem('user_telefono') || '',
+                fechaNac: localStorage.getItem('user_fecha_nac') || '',
+                emailVerified: localStorage.getItem('email_verified') === 'true',
+                fechaRegistro: localStorage.getItem('fecha_registro') || new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' }),
+                sesiones: parseInt(localStorage.getItem('user_sesiones')) || 0,
+                ejercicios: parseInt(localStorage.getItem('user_ejercicios')) || 0,
+                diasActivo: parseInt(localStorage.getItem('user_dias_activo')) || 0
+            },
+            isAuthenticated: !!localStorage.getItem('user_email'),
             legalAceptado: localStorage.getItem('legal_aceptado') === 'true',
-            user: { name: localStorage.getItem('user_name') || '', email: localStorage.getItem('user_email') || '', role: localStorage.getItem('user_role') || 'user', registerMethod: localStorage.getItem('register_method') || 'email', telefono: localStorage.getItem('user_telefono') || '', fechaNac: localStorage.getItem('user_fecha_nac') || '', emailVerified: localStorage.getItem('email_verified') === 'true', fechaRegistro: localStorage.getItem('fecha_registro') || new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' }), sesiones: parseInt(localStorage.getItem('user_sesiones')) || 0, ejercicios: parseInt(localStorage.getItem('user_ejercicios')) || 0, diasActivo: parseInt(localStorage.getItem('user_dias_activo')) || 0 },
-            isAuthenticated: !!localStorage.getItem('user_email'), breathInterval: null, currentView: 'view-home'
+            breathInterval: null,
+            currentView: 'view-home'
         },
-        verificarLegal() { if (this.state.legalAceptado) return true; document.getElementById('modal-legal-gate').classList.remove('hidden'); return false; },
-        aceptarLegalYContinuar() { localStorage.setItem('legal_aceptado', 'true'); this.state.legalAceptado = true; document.getElementById('modal-legal-gate').classList.add('hidden'); this.switchView('view-auth'); },
-        cancelarLegal() { document.getElementById('modal-legal-gate').classList.add('hidden'); this.switchView('view-home'); },
-        irAPerfil() { this.state.isAuthenticated ? this.switchView('view-perfil-usuario') : this.abrirLogin(); },
-        abrirLogin() { if (!this.verificarLegal()) return; this.switchAuthMode('login'); this.switchView('view-auth'); },
-        abrirRegistro() { if (!this.verificarLegal()) return; this.switchAuthMode('register'); this.switchView('view-auth'); },
+
+        // ============================================
+        // BARRERA LEGAL
+        // ============================================
+        verificarLegal() {
+            if (this.state.legalAceptado) return true;
+            document.getElementById('modal-legal-gate').classList.remove('hidden');
+            return false;
+        },
+
+        aceptarLegalYContinuar() {
+            localStorage.setItem('legal_aceptado', 'true');
+            this.state.legalAceptado = true;
+            document.getElementById('modal-legal-gate').classList.add('hidden');
+            this.switchView('view-auth');
+        },
+
+        cancelarLegal() {
+            document.getElementById('modal-legal-gate').classList.add('hidden');
+            this.switchView('view-home');
+        },
+
+        // ============================================
+        // NAVEGACIÓN
+        // ============================================
+        irAPerfil() {
+            if (this.state.isAuthenticated) {
+                this.switchView('view-perfil-usuario');
+            } else {
+                this.abrirLogin();
+            }
+        },
+
+        abrirLogin() {
+            if (!this.verificarLegal()) return;
+            this.switchAuthMode('login');
+            this.switchView('view-auth');
+        },
+
+        abrirRegistro() {
+            if (!this.verificarLegal()) return;
+            this.switchAuthMode('register');
+            this.switchView('view-auth');
+        },
+
+        abrirAdminLogin() {
+            this.switchView('view-admin-login');
+        },
+
         switchView(viewId) {
             document.querySelectorAll('.app-view').forEach(v => v.classList.add('hidden'));
             const target = document.getElementById(viewId);
-            if (target) { target.classList.remove('hidden'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+            if (target) target.classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
             this.state.currentView = viewId;
-            document.querySelectorAll('.nav-item').forEach(item => { item.classList.remove('active'); if (item.dataset.view === viewId) item.classList.add('active'); });
-            if (viewId === 'view-perfil-usuario' && !this.state.isAuthenticated) { this.switchView('view-auth'); return; }
-            if (viewId !== 'view-regulacion' && this.state.breathInterval) { clearInterval(this.state.breathInterval); this.state.breathInterval = null; }
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+                if (item.dataset.view === viewId) item.classList.add('active');
+            });
+
+            if (viewId === 'view-perfil-usuario' && !this.state.isAuthenticated) {
+                this.switchView('view-auth');
+                return;
+            }
+
+            if (viewId !== 'view-regulacion' && this.state.breathInterval) {
+                clearInterval(this.state.breathInterval);
+                this.state.breathInterval = null;
+            }
             if (viewId === 'view-regulacion') this.iniciarRespiración();
         },
-        actualizarNav() { const pi = document.getElementById('nav-perfil-icon'), pl = document.getElementById('nav-perfil-label'); if (this.state.isAuthenticated) { if (pi) pi.textContent = '👤'; if (pl) pl.textContent = 'Perfil'; } else { if (pi) pi.textContent = '🔑'; if (pl) pl.textContent = 'Login'; } },
-        actualizarHeader() { const lb = document.getElementById('header-login-btns'), pb = document.getElementById('header-profile-btn'), hn = document.getElementById('header-name'), ha = document.getElementById('header-avatar'); if (this.state.isAuthenticated && this.state.user.name) { lb.classList.add('hidden'); pb.classList.remove('hidden'); if (hn) hn.textContent = this.state.user.name; if (ha) ha.textContent = this.state.user.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'US'; } else { lb.classList.remove('hidden'); pb.classList.add('hidden'); } },
-        iniciarSesionGoogleDirecta() { if (!this.verificarLegal()) return; window.google && google.accounts ? this.iniciarGoogleReal() : this.iniciarGoogleSimuladoConSelector(); },
-        iniciarGoogleReal() { const clientId = 'TU_CLIENT_ID.apps.googleusercontent.com'; const tokenClient = google.accounts.oauth2.initTokenClient({ client_id: clientId, scope: 'email profile openid', callback: (r) => { if (r.access_token) fetch(`https://www.googleapis.com/oauth2/v3/userinfo?access_token=${r.access_token}`).then(res => res.json()).then(d => this.registrarUsuarioGoogle(d.name, d.email, d.picture || '')).catch(() => this.iniciarGoogleSimuladoConSelector()); } }); tokenClient.requestAccessToken({ prompt: 'select_account' }); },
-        iniciarGoogleSimuladoConSelector() { this.mostrarSelectorCuentas(); },
-        mostrarSelectorCuentas() { const correos = this.obtenerCorreosDispositivo(); const modalHTML = `<div id="modal-selector-google" class="fixed inset-0 bg-black/60 backdrop-blur-md z-[10001] flex items-center justify-center p-4"><div class="bg-white w-full max-w-sm rounded-3xl p-6 shadow-2xl animate-in"><div class="text-center space-y-3"><div class="flex justify-center"><svg class="w-12 h-12" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg></div><h3 class="text-xl font-bold text-[#7A8A7C]">Elige una cuenta</h3><p class="text-xs text-gray-500">Selecciona la cuenta de Google para continuar</p></div><div class="space-y-2 mt-4 max-h-60 overflow-y-auto">${correos.length > 0 ? correos.map(c => `<button onclick="App.seleccionarCuentaGoogle('${c.email}','${c.name}','${c.avatar}')" class="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-stone-100 transition border border-stone-200"><div class="w-10 h-10 rounded-full bg-[var(--color-primary)] text-white flex items-center justify-center font-bold text-sm">${c.avatar}</div><div class="text-left"><p class="text-sm font-semibold text-[#7A8A7C]">${c.name}</p><p class="text-xs text-gray-500">${c.email}</p></div></button>`).join('') : '<p class="text-center text-gray-400 text-sm py-4">No se encontraron cuentas guardadas</p>'}<button onclick="App.agregarOtraCuenta()" class="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-stone-100 transition border border-dashed border-stone-300"><div class="w-10 h-10 rounded-full bg-stone-200 flex items-center justify-center text-lg">＋</div><div class="text-left"><p class="text-sm font-semibold text-[var(--color-primary)]">Usar otra cuenta</p><p class="text-xs text-gray-500">Ingresar correo manualmente</p></div></button></div><button onclick="document.getElementById('modal-selector-google').remove()" class="w-full mt-3 py-2.5 text-sm text-gray-400 hover:text-gray-600 transition font-medium">Cancelar</button></div></div>`; const old = document.getElementById('modal-selector-google'); if (old) old.remove(); document.body.insertAdjacentHTML('beforeend', modalHTML); },
-        obtenerCorreosDispositivo() { const cuentas = []; const eg = localStorage.getItem('user_email'), ng = localStorage.getItem('user_name'), mr = localStorage.getItem('register_method'); if (eg && mr === 'google') cuentas.push({ email: eg, name: ng || 'Usuario', avatar: (ng || 'U').charAt(0).toUpperCase() }); for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (k.startsWith('google_account_')) { try { const d = JSON.parse(localStorage.getItem(k)); if (d.email && !cuentas.find(c => c.email === d.email)) cuentas.push({ email: d.email, name: d.name || 'Usuario', avatar: (d.name || 'U').charAt(0).toUpperCase() }); } catch(e) {} } } return cuentas; },
-        seleccionarCuentaGoogle(email, name, avatar) { const modal = document.getElementById('modal-selector-google'); if (modal) modal.remove(); this.registrarUsuarioGoogle(name, email, ''); },
-        agregarOtraCuenta() { const modal = document.getElementById('modal-selector-google'); if (modal) modal.remove(); const email = prompt('📧 Ingresa tu correo de Google:', 'usuario@gmail.com'); if (!email || !email.includes('@')) { this.showToast('⚠️ Por favor ingresa un correo válido', 'warning'); return; } const name = prompt('👤 Ingresa tu nombre:', email.split('@')[0]); if (!name) { this.showToast('⚠️ Por favor ingresa un nombre', 'warning'); return; } try { localStorage.setItem('google_account_' + Date.now(), JSON.stringify({ email, name })); } catch(e) {} this.registrarUsuarioGoogle(name, email, ''); },
-        registrarUsuarioGoogle(name, email, picture) { this.state.googleUserData = { name, email, picture }; const codigo = Math.floor(100000 + Math.random() * 900000).toString(); localStorage.setItem('google_verification_code', codigo); localStorage.setItem('google_verification_email', email); localStorage.setItem('google_verification_expires', Date.now() + 600000); this.mostrarModalVerificacion(email, codigo); },
-        mostrarModalVerificacion(email, codigo) { const modalHTML = `<div id="modal-verificacion-google" class="fixed inset-0 bg-black/60 backdrop-blur-md z-[10002] flex items-center justify-center p-4"><div class="bg-white w-full max-w-sm rounded-3xl p-6 shadow-2xl animate-in"><div class="text-center space-y-3"><div class="flex justify-center"><div class="w-16 h-16 rounded-full bg-[var(--color-primary)]/10 flex items-center justify-center text-3xl">📧</div></div><h3 class="text-xl font-bold text-[#7A8A7C]">Verifica tu correo</h3><p class="text-xs text-gray-500">Enviamos un código de verificación a:</p><p class="text-sm font-bold text-[var(--color-primary)]">${email}</p><div class="bg-blue-50 p-3 rounded-xl text-[10px] text-blue-700">💡 <strong>Código de prueba:</strong> <span class="text-lg font-bold">${codigo}</span><br><span class="text-[9px]">(En producción, este código llega al correo real)</span></div></div><div class="space-y-3 mt-4"><div><label class="block text-xs font-bold text-[#7A8A7C] mb-1">Código de verificación</label><input type="text" id="input-codigo-verificacion" placeholder="000000" maxlength="6" class="w-full p-3 text-center text-2xl font-bold tracking-widest clay-input focus:outline-none" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,6)"></div><div id="codigo-error" class="text-red-500 text-xs text-center hidden">❌ Código incorrecto. Intenta de nuevo.</div><div id="codigo-expirado" class="text-amber-600 text-xs text-center hidden">⏰ El código ha expirado. Solicita uno nuevo.</div><button onclick="App.verificarCodigoGoogle()" class="clay-btn-primary w-full py-3.5 text-sm font-bold">✅ Verificar y Entrar</button><div class="text-center space-y-1"><button onclick="App.reenviarCodigo()" class="text-[11px] text-[var(--color-primary)] font-semibold hover:underline">📤 Reenviar código</button><br><button onclick="App.cancelarVerificacion()" class="text-[11px] text-gray-400 hover:text-gray-600 font-medium">Cancelar</button></div></div></div></div>`; const old = document.getElementById('modal-verificacion-google'); if (old) old.remove(); document.body.insertAdjacentHTML('beforeend', modalHTML); setTimeout(() => { const inp = document.getElementById('input-codigo-verificacion'); if (inp) inp.focus(); }, 500); },
-        verificarCodigoGoogle() { const ingresado = document.getElementById('input-codigo-verificacion').value; const guardado = localStorage.getItem('google_verification_code'); const emailGuardado = localStorage.getItem('google_verification_email'); const expiracion = parseInt(localStorage.getItem('google_verification_expires')); const err = document.getElementById('codigo-error'); const exp = document.getElementById('codigo-expirado'); if (Date.now() > expiracion) { if (err) err.classList.add('hidden'); if (exp) exp.classList.remove('hidden'); return; } if (ingresado === guardado) { const modal = document.getElementById('modal-verificacion-google'); if (modal) modal.remove(); localStorage.removeItem('google_verification_code'); localStorage.removeItem('google_verification_email'); localStorage.removeItem('google_verification_expires'); const ud = this.state.googleUserData; const fr = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' }); localStorage.setItem('user_name', ud.name); localStorage.setItem('user_email', ud.email); localStorage.setItem('user_role', 'user'); localStorage.setItem('register_method', 'google'); localStorage.setItem('email_verified', 'true'); localStorage.setItem('google_picture', ud.picture || ''); localStorage.setItem('fecha_registro', fr); this.state.user = { ...this.state.user, name: ud.name, email: ud.email, role: 'user', registerMethod: 'google', emailVerified: true, fechaRegistro: fr }; this.state.isAuthenticated = true; this.actualizarPerfilUI(); this.actualizarHeader(); this.actualizarNav(); this.showToast(`✅ ¡Bienvenido${ud.name ? ' ' + ud.name.split(' ')[0] : ''}! Correo verificado.`, 'success'); this.switchView('view-perfil-usuario'); setTimeout(() => { this.showToast('📝 Completa tu perfil para personalizar tu experiencia', 'info'); this.mostrarEditarPerfil(); }, 1500); } else { if (exp) exp.classList.add('hidden'); if (err) err.classList.remove('hidden'); document.getElementById('input-codigo-verificacion').value = ''; document.getElementById('input-codigo-verificacion').focus(); } },
-        reenviarCodigo() { const email = localStorage.getItem('google_verification_email'); if (!email) return; const nuevo = Math.floor(100000 + Math.random() * 900000).toString(); localStorage.setItem('google_verification_code', nuevo); localStorage.setItem('google_verification_expires', Date.now() + 600000); const modal = document.getElementById('modal-verificacion-google'); if (modal) modal.remove(); this.mostrarModalVerificacion(email, nuevo); this.showToast('📤 Código reenviado a ' + email, 'info'); },
-        cancelarVerificacion() { const modal = document.getElementById('modal-verificacion-google'); if (modal) modal.remove(); localStorage.removeItem('google_verification_code'); localStorage.removeItem('google_verification_email'); localStorage.removeItem('google_verification_expires'); this.state.googleUserData = null; this.showToast('Verificación cancelada', 'info'); },
-        showToast(message, type = 'success') { const toast = document.getElementById('toast'); if (!toast) return; toast.className = `toast toast-${type}`; toast.textContent = message; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 4000); },
-        actualizarPerfilUI() { const name = this.state.user.name || 'Invitado Atrévete'; const email = this.state.user.email || 'correo@ejemplo.com'; const role = this.state.user.role || 'user'; const registerMethod = this.state.user.registerMethod || 'email'; const emailVerified = this.state.user.emailVerified || false; const telefono = this.state.user.telefono || 'No registrado'; const fechaNac = this.state.user.fechaNac || 'No registrada'; const fechaRegistro = this.state.user.fechaRegistro || 'Hoy'; const sesiones = this.state.user.sesiones || 0; const ejercicios = this.state.user.ejercicios || 0; const diasActivo = this.state.user.diasActivo || 0; const profileName = document.getElementById('profile-name'); const profileEmail = document.getElementById('profile-email'); const profileRole = document.getElementById('profile-role'); const profileRegisterMethod = document.getElementById('profile-register-method'); const profileVerifiedContainer = document.getElementById('profile-verified-container'); const profileTelefono = document.getElementById('profile-telefono-display'); const profileFecha = document.getElementById('profile-fecha-display'); const profileMiembroDesde = document.getElementById('profile-miembro-desde'); if (profileName) profileName.innerText = name; if (profileEmail) profileEmail.innerText = email; if (profileRole) profileRole.innerText = role === 'spec' ? '👩‍⚕️ Especialista' : '👤 Usuario'; if (profileRegisterMethod) profileRegisterMethod.innerText = registerMethod === 'google' ? '🟢 Registrado con Google' : '📧 Registrado con Email'; if (profileVerifiedContainer) profileVerifiedContainer.innerHTML = emailVerified ? '<span class="verified-badge">✅ Correo verificado</span>' : '<span class="unverified-badge">⏳ Correo no verificado</span>'; if (profileTelefono) profileTelefono.innerText = telefono; if (profileFecha) profileFecha.innerText = fechaNac; if (profileMiembroDesde) profileMiembroDesde.innerText = fechaRegistro; document.getElementById('profile-sesiones').innerText = sesiones; document.getElementById('profile-ejercicios').innerText = ejercicios; document.getElementById('profile-dias').innerText = diasActivo; const avatar = document.getElementById('profile-avatar'); const googlePicture = localStorage.getItem('google_picture'); if (googlePicture && googlePicture !== '') { avatar.style.backgroundImage = `url('${googlePicture}')`; avatar.style.backgroundSize = 'cover'; avatar.style.backgroundPosition = 'center'; avatar.textContent = ''; } else { avatar.style.backgroundImage = 'none'; const initials = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'AT'; avatar.textContent = initials; } const editNombre = document.getElementById('edit-nombre'); const editTelefono = document.getElementById('edit-telefono'); const editFechaNac = document.getElementById('edit-fecha-nac'); if (editNombre) editNombre.value = name; if (editTelefono) editTelefono.value = this.state.user.telefono || ''; if (editFechaNac) editFechaNac.value = this.state.user.fechaNac || ''; this.actualizarHeader(); this.actualizarNav(); },
-        procesarAuthEmail() { const email = document.getElementById('input-email').value; const password = document.getElementById('input-password').value; const nombreInput = document.getElementById('input-nombre'); const emailError = document.getElementById('email-error'); const passwordError = document.getElementById('password-error'); if (!email || !email.includes('@')) { if (emailError) emailError.classList.remove('hidden'); return; } if (emailError) emailError.classList.add('hidden'); if (password.length < 6) { if (passwordError) passwordError.classList.remove('hidden'); return; } if (passwordError) passwordError.classList.add('hidden'); let nombre = 'Usuario Atrévete'; if (this.state.authMode === 'register' && nombreInput && nombreInput.value.trim() !== '') { nombre = nombreInput.value.trim(); } else { nombre = email.split('@')[0]; } const fechaRegistro = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' }); localStorage.setItem('user_name', nombre); localStorage.setItem('user_email', email); localStorage.setItem('user_role', this.state.user.role || 'user'); localStorage.setItem('register_method', 'email'); localStorage.setItem('email_verified', 'false'); localStorage.setItem('fecha_registro', fechaRegistro); this.state.user = { ...this.state.user, name: nombre, email: email, registerMethod: 'email', emailVerified: false, fechaRegistro: fechaRegistro }; this.state.isAuthenticated = true; this.actualizarPerfilUI(); this.actualizarHeader(); this.actualizarNav(); this.showToast('✅ ¡Bienvenido a Atrévete HealthTech!', 'info'); this.switchView('view-perfil-usuario'); setTimeout(() => { this.showToast('📧 Se ha enviado un correo de verificación a tu cuenta', 'info'); }, 2000); },
-        switchAuthMode(mode) { this.state.authMode = mode; const tabLogin = document.getElementById('tab-login'); const tabRegister = document.getElementById('tab-register'); const fieldNombre = document.getElementById('field-nombre'); const fieldRol = document.getElementById('field-rol'); const linkForgot = document.getElementById('link-forgot-container'); const submitBtn = document.getElementById('auth-submit-btn'); const title = document.getElementById('auth-title'); const subtitle = document.getElementById('auth-subtitle'); if (mode === 'login') { if (tabLogin) tabLogin.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[var(--color-secondary)] shadow-sm transition'; if (tabRegister) tabRegister.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl text-[var(--color-secondary)] transition'; if (fieldNombre) fieldNombre.classList.add('hidden'); if (fieldRol) fieldRol.classList.add('hidden'); if (linkForgot) linkForgot.classList.remove('hidden'); if (submitBtn) submitBtn.innerText = 'Iniciar Sesión'; if (title) title.innerText = 'Iniciar Sesión'; if (subtitle) subtitle.innerText = 'Accede a tu cuenta de Atrévete HealthTech'; } else { if (tabRegister) tabRegister.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[var(--color-secondary)] shadow-sm transition'; if (tabLogin) tabLogin.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl text-[var(--color-secondary)] transition'; if (fieldNombre) fieldNombre.classList.remove('hidden'); if (fieldRol) fieldRol.classList.remove('hidden'); if (linkForgot) linkForgot.classList.add('hidden'); if (submitBtn) submitBtn.innerText = 'Crear Mi Cuenta'; if (title) title.innerText = 'Crea tu Cuenta'; if (subtitle) subtitle.innerText = 'Únete a nuestra plataforma somática'; } },
-        setAuthRole(role) { const btnUser = document.getElementById('btn-role-user'); const btnSpec = document.getElementById('btn-role-spec'); this.state.user.role = role; localStorage.setItem('user_role', role); if (role === 'user') { if (btnUser) btnUser.className = 'flex-1 py-2 text-xs font-bold rounded-xl bg-orange-100 text-[var(--color-primary)] border border-[var(--color-primary)]/30 transition'; if (btnSpec) btnSpec.className = 'flex-1 py-2 text-xs font-bold rounded-xl bg-stone-100 text-[var(--color-secondary)] transition'; } else { if (btnSpec) btnSpec.className = 'flex-1 py-2 text-xs font-bold rounded-xl bg-orange-100 text-[var(--color-primary)] border border-[var(--color-primary)]/30 transition'; if (btnUser) btnUser.className = 'flex-1 py-2 text-xs font-bold rounded-xl bg-stone-100 text-[var(--color-secondary)] transition'; } },
-        procesarRecuperacion() { const email = document.getElementById('recovery-email').value; if (!email) { this.showToast('Por favor ingresa tu correo electrónico.', 'error'); return; } this.showToast(`📧 Instrucciones enviadas a: ${email}`, 'success'); this.switchView('view-auth'); },
-        cerrarSesion() { ['user_name','user_email','user_role','register_method','user_telefono','user_fecha_nac','email_verified','google_picture','fecha_registro','user_sesiones','user_ejercicios','user_dias_activo'].forEach(k => localStorage.removeItem(k)); this.state.isAuthenticated = false; this.state.user = { name: '', email: '', role: 'user', registerMethod: 'email', telefono: '', fechaNac: '', emailVerified: false, fechaRegistro: '', sesiones: 0, ejercicios: 0, diasActivo: 0 }; this.actualizarPerfilUI(); this.actualizarHeader(); this.actualizarNav(); this.showToast('👋 Sesión cerrada exitosamente', 'info'); this.switchView('view-home'); },
-        mostrarEditarPerfil() { const form = document.getElementById('editar-perfil-form'); if (form) { form.classList.remove('hidden'); document.getElementById('edit-nombre').value = this.state.user.name || ''; document.getElementById('edit-telefono').value = this.state.user.telefono || ''; document.getElementById('edit-fecha-nac').value = this.state.user.fechaNac || ''; } },
-        cancelarEditarPerfil() { const form = document.getElementById('editar-perfil-form'); if (form) form.classList.add('hidden'); },
-        guardarEditarPerfil() { const nombre = document.getElementById('edit-nombre').value.trim(); const telefono = document.getElementById('edit-telefono').value.trim(); const fechaNac = document.getElementById('edit-fecha-nac').value; if (!nombre) { this.showToast('⚠️ El nombre es obligatorio', 'error'); return; } localStorage.setItem('user_name', nombre); localStorage.setItem('user_telefono', telefono); localStorage.setItem('user_fecha_nac', fechaNac); this.state.user.name = nombre; this.state.user.telefono = telefono; this.state.user.fechaNac = fechaNac; document.getElementById('editar-perfil-form').classList.add('hidden'); this.actualizarPerfilUI(); this.actualizarHeader(); this.actualizarNav(); this.showToast('✅ Perfil actualizado exitosamente', 'success'); },
-        cambiarFotoPerfil() { this.showToast('📸 Función de cambio de foto en desarrollo', 'info'); },
-        selectPaymentMethod(method) { this.state.selectedPayment = method; document.querySelectorAll('.clay-btn-pay').forEach(btn => btn.classList.remove('active-pay')); const btnMap = { 'pm_bdv': 'pay-bdv', 'pm_bnc': 'pay-bnc', 'zelle': 'pay-zelle', 'binance': 'pay-binance' }; const targetBtn = document.getElementById(btnMap[method]); if (targetBtn) targetBtn.classList.add('active-pay'); const box = document.getElementById('datos-pago-box'); const containerRef = document.getElementById('container-ref-pago'); const btnEnviar = document.getElementById('btn-enviar-pago'); const helperRef = document.getElementById('ref-pago-helper'); containerRef.style.display = 'block'; btnEnviar.style.display = 'block'; btnEnviar.disabled = false; btnEnviar.classList.remove('opacity-50', 'cursor-not-allowed'); if (helperRef) helperRef.classList.add('hidden'); if (method === 'pm_bdv') { box.innerHTML = `<p class="font-bold text-[var(--color-primary)]">🇻🇪 Pago Móvil - Banco de Venezuela (0102)</p><p>Teléfono: <strong>0414-4031678</strong></p><p>C.I: <strong>18.478.170</strong></p><p class="text-[10px] text-gray-500 mt-1">Monto: Equivalente en Bs. a la tasa BCV del día ($120.00)</p>`; if (helperRef) { helperRef.textContent = 'Ingresa el número de referencia de tu Pago Móvil.'; helperRef.classList.remove('hidden'); } } else if (method === 'pm_bnc') { box.innerHTML = `<p class="font-bold text-[var(--color-primary)]">🇻🇪 Pago Móvil - Banco Nacional de Crédito (0191)</p><p>Teléfono: <strong>0414-4187215</strong></p><p>C.I: <strong>13.518.664</strong></p><p class="text-[10px] text-gray-500 mt-1">Monto: Equivalente en Bs. a la tasa BCV del día ($120.00)</p>`; if (helperRef) { helperRef.textContent = 'Ingresa el número de referencia de tu Pago Móvil.'; helperRef.classList.remove('hidden'); } } else if (method === 'zelle') { containerRef.style.display = 'none'; btnEnviar.style.display = 'none'; box.innerHTML = `<p class="font-bold text-[var(--color-primary)]">🇺🇸 Zelle (Divisas)</p><p class="text-sm font-semibold mt-2 text-[var(--color-secondary)]">⏳ Próximamente disponible</p><p class="text-[10px] text-gray-500 mt-1">Este método de pago se habilitará muy pronto.</p>`; } else if (method === 'binance') { box.innerHTML = `<p class="font-bold text-[var(--color-primary)]">🟡 Binance Pay (USDT)</p><p>Binance Pay ID: <strong>163305332</strong></p><p class="text-[10px] text-gray-500 mt-1">Monto exacto: <strong>$120.00 USDT</strong> (red BEP-20)</p>`; if (helperRef) { helperRef.textContent = 'Ingresa el ID de la transacción o el hash de tu pago en Binance Pay.'; helperRef.classList.remove('hidden'); } } },
-        confirmarPagoMock() { if (this.state.selectedPayment === 'zelle') { this.showToast('⏳ El método de pago Zelle aún no está disponible.', 'warning'); return; } const ref = document.getElementById('input-ref-pago').value; if (!ref) { this.showToast('⚠️ Por favor ingresa el número de referencia o comprobante.', 'error'); document.getElementById('input-ref-pago').classList.add('border-red-400', 'border-2'); setTimeout(() => { document.getElementById('input-ref-pago').classList.remove('border-red-400', 'border-2'); }, 3000); return; } this.showToast('✅ ¡Comprobante reportado con éxito! Nuestro equipo lo verificará.', 'success'); this.switchView('view-perfil-usuario'); },
-        answerQuiz(step, choice) { this.state.quizAnswers[`step${step}`] = choice; if (step < 3) { document.getElementById(`quiz-step-${step}`).classList.add('hidden'); document.getElementById(`quiz-step-${step + 1}`).classList.remove('hidden'); document.getElementById('quiz-step-indicator').innerText = `Paso ${step + 1} de 3`; } else { document.getElementById('quiz-step-3').classList.add('hidden'); document.getElementById('quiz-result').classList.remove('hidden'); document.getElementById('quiz-step-indicator').innerText = 'Completado ✅'; document.getElementById('quiz-diagnosis-title').innerText = 'Diagnóstico Somático Detectado'; document.getElementById('quiz-diagnosis-desc').innerText = 'Tu sistema nervioso muestra acumulación de tensión corporal. Te recomendamos la siguiente técnica:'; document.getElementById('recommended-technique-card').innerHTML = '<h5 class="font-bold text-xs text-[var(--color-secondary)]">🌟 Técnica Recomendada: Descarga Vagal</h5><p class="text-[11px] text-gray-600">Realiza 3 ciclos de respiración profunda con exhalación prolongada y sacudida corporal.</p>'; } },
-        resetQuiz() { this.state.quizAnswers = {}; document.getElementById('quiz-result').classList.add('hidden'); document.getElementById('quiz-step-1').classList.remove('hidden'); document.getElementById('quiz-step-2').classList.add('hidden'); document.getElementById('quiz-step-3').classList.add('hidden'); document.getElementById('quiz-step-indicator').innerText = 'Paso 1 de 3'; },
-        iniciarRespiración() { if (this.state.breathInterval) clearInterval(this.state.breathInterval); const circle = document.getElementById('breath-circle'); if (!circle) return; let breathState = 0; circle.innerText = 'Inhala...'; circle.style.transform = 'scale(1.0)'; this.state.breathInterval = setInterval(() => { if (breathState === 0) { circle.innerText = 'Sostén...'; circle.style.transform = 'scale(1.3)'; breathState = 1; } else if (breathState === 1) { circle.innerText = 'Exhala...'; circle.style.transform = 'scale(0.8)'; breathState = 2; } else { circle.innerText = 'Inhala...'; circle.style.transform = 'scale(1.0)'; breathState = 0; } }, 3500); },
-        procesarCitaWhatsApp() { const terapeuta = document.getElementById('select-terapeuta').value; const fecha = document.getElementById('fecha-cita').value || 'Sin fecha'; const hora = document.getElementById('hora-cita').value || 'Sin hora'; if (!fecha || !hora) { this.showToast('⚠️ Por favor selecciona fecha y hora', 'error'); return; } const mensaje = encodeURIComponent(`Hola, deseo confirmar mi cita con ${terapeuta}.\n📅 Fecha: ${fecha}\n🕐 Hora: ${hora}`); window.open(`https://wa.me/584140000000?text=${mensaje}`, '_blank'); },
-        guardarCambiosAdmin() { const newLogo = document.getElementById('admin-logo-url').value; const newBannerImg = document.getElementById('admin-banner-img-url').value; const newBannerText = document.getElementById('admin-banner-text').value; const newColorPrimary = document.getElementById('admin-color-primary').value; const newColorSecondary = document.getElementById('admin-color-secondary').value; if (newLogo) { localStorage.setItem('app_logo', newLogo); document.getElementById('app-logo-img').src = newLogo; } if (newBannerImg) { localStorage.setItem('app_banner_img', newBannerImg); document.getElementById('home-hero-banner').style.backgroundImage = `url('${newBannerImg}')`; } if (newBannerText) { localStorage.setItem('app_banner_text', newBannerText); document.getElementById('home-banner-text').innerText = newBannerText; } if (newColorPrimary) { localStorage.setItem('app_color_primary', newColorPrimary); document.documentElement.style.setProperty('--color-primary', newColorPrimary); } if (newColorSecondary) { localStorage.setItem('app_color_secondary', newColorSecondary); document.documentElement.style.setProperty('--color-secondary', newColorSecondary); } this.showToast('✅ ¡Cambios guardados y aplicados con éxito!', 'success'); this.switchView('view-home'); }
+
+        // ============================================
+        // SELECTOR DE ROL
+        // ============================================
+        selectRole(role) {
+            this.state.selectedRole = role;
+            document.querySelectorAll('.role-option').forEach(el => el.classList.remove('selected'));
+            if (role === 'user') {
+                document.getElementById('role-user').classList.add('selected');
+            } else {
+                document.getElementById('role-spec').classList.add('selected');
+            }
+        },
+
+        // ============================================
+        // AUTENTICACIÓN
+        // ============================================
+        switchAuthMode(mode) {
+            this.state.authMode = mode;
+            const tabLogin = document.getElementById('tab-login');
+            const tabRegister = document.getElementById('tab-register');
+            const fieldNombre = document.getElementById('field-nombre');
+            const fieldRol = document.getElementById('field-rol');
+            const linkForgot = document.getElementById('link-forgot-container');
+            const submitBtn = document.getElementById('auth-submit-btn');
+            const title = document.getElementById('auth-title');
+            const subtitle = document.getElementById('auth-subtitle');
+
+            if (mode === 'login') {
+                tabLogin.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[#7A8A7C] shadow-sm transition';
+                tabRegister.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl text-[#7A8A7C] transition';
+                fieldNombre.classList.add('hidden');
+                fieldRol.classList.add('hidden');
+                linkForgot.classList.remove('hidden');
+                submitBtn.innerText = 'Iniciar Sesión';
+                title.innerText = 'Iniciar Sesión';
+                subtitle.innerText = 'Accede a tu cuenta de Atrévete HealthTech';
+            } else {
+                tabRegister.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[#7A8A7C] shadow-sm transition';
+                tabLogin.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl text-[#7A8A7C] transition';
+                fieldNombre.classList.remove('hidden');
+                fieldRol.classList.remove('hidden');
+                linkForgot.classList.add('hidden');
+                submitBtn.innerText = 'Crear Mi Cuenta';
+                title.innerText = 'Crea tu Cuenta';
+                subtitle.innerText = 'Únete a nuestra plataforma somática';
+            }
+        },
+
+        procesarAuthEmail() {
+            const email = document.getElementById('input-email').value;
+            const password = document.getElementById('input-password').value;
+            const nombreInput = document.getElementById('input-nombre');
+
+            if (!email || !email.includes('@')) {
+                document.getElementById('email-error').classList.remove('hidden');
+                return;
+            }
+            document.getElementById('email-error').classList.add('hidden');
+
+            if (password.length < 6) {
+                document.getElementById('password-error').classList.remove('hidden');
+                return;
+            }
+            document.getElementById('password-error').classList.add('hidden');
+
+            let nombre = 'Usuario Atrévete';
+            if (this.state.authMode === 'register' && nombreInput && nombreInput.value.trim() !== '') {
+                nombre = nombreInput.value.trim();
+            } else {
+                nombre = email.split('@')[0];
+            }
+
+            const role = this.state.authMode === 'register' ? this.state.selectedRole : (this.state.user.role || 'user');
+            const fechaRegistro = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' });
+
+            localStorage.setItem('user_name', nombre);
+            localStorage.setItem('user_email', email);
+            localStorage.setItem('user_role', role);
+            localStorage.setItem('register_method', 'email');
+            localStorage.setItem('email_verified', 'false');
+            localStorage.setItem('fecha_registro', fechaRegistro);
+
+            this.state.user = {
+                ...this.state.user,
+                name: nombre,
+                email: email,
+                role: role,
+                registerMethod: 'email',
+                emailVerified: false,
+                fechaRegistro: fechaRegistro
+            };
+            this.state.isAuthenticated = true;
+
+            this.actualizarPerfilUI();
+            this.actualizarHeader();
+            this.actualizarNav();
+            this.showToast('✅ ¡Bienvenido a Atrévete HealthTech!', 'success');
+            this.switchView('view-perfil-usuario');
+
+            setTimeout(() => {
+                this.showToast('📧 Se ha enviado un correo de verificación a tu cuenta', 'info');
+            }, 2000);
+        },
+
+        procesarRecuperacion() {
+            const email = document.getElementById('recovery-email').value;
+            if (!email) {
+                this.showToast('Por favor ingresa tu correo electrónico.', 'error');
+                return;
+            }
+            this.showToast(`📧 Instrucciones enviadas a: ${email}`, 'success');
+            this.switchView('view-auth');
+        },
+
+        cerrarSesion() {
+            localStorage.removeItem('user_name');
+            localStorage.removeItem('user_email');
+            localStorage.removeItem('user_role');
+            localStorage.removeItem('register_method');
+            localStorage.removeItem('user_telefono');
+            localStorage.removeItem('user_fecha_nac');
+            localStorage.removeItem('email_verified');
+            localStorage.removeItem('fecha_registro');
+
+            this.state.isAuthenticated = false;
+            this.state.user = {
+                name: '', email: '', role: 'user', registerMethod: 'email',
+                telefono: '', fechaNac: '', emailVerified: false, fechaRegistro: '',
+                sesiones: 0, ejercicios: 0, diasActivo: 0
+            };
+
+            this.actualizarPerfilUI();
+            this.actualizarHeader();
+            this.actualizarNav();
+            this.showToast('👋 Sesión cerrada exitosamente', 'info');
+            this.switchView('view-home');
+        },
+
+        // ============================================
+        // ACTUALIZAR UI
+        // ============================================
+        actualizarHeader() {
+            const loginBtns = document.getElementById('header-login-btns');
+            const profileBtn = document.getElementById('header-profile-btn');
+            const headerName = document.getElementById('header-name');
+            const headerAvatar = document.getElementById('header-avatar');
+
+            if (this.state.isAuthenticated && this.state.user.name) {
+                loginBtns.classList.add('hidden');
+                profileBtn.classList.remove('hidden');
+                if (headerName) headerName.textContent = this.state.user.name;
+                if (headerAvatar) {
+                    const initials = this.state.user.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'US';
+                    headerAvatar.textContent = initials;
+                }
+            } else {
+                loginBtns.classList.remove('hidden');
+                profileBtn.classList.add('hidden');
+            }
+        },
+
+        actualizarNav() {
+            const perfilIcon = document.getElementById('nav-perfil-icon');
+            const perfilLabel = document.getElementById('nav-perfil-label');
+
+            if (this.state.isAuthenticated) {
+                if (perfilIcon) perfilIcon.textContent = '👤';
+                if (perfilLabel) perfilLabel.textContent = 'Perfil';
+            } else {
+                if (perfilIcon) perfilIcon.textContent = '🔑';
+                if (perfilLabel) perfilLabel.textContent = 'Login';
+            }
+        },
+
+        actualizarPerfilUI() {
+            const name = this.state.user.name || 'Invitado Atrévete';
+            const email = this.state.user.email || 'correo@ejemplo.com';
+            const role = this.state.user.role || 'user';
+            const registerMethod = this.state.user.registerMethod || 'email';
+            const emailVerified = this.state.user.emailVerified || false;
+            const telefono = this.state.user.telefono || 'No registrado';
+            const fechaNac = this.state.user.fechaNac || 'No registrada';
+            const fechaRegistro = this.state.user.fechaRegistro || 'Hoy';
+            const sesiones = this.state.user.sesiones || 0;
+            const ejercicios = this.state.user.ejercicios || 0;
+            const diasActivo = this.state.user.diasActivo || 0;
+
+            const profileName = document.getElementById('profile-name');
+            const profileEmail = document.getElementById('profile-email');
+            const profileAvatar = document.getElementById('profile-avatar');
+            const profileRole = document.getElementById('profile-role');
+            const profileRegisterMethod = document.getElementById('profile-register-method');
+            const profileVerifiedContainer = document.getElementById('profile-verified-container');
+            const profileTelefono = document.getElementById('profile-telefono-display');
+            const profileFecha = document.getElementById('profile-fecha-display');
+            const profileMiembroDesde = document.getElementById('profile-miembro-desde');
+            const profileSesiones = document.getElementById('profile-sesiones');
+            const profileEjercicios = document.getElementById('profile-ejercicios');
+            const profileDias = document.getElementById('profile-dias');
+
+            if (profileName) profileName.innerText = name;
+            if (profileEmail) profileEmail.innerText = email;
+            if (profileRole) {
+                const roleText = role === 'spec' ? '👩‍⚕️ Especialista' : '👤 Usuario';
+                profileRole.innerText = roleText;
+            }
+            if (profileRegisterMethod) {
+                profileRegisterMethod.innerText = 'Registrado con: Email 📧';
+            }
+            if (profileVerifiedContainer) {
+                if (emailVerified) {
+                    profileVerifiedContainer.innerHTML = '<span class="verified-badge">✅ Correo verificado</span>';
+                } else {
+                    profileVerifiedContainer.innerHTML = '<span class="unverified-badge">⏳ Correo no verificado</span>';
+                }
+            }
+            if (profileTelefono) profileTelefono.innerText = telefono;
+            if (profileFecha) profileFecha.innerText = fechaNac;
+            if (profileMiembroDesde) profileMiembroDesde.innerText = fechaRegistro;
+            if (profileSesiones) profileSesiones.innerText = sesiones;
+            if (profileEjercicios) profileEjercicios.innerText = ejercicios;
+            if (profileDias) profileDias.innerText = diasActivo;
+
+            if (profileAvatar) {
+                profileAvatar.style.backgroundImage = 'none';
+                const initials = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'AT';
+                profileAvatar.textContent = initials;
+            }
+
+            const editNombre = document.getElementById('edit-nombre');
+            const editTelefono = document.getElementById('edit-telefono');
+            const editFechaNac = document.getElementById('edit-fecha-nac');
+            if (editNombre) editNombre.value = name;
+            if (editTelefono) editTelefono.value = this.state.user.telefono || '';
+            if (editFechaNac) editFechaNac.value = this.state.user.fechaNac || '';
+
+            this.actualizarHeader();
+            this.actualizarNav();
+        },
+
+        // ============================================
+        // EDITAR PERFIL
+        // ============================================
+        mostrarEditarPerfil() {
+            const form = document.getElementById('editar-perfil-form');
+            if (form) {
+                form.classList.remove('hidden');
+                document.getElementById('edit-nombre').value = this.state.user.name || '';
+                document.getElementById('edit-telefono').value = this.state.user.telefono || '';
+                document.getElementById('edit-fecha-nac').value = this.state.user.fechaNac || '';
+            }
+        },
+
+        cancelarEditarPerfil() {
+            const form = document.getElementById('editar-perfil-form');
+            if (form) form.classList.add('hidden');
+        },
+
+        guardarEditarPerfil() {
+            const nombre = document.getElementById('edit-nombre').value.trim();
+            const telefono = document.getElementById('edit-telefono').value.trim();
+            const fechaNac = document.getElementById('edit-fecha-nac').value;
+
+            if (!nombre) {
+                this.showToast('⚠️ El nombre es obligatorio', 'error');
+                return;
+            }
+
+            localStorage.setItem('user_name', nombre);
+            localStorage.setItem('user_telefono', telefono);
+            localStorage.setItem('user_fecha_nac', fechaNac);
+
+            this.state.user.name = nombre;
+            this.state.user.telefono = telefono;
+            this.state.user.fechaNac = fechaNac;
+
+            document.getElementById('editar-perfil-form').classList.add('hidden');
+            this.actualizarPerfilUI();
+            this.showToast('✅ Perfil actualizado exitosamente', 'success');
+        },
+
+        // ============================================
+        // PAGOS
+        // ============================================
+        selectPaymentMethod(method) {
+            this.state.selectedPayment = method;
+            document.querySelectorAll('.clay-btn-pay').forEach(btn => btn.classList.remove('active-pay'));
+            const btnMap = { 'pm_bdv': 'pay-bdv', 'pm_bnc': 'pay-bnc', 'zelle': 'pay-zelle', 'binance': 'pay-binance' };
+            const targetBtn = document.getElementById(btnMap[method]);
+            if (targetBtn) targetBtn.classList.add('active-pay');
+
+            const box = document.getElementById('datos-pago-box');
+            const containerRef = document.getElementById('container-ref-pago');
+            const btnEnviar = document.getElementById('btn-enviar-pago');
+
+            if (method === 'pm_bdv') {
+                containerRef.style.display = 'block';
+                btnEnviar.style.display = 'block';
+                box.innerHTML = `
+                    <p class="font-bold text-[#E27D60]">🇻🇪 Pago Móvil - Banco de Venezuela (0102)</p>
+                    <p>Teléfono: <strong>0414-4031678</strong></p>
+                    <p>C.I: <strong>18.478.170</strong></p>
+                    <p class="text-[10px] text-gray-500 mt-1">Monto: Equivalente en Bs. a la tasa BCV del día ($120.00)</p>
+                `;
+            } else if (method === 'pm_bnc') {
+                containerRef.style.display = 'block';
+                btnEnviar.style.display = 'block';
+                box.innerHTML = `
+                    <p class="font-bold text-[#E27D60]">🇻🇪 Pago Móvil - Banco Nacional de Crédito (0191)</p>
+                    <p>Teléfono: <strong>0414-4187215</strong></p>
+                    <p>C.I: <strong>13.518.664</strong></p>
+                    <p class="text-[10px] text-gray-500 mt-1">Monto: Equivalente en Bs. a la tasa BCV del día ($120.00)</p>
+                `;
+            } else if (method === 'zelle') {
+                containerRef.style.display = 'none';
+                btnEnviar.style.display = 'none';
+                box.innerHTML = `
+                    <p class="font-bold text-[#E27D60]">🇺🇸 Zelle (Divisas)</p>
+                    <p class="text-sm font-semibold mt-2 text-[#7A8A7C]">⏳ Próximamente disponible</p>
+                `;
+            } else if (method === 'binance') {
+                containerRef.style.display = 'block';
+                btnEnviar.style.display = 'block';
+                box.innerHTML = `
+                    <p class="font-bold text-[#E27D60]">🟡 Binance Pay (USDT)</p>
+                    <p>Binance Pay ID: <strong>163305332</strong></p>
+                    <p class="text-[10px] text-gray-500 mt-1">Monto exacto: <strong>$120.00 USDT</strong></p>
+                `;
+            }
+        },
+
+        confirmarPagoMock() {
+            const ref = document.getElementById('input-ref-pago').value;
+            if (!ref) {
+                this.showToast('⚠️ Por favor ingresa el número de referencia', 'error');
+                return;
+            }
+            this.showToast('✅ ¡Comprobante reportado con éxito! En verificación.', 'success');
+            this.switchView('view-perfil-usuario');
+        },
+
+        // ============================================
+        // QUIZ
+        // ============================================
+        answerQuiz(step, choice) {
+            this.state.quizAnswers[`step${step}`] = choice;
+            if (step < 3) {
+                document.getElementById(`quiz-step-${step}`).classList.add('hidden');
+                document.getElementById(`quiz-step-${step + 1}`).classList.remove('hidden');
+                document.getElementById('quiz-step-indicator').innerText = `Paso ${step + 1} de 3`;
+            } else {
+                document.getElementById('quiz-step-3').classList.add('hidden');
+                document.getElementById('quiz-result').classList.remove('hidden');
+                document.getElementById('quiz-step-indicator').innerText = 'Completado ✅';
+                document.getElementById('quiz-diagnosis-title').innerText = 'Diagnóstico Somático Detectado';
+                document.getElementById('quiz-diagnosis-desc').innerText = 'Tu sistema nervioso muestra acumulación de tensión corporal. Te recomendamos la siguiente técnica:';
+                document.getElementById('recommended-technique-card').innerHTML = `
+                    <h5 class="font-bold text-xs text-[#7A8A7C]">🌟 Técnica Recomendada: Descarga Vagal</h5>
+                    <p class="text-[11px] text-gray-600">Realiza 3 ciclos de respiración profunda con exhalación prolongada y sacudida corporal.</p>
+                `;
+            }
+        },
+
+        resetQuiz() {
+            this.state.quizAnswers = {};
+            document.getElementById('quiz-result').classList.add('hidden');
+            document.getElementById('quiz-step-1').classList.remove('hidden');
+            document.getElementById('quiz-step-2').classList.add('hidden');
+            document.getElementById('quiz-step-3').classList.add('hidden');
+            document.getElementById('quiz-step-indicator').innerText = 'Paso 1 de 3';
+        },
+
+        // ============================================
+        // RESPIRACIÓN
+        // ============================================
+        iniciarRespiración() {
+            if (this.state.breathInterval) clearInterval(this.state.breathInterval);
+            const circle = document.getElementById('breath-circle');
+            if (!circle) return;
+            let breathState = 0;
+            circle.innerText = 'Inhala...';
+            circle.style.transform = 'scale(1.0)';
+            this.state.breathInterval = setInterval(() => {
+                if (breathState === 0) {
+                    circle.innerText = 'Sostén...';
+                    circle.style.transform = 'scale(1.3)';
+                    breathState = 1;
+                } else if (breathState === 1) {
+                    circle.innerText = 'Exhala...';
+                    circle.style.transform = 'scale(0.8)';
+                    breathState = 2;
+                } else {
+                    circle.innerText = 'Inhala...';
+                    circle.style.transform = 'scale(1.0)';
+                    breathState = 0;
+                }
+            }, 3500);
+        },
+
+        // ============================================
+        // CITAS
+        // ============================================
+        procesarCitaWhatsApp() {
+            const terapeuta = document.getElementById('select-terapeuta').value;
+            const fecha = document.getElementById('fecha-cita').value || 'Sin fecha';
+            const hora = document.getElementById('hora-cita').value || 'Sin hora';
+            if (!fecha || !hora) {
+                this.showToast('⚠️ Por favor selecciona fecha y hora', 'error');
+                return;
+            }
+            const mensaje = encodeURIComponent(`Hola, deseo confirmar mi cita con ${terapeuta}.\n📅 Fecha: ${fecha}\n🕐 Hora: ${hora}`);
+            window.open(`https://wa.me/584140000000?text=${mensaje}`, '_blank');
+        },
+
+        // ============================================
+        // ADMIN
+        // ============================================
+        verificarAdminPin() {
+            const pin = document.getElementById('admin-pin-input').value;
+            if (pin === '7777') {
+                document.getElementById('admin-pin-input').value = '';
+                this.switchView('view-admin-dashboard');
+                this.showToast('🔓 Panel administrativo desbloqueado', 'success');
+            } else {
+                this.showToast('❌ PIN incorrecto. Acceso denegado.', 'error');
+            }
+        },
+
+        guardarCambiosAdmin() {
+            const newLogo = document.getElementById('admin-logo-url').value;
+            const newBannerImg = document.getElementById('admin-banner-img-url').value;
+            const newBannerText = document.getElementById('admin-banner-text').value;
+
+            if (newLogo) {
+                localStorage.setItem('app_logo', newLogo);
+                document.getElementById('app-logo-img').src = newLogo;
+            }
+            if (newBannerImg) {
+                localStorage.setItem('app_banner_img', newBannerImg);
+                document.getElementById('home-hero-banner').style.backgroundImage = `url('${newBannerImg}')`;
+            }
+            if (newBannerText) {
+                localStorage.setItem('app_banner_text', newBannerText);
+                document.getElementById('home-banner-text').innerText = newBannerText;
+            }
+            this.showToast('✅ ¡Imágenes y banners actualizados con éxito!', 'success');
+            this.switchView('view-home');
+        },
+
+        // ============================================
+        // TOAST
+        // ============================================
+        showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.className = `toast toast-${type}`;
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 4000);
+        }
     };
 
-    const Chatbot = {
-        isOpen: false, conversation: [], userName: localStorage.getItem('user_name') || '',
-        toggle() { this.isOpen = !this.isOpen; const container = document.getElementById('chatbot-container'); const badge = document.getElementById('chatbot-badge'); if (this.isOpen) { container.classList.add('open'); badge.classList.add('hidden'); setTimeout(() => document.getElementById('chatbot-input').focus(), 500); } else { container.classList.remove('open'); } },
-        addMessage(text, sender = 'bot') { const messagesContainer = document.getElementById('chatbot-messages'); const messageDiv = document.createElement('div'); messageDiv.className = `chatbot-message ${sender}`; messageDiv.innerHTML = `<div class="chatbot-bubble">${text}</div>`; messagesContainer.appendChild(messageDiv); messagesContainer.scrollTop = messagesContainer.scrollHeight; this.conversation.push({ sender, text }); },
-        showTyping() { const messagesContainer = document.getElementById('chatbot-messages'); const typingDiv = document.createElement('div'); typingDiv.className = 'chatbot-message bot'; typingDiv.id = 'typing-indicator'; typingDiv.innerHTML = '<div class="chatbot-bubble"><div class="chatbot-typing"><span></span><span></span><span></span></div></div>'; messagesContainer.appendChild(typingDiv); messagesContainer.scrollTop = messagesContainer.scrollHeight; },
-        removeTyping() { const typing = document.getElementById('typing-indicator'); if (typing) typing.remove(); },
-        sendMessage() { const input = document.getElementById('chatbot-input'); const message = input.value.trim(); if (!message) return; this.addMessage(message, 'user'); input.value = ''; this.processAI(message); },
-        sendQuickReply(message) { this.addMessage(message, 'user'); this.processAI(message); },
-        processAI(userMessage) { this.showTyping(); const msg = userMessage.toLowerCase(); const userName = this.userName ? ' ' + this.userName.split(' ')[0] : ''; setTimeout(() => { this.removeTyping(); let response = ''; if (msg.includes('escáner') || msg.includes('escaner') || msg.includes('cuántico') || msg.includes('cuantico')) response = `🔮 <strong>¡El Escáner Cuántico es revolucionario${userName}!</strong><br><br>Es una tecnología <strong>bioenergética de última generación</strong> que en <strong>solo 3 minutos</strong> realiza un mapeo completo de <strong>9 sistemas corporales</strong> y <strong>39 órganos vitales</strong>. Recibes un <strong>informe detallado de 20+ páginas</strong> con recomendaciones personalizadas.<br><br>¿Quieres que te cuente sobre los <strong>paquetes especiales</strong> que tenemos? 🌟`; else if (msg.includes('campamento') || msg.includes('adultas en fuga') || msg.includes('evento') || msg.includes('retiro')) response = `🏕️ <strong>¡Adultas en Fuga es EL evento del año${userName}!</strong><br><br>📅 <strong>26 de Septiembre, 2026</strong><br>📍 <strong>Maracay, Venezuela</strong><br>💰 <strong>Inversión: $120.00</strong> (preventa 🔥)<br><br>Incluye: 🌿 3 sesiones de regulación somática, 🔮 1 Escáner Cuántico, 🧘 Talleres de respiración, 🍃 Alimentación consciente, 🤝 Red de apoyo femenino.<br><br>¿Te gustaría asegurar tu cupo? Solo quedan <strong>12 espacios</strong>. 🎯`; else if (msg.includes('agendar') || msg.includes('cita') || msg.includes('sesión') || msg.includes('sesion')) response = `📅 <strong>¡Agendar es muy fácil${userName}!</strong><br><br>Contamos con <strong>3 especialistas</strong>: Dra. Carla Rodríguez, Dra. María González y Lic. Ana Pérez.<br><br>📍 <strong>Tipos de sesión:</strong> Virtual ($45), Presencial ($65), Escáner + Consulta ($85).<br><br>Ve a la sección <strong>Citas</strong> (📅) en el menú inferior para agendar.`; else if (msg.includes('precio') || msg.includes('pago') || msg.includes('costo') || msg.includes('cuánto') || msg.includes('cuanto')) response = `💳 <strong>Inversión en tu bienestar${userName}:</strong><br><br>🔮 Escáner Cuántico: $45<br>🧘 Sesión: $45-65<br>🏕️ Campamento: $120<br>📦 Pack Completo: $150<br><br>Aceptamos Pago Móvil BDV/BNC y Binance Pay (USDT).`; else if (msg.includes('hola') || msg.includes('buenos') || msg.includes('saludos')) response = `¡Hola${userName}! 👋 Soy <strong>Sofía</strong>, tu asesora de bienestar en <strong>Atrévete HealthTech</strong>. ¿En qué puedo ayudarte hoy? 😊`; else response = `Excelente pregunta${userName}. Puedo ayudarte con: 🔮 <strong>Escáner Cuántico</strong>, 🏕️ <strong>Campamento</strong>, 📅 <strong>Citas</strong>, 💳 <strong>Precios</strong>. ¿Qué te interesa? ✨`; this.addMessage(response, 'bot'); }, 1200); }
-    };
-
+    // ============================================
+    // INICIALIZACIÓN
+    // ============================================
     document.addEventListener('DOMContentLoaded', function() {
-        const savedColorPrimary = localStorage.getItem('app_color_primary');
-        const savedColorSecondary = localStorage.getItem('app_color_secondary');
-        if (savedColorPrimary) document.documentElement.style.setProperty('--color-primary', savedColorPrimary);
-        if (savedColorSecondary) document.documentElement.style.setProperty('--color-secondary', savedColorSecondary);
         const savedLogo = localStorage.getItem('app_logo');
         const savedBannerImg = localStorage.getItem('app_banner_img');
         const savedBannerText = localStorage.getItem('app_banner_text');
-        if (savedLogo) { document.getElementById('app-logo-img').src = savedLogo; const adminLogo = document.getElementById('admin-logo-url'); if (adminLogo) adminLogo.value = savedLogo; }
-        if (savedBannerImg) { document.getElementById('home-hero-banner').style.backgroundImage = `url('${savedBannerImg}')`; const adminBanner = document.getElementById('admin-banner-img-url'); if (adminBanner) adminBanner.value = savedBannerImg; }
-        if (savedBannerText) { document.getElementById('home-banner-text').innerText = savedBannerText; const adminText = document.getElementById('admin-banner-text'); if (adminText) adminText.value = savedBannerText; }
+
+        if (savedLogo) {
+            document.getElementById('app-logo-img').src = savedLogo;
+            const adminLogo = document.getElementById('admin-logo-url');
+            if (adminLogo) adminLogo.value = savedLogo;
+        }
+        if (savedBannerImg) {
+            document.getElementById('home-hero-banner').style.backgroundImage = `url('${savedBannerImg}')`;
+            const adminBanner = document.getElementById('admin-banner-img-url');
+            if (adminBanner) adminBanner.value = savedBannerImg;
+        }
+        if (savedBannerText) {
+            document.getElementById('home-banner-text').innerText = savedBannerText;
+            const adminText = document.getElementById('admin-banner-text');
+            if (adminText) adminText.value = savedBannerText;
+        }
+
         App.state.user.name = localStorage.getItem('user_name') || '';
         App.state.user.email = localStorage.getItem('user_email') || '';
         App.state.user.role = localStorage.getItem('user_role') || 'user';
         App.state.user.registerMethod = localStorage.getItem('register_method') || 'email';
+        App.state.user.telefono = localStorage.getItem('user_telefono') || '';
+        App.state.user.fechaNac = localStorage.getItem('user_fecha_nac') || '';
         App.state.user.emailVerified = localStorage.getItem('email_verified') === 'true';
         App.state.user.fechaRegistro = localStorage.getItem('fecha_registro') || new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' });
+        App.state.user.sesiones = parseInt(localStorage.getItem('user_sesiones')) || 0;
+        App.state.user.ejercicios = parseInt(localStorage.getItem('user_ejercicios')) || 0;
+        App.state.user.diasActivo = parseInt(localStorage.getItem('user_dias_activo')) || 0;
         App.state.legalAceptado = localStorage.getItem('legal_aceptado') === 'true';
-        App.state.isAuthenticated = !!localStorage.getItem('user_email');
-        Chatbot.userName = App.state.user.name;
-        App.actualizarPerfilUI(); App.actualizarHeader(); App.actualizarNav();
-        App.switchView('view-home'); App.selectPaymentMethod('pm_bdv');
-        setTimeout(() => { const badge = document.getElementById('chatbot-badge'); if (badge && !Chatbot.isOpen) { badge.classList.remove('hidden'); badge.textContent = '1'; } }, 5000);
+
+        App.actualizarPerfilUI();
+        App.actualizarHeader();
+        App.actualizarNav();
+
+        if (App.state.isAuthenticated) App.switchView('view-home');
+
+        App.selectPaymentMethod('pm_bdv');
+        console.log('🚀 Atrévete HealthTech App inicializada');
     });
-    window.App = App; window.Chatbot = Chatbot;
-  </script>
+
+    window.App = App;
+</script>
 </body>
 </html>
