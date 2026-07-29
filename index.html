@@ -616,6 +616,252 @@
             background: #FFF8F6;
         }
 
+        /* ==================== EVENTOS ==================== */
+        .btn-evento-activo {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #E27D60, #c06a51);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 12px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            box-shadow: 4px 4px 12px rgba(226, 125, 96, 0.3);
+        }
+        .btn-evento-activo:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 6px 6px 20px rgba(226, 125, 96, 0.4);
+        }
+
+        .btn-evento-pendiente {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #ffc107;
+            color: #212529;
+            padding: 10px 20px;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 12px;
+            border: none;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .btn-evento-inactivo {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #e9ecef;
+            color: #6c757d;
+            padding: 10px 20px;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 12px;
+            border: none;
+            cursor: not-allowed;
+        }
+
+        .btn-solicitar-evento {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 12px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 4px 4px 12px rgba(102, 126, 234, 0.3);
+        }
+        .btn-solicitar-evento:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 6px 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .galeria-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 12px;
+            margin-top: 12px;
+        }
+        .galeria-item {
+            border-radius: 12px;
+            overflow: hidden;
+            background: white;
+            border: 2px solid #e5e0db;
+            transition: all 0.3s ease;
+        }
+        .galeria-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+        }
+        .galeria-item img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+        }
+        .galeria-item .info {
+            padding: 8px;
+            font-size: 10px;
+            color: #7A8A7C;
+            text-align: center;
+        }
+        .galeria-item .acciones {
+            display: flex;
+            gap: 4px;
+            padding: 6px;
+            background: #f8f6f4;
+        }
+        .galeria-item .acciones button {
+            flex: 1;
+            padding: 4px 8px;
+            border: none;
+            border-radius: 6px;
+            font-size: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .galeria-item .acciones .btn-eliminar {
+            background: #dc3545;
+            color: white;
+        }
+        .galeria-item .acciones .btn-eliminar:hover {
+            background: #c82333;
+        }
+        .galeria-item .acciones .btn-editar {
+            background: #ffc107;
+            color: #212529;
+        }
+        .galeria-item .acciones .btn-editar:hover {
+            background: #e0a800;
+        }
+
+        .eventos-form {
+            background: #f8f6f4;
+            padding: 16px;
+            border-radius: 16px;
+            margin: 12px 0;
+        }
+        .eventos-form input[type="file"] {
+            display: block;
+            width: 100%;
+            padding: 8px;
+            border: 2px dashed #e5e0db;
+            border-radius: 12px;
+            background: white;
+            cursor: pointer;
+        }
+        .eventos-form input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #e5e0db;
+            border-radius: 10px;
+            margin: 8px 0;
+            font-size: 12px;
+        }
+        .eventos-form button {
+            width: 100%;
+            padding: 10px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .eventos-form button:hover {
+            background: #218838;
+        }
+
+        .alert {
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 12px;
+            margin: 8px 0;
+        }
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+        }
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        .alert-danger {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .notificaciones-evento {
+            background: #f8f6f4;
+            border-radius: 12px;
+            padding: 12px;
+            margin: 8px 0;
+        }
+        .notificacion-item {
+            padding: 8px 0;
+            border-bottom: 1px solid #e5e0db;
+        }
+        .notificacion-item:last-child {
+            border-bottom: none;
+        }
+        .notificacion-item .fecha {
+            color: #999;
+            font-size: 10px;
+        }
+
+        .eventos-publicos {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+        .evento-publico-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+            transition: all 0.3s ease;
+        }
+        .evento-publico-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+        .evento-publico-card img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+        }
+        .evento-publico-card .info {
+            padding: 12px;
+        }
+        .evento-publico-card .info h4 {
+            font-size: 14px;
+            color: #4A5D4E;
+        }
+        .evento-publico-card .info p {
+            font-size: 11px;
+            color: #7A8A7C;
+        }
+
         /* Responsive */
         @media (max-width: 400px) {
             .assistant-chat {
@@ -630,6 +876,9 @@
                 font-size: 20px;
                 bottom: 90px;
                 right: 16px;
+            }
+            .galeria-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
             }
         }
     </style>
@@ -841,7 +1090,7 @@
     <button onclick="App.switchView('view-auth')" class="clay-btn-secondary w-full py-3 text-xs font-bold focus-visible">← Volver al Ingreso</button>
   </main>
 
-  <!-- ================= 4. PERFIL ================= -->
+  <!-- ================= 4. PERFIL DEL USUARIO ================= -->
   <main id="view-perfil-usuario" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
     <div class="clay-card profile-card p-6 text-center space-y-4 relative overflow-hidden">
       <div class="absolute top-0 right-0 w-40 h-40 bg-[#E27D60]/5 rounded-full -translate-y-20 translate-x-20"></div>
@@ -886,6 +1135,75 @@
       </div>
     </div>
 
+    <!-- ============================================ -->
+    <!-- SECCIÓN DE EVENTOS EN EL PERFIL              -->
+    <!-- ============================================ -->
+    <div class="clay-card p-5 space-y-4 border-2 border-[#E27D60]/20 bg-orange-50/10">
+      <div class="flex items-center justify-between">
+        <h4 class="font-bold text-sm text-[#7A8A7C] flex items-center gap-2">📅 Mis Eventos</h4>
+        <span id="evento-status-badge" class="text-[10px] font-bold px-3 py-1 rounded-full bg-gray-200 text-gray-600">Inactivo</span>
+      </div>
+
+      <!-- Notificaciones de eventos -->
+      <div id="evento-notificaciones" class="hidden notificaciones-evento">
+        <h5 class="text-xs font-bold text-[#7A8A7C] mb-2">📬 Notificaciones</h5>
+        <div id="evento-notificaciones-list"></div>
+      </div>
+
+      <!-- Estado del espacio de eventos -->
+      <div id="evento-estado-container">
+        <!-- Estado: APROBADO -->
+        <div id="evento-estado-aprobado" class="hidden">
+          <div class="alert alert-success">✅ ¡Tu espacio de eventos está activo! Sube tus fotos para mostrarlas en tu perfil.</div>
+          
+          <div class="eventos-form">
+            <h5 class="text-xs font-bold text-[#7A8A7C] mb-2">📤 Subir nueva imagen</h5>
+            <form id="formSubirImagen" enctype="multipart/form-data">
+              <input type="file" name="imagen" accept="image/*" required>
+              <input type="text" name="descripcion" placeholder="Descripción (opcional)">
+              <button type="submit">Subir imagen</button>
+            </form>
+          </div>
+
+          <h5 class="text-xs font-bold text-[#7A8A7C] mt-3">Mi Galería de Eventos (<span id="galeria-count">0</span> imágenes)</h5>
+          <div id="galeria-container" class="galeria-grid"></div>
+        </div>
+
+        <!-- Estado: SOLICITUD PENDIENTE -->
+        <div id="evento-estado-pendiente" class="hidden">
+          <div class="alert alert-warning">
+            ⏳ <strong>Solicitud en revisión</strong><br>
+            Tu solicitud para el espacio de eventos está siendo evaluada por el administrador.
+            Te notificaremos cuando sea aprobada.
+          </div>
+        </div>
+
+        <!-- Estado: RECHAZADO -->
+        <div id="evento-estado-rechazado" class="hidden">
+          <div class="alert alert-danger">
+            ❌ <strong>Solicitud rechazada</strong><br>
+            <span id="evento-motivo-rechazo"></span><br><br>
+            Puedes volver a solicitar el espacio de eventos.
+          </div>
+          <button onclick="App.solicitarEspacioEventos()" class="btn-solicitar-evento w-full justify-center">
+            🚀 Solicitar nuevamente
+          </button>
+        </div>
+
+        <!-- Estado: SIN SOLICITAR -->
+        <div id="evento-estado-inactivo" class="hidden">
+          <div class="alert alert-info">
+            📢 <strong>¡Activa tu espacio de eventos!</strong><br>
+            Muestra tus eventos y trabajos destacados a todos los visitantes.
+            Solicita la activación de este espacio.
+          </div>
+          <button onclick="App.solicitarEspacioEventos()" class="btn-solicitar-evento w-full justify-center">
+            🚀 Solicitar Espacio de Eventos
+          </button>
+        </div>
+      </div>
+    </div>
+
     <div class="space-y-3">
       <button onclick="App.mostrarEditarPerfil()" class="clay-btn-primary w-full py-3.5 text-sm font-bold flex items-center justify-center gap-2 focus-visible">✏️ Editar Perfil</button>
       <button onclick="App.cerrarSesion()" class="w-full py-3.5 text-sm font-medium text-[#E27D60] border-2 border-[#E27D60]/30 rounded-full hover:bg-[#E27D60]/5 hover:border-[#E27D60] transition-all focus-visible">Cerrar Sesión</button>
@@ -912,7 +1230,29 @@
     </div>
   </main>
 
-  <!-- ================= 5. PAGOS ================= -->
+  <!-- ================= 5. VER EVENTOS PÚBLICOS ================= -->
+  <main id="view-eventos-publicos" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
+    <div class="text-center space-y-1">
+      <h2 id="eventos-publicos-titulo" class="text-2xl font-bold text-[#7A8A7C]">Eventos</h2>
+      <p id="eventos-publicos-especialista" class="text-xs text-[#7A8A7C]/70">Especialista</p>
+    </div>
+
+    <div class="clay-card p-5 text-center">
+      <div id="eventos-publicos-avatar" class="w-20 h-20 rounded-full bg-[#E27D60] text-white flex items-center justify-center text-2xl font-bold mx-auto mb-3">US</div>
+      <h3 id="eventos-publicos-nombre" class="font-bold text-[#7A8A7C]">Especialista</h3>
+      <p id="eventos-publicos-especialidad" class="text-xs text-[#7A8A7C]/70">Especialidad</p>
+      <p id="eventos-publicos-descripcion" class="text-xs text-[#7A8A7C]/60 mt-2"></p>
+    </div>
+
+    <h4 class="font-bold text-sm text-[#7A8A7C]">📸 Galería de Eventos</h4>
+    <div id="eventos-publicos-galeria" class="eventos-publicos">
+      <div class="text-center text-xs text-[#7A8A7C]/60 py-8">No hay eventos disponibles</div>
+    </div>
+
+    <button onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold text-xs focus-visible">Volver al Inicio</button>
+  </main>
+
+  <!-- ================= 6. PAGOS ================= -->
   <main id="view-pagos" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
     <h2 class="text-2xl font-bold text-[#7A8A7C] text-center">Pasarela de Pago</h2>
     <div class="clay-card p-4 bg-orange-50/30 border border-[#E27D60]/20 flex justify-between items-center">
@@ -941,7 +1281,7 @@
     <button onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold focus-visible">Cancelar</button>
   </main>
 
-  <!-- ================= 6. REGULACIÓN SOMÁTICA ================= -->
+  <!-- ================= 7. REGULACIÓN SOMÁTICA ================= -->
   <main id="view-regulacion" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
     <div class="text-center space-y-1">
       <h2 class="text-2xl font-bold text-[#7A8A7C]">Gimnasio Emocional</h2>
@@ -995,7 +1335,7 @@
     <button onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold text-xs focus-visible">Volver al Inicio</button>
   </main>
 
-  <!-- ================= 7. CITAS ================= -->
+  <!-- ================= 8. CITAS ================= -->
   <main id="view-citas" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
     <h2 class="text-2xl font-bold text-[#7A8A7C] text-center">Agendar tu Sesión</h2>
     <div class="clay-card p-5 space-y-4">
@@ -1018,7 +1358,7 @@
     <button onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold text-xs focus-visible">Volver</button>
   </main>
 
-  <!-- ================= 8. PRIVACIDAD ================= -->
+  <!-- ================= 9. PRIVACIDAD ================= -->
   <main id="view-privacidad" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
     <div class="text-center space-y-1">
       <h2 class="text-2xl font-bold text-[#7A8A7C]">Políticas de Privacidad</h2>
@@ -1041,11 +1381,11 @@
     <button onclick="App.switchView('view-auth')" class="clay-btn-primary w-full py-3.5 font-bold text-xs focus-visible">Entendido / Volver</button>
   </main>
 
-  <!-- ================= 9. ADMIN - LOGIN ================= -->
+  <!-- ================= 10. ADMIN - LOGIN ================= -->
   <main id="view-admin-login" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
     <div class="text-center space-y-1">
       <h2 class="text-2xl font-bold text-[#E27D60]">Acceso Administrativo</h2>
-      <p class="text-xs text-[#7A8A7C]/70">Área restringida para gestión visual y banners.</p>
+      <p class="text-xs text-[#7A8A7C]/70">Área restringida para gestión de eventos y banners.</p>
     </div>
     <form onsubmit="event.preventDefault(); App.verificarAdminPin();" class="clay-card p-6 space-y-4">
       <div>
@@ -1057,33 +1397,53 @@
     <button onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold text-xs focus-visible">Volver al Inicio</button>
   </main>
 
-  <!-- ================= 10. ADMIN - DASHBOARD ================= -->
+  <!-- ================= 11. ADMIN - DASHBOARD ================= -->
   <main id="view-admin-dashboard" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
     <div class="flex justify-between items-center border-b border-stone-200 pb-3">
       <div>
-        <h2 class="text-xl font-bold text-[#7A8A7C]">Gestor Visual Admin</h2>
-        <p class="text-[10px] text-[#7A8A7C]/70">Actualiza logotipos e imágenes en tiempo real</p>
+        <h2 class="text-xl font-bold text-[#7A8A7C]">Gestor Admin</h2>
+        <p class="text-[10px] text-[#7A8A7C]/70">Gestiona banners y solicitudes de eventos</p>
       </div>
       <button onclick="App.switchView('view-home')" class="px-3 py-1.5 bg-stone-200 text-[#7A8A7C] text-xs font-bold rounded-xl focus-visible">Salir</button>
     </div>
-    <form onsubmit="event.preventDefault(); App.guardarCambiosAdmin();" class="clay-card p-5 space-y-4">
-      <div>
-        <label class="block text-xs font-bold text-[#7A8A7C] mb-1">URL del Logotipo (Header)</label>
-        <input type="url" id="admin-logo-url" placeholder="https://ejemplo.com/logo.png" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible">
+
+    <!-- Pestañas del admin -->
+    <div class="flex gap-2">
+      <button onclick="App.adminTab('banners')" id="admin-tab-banners" class="flex-1 py-2 text-xs font-bold rounded-xl bg-white text-[#7A8A7C] shadow-sm transition focus-visible">🖼️ Banners</button>
+      <button onclick="App.adminTab('solicitudes')" id="admin-tab-solicitudes" class="flex-1 py-2 text-xs font-bold rounded-xl text-[#7A8A7C] transition focus-visible">📋 Solicitudes</button>
+    </div>
+
+    <!-- Panel de Banners -->
+    <div id="admin-panel-banners" class="clay-card p-5 space-y-4">
+      <h4 class="font-bold text-sm text-[#7A8A7C]">🖼️ Gestión de Banners</h4>
+      <form onsubmit="event.preventDefault(); App.guardarCambiosAdmin();" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-[#7A8A7C] mb-1">URL del Logotipo (Header)</label>
+          <input type="url" id="admin-logo-url" placeholder="https://ejemplo.com/logo.png" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible">
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-[#7A8A7C] mb-1">URL de la Imagen Banner Principal (Home)</label>
+          <input type="url" id="admin-banner-img-url" placeholder="https://images.unsplash.com/..." class="w-full p-3 text-xs clay-input focus:outline-none focus-visible">
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-[#7A8A7C] mb-1">Texto Destacado del Banner Principal</label>
+          <input type="text" id="admin-banner-text" placeholder="Ej. Calibra tu calma somática hoy" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible">
+        </div>
+        <button type="submit" class="clay-btn-primary w-full py-3.5 font-bold text-xs mt-2 focus-visible">💾 Guardar Cambios</button>
+      </form>
+    </div>
+
+    <!-- Panel de Solicitudes de Eventos -->
+    <div id="admin-panel-solicitudes" class="clay-card p-5 space-y-4 hidden">
+      <h4 class="font-bold text-sm text-[#7A8A7C]">📋 Solicitudes de Espacio de Eventos</h4>
+      <div id="admin-solicitudes-list" class="space-y-3">
+        <div class="text-center text-xs text-[#7A8A7C]/60 py-4">Cargando solicitudes...</div>
       </div>
-      <div>
-        <label class="block text-xs font-bold text-[#7A8A7C] mb-1">URL de la Imagen Banner Principal (Home)</label>
-        <input type="url" id="admin-banner-img-url" placeholder="https://images.unsplash.com/..." class="w-full p-3 text-xs clay-input focus:outline-none focus-visible">
-      </div>
-      <div>
-        <label class="block text-xs font-bold text-[#7A8A7C] mb-1">Texto Destacado del Banner Principal</label>
-        <input type="text" id="admin-banner-text" placeholder="Ej. Calibra tu calma somática hoy" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible">
-      </div>
-      <button type="submit" class="clay-btn-primary w-full py-3.5 font-bold text-xs mt-2 focus-visible">💾 Guardar y Aplicar Cambios</button>
-    </form>
+    </div>
+
     <div class="clay-card p-4 bg-orange-50/40 text-[11px] text-[#7A8A7C] space-y-1">
       <p class="font-bold text-[#E27D60]">💡 Nota de Seguridad:</p>
-      <p>Los cambios realizados se aplican de inmediato en la aplicación y se guardan en el almacenamiento local del navegador.</p>
+      <p>Los cambios se aplican de inmediato y se guardan localmente.</p>
     </div>
   </main>
 
@@ -1101,7 +1461,7 @@
   <!-- ================= JAVASCRIPT ================= -->
   <script>
     // ============================================
-    // APP - Objeto principal
+    // APP - SISTEMA DE EVENTOS INTEGRADO
     // ============================================
     const App = {
         state: {
@@ -1122,12 +1482,21 @@
                 ejercicios: parseInt(localStorage.getItem('user_ejercicios')) || 0,
                 diasActivo: parseInt(localStorage.getItem('user_dias_activo')) || 0
             },
+            eventos: {
+                estado: localStorage.getItem('eventos_estado') || 'inactivo', // inactivo, pendiente, aprobado, rechazado
+                motivoRechazo: localStorage.getItem('eventos_motivo_rechazo') || '',
+                fechaSolicitud: localStorage.getItem('eventos_fecha_solicitud') || '',
+                fechaAprobacion: localStorage.getItem('eventos_fecha_aprobacion') || '',
+                galeria: JSON.parse(localStorage.getItem('eventos_galeria') || '[]'),
+                notificaciones: JSON.parse(localStorage.getItem('eventos_notificaciones') || '[]')
+            },
             isAuthenticated: !!localStorage.getItem('user_email'),
             legalAceptado: localStorage.getItem('legal_aceptado') === 'true',
             breathInterval: null,
             currentView: 'view-home',
             assistantOpen: false,
-            isProcessing: false
+            isProcessing: false,
+            adminTab: 'banners'
         },
 
         // ============================================
@@ -1160,11 +1529,8 @@
             input.value = '';
             this.addMessage(message, 'user');
             this.state.isProcessing = true;
-            
-            // Mostrar indicador de escritura
             this.showTypingIndicator();
             
-            // Simular respuesta del asistente
             setTimeout(() => {
                 this.hideTypingIndicator();
                 const response = this.getAssistantResponse(message);
@@ -1201,11 +1567,7 @@
             const div = document.createElement('div');
             div.className = 'message bot';
             div.id = 'typing-indicator';
-            div.innerHTML = `
-                <div class="typing-indicator">
-                    <span></span><span></span><span></span>
-                </div>
-            `;
+            div.innerHTML = `<div class="typing-indicator"><span></span><span></span><span></span></div>`;
             container.appendChild(div);
             container.scrollTop = container.scrollHeight;
         },
@@ -1218,37 +1580,28 @@
         getAssistantResponse(message) {
             const msg = message.toLowerCase();
             
-            // Respuestas predefinidas
             if (msg.includes('qué es') || msg.includes('que es') || msg.includes('plataforma')) {
-                return '🌿 Atrévete HealthTech es un ecosistema somático integrativo que combina regulación del sistema nervioso, acompañamiento clínico y herramientas de bienestar emocional. Nuestra misión es ayudarte a habitar tu cuerpo con consciencia.';
+                return '🌿 Atrévete HealthTech es un ecosistema somático integrativo que combina regulación del sistema nervioso, acompañamiento clínico y herramientas de bienestar emocional.';
             }
-            
             if (msg.includes('cita') || msg.includes('agendar') || msg.includes('sesión')) {
-                return '📅 Para agendar una sesión, ve a la sección "Citas" en el menú inferior. Allí podrás seleccionar a tu especialista, elegir fecha y hora, y confirmar tu cita vía WhatsApp. ¿Necesitas ayuda con algún paso específico?';
+                return '📅 Para agendar una sesión, ve a la sección "Citas" en el menú inferior. Allí podrás seleccionar a tu especialista, elegir fecha y hora, y confirmar tu cita vía WhatsApp.';
             }
-            
             if (msg.includes('regulación') || msg.includes('somática') || msg.includes('gimnasio')) {
-                return '🧘 La regulación somática es una práctica que te ayuda a conectar con las señales de tu cuerpo para regular el sistema nervioso. En nuestro "Gimnasio Emocional" encontrarás el "Chequeo Corporal", una herramienta de diagnóstico somático que te guiará hacia la técnica más adecuada para tu estado actual.';
+                return '🧘 La regulación somática es una práctica que te ayuda a conectar con las señales de tu cuerpo. En nuestro "Gimnasio Emocional" encontrarás el "Chequeo Corporal".';
             }
-            
-            if (msg.includes('contacto') || msg.includes('contactar') || msg.includes('email')) {
-                return '📞 Puedes contactarnos a través de:\n📧 Email: hola@atrevetehealthtech.com\n📱 WhatsApp: +58 414-4031678\n🌐 Visita nuestra web para más información.';
+            if (msg.includes('contacto') || msg.includes('contactar')) {
+                return '📞 Puedes contactarnos a través de:\n📧 Email: hola@atrevetehealthtech.com\n📱 WhatsApp: +58 414-4031678';
             }
-            
-            if (msg.includes('pago') || msg.includes('pagar') || msg.includes('precio') || msg.includes('costo')) {
-                return '💳 Nuestra pasarela de pago acepta Pago Móvil (BDV y BNC), Zelle (próximamente) y Binance Pay. Todos los pagos son seguros y se procesan bajo estricta confidencialidad.';
+            if (msg.includes('evento') || msg.includes('eventos')) {
+                return '📅 ¡Qué bien que preguntas! En Atrévete HealthTech tenemos un sistema de eventos donde los especialistas pueden mostrar sus trabajos. Si eres especialista, solicita tu espacio en el perfil.';
             }
-            
-            if (msg.includes('hola') || msg.includes('buenas') || msg.includes('saludo')) {
-                return '¡Hola! 🌟 Es un placer saludarte. ¿Cómo puedo ayudarte hoy? Puedes preguntarme sobre la plataforma, citas, regulación somática o cualquier otra duda.';
+            if (msg.includes('hola') || msg.includes('buenas')) {
+                return '¡Hola! 🌟 Es un placer saludarte. ¿Cómo puedo ayudarte hoy?';
             }
-            
-            if (msg.includes('gracias') || msg.includes('gracias') || msg.includes('ok') || msg.includes('vale')) {
-                return '¡De nada! 🙏 Estoy aquí para lo que necesites. Recuerda que puedes escribirme en cualquier momento. ¡Que tengas un hermoso día! 🌸';
+            if (msg.includes('gracias')) {
+                return '¡De nada! 🙏 Estoy aquí para lo que necesites. ¡Que tengas un hermoso día! 🌸';
             }
-            
-            // Respuesta por defecto
-            return '🤔 Gracias por tu mensaje. Estoy aquí para ayudarte con información sobre Atrévete HealthTech, citas, regulación somática, pagos o cualquier otra consulta. ¿Puedes ser más específico con tu pregunta?';
+            return '🤔 Gracias por tu mensaje. Estoy aquí para ayudarte con información sobre Atrévete HealthTech, citas, regulación somática, eventos o pagos. ¿Puedes ser más específico?';
         },
 
         // ============================================
@@ -1314,6 +1667,11 @@
             if (viewId === 'view-perfil-usuario' && !this.state.isAuthenticated) {
                 this.switchView('view-auth');
                 return;
+            }
+
+            if (viewId === 'view-perfil-usuario') {
+                this.actualizarPerfilUI();
+                this.cargarEstadoEventos();
             }
 
             if (viewId !== 'view-regulacion' && this.state.breathInterval) {
@@ -1419,6 +1777,7 @@
             this.actualizarPerfilUI();
             this.actualizarHeader();
             this.actualizarNav();
+            this.cargarEstadoEventos();
             this.showToast('✅ ¡Bienvenido a Atrévete HealthTech!', 'success');
             this.switchView('view-perfil-usuario');
 
@@ -1497,6 +1856,426 @@
             }
         },
 
+        // ============================================
+        // SISTEMA DE EVENTOS - COMPLETO
+        // ============================================
+
+        // Guardar estado de eventos en localStorage
+        guardarEventosState() {
+            localStorage.setItem('eventos_estado', this.state.eventos.estado);
+            localStorage.setItem('eventos_motivo_rechazo', this.state.eventos.motivoRechazo);
+            localStorage.setItem('eventos_fecha_solicitud', this.state.eventos.fechaSolicitud);
+            localStorage.setItem('eventos_fecha_aprobacion', this.state.eventos.fechaAprobacion);
+            localStorage.setItem('eventos_galeria', JSON.stringify(this.state.eventos.galeria));
+            localStorage.setItem('eventos_notificaciones', JSON.stringify(this.state.eventos.notificaciones));
+        },
+
+        // Cargar estado de eventos en el perfil
+        cargarEstadoEventos() {
+            const estado = this.state.eventos.estado;
+            const badge = document.getElementById('evento-status-badge');
+            const contenedorAprobado = document.getElementById('evento-estado-aprobado');
+            const contenedorPendiente = document.getElementById('evento-estado-pendiente');
+            const contenedorRechazado = document.getElementById('evento-estado-rechazado');
+            const contenedorInactivo = document.getElementById('evento-estado-inactivo');
+            const notificacionesContainer = document.getElementById('evento-notificaciones');
+
+            // Ocultar todos
+            if (contenedorAprobado) contenedorAprobado.classList.add('hidden');
+            if (contenedorPendiente) contenedorPendiente.classList.add('hidden');
+            if (contenedorRechazado) contenedorRechazado.classList.add('hidden');
+            if (contenedorInactivo) contenedorInactivo.classList.add('hidden');
+
+            // Mostrar según estado
+            if (estado === 'aprobado') {
+                if (badge) { badge.textContent = '✅ Activo'; badge.className = 'text-[10px] font-bold px-3 py-1 rounded-full bg-green-100 text-green-700'; }
+                if (contenedorAprobado) contenedorAprobado.classList.remove('hidden');
+                this.renderGaleria();
+            } else if (estado === 'pendiente') {
+                if (badge) { badge.textContent = '⏳ Pendiente'; badge.className = 'text-[10px] font-bold px-3 py-1 rounded-full bg-yellow-100 text-yellow-700'; }
+                if (contenedorPendiente) contenedorPendiente.classList.remove('hidden');
+            } else if (estado === 'rechazado') {
+                if (badge) { badge.textContent = '❌ Rechazado'; badge.className = 'text-[10px] font-bold px-3 py-1 rounded-full bg-red-100 text-red-700'; }
+                if (contenedorRechazado) {
+                    contenedorRechazado.classList.remove('hidden');
+                    const motivoEl = document.getElementById('evento-motivo-rechazo');
+                    if (motivoEl) motivoEl.textContent = 'Motivo: ' + (this.state.eventos.motivoRechazo || 'No especificado');
+                }
+            } else {
+                if (badge) { badge.textContent = '📅 Inactivo'; badge.className = 'text-[10px] font-bold px-3 py-1 rounded-full bg-gray-200 text-gray-600'; }
+                if (contenedorInactivo) contenedorInactivo.classList.remove('hidden');
+            }
+
+            // Mostrar notificaciones
+            if (this.state.eventos.notificaciones.length > 0) {
+                if (notificacionesContainer) {
+                    notificacionesContainer.classList.remove('hidden');
+                    this.renderNotificaciones();
+                }
+            } else {
+                if (notificacionesContainer) notificacionesContainer.classList.add('hidden');
+            }
+
+            // Actualizar contador de galería
+            const countEl = document.getElementById('galeria-count');
+            if (countEl) countEl.textContent = this.state.eventos.galeria.length;
+        },
+
+        // Renderizar galería
+        renderGaleria() {
+            const container = document.getElementById('galeria-container');
+            if (!container) return;
+
+            const imagenes = this.state.eventos.galeria;
+
+            if (imagenes.length === 0) {
+                container.innerHTML = '<div class="text-center text-xs text-[#7A8A7C]/60 py-4 col-span-full">No hay imágenes en tu galería. ¡Sube tus primeros eventos!</div>';
+                return;
+            }
+
+            container.innerHTML = imagenes.map((img, index) => `
+                <div class="galeria-item" data-id="${img.id || index}">
+                    <img src="${img.url}" alt="${img.descripcion || 'Evento'}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22%3E%3Crect fill=%22%23f0ece8%22 width=%22200%22 height=%22200%22/%3E%3Ctext x=%2250%22 y=%22110%22 font-size=%2230%22 fill=%22%23999%22 text-anchor=%22middle%22%3E📷%3C/text%3E%3C/svg%3E'">
+                    <div class="info">${img.descripcion || 'Sin descripción'}</div>
+                    <div class="acciones">
+                        <button onclick="App.editarDescripcionGaleria(${index})" class="btn-editar">✏️ Editar</button>
+                        <button onclick="App.eliminarImagenGaleria(${index})" class="btn-eliminar">🗑️ Eliminar</button>
+                    </div>
+                </div>
+            `).join('');
+        },
+
+        // Renderizar notificaciones
+        renderNotificaciones() {
+            const container = document.getElementById('evento-notificaciones-list');
+            if (!container) return;
+
+            const notifs = this.state.eventos.notificaciones;
+
+            if (notifs.length === 0) {
+                container.innerHTML = '<div class="text-center text-xs text-[#7A8A7C]/60 py-2">No hay notificaciones</div>';
+                return;
+            }
+
+            container.innerHTML = notifs.map(notif => `
+                <div class="notificacion-item">
+                    <strong>${notif.titulo}</strong>
+                    <p>${notif.mensaje}</p>
+                    <span class="fecha">${notif.fecha || new Date().toLocaleString()}</span>
+                </div>
+            `).join('');
+        },
+
+        // Solicitar espacio de eventos
+        solicitarEspacioEventos() {
+            if (!this.state.isAuthenticated) {
+                this.showToast('⚠️ Debes iniciar sesión para solicitar el espacio', 'error');
+                this.switchView('view-auth');
+                return;
+            }
+
+            if (this.state.eventos.estado === 'pendiente') {
+                this.showToast('⏳ Ya tienes una solicitud pendiente', 'warning');
+                return;
+            }
+
+            if (this.state.eventos.estado === 'aprobado') {
+                this.showToast('✅ Tu espacio ya está activo', 'success');
+                return;
+            }
+
+            if (!confirm('¿Quieres solicitar la activación de tu espacio de eventos? Un administrador revisará tu solicitud.')) {
+                return;
+            }
+
+            // Simular solicitud
+            this.state.eventos.estado = 'pendiente';
+            this.state.eventos.fechaSolicitud = new Date().toLocaleString();
+            this.state.eventos.motivoRechazo = '';
+            
+            // Agregar notificación
+            this.state.eventos.notificaciones.push({
+                titulo: '📨 Solicitud enviada',
+                mensaje: 'Tu solicitud para el espacio de eventos ha sido enviada. Espera la aprobación del administrador.',
+                fecha: new Date().toLocaleString()
+            });
+
+            this.guardarEventosState();
+            this.cargarEstadoEventos();
+            this.showToast('✅ Solicitud enviada correctamente', 'success');
+        },
+
+        // Subir imagen a galería
+        subirImagenEvento(formData) {
+            const file = formData.get('imagen');
+            const descripcion = formData.get('descripcion') || '';
+
+            if (!file) {
+                this.showToast('⚠️ Por favor selecciona una imagen', 'error');
+                return false;
+            }
+
+            // Validar tipo de archivo
+            const tiposPermitidos = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+            if (!tiposPermitidos.includes(file.type)) {
+                this.showToast('⚠️ Formato no permitido. Usa JPG, PNG, GIF o WEBP', 'error');
+                return false;
+            }
+
+            // Validar tamaño (máx 5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                this.showToast('⚠️ La imagen excede el tamaño máximo (5MB)', 'error');
+                return false;
+            }
+
+            // Crear URL de la imagen
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const imagenUrl = e.target.result;
+                
+                // Agregar a la galería
+                this.state.eventos.galeria.push({
+                    url: imagenUrl,
+                    descripcion: descripcion,
+                    fecha: new Date().toLocaleString()
+                });
+
+                this.guardarEventosState();
+                this.cargarEstadoEventos();
+                this.showToast('✅ Imagen subida correctamente', 'success');
+            };
+
+            reader.readAsDataURL(file);
+            return true;
+        },
+
+        // Eliminar imagen de la galería
+        eliminarImagenGaleria(index) {
+            if (!confirm('¿Estás seguro de eliminar esta imagen?')) return;
+
+            this.state.eventos.galeria.splice(index, 1);
+            this.guardarEventosState();
+            this.cargarEstadoEventos();
+            this.showToast('✅ Imagen eliminada', 'success');
+        },
+
+        // Editar descripción de imagen
+        editarDescripcionGaleria(index) {
+            const img = this.state.eventos.galeria[index];
+            if (!img) return;
+
+            const nuevaDesc = prompt('Editar descripción:', img.descripcion || '');
+            if (nuevaDesc === null) return;
+
+            img.descripcion = nuevaDesc.trim();
+            this.guardarEventosState();
+            this.cargarEstadoEventos();
+            this.showToast('✅ Descripción actualizada', 'success');
+        },
+
+        // Ver eventos públicos de un especialista
+        verEventosPublicos(especialistaId) {
+            // Simular datos del especialista
+            const especialista = {
+                id: especialistaId,
+                nombre: this.state.user.name || 'Especialista',
+                email: this.state.user.email || 'correo@ejemplo.com',
+                especialidad: this.state.user.role === 'spec' ? 'Terapeuta Somático' : 'Especialista',
+                descripcion: 'Especialista en regulación somática y bienestar integral.',
+                fotoPerfil: null
+            };
+
+            const imagenes = this.state.eventos.galeria;
+
+            // Actualizar UI
+            document.getElementById('eventos-publicos-titulo').textContent = 'Eventos de ' + especialista.nombre;
+            document.getElementById('eventos-publicos-especialista').textContent = especialista.especialidad;
+            document.getElementById('eventos-publicos-nombre').textContent = especialista.nombre;
+            document.getElementById('eventos-publicos-especialidad').textContent = especialista.especialidad;
+            document.getElementById('eventos-publicos-descripcion').textContent = especialista.descripcion;
+
+            const avatarEl = document.getElementById('eventos-publicos-avatar');
+            if (avatarEl) {
+                const initials = especialista.nombre.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+                avatarEl.textContent = initials;
+            }
+
+            const galeriaContainer = document.getElementById('eventos-publicos-galeria');
+            if (imagenes.length === 0) {
+                galeriaContainer.innerHTML = '<div class="text-center text-xs text-[#7A8A7C]/60 py-8">No hay eventos disponibles</div>';
+            } else {
+                galeriaContainer.innerHTML = imagenes.map(img => `
+                    <div class="evento-publico-card">
+                        <img src="${img.url}" alt="${img.descripcion || 'Evento'}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22200%22%3E%3Crect fill=%22%23f0ece8%22 width=%22300%22 height=%22200%22/%3E%3Ctext x=%2250%22 y=%22110%22 font-size=%2230%22 fill=%22%23999%22 text-anchor=%22middle%22%3E📷%3C/text%3E%3C/svg%3E'">
+                        <div class="info">
+                            <h4>${img.descripcion || 'Sin descripción'}</h4>
+                            <p>${img.fecha || ''}</p>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            this.switchView('view-eventos-publicos');
+        },
+
+        // ============================================
+        // ADMIN - EVENTOS
+        // ============================================
+
+        adminTab(tab) {
+            this.state.adminTab = tab;
+            
+            const tabBanners = document.getElementById('admin-tab-banners');
+            const tabSolicitudes = document.getElementById('admin-tab-solicitudes');
+            const panelBanners = document.getElementById('admin-panel-banners');
+            const panelSolicitudes = document.getElementById('admin-panel-solicitudes');
+
+            if (tab === 'banners') {
+                tabBanners.className = 'flex-1 py-2 text-xs font-bold rounded-xl bg-white text-[#7A8A7C] shadow-sm transition focus-visible';
+                tabSolicitudes.className = 'flex-1 py-2 text-xs font-bold rounded-xl text-[#7A8A7C] transition focus-visible';
+                panelBanners.classList.remove('hidden');
+                panelSolicitudes.classList.add('hidden');
+            } else {
+                tabSolicitudes.className = 'flex-1 py-2 text-xs font-bold rounded-xl bg-white text-[#7A8A7C] shadow-sm transition focus-visible';
+                tabBanners.className = 'flex-1 py-2 text-xs font-bold rounded-xl text-[#7A8A7C] transition focus-visible';
+                panelSolicitudes.classList.remove('hidden');
+                panelBanners.classList.add('hidden');
+                this.cargarSolicitudesAdmin();
+            }
+        },
+
+        cargarSolicitudesAdmin() {
+            const container = document.getElementById('admin-solicitudes-list');
+            if (!container) return;
+
+            // Buscar solicitudes en el estado (simulado)
+            // En una app real, esto vendría de una API
+            const solicitudes = [];
+
+            // Si hay una solicitud pendiente del usuario actual, mostrarla
+            if (this.state.eventos.estado === 'pendiente' && this.state.isAuthenticated) {
+                solicitudes.push({
+                    id: 1,
+                    especialista_id: 1,
+                    nombre: this.state.user.name || 'Usuario',
+                    email: this.state.user.email || 'correo@ejemplo.com',
+                    especialidad: this.state.user.role === 'spec' ? 'Terapeuta' : 'Usuario',
+                    fecha_solicitud: this.state.eventos.fechaSolicitud || new Date().toLocaleString(),
+                    estado: 'pendiente'
+                });
+            }
+
+            if (solicitudes.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center text-xs text-[#7A8A7C]/60 py-8">
+                        <p>🎉 No hay solicitudes pendientes</p>
+                        <p class="text-[10px] mt-1">Los especialistas solicitarán espacio aquí</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = solicitudes.map(s => `
+                <div class="bg-stone-50 rounded-xl p-4 space-y-2 border border-stone-200">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="font-bold text-sm text-[#7A8A7C]">${s.nombre}</p>
+                            <p class="text-xs text-[#7A8A7C]/70">${s.especialidad}</p>
+                            <p class="text-[10px] text-[#7A8A7C]/50">${s.email}</p>
+                        </div>
+                        <span class="text-[10px] font-bold px-2 py-1 rounded-full bg-yellow-100 text-yellow-700">Pendiente</span>
+                    </div>
+                    <p class="text-[10px] text-[#7A8A7C]/50">Solicitado: ${s.fecha_solicitud}</p>
+                    <div class="flex gap-2">
+                        <button onclick="App.aprobarEventoAdmin(${s.id})" class="flex-1 py-2 bg-green-500 text-white text-xs font-bold rounded-xl hover:bg-green-600 transition">✅ Aprobar</button>
+                        <button onclick="App.rechazarEventoAdmin(${s.id})" class="flex-1 py-2 bg-red-500 text-white text-xs font-bold rounded-xl hover:bg-red-600 transition">❌ Rechazar</button>
+                    </div>
+                </div>
+            `).join('');
+        },
+
+        aprobarEventoAdmin(solicitudId) {
+            if (!confirm('¿Aprobar este espacio de eventos?')) return;
+
+            this.state.eventos.estado = 'aprobado';
+            this.state.eventos.fechaAprobacion = new Date().toLocaleString();
+            this.state.eventos.motivoRechazo = '';
+            
+            this.state.eventos.notificaciones.push({
+                titulo: '✅ Espacio aprobado',
+                mensaje: '¡Felicidades! Tu espacio de eventos ha sido aprobado. Ya puedes subir tus fotos.',
+                fecha: new Date().toLocaleString()
+            });
+
+            this.guardarEventosState();
+            this.cargarEstadoEventos();
+            this.cargarSolicitudesAdmin();
+            this.showToast('✅ Espacio aprobado correctamente', 'success');
+        },
+
+        rechazarEventoAdmin(solicitudId) {
+            const motivo = prompt('¿Por qué se rechaza esta solicitud?');
+            if (motivo === null) return;
+            if (!motivo.trim()) {
+                this.showToast('⚠️ Debes escribir un motivo', 'error');
+                return;
+            }
+
+            this.state.eventos.estado = 'rechazado';
+            this.state.eventos.motivoRechazo = motivo.trim();
+            this.state.eventos.fechaSolicitud = '';
+            
+            this.state.eventos.notificaciones.push({
+                titulo: '❌ Solicitud rechazada',
+                mensaje: 'Tu solicitud para el espacio de eventos ha sido rechazada. Motivo: ' + motivo.trim(),
+                fecha: new Date().toLocaleString()
+            });
+
+            this.guardarEventosState();
+            this.cargarEstadoEventos();
+            this.cargarSolicitudesAdmin();
+            this.showToast('❌ Solicitud rechazada', 'error');
+        },
+
+        // ============================================
+        // ADMIN - BANNERS
+        // ============================================
+
+        verificarAdminPin() {
+            const pin = document.getElementById('admin-pin-input').value;
+            if (pin === '7777') {
+                document.getElementById('admin-pin-input').value = '';
+                this.switchView('view-admin-dashboard');
+                this.adminTab('banners');
+                this.showToast('🔓 Panel administrativo desbloqueado', 'success');
+            } else {
+                this.showToast('❌ PIN incorrecto. Acceso denegado.', 'error');
+            }
+        },
+
+        guardarCambiosAdmin() {
+            const newLogo = document.getElementById('admin-logo-url').value;
+            const newBannerImg = document.getElementById('admin-banner-img-url').value;
+            const newBannerText = document.getElementById('admin-banner-text').value;
+
+            if (newLogo) {
+                localStorage.setItem('app_logo', newLogo);
+                document.getElementById('app-logo-img').src = newLogo;
+            }
+            if (newBannerImg) {
+                localStorage.setItem('app_banner_img', newBannerImg);
+                document.getElementById('home-hero-banner').style.backgroundImage = `url('${newBannerImg}')`;
+            }
+            if (newBannerText) {
+                localStorage.setItem('app_banner_text', newBannerText);
+                document.getElementById('home-banner-text').innerText = newBannerText;
+            }
+            this.showToast('✅ ¡Imágenes y banners actualizados con éxito!', 'success');
+        },
+
+        // ============================================
+        // ACTUALIZAR PERFIL UI
+        // ============================================
         actualizarPerfilUI() {
             const name = this.state.user.name || 'Invitado Atrévete';
             const email = this.state.user.email || 'correo@ejemplo.com';
@@ -1738,41 +2517,6 @@
         },
 
         // ============================================
-        // ADMIN
-        // ============================================
-        verificarAdminPin() {
-            const pin = document.getElementById('admin-pin-input').value;
-            if (pin === '7777') {
-                document.getElementById('admin-pin-input').value = '';
-                this.switchView('view-admin-dashboard');
-                this.showToast('🔓 Panel administrativo desbloqueado', 'success');
-            } else {
-                this.showToast('❌ PIN incorrecto. Acceso denegado.', 'error');
-            }
-        },
-
-        guardarCambiosAdmin() {
-            const newLogo = document.getElementById('admin-logo-url').value;
-            const newBannerImg = document.getElementById('admin-banner-img-url').value;
-            const newBannerText = document.getElementById('admin-banner-text').value;
-
-            if (newLogo) {
-                localStorage.setItem('app_logo', newLogo);
-                document.getElementById('app-logo-img').src = newLogo;
-            }
-            if (newBannerImg) {
-                localStorage.setItem('app_banner_img', newBannerImg);
-                document.getElementById('home-hero-banner').style.backgroundImage = `url('${newBannerImg}')`;
-            }
-            if (newBannerText) {
-                localStorage.setItem('app_banner_text', newBannerText);
-                document.getElementById('home-banner-text').innerText = newBannerText;
-            }
-            this.showToast('✅ ¡Imágenes y banners actualizados con éxito!', 'success');
-            this.switchView('view-home');
-        },
-
-        // ============================================
         // TOAST
         // ============================================
         showToast(message, type = 'success') {
@@ -1790,6 +2534,7 @@
     // INICIALIZACIÓN
     // ============================================
     document.addEventListener('DOMContentLoaded', function() {
+        // Cargar configuración de banners
         const savedLogo = localStorage.getItem('app_logo');
         const savedBannerImg = localStorage.getItem('app_banner_img');
         const savedBannerText = localStorage.getItem('app_banner_text');
@@ -1810,6 +2555,7 @@
             if (adminText) adminText.value = savedBannerText;
         }
 
+        // Cargar datos del usuario
         App.state.user.name = localStorage.getItem('user_name') || '';
         App.state.user.email = localStorage.getItem('user_email') || '';
         App.state.user.role = localStorage.getItem('user_role') || 'user';
@@ -1823,16 +2569,40 @@
         App.state.user.diasActivo = parseInt(localStorage.getItem('user_dias_activo')) || 0;
         App.state.legalAceptado = localStorage.getItem('legal_aceptado') === 'true';
 
+        // Cargar estado de eventos
+        App.state.eventos.estado = localStorage.getItem('eventos_estado') || 'inactivo';
+        App.state.eventos.motivoRechazo = localStorage.getItem('eventos_motivo_rechazo') || '';
+        App.state.eventos.fechaSolicitud = localStorage.getItem('eventos_fecha_solicitud') || '';
+        App.state.eventos.fechaAprobacion = localStorage.getItem('eventos_fecha_aprobacion') || '';
+        App.state.eventos.galeria = JSON.parse(localStorage.getItem('eventos_galeria') || '[]');
+        App.state.eventos.notificaciones = JSON.parse(localStorage.getItem('eventos_notificaciones') || '[]');
+
+        App.isAuthenticated = !!localStorage.getItem('user_email');
+
         App.actualizarPerfilUI();
         App.actualizarHeader();
         App.actualizarNav();
 
-        if (App.state.isAuthenticated) App.switchView('view-home');
+        if (App.state.isAuthenticated) {
+            App.cargarEstadoEventos();
+            App.switchView('view-home');
+        }
 
         App.selectPaymentMethod('pm_bdv');
-        console.log('🚀 Atrévete HealthTech App inicializada');
+        console.log('🚀 Atrévete HealthTech App inicializada con Sistema de Eventos');
+
+        // ============================================
+        // EVENTO: Subir imagen desde el perfil
+        // ============================================
+        document.getElementById('formSubirImagen')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            App.subirImagenEvento(formData);
+            this.reset();
+        });
     });
 
+    // Exponer App globalmente
     window.App = App;
 </script>
 </body>
