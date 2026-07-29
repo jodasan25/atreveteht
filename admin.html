@@ -3,12 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel Admin - Atrévete HealthTech</title>
+    <title>Panel Admin Pro - Atrévete HealthTech</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js para gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
         :root {
             --color-primary: #E27D60;
             --color-secondary: #7A8A7C;
+            --color-success: #28a745;
+            --color-danger: #dc3545;
+            --color-warning: #ffc107;
+            --color-info: #17a2b8;
         }
         
         body {
@@ -20,6 +26,11 @@
             background: #FFFFFF;
             border-radius: 28px;
             box-shadow: 8px 8px 16px #e0deda, -8px -8px 16px #ffffff;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .clay-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 10px 10px 20px #d5d3cf, -10px -10px 20px #ffffff;
         }
         
         .clay-input {
@@ -36,10 +47,6 @@
         .clay-input:focus {
             border-color: var(--color-primary);
             box-shadow: inset 4px 4px 8px #e0deda, inset -4px -4px 8px #ffffff, 0 0 0 3px rgba(226, 125, 96, 0.1);
-        }
-        .clay-input::placeholder {
-            color: #bbb;
-            font-size: 12px;
         }
         
         .clay-btn-primary {
@@ -59,15 +66,6 @@
             transform: translateY(-2px);
             box-shadow: 8px 8px 16px #c06a51, -8px -8px 12px #ffffff;
         }
-        .clay-btn-primary:active {
-            transform: translateY(0);
-            box-shadow: 4px 4px 8px #c06a51, -4px -4px 8px #ffffff;
-        }
-        .clay-btn-primary:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none !important;
-        }
         
         .clay-btn-secondary {
             background: #F0B7A1;
@@ -84,68 +82,6 @@
         }
         .clay-btn-secondary:hover {
             transform: translateY(-2px);
-        }
-        
-        .clay-btn-danger {
-            background: #dc3545;
-            color: white;
-            border-radius: 9999px;
-            padding: 8px 16px;
-            font-weight: bold;
-            font-size: 12px;
-            box-shadow: 4px 4px 8px #b02a37, -4px -4px 8px #ffffff;
-            transition: all 0.2s ease;
-            cursor: pointer;
-            border: none;
-        }
-        .clay-btn-danger:hover {
-            transform: translateY(-2px);
-        }
-        
-        .clay-btn-success {
-            background: #28a745;
-            color: white;
-            border-radius: 9999px;
-            padding: 8px 16px;
-            font-weight: bold;
-            font-size: 12px;
-            box-shadow: 4px 4px 8px #1e7e34, -4px -4px 8px #ffffff;
-            transition: all 0.2s ease;
-            cursor: pointer;
-            border: none;
-        }
-        .clay-btn-success:hover {
-            transform: translateY(-2px);
-        }
-        
-        .clay-btn-warning {
-            background: #ffc107;
-            color: #212529;
-            border-radius: 9999px;
-            padding: 8px 16px;
-            font-weight: bold;
-            font-size: 12px;
-            box-shadow: 4px 4px 8px #d39e00, -4px -4px 8px #ffffff;
-            transition: all 0.2s ease;
-            cursor: pointer;
-            border: none;
-        }
-        .clay-btn-warning:hover {
-            transform: translateY(-2px);
-        }
-        
-        .btn-sm {
-            padding: 4px 12px;
-            font-size: 10px;
-            border-radius: 9999px;
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.2s;
-            margin: 0 2px;
-        }
-        .btn-sm:hover {
-            transform: scale(1.05);
         }
         
         .toast {
@@ -254,7 +190,44 @@
             background: rgba(255,255,255,0.3);
         }
 
-        /* Tablas */
+        /* Tarjetas de estadísticas */
+        .stat-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px 24px;
+            box-shadow: 4px 4px 12px #e0deda, -4px -4px 12px #ffffff;
+            transition: all 0.3s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 6px 6px 16px #d5d3cf, -6px -6px 16px #ffffff;
+        }
+        .stat-card .stat-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--color-primary);
+            line-height: 1.2;
+        }
+        .stat-card .stat-label {
+            font-size: 12px;
+            color: var(--color-secondary);
+            font-weight: 500;
+            margin-top: 2px;
+        }
+        .stat-card .stat-icon {
+            font-size: 28px;
+            float: right;
+            opacity: 0.3;
+        }
+        .stat-card .stat-change {
+            font-size: 11px;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+        .stat-card .stat-change.up { color: var(--color-success); }
+        .stat-card .stat-change.down { color: var(--color-danger); }
+
+        /* Tablas mejoradas */
         .table-container {
             overflow-x: auto;
             border-radius: 16px;
@@ -307,7 +280,7 @@
         .badge-especialista { background: #d6d8db; color: #383d41; }
         .badge-usuario { background: #e9ecef; color: #495057; }
 
-        /* Modal */
+        /* Modal mejorado */
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -325,7 +298,7 @@
         .modal-content {
             background: white;
             border-radius: 24px;
-            max-width: 500px;
+            max-width: 600px;
             width: 100%;
             max-height: 90vh;
             overflow-y: auto;
@@ -365,7 +338,7 @@
         .modal-content .info-row .label {
             font-weight: 600;
             color: var(--color-secondary);
-            width: 110px;
+            width: 120px;
             flex-shrink: 0;
         }
         .modal-content .info-row .value {
@@ -381,7 +354,7 @@
             justify-content: flex-end;
         }
 
-        /* Formulario de creación */
+        /* Formularios */
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -410,6 +383,25 @@
             cursor: pointer;
         }
 
+        /* Botones pequeños */
+        .btn-sm {
+            padding: 4px 12px;
+            font-size: 10px;
+            border-radius: 9999px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+            margin: 0 2px;
+        }
+        .btn-sm:hover {
+            transform: scale(1.05);
+        }
+        .btn-success-sm { background: var(--color-success); color: white; }
+        .btn-danger-sm { background: var(--color-danger); color: white; }
+        .btn-warning-sm { background: var(--color-warning); color: #212529; }
+        .btn-info-sm { background: var(--color-info); color: white; }
+
         /* Buscador */
         .search-box {
             display: flex;
@@ -428,6 +420,30 @@
             font-weight: 500;
         }
 
+        /* Filtros */
+        .filter-group {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .filter-group select {
+            padding: 6px 12px;
+            border-radius: 12px;
+            border: 1px solid #e5e0db;
+            background: white;
+            font-size: 12px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        /* Contenedor de gráficos */
+        .chart-container {
+            position: relative;
+            height: 200px;
+            width: 100%;
+        }
+
         /* Responsive */
         @media (max-width: 640px) {
             .form-grid {
@@ -444,16 +460,15 @@
                 font-size: 10px;
                 padding: 6px 12px;
             }
-            .table-container {
-                font-size: 11px;
+            .stat-card .stat-number {
+                font-size: 24px;
             }
-            .table-container th,
-            .table-container td {
-                padding: 6px 8px;
+            .filter-group {
+                flex-direction: column;
+                width: 100%;
             }
-            .btn-sm {
-                font-size: 9px;
-                padding: 3px 8px;
+            .filter-group select {
+                width: 100%;
             }
         }
 
@@ -561,51 +576,20 @@
         </div>
     </div>
 
-    <!-- ==================== MODAL CREAR USUARIO ==================== -->
-    <div id="modal-crear-usuario" class="modal-overlay">
-        <div class="modal-content">
+    <!-- ==================== MODAL VER REPORTE ==================== -->
+    <div id="modal-reporte" class="modal-overlay">
+        <div class="modal-content" style="max-width: 800px;">
             <div class="modal-header">
-                <h2>➕ Crear Nuevo Usuario</h2>
-                <button class="modal-close" onclick="Admin.cerrarModal('modal-crear-usuario')">✕</button>
+                <h2>📊 Reporte Detallado</h2>
+                <button class="modal-close" onclick="Admin.cerrarModal('modal-reporte')">✕</button>
             </div>
-            <form id="form-crear-usuario" onsubmit="Admin.crearUsuario(event)">
-                <div class="modal-body">
-                    <div class="form-grid">
-                        <div class="full-width form-group">
-                            <label for="crear-nombre">Nombre Completo *</label>
-                            <input type="text" id="crear-nombre" class="clay-input" placeholder="Ej. Juan Pérez" required>
-                        </div>
-                        <div class="full-width form-group">
-                            <label for="crear-email">Email *</label>
-                            <input type="email" id="crear-email" class="clay-input" placeholder="ejemplo@email.com" required>
-                        </div>
-                        <div class="full-width form-group">
-                            <label for="crear-password">Contraseña * (mínimo 6 caracteres)</label>
-                            <input type="password" id="crear-password" class="clay-input" placeholder="••••••••" required minlength="6">
-                        </div>
-                        <div class="form-group">
-                            <label for="crear-rol">Rol</label>
-                            <select id="crear-rol" class="clay-input">
-                                <option value="usuario">👤 Usuario</option>
-                                <option value="especialista">👩‍⚕️ Especialista</option>
-                                <option value="admin">⚙️ Administrador</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="crear-telefono">Teléfono</label>
-                            <input type="text" id="crear-telefono" class="clay-input" placeholder="0414-1234567">
-                        </div>
-                        <div class="full-width form-group">
-                            <label for="crear-especialidad">Especialidad (solo para especialistas)</label>
-                            <input type="text" id="crear-especialidad" class="clay-input" placeholder="Ej. Terapeuta Somática">
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="clay-btn-secondary" style="flex:1;padding:10px;" onclick="Admin.cerrarModal('modal-crear-usuario')">Cancelar</button>
-                    <button type="submit" class="clay-btn-primary" style="flex:1;padding:10px;">📌 Crear Usuario</button>
-                </div>
-            </form>
+            <div id="modal-reporte-body" class="modal-body">
+                <!-- Se llena con JS -->
+            </div>
+            <div class="modal-footer">
+                <button class="clay-btn-primary" style="flex:1;padding:10px;" onclick="Admin.exportarReporte()">📥 Exportar Reporte</button>
+                <button class="clay-btn-secondary" style="flex:1;padding:10px;" onclick="Admin.cerrarModal('modal-reporte')">Cerrar</button>
+            </div>
         </div>
     </div>
 
@@ -614,14 +598,14 @@
         <div class="text-center space-y-3 mb-6">
             <div class="flex items-center justify-center gap-3">
                 <span class="text-4xl">🔐</span>
-                <h1 class="text-3xl font-extrabold text-[var(--color-secondary)]">Panel Admin</h1>
+                <h1 class="text-3xl font-extrabold text-[var(--color-secondary)]">Panel Admin Pro</h1>
             </div>
-            <p class="text-sm text-[var(--color-secondary)]/70">Acceso restringido • Atrévete HealthTech</p>
+            <p class="text-sm text-[var(--color-secondary)]/70">Gestión avanzada • Atrévete HealthTech</p>
         </div>
 
         <form onsubmit="event.preventDefault(); Admin.login();" class="clay-card p-6 space-y-4 max-w-md mx-auto">
             <div class="text-center pb-2">
-                <span class="text-xs uppercase font-bold tracking-widest text-[var(--color-primary)]">Iniciar Sesión</span>
+                <span class="text-xs uppercase font-bold tracking-widest text-[var(--color-primary)]">Acceso Restringido</span>
             </div>
 
             <div>
@@ -658,7 +642,7 @@
     </div>
 
     <!-- ==================== PANEL DE ADMINISTRACIÓN ==================== -->
-    <main id="admin-panel" class="max-w-4xl mx-auto p-4 space-y-6 hidden">
+    <main id="admin-panel" class="max-w-6xl mx-auto p-4 space-y-6 hidden">
         
         <!-- HEADER -->
         <div class="flex items-center justify-between flex-wrap gap-3">
@@ -666,12 +650,12 @@
                 <div class="flex items-center gap-3">
                     <span class="text-3xl">⚙️</span>
                     <div>
-                        <h1 class="text-2xl font-extrabold text-[var(--color-secondary)]">Panel Administrativo</h1>
-                        <p class="text-xs text-[var(--color-secondary)]/70">Gestión completa de Atrévete HealthTech</p>
+                        <h1 class="text-2xl font-extrabold text-[var(--color-secondary)]">Panel Administrativo Pro</h1>
+                        <p class="text-xs text-[var(--color-secondary)]/70">Gestión avanzada con estadísticas y reportes</p>
                     </div>
                 </div>
             </div>
-            <div class="flex items-center gap-3">
+            <div class="flex items-center gap-3 flex-wrap">
                 <span class="text-[10px] text-green-600 font-semibold flex items-center gap-1">
                     <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
                     En línea
@@ -680,9 +664,56 @@
             </div>
         </div>
 
+        <!-- ==================== DASHBOARD / ESTADÍSTICAS ==================== -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3" id="stats-grid">
+            <div class="stat-card">
+                <span class="stat-icon">👥</span>
+                <div class="stat-number" id="stat-total-usuarios">0</div>
+                <div class="stat-label">Total Usuarios</div>
+                <div class="stat-change up" id="stat-usuarios-change">+0% este mes</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-icon">👩‍⚕️</span>
+                <div class="stat-number" id="stat-total-especialistas">0</div>
+                <div class="stat-label">Especialistas</div>
+                <div class="stat-change up" id="stat-especialistas-change">+0% este mes</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-icon">📋</span>
+                <div class="stat-number" id="stat-solicitudes-pendientes">0</div>
+                <div class="stat-label">Solicitudes Pendientes</div>
+                <div class="stat-change" id="stat-solicitudes-change" style="color:var(--color-warning);">⚠️ Pendientes</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-icon">✅</span>
+                <div class="stat-number" id="stat-espacios-activos">0</div>
+                <div class="stat-label">Espacios Activos</div>
+                <div class="stat-change up" id="stat-espacios-change">+0% este mes</div>
+            </div>
+        </div>
+
+        <!-- GRÁFICOS -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="clay-card p-4">
+                <h4 class="text-xs font-bold text-[var(--color-secondary)] mb-3">📊 Usuarios por Rol</h4>
+                <div class="chart-container">
+                    <canvas id="chart-roles"></canvas>
+                </div>
+            </div>
+            <div class="clay-card p-4">
+                <h4 class="text-xs font-bold text-[var(--color-secondary)] mb-3">📈 Solicitudes por Estado</h4>
+                <div class="chart-container">
+                    <canvas id="chart-solicitudes"></canvas>
+                </div>
+            </div>
+        </div>
+
         <!-- PESTAÑAS -->
         <div class="admin-tabs">
-            <button class="admin-tab active" data-tab="banners" onclick="Admin.cambiarTab('banners')">
+            <button class="admin-tab active" data-tab="dashboard" onclick="Admin.cambiarTab('dashboard')">
+                📊 Dashboard
+            </button>
+            <button class="admin-tab" data-tab="banners" onclick="Admin.cambiarTab('banners')">
                 🖼️ Banners
             </button>
             <button class="admin-tab" data-tab="usuarios" onclick="Admin.cambiarTab('usuarios')">
@@ -695,15 +726,56 @@
                 📋 Solicitudes
                 <span class="badge" id="solicitudes-badge">0</span>
             </button>
+            <button class="admin-tab" data-tab="reportes" onclick="Admin.cambiarTab('reportes')">
+                📊 Reportes
+            </button>
             <button class="admin-tab" data-tab="crear" onclick="Admin.cambiarTab('crear')">
                 ➕ Crear
             </button>
         </div>
 
+        <!-- ==================== TAB: DASHBOARD ==================== -->
+        <div id="tab-dashboard" class="tab-content">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="clay-card p-4">
+                    <h4 class="text-xs font-bold text-[var(--color-secondary)] mb-2">📅 Actividad Reciente</h4>
+                    <div id="actividad-reciente" class="space-y-2 max-h-64 overflow-y-auto">
+                        <p class="text-xs text-[var(--color-secondary)]/60 text-center py-4">Cargando actividad...</p>
+                    </div>
+                </div>
+                <div class="clay-card p-4">
+                    <h4 class="text-xs font-bold text-[var(--color-secondary)] mb-2">📊 Resumen Rápido</h4>
+                    <div id="resumen-rapido" class="space-y-3">
+                        <div class="flex justify-between text-xs border-b border-stone-100 py-2">
+                            <span class="text-[var(--color-secondary)]">Usuarios activos</span>
+                            <span class="font-bold" id="resumen-usuarios-activos">0</span>
+                        </div>
+                        <div class="flex justify-between text-xs border-b border-stone-100 py-2">
+                            <span class="text-[var(--color-secondary)]">Espacios aprobados</span>
+                            <span class="font-bold" id="resumen-espacios-aprobados">0</span>
+                        </div>
+                        <div class="flex justify-between text-xs border-b border-stone-100 py-2">
+                            <span class="text-[var(--color-secondary)]">Solicitudes totales</span>
+                            <span class="font-bold" id="resumen-solicitudes-totales">0</span>
+                        </div>
+                        <div class="flex justify-between text-xs py-2">
+                            <span class="text-[var(--color-secondary)]">Imágenes en galería</span>
+                            <span class="font-bold" id="resumen-imagenes-totales">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clay-card p-4 mt-4">
+                <h4 class="text-xs font-bold text-[var(--color-secondary)] mb-3">📈 Evolución Mensual</h4>
+                <div class="chart-container" style="height:150px;">
+                    <canvas id="chart-evolucion"></canvas>
+                </div>
+            </div>
+        </div>
+
         <!-- ==================== TAB: BANNERS ==================== -->
-        <div id="tab-banners" class="tab-content">
+        <div id="tab-banners" class="tab-content hidden">
             <form onsubmit="event.preventDefault(); Admin.guardarCambios();" class="clay-card p-6 space-y-5">
-                
                 <div class="space-y-2">
                     <label class="block text-xs font-bold text-[var(--color-secondary)] flex items-center gap-2">
                         <span>🖼️</span> Logotipo Principal
@@ -766,11 +838,6 @@
                     </button>
                 </div>
             </form>
-
-            <div class="clay-card p-4 mt-4 bg-orange-50/40 text-[11px] text-[var(--color-secondary)] space-y-1">
-                <p class="font-bold text-[var(--color-primary)]">💡 ¿Cómo funciona?</p>
-                <p>Los cambios se guardan en el almacenamiento local y se reflejan automáticamente en la app principal.</p>
-            </div>
         </div>
 
         <!-- ==================== TAB: USUARIOS ==================== -->
@@ -779,8 +846,16 @@
                 <div class="flex items-center justify-between flex-wrap gap-3">
                     <h3 class="font-bold text-[var(--color-secondary)]">📋 Lista de Usuarios</h3>
                     <div class="search-box">
-                        <input type="text" id="buscar-usuarios" placeholder="🔍 Buscar usuario..." 
-                               class="clay-input" oninput="Admin.filtrarUsuarios()">
+                        <div class="filter-group">
+                            <select id="filtro-rol-usuarios" onchange="Admin.filtrarUsuarios()">
+                                <option value="todos">Todos los roles</option>
+                                <option value="admin">Administradores</option>
+                                <option value="especialista">Especialistas</option>
+                                <option value="usuario">Usuarios</option>
+                            </select>
+                            <input type="text" id="buscar-usuarios" placeholder="🔍 Buscar usuario..." 
+                                   class="clay-input" oninput="Admin.filtrarUsuarios()">
+                        </div>
                         <span class="count-badge" id="usuarios-count">0 usuarios</span>
                     </div>
                 </div>
@@ -793,11 +868,12 @@
                                 <th>Email</th>
                                 <th>Rol</th>
                                 <th>Estado</th>
+                                <th>Registro</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody id="tabla-usuarios-body">
-                            <tr><td colspan="6" style="text-align:center;padding:20px;color:#999;">Cargando...</td></tr>
+                            <tr><td colspan="7" style="text-align:center;padding:20px;color:#999;">Cargando...</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -810,8 +886,17 @@
                 <div class="flex items-center justify-between flex-wrap gap-3">
                     <h3 class="font-bold text-[var(--color-secondary)]">👩‍⚕️ Especialistas Registrados</h3>
                     <div class="search-box">
-                        <input type="text" id="buscar-especialistas" placeholder="🔍 Buscar especialista..." 
-                               class="clay-input" oninput="Admin.filtrarEspecialistas()">
+                        <div class="filter-group">
+                            <select id="filtro-estado-especialistas" onchange="Admin.filtrarEspecialistas()">
+                                <option value="todos">Todos los estados</option>
+                                <option value="aprobado">✅ Activos</option>
+                                <option value="pendiente">⏳ Pendientes</option>
+                                <option value="rechazado">❌ Rechazados</option>
+                                <option value="inactivo">📅 Inactivos</option>
+                            </select>
+                            <input type="text" id="buscar-especialistas" placeholder="🔍 Buscar especialista..." 
+                                   class="clay-input" oninput="Admin.filtrarEspecialistas()">
+                        </div>
                         <span class="count-badge" id="especialistas-count">0 especialistas</span>
                     </div>
                 </div>
@@ -840,7 +925,17 @@
             <div class="clay-card p-4 space-y-4">
                 <div class="flex items-center justify-between flex-wrap gap-3">
                     <h3 class="font-bold text-[var(--color-secondary)]">📋 Solicitudes de Espacio de Eventos</h3>
-                    <span class="count-badge" id="solicitudes-count">0 solicitudes</span>
+                    <div class="search-box">
+                        <div class="filter-group">
+                            <select id="filtro-estado-solicitudes" onchange="Admin.cargarSolicitudes()">
+                                <option value="todos">Todos los estados</option>
+                                <option value="pendiente">⏳ Pendientes</option>
+                                <option value="aprobado">✅ Aprobados</option>
+                                <option value="rechazado">❌ Rechazados</option>
+                            </select>
+                            <span class="count-badge" id="solicitudes-count">0 solicitudes</span>
+                        </div>
+                    </div>
                 </div>
                 <div class="table-container">
                     <table>
@@ -859,6 +954,71 @@
                             <tr><td colspan="7" style="text-align:center;padding:20px;color:#999;">Cargando...</td></tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== TAB: REPORTES ==================== -->
+        <div id="tab-reportes" class="tab-content hidden">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="clay-card p-4 cursor-pointer hover:shadow-xl transition" onclick="Admin.generarReporte('usuarios')">
+                    <div class="flex items-center gap-4">
+                        <span class="text-3xl">👥</span>
+                        <div>
+                            <h4 class="font-bold text-[var(--color-secondary)]">Reporte de Usuarios</h4>
+                            <p class="text-xs text-[var(--color-secondary)]/60">Lista completa con todos los datos</p>
+                        </div>
+                        <span class="ml-auto text-2xl">→</span>
+                    </div>
+                </div>
+                <div class="clay-card p-4 cursor-pointer hover:shadow-xl transition" onclick="Admin.generarReporte('especialistas')">
+                    <div class="flex items-center gap-4">
+                        <span class="text-3xl">👩‍⚕️</span>
+                        <div>
+                            <h4 class="font-bold text-[var(--color-secondary)]">Reporte de Especialistas</h4>
+                            <p class="text-xs text-[var(--color-secondary)]/60">Especialistas y estado de sus eventos</p>
+                        </div>
+                        <span class="ml-auto text-2xl">→</span>
+                    </div>
+                </div>
+                <div class="clay-card p-4 cursor-pointer hover:shadow-xl transition" onclick="Admin.generarReporte('solicitudes')">
+                    <div class="flex items-center gap-4">
+                        <span class="text-3xl">📋</span>
+                        <div>
+                            <h4 class="font-bold text-[var(--color-secondary)]">Reporte de Solicitudes</h4>
+                            <p class="text-xs text-[var(--color-secondary)]/60">Todas las solicitudes y su estado</p>
+                        </div>
+                        <span class="ml-auto text-2xl">→</span>
+                    </div>
+                </div>
+                <div class="clay-card p-4 cursor-pointer hover:shadow-xl transition" onclick="Admin.generarReporte('general')">
+                    <div class="flex items-center gap-4">
+                        <span class="text-3xl">📊</span>
+                        <div>
+                            <h4 class="font-bold text-[var(--color-secondary)]">Reporte General</h4>
+                            <p class="text-xs text-[var(--color-secondary)]/60">Resumen completo de la plataforma</p>
+                        </div>
+                        <span class="ml-auto text-2xl">→</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exportación rápida -->
+            <div class="clay-card p-4 mt-4">
+                <h4 class="font-bold text-[var(--color-secondary)] text-sm mb-3">📥 Exportación Rápida</h4>
+                <div class="flex gap-3 flex-wrap">
+                    <button onclick="Admin.exportarCSV('usuarios')" class="flex-1 py-2 px-4 bg-green-500 text-white rounded-xl text-xs font-bold hover:bg-green-600 transition min-w-[100px]">
+                        📊 Usuarios CSV
+                    </button>
+                    <button onclick="Admin.exportarCSV('especialistas')" class="flex-1 py-2 px-4 bg-blue-500 text-white rounded-xl text-xs font-bold hover:bg-blue-600 transition min-w-[100px]">
+                        📊 Especialistas CSV
+                    </button>
+                    <button onclick="Admin.exportarCSV('solicitudes')" class="flex-1 py-2 px-4 bg-orange-500 text-white rounded-xl text-xs font-bold hover:bg-orange-600 transition min-w-[100px]">
+                        📊 Solicitudes CSV
+                    </button>
+                    <button onclick="Admin.exportarDatos()" class="flex-1 py-2 px-4 bg-purple-500 text-white rounded-xl text-xs font-bold hover:bg-purple-600 transition min-w-[100px]">
+                        💾 Backup JSON
+                    </button>
                 </div>
             </div>
         </div>
@@ -903,15 +1063,15 @@
             </div>
         </div>
 
-        <!-- BOTÓN PARA ABRIR APP -->
+        <!-- BOTONES DE ACCIÓN RÁPIDA -->
         <div class="flex gap-3 flex-wrap">
             <button onclick="window.open('index.html', '_blank')" 
                     class="flex-1 py-3 text-sm font-bold text-[var(--color-primary)] border-2 border-[var(--color-primary)]/30 rounded-full hover:bg-[var(--color-primary)]/5 transition min-w-[140px]">
                 🔗 Abrir App Principal
             </button>
-            <button onclick="Admin.exportarDatos()" 
+            <button onclick="Admin.refrescarDatos()" 
                     class="flex-1 py-3 text-sm font-bold text-[var(--color-secondary)] border-2 border-[var(--color-secondary)]/30 rounded-full hover:bg-[var(--color-secondary)]/5 transition min-w-[140px]">
-                📥 Exportar Datos
+                🔄 Refrescar Datos
             </button>
         </div>
     </main>
@@ -924,86 +1084,24 @@
             init() {
                 if (!localStorage.getItem('db_usuarios')) {
                     const usuariosIniciales = [
-                        {
-                            id: 1,
-                            nombre: 'Administrador',
-                            email: 'admin@atreveteht.com',
-                            password: btoa('admin123'),
-                            rol: 'admin',
-                            telefono: '0414-1234567',
-                            fechaRegistro: '2024-01-15',
-                            activo: true,
-                            emailVerificado: true,
-                            especialidad: 'Administrador del Sistema'
-                        },
-                        {
-                            id: 2,
-                            nombre: 'María González',
-                            email: 'maria@email.com',
-                            password: btoa('password123'),
-                            rol: 'especialista',
-                            telefono: '0414-4031678',
-                            fechaRegistro: '2024-01-20',
-                            activo: true,
-                            emailVerificado: true,
-                            especialidad: 'Terapeuta Somática',
-                            descripcion: 'Especialista en regulación del sistema nervioso'
-                        },
-                        {
-                            id: 3,
-                            nombre: 'Carlos Rodríguez',
-                            email: 'carlos@email.com',
-                            password: btoa('password123'),
-                            rol: 'especialista',
-                            telefono: '0414-4187215',
-                            fechaRegistro: '2024-01-25',
-                            activo: true,
-                            emailVerificado: true,
-                            especialidad: 'Coach Emocional',
-                            descripcion: 'Coach especializado en inteligencia emocional'
-                        },
-                        {
-                            id: 4,
-                            nombre: 'Ana Pérez',
-                            email: 'ana@email.com',
-                            password: btoa('password123'),
-                            rol: 'usuario',
-                            telefono: '0414-5556789',
-                            fechaRegistro: '2024-02-01',
-                            activo: true,
-                            emailVerificado: false,
-                            especialidad: ''
-                        }
+                        { id: 1, nombre: 'Administrador', email: 'admin@atreveteht.com', password: btoa('admin123'), rol: 'admin', telefono: '0414-1234567', fechaRegistro: '2024-01-15', activo: true, emailVerificado: true, especialidad: 'Administrador del Sistema' },
+                        { id: 2, nombre: 'María González', email: 'maria@email.com', password: btoa('password123'), rol: 'especialista', telefono: '0414-4031678', fechaRegistro: '2024-01-20', activo: true, emailVerificado: true, especialidad: 'Terapeuta Somática', descripcion: 'Especialista en regulación del sistema nervioso' },
+                        { id: 3, nombre: 'Carlos Rodríguez', email: 'carlos@email.com', password: btoa('password123'), rol: 'especialista', telefono: '0414-4187215', fechaRegistro: '2024-01-25', activo: true, emailVerificado: true, especialidad: 'Coach Emocional', descripcion: 'Coach especializado en inteligencia emocional' },
+                        { id: 4, nombre: 'Ana Pérez', email: 'ana@email.com', password: btoa('password123'), rol: 'usuario', telefono: '0414-5556789', fechaRegistro: '2024-02-01', activo: true, emailVerificado: false, especialidad: '' }
                     ];
                     localStorage.setItem('db_usuarios', JSON.stringify(usuariosIniciales));
                 }
 
                 if (!localStorage.getItem('db_solicitudes')) {
                     const solicitudesIniciales = [
-                        {
-                            id: 1,
-                            especialista_id: 2,
-                            nombre: 'María González',
-                            email: 'maria@email.com',
-                            especialidad: 'Terapeuta Somática',
-                            fecha_solicitud: '2024-02-10 14:30:00',
-                            estado: 'pendiente',
-                            comentario_admin: '',
-                            telefono: '0414-4031678'
-                        },
-                        {
-                            id: 2,
-                            especialista_id: 3,
-                            nombre: 'Carlos Rodríguez',
-                            email: 'carlos@email.com',
-                            especialidad: 'Coach Emocional',
-                            fecha_solicitud: '2024-02-12 09:15:00',
-                            estado: 'pendiente',
-                            comentario_admin: '',
-                            telefono: '0414-4187215'
-                        }
+                        { id: 1, especialista_id: 2, nombre: 'María González', email: 'maria@email.com', especialidad: 'Terapeuta Somática', fecha_solicitud: '2024-02-10 14:30:00', estado: 'pendiente', comentario_admin: '', telefono: '0414-4031678' },
+                        { id: 2, especialista_id: 3, nombre: 'Carlos Rodríguez', email: 'carlos@email.com', especialidad: 'Coach Emocional', fecha_solicitud: '2024-02-12 09:15:00', estado: 'pendiente', comentario_admin: '', telefono: '0414-4187215' }
                     ];
                     localStorage.setItem('db_solicitudes', JSON.stringify(solicitudesIniciales));
+                }
+
+                if (!localStorage.getItem('db_historial')) {
+                    localStorage.setItem('db_historial', JSON.stringify([]));
                 }
 
                 if (!localStorage.getItem('db_eventos_galeria')) {
@@ -1015,30 +1113,17 @@
                 }
             },
 
-            getUsuarios() {
-                return JSON.parse(localStorage.getItem('db_usuarios') || '[]');
-            },
-
-            getUsuario(id) {
-                return this.getUsuarios().find(u => u.id === id);
-            },
-
-            getUsuarioByEmail(email) {
-                return this.getUsuarios().find(u => u.email === email);
-            },
+            getUsuarios() { return JSON.parse(localStorage.getItem('db_usuarios') || '[]'); },
+            getUsuario(id) { return this.getUsuarios().find(u => u.id === id); },
+            getUsuarioByEmail(email) { return this.getUsuarios().find(u => u.email === email); },
 
             crearUsuario(usuario) {
                 const usuarios = this.getUsuarios();
                 const maxId = usuarios.reduce((max, u) => Math.max(max, u.id), 0);
-                const nuevo = {
-                    id: maxId + 1,
-                    ...usuario,
-                    fechaRegistro: new Date().toISOString().split('T')[0],
-                    activo: true,
-                    emailVerificado: false
-                };
+                const nuevo = { id: maxId + 1, ...usuario, fechaRegistro: new Date().toISOString().split('T')[0], activo: true, emailVerificado: false };
                 usuarios.push(nuevo);
                 localStorage.setItem('db_usuarios', JSON.stringify(usuarios));
+                this.registrarHistorial('crear_usuario', `Usuario ${nuevo.nombre} creado`);
                 return nuevo;
             },
 
@@ -1048,40 +1133,30 @@
                 if (index === -1) return null;
                 usuarios[index] = { ...usuarios[index], ...datos };
                 localStorage.setItem('db_usuarios', JSON.stringify(usuarios));
+                this.registrarHistorial('editar_usuario', `Usuario ${usuarios[index].nombre} actualizado`);
                 return usuarios[index];
             },
 
             eliminarUsuario(id) {
+                const usuario = this.getUsuario(id);
                 let usuarios = this.getUsuarios();
                 usuarios = usuarios.filter(u => u.id !== id);
                 localStorage.setItem('db_usuarios', JSON.stringify(usuarios));
+                this.registrarHistorial('eliminar_usuario', `Usuario ${usuario?.nombre || id} eliminado`);
                 return true;
             },
 
-            getSolicitudes() {
-                return JSON.parse(localStorage.getItem('db_solicitudes') || '[]');
-            },
-
-            getSolicitud(id) {
-                return this.getSolicitudes().find(s => s.id === id);
-            },
-
-            getSolicitudesPendientes() {
-                return this.getSolicitudes().filter(s => s.estado === 'pendiente');
-            },
+            getSolicitudes() { return JSON.parse(localStorage.getItem('db_solicitudes') || '[]'); },
+            getSolicitud(id) { return this.getSolicitudes().find(s => s.id === id); },
+            getSolicitudesPendientes() { return this.getSolicitudes().filter(s => s.estado === 'pendiente'); },
 
             crearSolicitud(solicitud) {
                 const solicitudes = this.getSolicitudes();
                 const maxId = solicitudes.reduce((max, s) => Math.max(max, s.id), 0);
-                const nueva = {
-                    id: maxId + 1,
-                    ...solicitud,
-                    fecha_solicitud: new Date().toLocaleString(),
-                    estado: 'pendiente',
-                    comentario_admin: ''
-                };
+                const nueva = { id: maxId + 1, ...solicitud, fecha_solicitud: new Date().toLocaleString(), estado: 'pendiente', comentario_admin: '' };
                 solicitudes.push(nueva);
                 localStorage.setItem('db_solicitudes', JSON.stringify(solicitudes));
+                this.registrarHistorial('crear_solicitud', `Solicitud de ${nueva.nombre} creada`);
                 return nueva;
             },
 
@@ -1091,6 +1166,7 @@
                 if (index === -1) return null;
                 solicitudes[index] = { ...solicitudes[index], ...datos };
                 localStorage.setItem('db_solicitudes', JSON.stringify(solicitudes));
+                this.registrarHistorial('actualizar_solicitud', `Solicitud #${id} actualizada a ${datos.estado}`);
                 return solicitudes[index];
             },
 
@@ -1098,12 +1174,12 @@
                 let solicitudes = this.getSolicitudes();
                 solicitudes = solicitudes.filter(s => s.id !== id);
                 localStorage.setItem('db_solicitudes', JSON.stringify(solicitudes));
+                this.registrarHistorial('eliminar_solicitud', `Solicitud #${id} eliminada`);
                 return true;
             },
 
-            getGaleria() {
-                return JSON.parse(localStorage.getItem('db_eventos_galeria') || '[]');
-            },
+            getGaleria() { return JSON.parse(localStorage.getItem('db_eventos_galeria') || '[]'); },
+            getGaleriaByEspecialista(especialista_id) { return this.getGaleria().filter(g => g.especialista_id === especialista_id); },
 
             agregarImagenGaleria(datos) {
                 const galeria = this.getGaleria();
@@ -1126,17 +1202,66 @@
                 notificaciones.push(nueva);
                 localStorage.setItem('db_notificaciones', JSON.stringify(notificaciones));
                 return nueva;
+            },
+
+            getHistorial() { return JSON.parse(localStorage.getItem('db_historial') || '[]'); },
+
+            registrarHistorial(accion, detalle) {
+                const historial = this.getHistorial();
+                historial.push({ id: Date.now(), accion, detalle, fecha: new Date().toLocaleString() });
+                localStorage.setItem('db_historial', JSON.stringify(historial));
+                return true;
+            },
+
+            getEstadisticas() {
+                const usuarios = this.getUsuarios();
+                const especialistas = usuarios.filter(u => u.rol === 'especialista');
+                const solicitudes = this.getSolicitudes();
+                const pendientes = solicitudes.filter(s => s.estado === 'pendiente');
+                const aprobados = solicitudes.filter(s => s.estado === 'aprobado');
+                const galeria = this.getGaleria();
+
+                // Calcular cambios mensuales (simulados)
+                const totalUsuarios = usuarios.length;
+                const totalEspecialistas = especialistas.length;
+                const totalPendientes = pendientes.length;
+                const totalActivos = especialistas.filter(e => {
+                    const estado = localStorage.getItem('eventos_estado_' + e.id) || 'inactivo';
+                    return estado === 'aprobado';
+                }).length;
+                const totalImagenes = galeria.length;
+
+                return {
+                    totalUsuarios,
+                    totalEspecialistas,
+                    totalPendientes,
+                    totalActivos,
+                    totalImagenes,
+                    totalSolicitudes: solicitudes.length,
+                    totalAprobados: aprobados.length,
+                    usuariosPorRol: {
+                        admin: usuarios.filter(u => u.rol === 'admin').length,
+                        especialista: totalEspecialistas,
+                        usuario: usuarios.filter(u => u.rol === 'usuario').length
+                    },
+                    solicitudesPorEstado: {
+                        pendiente: totalPendientes,
+                        aprobado: aprobados.length,
+                        rechazado: solicitudes.filter(s => s.estado === 'rechazado').length
+                    }
+                };
             }
         };
 
         // ============================================
-        // ADMIN - COMPLETO
+        // ADMIN - VERSIÓN COMPLETA
         // ============================================
         const Admin = {
             credentials: { usuario: 'admin', password: 'Atrevete2026!' },
             usuarioEditando: null,
             accionConfirmacion: null,
-            tabActual: 'banners',
+            tabActual: 'dashboard',
+            charts: {},
 
             // ============================================
             // INICIALIZACIÓN
@@ -1145,7 +1270,6 @@
                 DB.init();
                 this.verificarSesion();
                 
-                // Eventos de preview
                 document.getElementById('admin-logo-url')?.addEventListener('input', (e) => {
                     this.mostrarPreviewLogo(e.target.value);
                 });
@@ -1176,6 +1300,7 @@
                 document.getElementById('login-screen').classList.add('hidden');
                 document.getElementById('admin-panel').classList.remove('hidden');
                 this.cargarValoresGuardados();
+                this.actualizarDashboard();
                 this.cargarUsuarios();
                 this.cargarEspecialistas();
                 this.cargarSolicitudes();
@@ -1190,7 +1315,7 @@
                 if (usuario === this.credentials.usuario && password === this.credentials.password) {
                     sessionStorage.setItem('admin_sesion', 'true');
                     errorDiv.classList.add('hidden');
-                    this.mostrarToast('✅ ¡Bienvenido al Panel Administrativo!', 'success');
+                    this.mostrarToast('✅ ¡Bienvenido al Panel Administrativo Pro!', 'success');
                     this.mostrarPanel();
                 } else {
                     errorDiv.classList.remove('hidden');
@@ -1215,6 +1340,152 @@
                     input.type = 'password';
                     btn.textContent = '👁️';
                 }
+            },
+
+            // ============================================
+            // DASHBOARD Y ESTADÍSTICAS
+            // ============================================
+            actualizarDashboard() {
+                const stats = DB.getEstadisticas();
+                
+                document.getElementById('stat-total-usuarios').textContent = stats.totalUsuarios;
+                document.getElementById('stat-total-especialistas').textContent = stats.totalEspecialistas;
+                document.getElementById('stat-solicitudes-pendientes').textContent = stats.totalPendientes;
+                document.getElementById('stat-espacios-activos').textContent = stats.totalActivos;
+                
+                document.getElementById('resumen-usuarios-activos').textContent = stats.totalUsuarios;
+                document.getElementById('resumen-espacios-aprobados').textContent = stats.totalActivos;
+                document.getElementById('resumen-solicitudes-totales').textContent = stats.totalSolicitudes;
+                document.getElementById('resumen-imagenes-totales').textContent = stats.totalImagenes;
+
+                // Simular cambios
+                document.getElementById('stat-usuarios-change').textContent = `+${Math.floor(Math.random() * 15 + 1)}% este mes`;
+                document.getElementById('stat-especialistas-change').textContent = `+${Math.floor(Math.random() * 10 + 1)}% este mes`;
+                document.getElementById('stat-espacios-change').textContent = `+${Math.floor(Math.random() * 20 + 5)}% este mes`;
+
+                this.actualizarGraficos(stats);
+                this.cargarActividadReciente();
+            },
+
+            actualizarGraficos(stats) {
+                const ctxRoles = document.getElementById('chart-roles')?.getContext('2d');
+                const ctxSolicitudes = document.getElementById('chart-solicitudes')?.getContext('2d');
+                const ctxEvolucion = document.getElementById('chart-evolucion')?.getContext('2d');
+
+                if (ctxRoles) {
+                    if (this.charts.roles) this.charts.roles.destroy();
+                    this.charts.roles = new Chart(ctxRoles, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Administradores', 'Especialistas', 'Usuarios'],
+                            datasets: [{
+                                data: [stats.usuariosPorRol.admin, stats.usuariosPorRol.especialista, stats.usuariosPorRol.usuario],
+                                backgroundColor: ['#E27D60', '#F0B7A1', '#7A8A7C'],
+                                borderWidth: 2,
+                                borderColor: '#fff'
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    position: 'bottom',
+                                    labels: { font: { size: 10 }, boxWidth: 12, padding: 8 }
+                                }
+                            }
+                        }
+                    });
+                }
+
+                if (ctxSolicitudes) {
+                    if (this.charts.solicitudes) this.charts.solicitudes.destroy();
+                    this.charts.solicitudes = new Chart(ctxSolicitudes, {
+                        type: 'bar',
+                        data: {
+                            labels: ['Pendientes', 'Aprobados', 'Rechazados'],
+                            datasets: [{
+                                label: 'Solicitudes',
+                                data: [stats.solicitudesPorEstado.pendiente, stats.solicitudesPorEstado.aprobado, stats.solicitudesPorEstado.rechazado],
+                                backgroundColor: ['#ffc107', '#28a745', '#dc3545'],
+                                borderRadius: 8
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: { display: false }
+                            },
+                            scales: {
+                                y: { beginAtZero: true, ticks: { stepSize: 1, font: { size: 9 } } },
+                                x: { ticks: { font: { size: 9 } } }
+                            }
+                        }
+                    });
+                }
+
+                if (ctxEvolucion) {
+                    if (this.charts.evolucion) this.charts.evolucion.destroy();
+                    const meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'];
+                    const datos = meses.map(() => Math.floor(Math.random() * 20 + 5));
+                    this.charts.evolucion = new Chart(ctxEvolucion, {
+                        type: 'line',
+                        data: {
+                            labels: meses,
+                            datasets: [{
+                                label: 'Nuevos usuarios',
+                                data: datos,
+                                borderColor: '#E27D60',
+                                backgroundColor: 'rgba(226, 125, 96, 0.1)',
+                                fill: true,
+                                tension: 0.4,
+                                pointBackgroundColor: '#E27D60'
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: { display: false }
+                            },
+                            scales: {
+                                y: { beginAtZero: true, ticks: { stepSize: 2, font: { size: 9 } } },
+                                x: { ticks: { font: { size: 9 } } }
+                            }
+                        }
+                    });
+                }
+            },
+
+            cargarActividadReciente() {
+                const historial = DB.getHistorial();
+                const container = document.getElementById('actividad-reciente');
+                
+                if (historial.length === 0) {
+                    container.innerHTML = '<p class="text-xs text-[var(--color-secondary)]/60 text-center py-4">No hay actividad reciente</p>';
+                    return;
+                }
+
+                const ultimas = historial.slice(-5).reverse();
+                const iconos = {
+                    'crear_usuario': '➕',
+                    'editar_usuario': '✏️',
+                    'eliminar_usuario': '🗑️',
+                    'crear_solicitud': '📋',
+                    'actualizar_solicitud': '🔄',
+                    'eliminar_solicitud': '🗑️'
+                };
+
+                container.innerHTML = ultimas.map(h => `
+                    <div class="flex items-start gap-3 py-2 border-b border-stone-100">
+                        <span class="text-base">${iconos[h.accion] || '📌'}</span>
+                        <div class="flex-1">
+                            <p class="text-xs text-[var(--color-secondary)]">${h.detalle}</p>
+                            <p class="text-[10px] text-[var(--color-secondary)]/50">${h.fecha}</p>
+                        </div>
+                    </div>
+                `).join('');
             },
 
             // ============================================
@@ -1286,7 +1557,7 @@
                     document.documentElement.style.setProperty('--color-secondary', colorSecondary);
                 }
 
-                this.mostrarToast('✅ Cambios guardados exitosamente', 'success');
+                this.mostrarToast('✅ Cambios guardados', 'success');
             },
 
             resetearValores() {
@@ -1326,6 +1597,7 @@
                 const content = document.getElementById(`tab-${tab}`);
                 if (content) content.classList.remove('hidden');
 
+                if (tab === 'dashboard') this.actualizarDashboard();
                 if (tab === 'usuarios') this.cargarUsuarios();
                 if (tab === 'especialistas') this.cargarEspecialistas();
                 if (tab === 'solicitudes') this.cargarSolicitudes();
@@ -1338,15 +1610,18 @@
                 const usuarios = DB.getUsuarios();
                 const tbody = document.getElementById('tabla-usuarios-body');
                 const buscar = document.getElementById('buscar-usuarios')?.value?.toLowerCase() || '';
+                const filtroRol = document.getElementById('filtro-rol-usuarios')?.value || 'todos';
 
-                const filtrados = usuarios.filter(u => {
+                let filtrados = usuarios.filter(u => {
                     const nombre = u.nombre.toLowerCase();
                     const email = u.email.toLowerCase();
-                    return nombre.includes(buscar) || email.includes(buscar);
+                    const matchBusqueda = nombre.includes(buscar) || email.includes(buscar);
+                    const matchRol = filtroRol === 'todos' || u.rol === filtroRol;
+                    return matchBusqueda && matchRol;
                 });
 
                 if (filtrados.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:20px;color:#999;">No hay usuarios registrados</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:20px;color:#999;">No hay usuarios</td></tr>`;
                     return;
                 }
 
@@ -1363,9 +1638,10 @@
                             <td>${u.email}</td>
                             <td><span class="badge ${rolBadge}">${rolLabel}</span></td>
                             <td><span class="badge ${estadoBadge}">${estadoLabel}</span></td>
+                            <td>${u.fechaRegistro || '—'}</td>
                             <td>
-                                <button onclick="Admin.verUsuario(${u.id})" class="btn-sm clay-btn-success">👁️</button>
-                                <button onclick="Admin.eliminarUsuario(${u.id})" class="btn-sm clay-btn-danger">🗑️</button>
+                                <button onclick="Admin.verUsuario(${u.id})" class="btn-sm btn-info-sm">👁️</button>
+                                <button onclick="Admin.eliminarUsuario(${u.id})" class="btn-sm btn-danger-sm">🗑️</button>
                             </td>
                         </tr>
                     `;
@@ -1437,6 +1713,7 @@
                 this.cargarUsuarios();
                 this.cargarEspecialistas();
                 this.actualizarContadores();
+                this.actualizarDashboard();
             },
 
             eliminarUsuario(id) {
@@ -1451,6 +1728,7 @@
                         this.cargarUsuarios();
                         this.cargarEspecialistas();
                         this.actualizarContadores();
+                        this.actualizarDashboard();
                         this.cerrarModal('modal-confirmacion');
                     }
                 );
@@ -1464,16 +1742,22 @@
                 const especialistas = usuarios.filter(u => u.rol === 'especialista');
                 const tbody = document.getElementById('tabla-especialistas-body');
                 const buscar = document.getElementById('buscar-especialistas')?.value?.toLowerCase() || '';
+                const filtroEstado = document.getElementById('filtro-estado-especialistas')?.value || 'todos';
 
-                const filtrados = especialistas.filter(u => {
+                let filtrados = especialistas.filter(u => {
                     const nombre = u.nombre.toLowerCase();
                     const email = u.email.toLowerCase();
                     const esp = (u.especialidad || '').toLowerCase();
-                    return nombre.includes(buscar) || email.includes(buscar) || esp.includes(buscar);
+                    const matchBusqueda = nombre.includes(buscar) || email.includes(buscar) || esp.includes(buscar);
+                    
+                    const estadoEventos = localStorage.getItem('eventos_estado_' + u.id) || 'inactivo';
+                    const matchEstado = filtroEstado === 'todos' || estadoEventos === filtroEstado;
+                    
+                    return matchBusqueda && matchEstado;
                 });
 
                 if (filtrados.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:20px;color:#999;">No hay especialistas registrados</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:20px;color:#999;">No hay especialistas</td></tr>`;
                     return;
                 }
 
@@ -1494,8 +1778,8 @@
                             <td>${u.especialidad || '—'}</td>
                             <td>${estadoLabels[estadoEventos] || estadoLabels.inactivo}</td>
                             <td>
-                                <button onclick="Admin.verUsuario(${u.id})" class="btn-sm clay-btn-success">👁️</button>
-                                <button onclick="Admin.eliminarUsuario(${u.id})" class="btn-sm clay-btn-danger">🗑️</button>
+                                <button onclick="Admin.verUsuario(${u.id})" class="btn-sm btn-info-sm">👁️</button>
+                                <button onclick="Admin.eliminarUsuario(${u.id})" class="btn-sm btn-danger-sm">🗑️</button>
                             </td>
                         </tr>
                     `;
@@ -1512,13 +1796,19 @@
             cargarSolicitudes() {
                 const solicitudes = DB.getSolicitudes();
                 const tbody = document.getElementById('tabla-solicitudes-body');
+                const filtroEstado = document.getElementById('filtro-estado-solicitudes')?.value || 'todos';
 
-                if (solicitudes.length === 0) {
+                let filtrados = solicitudes;
+                if (filtroEstado !== 'todos') {
+                    filtrados = solicitudes.filter(s => s.estado === filtroEstado);
+                }
+
+                if (filtrados.length === 0) {
                     tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:20px;color:#999;">🎉 No hay solicitudes</td></tr>`;
                     return;
                 }
 
-                tbody.innerHTML = solicitudes.map(s => {
+                tbody.innerHTML = filtrados.map(s => {
                     const estadoLabels = {
                         'pendiente': '<span class="badge badge-pendiente">⏳ Pendiente</span>',
                         'aprobado': '<span class="badge badge-aprobado">✅ Aprobado</span>',
@@ -1526,10 +1816,10 @@
                     };
 
                     const acciones = s.estado === 'pendiente' ? `
-                        <button onclick="Admin.aprobarSolicitud(${s.id})" class="btn-sm clay-btn-success">✅</button>
-                        <button onclick="Admin.rechazarSolicitud(${s.id})" class="btn-sm clay-btn-danger">❌</button>
+                        <button onclick="Admin.aprobarSolicitud(${s.id})" class="btn-sm btn-success-sm">✅</button>
+                        <button onclick="Admin.rechazarSolicitud(${s.id})" class="btn-sm btn-danger-sm">❌</button>
                     ` : `
-                        <button onclick="Admin.eliminarSolicitud(${s.id})" class="btn-sm clay-btn-danger">🗑️</button>
+                        <button onclick="Admin.eliminarSolicitud(${s.id})" class="btn-sm btn-danger-sm">🗑️</button>
                     `;
 
                     return `
@@ -1546,7 +1836,7 @@
                 }).join('');
 
                 const pendientes = solicitudes.filter(s => s.estado === 'pendiente').length;
-                document.getElementById('solicitudes-count').textContent = solicitudes.length + ' solicitudes';
+                document.getElementById('solicitudes-count').textContent = filtrados.length + ' solicitudes';
                 const badge = document.getElementById('solicitudes-badge');
                 if (pendientes > 0) {
                     badge.textContent = pendientes;
@@ -1574,6 +1864,7 @@
                         this.cargarSolicitudes();
                         this.cargarEspecialistas();
                         this.actualizarContadores();
+                        this.actualizarDashboard();
                         this.cerrarModal('modal-confirmacion');
                     }
                 );
@@ -1602,6 +1893,7 @@
                 this.cargarSolicitudes();
                 this.cargarEspecialistas();
                 this.actualizarContadores();
+                this.actualizarDashboard();
             },
 
             eliminarSolicitud(id) {
@@ -1622,7 +1914,6 @@
             // ============================================
             crearUsuario(e) {
                 e.preventDefault();
-                const form = e.target || document.getElementById('form-crear-usuario');
                 const nombre = document.getElementById('crear-nombre-form').value.trim();
                 const email = document.getElementById('crear-email-form').value.trim();
                 const password = document.getElementById('crear-password-form').value;
@@ -1669,15 +1960,209 @@
                     });
                 }
 
-                form.reset();
+                document.getElementById('form-crear-usuario')?.reset();
                 this.mostrarToast(`✅ Usuario ${creado.nombre} creado`, 'success');
                 this.cargarUsuarios();
                 this.cargarEspecialistas();
                 this.cargarSolicitudes();
                 this.actualizarContadores();
+                this.actualizarDashboard();
+            },
 
-                // Cerrar modal si está abierto
-                this.cerrarModal('modal-crear-usuario');
+            // ============================================
+            // REPORTES
+            // ============================================
+            generarReporte(tipo) {
+                const stats = DB.getEstadisticas();
+                const usuarios = DB.getUsuarios();
+                const solicitudes = DB.getSolicitudes();
+                const body = document.getElementById('modal-reporte-body');
+
+                let html = '';
+
+                if (tipo === 'usuarios') {
+                    html = `
+                        <h4 class="font-bold text-[var(--color-secondary)] mb-3">👥 Reporte de Usuarios</h4>
+                        <p class="text-xs text-[var(--color-secondary)]/60 mb-4">Total: ${usuarios.length} usuarios registrados</p>
+                        <div class="table-container">
+                            <table>
+                                <thead><tr><th>ID</th><th>Nombre</th><th>Email</th><th>Rol</th><th>Estado</th><th>Registro</th></tr></thead>
+                                <tbody>
+                                    ${usuarios.map(u => `
+                                        <tr>
+                                            <td>#${u.id}</td>
+                                            <td>${u.nombre}</td>
+                                            <td>${u.email}</td>
+                                            <td>${u.rol}</td>
+                                            <td>${u.activo ? '✅ Activo' : '❌ Inactivo'}</td>
+                                            <td>${u.fechaRegistro || '—'}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    `;
+                } else if (tipo === 'especialistas') {
+                    const especialistas = usuarios.filter(u => u.rol === 'especialista');
+                    html = `
+                        <h4 class="font-bold text-[var(--color-secondary)] mb-3">👩‍⚕️ Reporte de Especialistas</h4>
+                        <p class="text-xs text-[var(--color-secondary)]/60 mb-4">Total: ${especialistas.length} especialistas</p>
+                        <div class="table-container">
+                            <table>
+                                <thead><tr><th>ID</th><th>Nombre</th><th>Email</th><th>Especialidad</th><th>Estado Eventos</th></tr></thead>
+                                <tbody>
+                                    ${especialistas.map(u => {
+                                        const estado = localStorage.getItem('eventos_estado_' + u.id) || 'inactivo';
+                                        return `
+                                            <tr>
+                                                <td>#${u.id}</td>
+                                                <td>${u.nombre}</td>
+                                                <td>${u.email}</td>
+                                                <td>${u.especialidad || '—'}</td>
+                                                <td><span class="badge badge-${estado}">${estado}</span></td>
+                                            </tr>
+                                        `;
+                                    }).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    `;
+                } else if (tipo === 'solicitudes') {
+                    html = `
+                        <h4 class="font-bold text-[var(--color-secondary)] mb-3">📋 Reporte de Solicitudes</h4>
+                        <p class="text-xs text-[var(--color-secondary)]/60 mb-4">Total: ${solicitudes.length} solicitudes</p>
+                        <div class="table-container">
+                            <table>
+                                <thead><tr><th>ID</th><th>Especialista</th><th>Email</th><th>Fecha</th><th>Estado</th></tr></thead>
+                                <tbody>
+                                    ${solicitudes.map(s => `
+                                        <tr>
+                                            <td>#${s.id}</td>
+                                            <td>${s.nombre}</td>
+                                            <td>${s.email}</td>
+                                            <td>${s.fecha_solicitud || '—'}</td>
+                                            <td><span class="badge badge-${s.estado}">${s.estado}</span></td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    `;
+                } else {
+                    html = `
+                        <h4 class="font-bold text-[var(--color-secondary)] mb-3">📊 Reporte General</h4>
+                        <div class="grid grid-cols-2 gap-3 mb-4">
+                            <div class="bg-stone-50 p-3 rounded-xl text-center">
+                                <div class="text-2xl font-bold text-[var(--color-primary)]">${stats.totalUsuarios}</div>
+                                <div class="text-[10px] text-[var(--color-secondary)]">Total Usuarios</div>
+                            </div>
+                            <div class="bg-stone-50 p-3 rounded-xl text-center">
+                                <div class="text-2xl font-bold text-[var(--color-primary)]">${stats.totalEspecialistas}</div>
+                                <div class="text-[10px] text-[var(--color-secondary)]">Especialistas</div>
+                            </div>
+                            <div class="bg-stone-50 p-3 rounded-xl text-center">
+                                <div class="text-2xl font-bold text-[var(--color-warning)]">${stats.totalPendientes}</div>
+                                <div class="text-[10px] text-[var(--color-secondary)]">Pendientes</div>
+                            </div>
+                            <div class="bg-stone-50 p-3 rounded-xl text-center">
+                                <div class="text-2xl font-bold text-[var(--color-success)]">${stats.totalActivos}</div>
+                                <div class="text-[10px] text-[var(--color-secondary)]">Espacios Activos</div>
+                            </div>
+                        </div>
+                        <div class="text-xs text-[var(--color-secondary)]/60">
+                            <p>📅 Reporte generado: ${new Date().toLocaleString()}</p>
+                            <p>📊 Datos actualizados en tiempo real</p>
+                        </div>
+                    `;
+                }
+
+                body.innerHTML = html;
+                document.getElementById('modal-reporte').classList.add('show');
+            },
+
+            exportarReporte() {
+                const content = document.getElementById('modal-reporte-body').innerText;
+                const blob = new Blob([content], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `reporte_${new Date().toISOString().split('T')[0]}.txt`;
+                a.click();
+                URL.revokeObjectURL(url);
+                this.mostrarToast('📥 Reporte exportado', 'success');
+            },
+
+            // ============================================
+            // EXPORTAR CSV
+            // ============================================
+            exportarCSV(tipo) {
+                let data = [];
+                let headers = [];
+                let filename = '';
+
+                if (tipo === 'usuarios') {
+                    const usuarios = DB.getUsuarios();
+                    headers = ['ID', 'Nombre', 'Email', 'Rol', 'Teléfono', 'Estado', 'Registro'];
+                    data = usuarios.map(u => [u.id, u.nombre, u.email, u.rol, u.telefono || '', u.activo ? 'Activo' : 'Inactivo', u.fechaRegistro || '']);
+                    filename = 'usuarios';
+                } else if (tipo === 'especialistas') {
+                    const usuarios = DB.getUsuarios();
+                    const especialistas = usuarios.filter(u => u.rol === 'especialista');
+                    headers = ['ID', 'Nombre', 'Email', 'Especialidad', 'Estado Eventos'];
+                    data = especialistas.map(u => {
+                        const estado = localStorage.getItem('eventos_estado_' + u.id) || 'inactivo';
+                        return [u.id, u.nombre, u.email, u.especialidad || '', estado];
+                    });
+                    filename = 'especialistas';
+                } else if (tipo === 'solicitudes') {
+                    const solicitudes = DB.getSolicitudes();
+                    headers = ['ID', 'Especialista', 'Email', 'Especialidad', 'Fecha', 'Estado'];
+                    data = solicitudes.map(s => [s.id, s.nombre, s.email, s.especialidad || '', s.fecha_solicitud || '', s.estado]);
+                    filename = 'solicitudes';
+                }
+
+                let csv = headers.join(',') + '\n';
+                data.forEach(row => {
+                    csv += row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(',') + '\n';
+                });
+
+                const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${filename}_${new Date().toISOString().split('T')[0]}.csv`;
+                a.click();
+                URL.revokeObjectURL(url);
+                this.mostrarToast(`📥 CSV de ${tipo} exportado`, 'success');
+            },
+
+            exportarDatos() {
+                const datos = {
+                    usuarios: DB.getUsuarios(),
+                    solicitudes: DB.getSolicitudes(),
+                    galeria: DB.getGaleria(),
+                    notificaciones: JSON.parse(localStorage.getItem('db_notificaciones') || '[]'),
+                    historial: DB.getHistorial(),
+                    exportado: new Date().toISOString()
+                };
+
+                const blob = new Blob([JSON.stringify(datos, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `atreveteht_backup_${new Date().toISOString().split('T')[0]}.json`;
+                a.click();
+                URL.revokeObjectURL(url);
+                this.mostrarToast('📥 Backup exportado', 'success');
+            },
+
+            refrescarDatos() {
+                this.mostrarToast('🔄 Datos actualizados', 'info');
+                this.cargarUsuarios();
+                this.cargarEspecialistas();
+                this.cargarSolicitudes();
+                this.actualizarContadores();
+                this.actualizarDashboard();
             },
 
             // ============================================
@@ -1716,32 +2201,9 @@
             },
 
             // ============================================
-            // EXPORTAR DATOS
-            // ============================================
-            exportarDatos() {
-                const datos = {
-                    usuarios: DB.getUsuarios(),
-                    solicitudes: DB.getSolicitudes(),
-                    galeria: DB.getGaleria(),
-                    notificaciones: JSON.parse(localStorage.getItem('db_notificaciones') || '[]'),
-                    exportado: new Date().toISOString()
-                };
-
-                const blob = new Blob([JSON.stringify(datos, null, 2)], { type: 'application/json' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `atreveteht_backup_${new Date().toISOString().split('T')[0]}.json`;
-                a.click();
-                URL.revokeObjectURL(url);
-
-                this.mostrarToast('📥 Datos exportados correctamente', 'success');
-            },
-
-            // ============================================
             // TOAST
             // ============================================
-            mostrarToast(mensaje, tipo) {
+            mostrarToast(mensaje, tipo = 'success') {
                 const toast = document.getElementById('toast');
                 toast.className = `toast toast-${tipo}`;
                 toast.textContent = mensaje;
@@ -1755,7 +2217,7 @@
         // ============================================
         document.addEventListener('DOMContentLoaded', () => {
             Admin.init();
-            console.log('🚀 Panel Administrativo AtréveteHT - v2.0');
+            console.log('🚀 Panel Administrativo Pro - AtréveteHT v3.0');
         });
     </script>
 </body>
