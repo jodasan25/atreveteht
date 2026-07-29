@@ -1221,7 +1221,6 @@
                 const aprobados = solicitudes.filter(s => s.estado === 'aprobado');
                 const galeria = this.getGaleria();
 
-                // Calcular cambios mensuales (simulados)
                 const totalUsuarios = usuarios.length;
                 const totalEspecialistas = especialistas.length;
                 const totalPendientes = pendientes.length;
@@ -1254,7 +1253,7 @@
         };
 
         // ============================================
-        // ADMIN - VERSIÓN COMPLETA
+        // ADMIN - VERSIÓN COMPLETA CON SINCRONIZACIÓN
         // ============================================
         const Admin = {
             credentials: { usuario: 'admin', password: 'Atrevete2026!' },
@@ -2217,7 +2216,7 @@
         // ============================================
         document.addEventListener('DOMContentLoaded', () => {
             Admin.init();
-            console.log('🚀 Panel Administrativo Pro - AtréveteHT v3.0');
+            console.log('🚀 Panel Administrativo Pro - AtréveteHT v3.0 (Sincronizado)');
         });
     </script>
 </body>
