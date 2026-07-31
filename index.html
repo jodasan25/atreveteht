@@ -6,39 +6,46 @@
     <title>Atrévete HealthTech - Plataforma Integrativa</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* ============================================
-           TODOS TUS ESTILOS EXISTENTES AQUÍ
-           (Mantén los que ya tienes)
-           ============================================ */
         .hidden { display: none !important; }
         body { background-color: #F4F1ED; font-family: 'Inter', system-ui, sans-serif; }
         .clay-card { background: #FFFFFF; border-radius: 28px; box-shadow: 8px 8px 16px #e0deda, -8px -8px 16px #ffffff, inset 3px 3px 6px #ffffff, inset -3px -3px 6px #e0deda; }
         .clay-btn-primary { background: #E27D60; color: #FFFFFF; border-radius: 9999px; box-shadow: 6px 6px 12px #c06a51, -6px -6px 12px #ffffff; transition: all 0.2s ease; cursor: pointer; border: none; padding: 12px 24px; font-weight: bold; }
         .clay-btn-primary:hover { transform: translateY(-2px); }
+        .clay-btn-secondary { background: #7A8A7C; color: #FFFFFF; border-radius: 9999px; transition: all 0.2s ease; cursor: pointer; border: none; padding: 12px 24px; font-weight: bold; }
         .toast { position: fixed; top: 20px; right: 20px; z-index: 9999; padding: 16px 24px; border-radius: 16px; color: white; font-weight: bold; font-size: 14px; box-shadow: 0 8px 24px rgba(0,0,0,0.2); transform: translateX(120%); transition: transform 0.3s ease; max-width: 90%; }
         .toast.show { transform: translateX(0); }
         .toast-success { background: #4CAF50; }
         .toast-error { background: #f44336; }
         .toast-warning { background: #FF9800; }
         .toast-info { background: #2196F3; }
-        /* ... resto de estilos ... */
+        .clay-nav { background: #F4F1ED; border-top: 1px solid #e0deda; padding: 10px 0; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; cursor: pointer; color: #7A8A7C; font-size: 10px; font-weight: bold; }
+        .nav-item.active { color: #E27D60; }
+        .nav-icon { font-size: 18px; margin-bottom: 2px; }
+        .header-action-btn { background: #FFFFFF; border: 1px solid #e0deda; padding: 6px 12px; border-radius: 12px; font-size: 11px; font-weight: bold; color: #7A8A7C; cursor: pointer; }
+        .header-profile-btn { display: flex; align-items: center; gap: 8px; background: #FFFFFF; padding: 4px 10px; border-radius: 12px; border: 1px solid #e0deda; cursor: pointer; }
+        .header-profile-avatar { width: 28px; height: 28px; background: #E27D60; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; }
+        .header-profile-name { font-size: 11px; font-weight: bold; color: #7A8A7C; }
     </style>
 </head>
 <body>
 
-    <!-- ============================================
-    TOAST
-    ============================================ -->
+    <!-- TOAST -->
     <div id="toast" class="toast"></div>
 
-    <!-- ============================================
-    BARRERA LEGAL (mantén la que ya tienes)
-    ============================================ -->
-    <!-- ... tu modal legal existente ... -->
+    <!-- BARRERA LEGAL -->
+    <div id="modal-legal-gate" class="hidden fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
+        <div class="clay-card p-6 max-w-sm w-full space-y-4 bg-white text-center">
+            <h3 class="font-bold text-lg text-[#7A8A7C]">Aviso Legal y Términos</h3>
+            <p class="text-xs text-[#7A8A7C]/80">Para continuar usando Atrévete HealthTech, debes aceptar nuestros términos y condiciones de salud integrativa.</p>
+            <div class="flex gap-2 pt-2">
+                <button onclick="App.cancelarLegal()" class="flex-1 py-2 text-xs font-bold text-[#7A8A7C] border border-[#7A8A7C]/30 rounded-xl">Cancelar</button>
+                <button onclick="App.aceptarLegalYContinuar()" class="flex-1 py-2 text-xs font-bold bg-[#E27D60] text-white rounded-xl">Aceptar</button>
+            </div>
+        </div>
+    </div>
 
-    <!-- ============================================
-    CABECERA
-    ============================================ -->
+    <!-- CABECERA -->
     <header class="pt-3 pb-1 px-6 max-w-md mx-auto">
         <div class="flex items-center justify-between">
             <div class="cursor-pointer" onclick="App.switchView('view-home')">
@@ -59,19 +66,93 @@
         </div>
     </header>
 
-    <!-- ============================================
-    ASISTENTE VIRTUAL (mantén el que ya tienes)
-    ============================================ -->
-    <!-- ... tu asistente existente ... -->
+    <!-- VISTAS -->
+    <!-- VISTA: HOME -->
+    <main id="view-home" class="app-view max-w-md mx-auto px-5 py-6 space-y-6">
+        <div class="clay-card p-6 text-center space-y-3">
+            <h2 class="text-xl font-bold text-[#7A8A7C]">Bienvenido a Atrévete HealthTech</h2>
+            <p class="text-xs text-[#7A8A7C]/70">Plataforma integrativa para tu bienestar somático y mental.</p>
+            <button onclick="App.switchView('view-regulacion')" class="clay-btn-primary w-full">Comenzar Gimnasio Somático</button>
+        </div>
+    </main>
 
-    <!-- ============================================
-    VISTAS (mantén todas las que ya tienes)
-    ============================================ -->
-    <!-- view-home, view-auth, view-recovery, view-perfil-usuario, etc. -->
+    <!-- VISTA: AUTH -->
+    <main id="view-auth" class="app-view max-w-md mx-auto px-5 py-6 space-y-6 hidden">
+        <div class="clay-card p-6 space-y-4">
+            <div class="flex bg-[#F4F1ED] p-1 rounded-2xl">
+                <button id="tab-login" onclick="App.switchAuthMode('login')" class="flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[#7A8A7C] shadow-sm transition">Iniciar Sesión</button>
+                <button id="tab-register" onclick="App.switchAuthMode('register')" class="flex-1 py-2.5 text-xs font-bold rounded-xl text-[#7A8A7C] transition">Registrarse</button>
+            </div>
+            <div class="text-center space-y-1">
+                <h2 id="auth-title" class="text-lg font-bold text-[#7A8A7C]">Iniciar Sesión</h2>
+                <p id="auth-subtitle" class="text-xs text-[#7A8A7C]/70">Accede a tu cuenta de Atrévete HealthTech</p>
+            </div>
+            <div class="space-y-3">
+                <div id="field-nombre" class="hidden space-y-1">
+                    <label class="text-[10px] font-bold text-[#7A8A7C]">Nombre Completo</label>
+                    <input type="text" id="input-nombre" placeholder="Tu nombre" class="w-full p-3 rounded-xl border border-[#e0deda] text-xs outline-none bg-[#F4F1ED]">
+                </div>
+                <div class="space-y-1">
+                    <label class="text-[10px] font-bold text-[#7A8A7C]">Correo Electrónico</label>
+                    <input type="email" id="input-email" placeholder="correo@ejemplo.com" class="w-full p-3 rounded-xl border border-[#e0deda] text-xs outline-none bg-[#F4F1ED]">
+                    <p id="email-error" class="text-[10px] text-red-500 hidden">Ingresa un correo válido</p>
+                </div>
+                <div class="space-y-1">
+                    <label class="text-[10px] font-bold text-[#7A8A7C]">Contraseña</label>
+                    <input type="password" id="input-password" placeholder="••••••••" class="w-full p-3 rounded-xl border border-[#e0deda] text-xs outline-none bg-[#F4F1ED]">
+                    <p id="password-error" class="text-[10px] text-red-500 hidden">Mínimo 6 caracteres</p>
+                </div>
+                <div id="field-rol" class="hidden space-y-1">
+                    <label class="text-[10px] font-bold text-[#7A8A7C]">Tipo de Cuenta</label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div id="role-user" onclick="App.selectRole('user')" class="role-option selected p-3 border rounded-xl text-center cursor-pointer text-xs font-bold border-[#E27D60] text-[#E27D60]">Usuario</div>
+                        <div id="role-spec" onclick="App.selectRole('especialista')" class="role-option p-3 border rounded-xl text-center cursor-pointer text-xs font-bold border-[#e0deda] text-[#7A8A7C]">Especialista</div>
+                    </div>
+                </div>
+                <button id="auth-submit-btn" onclick="App.procesarAuthEmail()" class="clay-btn-primary w-full py-3 mt-2">Iniciar Sesión</button>
+            </div>
+        </div>
+    </main>
 
-    <!-- ============================================
-    VISTA: VER EVENTOS PÚBLICOS
-    ============================================ -->
+    <!-- VISTA: PERFIL USUARIO -->
+    <main id="view-perfil-usuario" class="app-view max-w-md mx-auto px-5 py-6 space-y-6 hidden">
+        <div class="clay-card p-5 text-center space-y-3">
+            <div id="perfil-avatar" class="w-20 h-20 rounded-full bg-[#E27D60] text-white flex items-center justify-center text-2xl font-bold mx-auto">US</div>
+            <div>
+                <h2 id="perfil-nombre" class="font-bold text-lg text-[#7A8A7C]">Usuario</h2>
+                <p id="perfil-email" class="text-xs text-[#7A8A7C]/70">correo@ejemplo.com</p>
+                <span id="evento-status-badge" class="inline-block mt-2 text-[10px] font-bold px-3 py-1 rounded-full bg-gray-100 text-gray-700">🔒 Inactivo</span>
+            </div>
+        </div>
+
+        <!-- ESTADOS DE EVENTOS -->
+        <div id="evento-estado-inactivo" class="clay-card p-4 space-y-3">
+            <h4 class="font-bold text-sm text-[#7A8A7C]">Espacio de Eventos</h4>
+            <p class="text-xs text-[#7A8A7C]/70">Regístrate como especialista o solicita tu espacio para publicar eventos y galerías.</p>
+            <button onclick="App.guardarEstadoEventosSincronizado(App.state.user.id, 'pendiente')" class="clay-btn-primary w-full py-2 text-xs">Solicitar Espacio</button>
+        </div>
+        <div id="evento-estado-pendiente" class="clay-card p-4 space-y-2 hidden">
+            <h4 class="font-bold text-sm text-yellow-600">⏳ Solicitud en Revisión</h4>
+            <p class="text-xs text-[#7A8A7C]/70">Tu solicitud para el espacio de eventos está siendo evaluada por el administrador.</p>
+        </div>
+        <div id="evento-estado-rechazado" class="clay-card p-4 space-y-2 hidden">
+            <h4 class="font-bold text-sm text-red-600">❌ Solicitud Rechazada</h4>
+            <p class="text-xs text-[#7A8A7C]/70" id="evento-motivo-texto">Contacta con soporte para más detalles.</p>
+        </div>
+        <div id="evento-estado-aprobado" class="clay-card p-4 space-y-4 hidden">
+            <h4 class="font-bold text-sm text-green-600">✅ Panel de Eventos Activo</h4>
+            <form id="formSubirImagen" class="space-y-3">
+                <input type="text" name="titulo" placeholder="Título del evento" class="w-full p-2.5 rounded-xl border border-[#e0deda] text-xs outline-none bg-[#F4F1ED]" required>
+                <input type="url" name="url" placeholder="URL de la imagen (ej: https://...)" class="w-full p-2.5 rounded-xl border border-[#e0deda] text-xs outline-none bg-[#F4F1ED]" required>
+                <button type="submit" class="clay-btn-primary w-full py-2 text-xs">Subir Imagen a Galería</button>
+            </form>
+            <div id="perfil-galeria-grid" class="grid grid-cols-2 gap-2 pt-2"></div>
+        </div>
+
+        <button onclick="App.cerrarSesion()" class="clay-btn-secondary w-full py-3 text-xs">Cerrar Sesión</button>
+    </main>
+
+    <!-- VISTA: VER EVENTOS PÚBLICOS -->
     <main id="view-eventos-publicos" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
         <div class="text-center space-y-1">
             <h2 id="eventos-publicos-titulo" class="text-2xl font-bold text-[#7A8A7C]">Eventos</h2>
@@ -90,9 +171,7 @@
         <button onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold text-xs">Volver al Inicio</button>
     </main>
 
-    <!-- ============================================
-    BARRA DE NAVEGACIÓN INFERIOR
-    ============================================ -->
+    <!-- BARRA DE NAVEGACIÓN INFERIOR -->
     <nav class="clay-nav fixed bottom-0 inset-x-0 max-w-md mx-auto z-50">
         <div class="flex justify-around items-center">
             <div onclick="App.switchView('view-home')" class="nav-item active" data-view="view-home"><span class="nav-icon">🏠</span><span class="nav-label">Inicio</span></div>
@@ -103,13 +182,8 @@
         </div>
     </nav>
 
-    <!-- ============================================
-    JAVASCRIPT - APP COMPLETA CON SINCRONIZACIÓN
-    ============================================ -->
+    <!-- JAVASCRIPT -->
     <script>
-    // ============================================
-    // BASE DE DATOS SIMULADA (SINCRONIZADA)
-    // ============================================
     const DB = {
         init() {
             if (!localStorage.getItem('db_usuarios')) {
@@ -121,7 +195,6 @@
                 ];
                 localStorage.setItem('db_usuarios', JSON.stringify(usuariosIniciales));
             }
-
             if (!localStorage.getItem('db_solicitudes')) {
                 const solicitudesIniciales = [
                     { id: 1, especialista_id: 2, nombre: 'María González', email: 'maria@email.com', especialidad: 'Terapeuta Somática', fecha_solicitud: '2024-02-10 14:30:00', estado: 'pendiente', comentario_admin: '', telefono: '0414-4031678' },
@@ -129,20 +202,15 @@
                 ];
                 localStorage.setItem('db_solicitudes', JSON.stringify(solicitudesIniciales));
             }
-
             if (!localStorage.getItem('db_eventos_galeria')) {
                 localStorage.setItem('db_eventos_galeria', JSON.stringify([]));
             }
-
             if (!localStorage.getItem('db_notificaciones')) {
                 localStorage.setItem('db_notificaciones', JSON.stringify([]));
             }
         },
-
         getUsuarios() { return JSON.parse(localStorage.getItem('db_usuarios') || '[]'); },
         getUsuario(id) { return this.getUsuarios().find(u => u.id === id); },
-        getUsuarioByEmail(email) { return this.getUsuarios().find(u => u.email === email); },
-
         crearUsuario(usuario) {
             const usuarios = this.getUsuarios();
             const maxId = usuarios.reduce((max, u) => Math.max(max, u.id), 0);
@@ -151,27 +219,7 @@
             localStorage.setItem('db_usuarios', JSON.stringify(usuarios));
             return nuevo;
         },
-
-        actualizarUsuario(id, datos) {
-            const usuarios = this.getUsuarios();
-            const index = usuarios.findIndex(u => u.id === id);
-            if (index === -1) return null;
-            usuarios[index] = { ...usuarios[index], ...datos };
-            localStorage.setItem('db_usuarios', JSON.stringify(usuarios));
-            return usuarios[index];
-        },
-
-        eliminarUsuario(id) {
-            let usuarios = this.getUsuarios();
-            usuarios = usuarios.filter(u => u.id !== id);
-            localStorage.setItem('db_usuarios', JSON.stringify(usuarios));
-            return true;
-        },
-
         getSolicitudes() { return JSON.parse(localStorage.getItem('db_solicitudes') || '[]'); },
-        getSolicitud(id) { return this.getSolicitudes().find(s => s.id === id); },
-        getSolicitudesPendientes() { return this.getSolicitudes().filter(s => s.estado === 'pendiente'); },
-
         crearSolicitud(solicitud) {
             const solicitudes = this.getSolicitudes();
             const maxId = solicitudes.reduce((max, s) => Math.max(max, s.id), 0);
@@ -179,155 +227,72 @@
             solicitudes.push(nueva);
             localStorage.setItem('db_solicitudes', JSON.stringify(solicitudes));
             return nueva;
-        },
-
-        actualizarSolicitud(id, datos) {
-            const solicitudes = this.getSolicitudes();
-            const index = solicitudes.findIndex(s => s.id === id);
-            if (index === -1) return null;
-            solicitudes[index] = { ...solicitudes[index], ...datos };
-            localStorage.setItem('db_solicitudes', JSON.stringify(solicitudes));
-            return solicitudes[index];
-        },
-
-        eliminarSolicitud(id) {
-            let solicitudes = this.getSolicitudes();
-            solicitudes = solicitudes.filter(s => s.id !== id);
-            localStorage.setItem('db_solicitudes', JSON.stringify(solicitudes));
-            return true;
-        },
-
-        getGaleria() { return JSON.parse(localStorage.getItem('db_eventos_galeria') || '[]'); },
-        getGaleriaByEspecialista(especialista_id) { return this.getGaleria().filter(g => g.especialista_id === especialista_id); },
-
-        agregarImagenGaleria(datos) {
-            const galeria = this.getGaleria();
-            const nueva = { id: Date.now(), ...datos, fecha_subida: new Date().toLocaleString() };
-            galeria.push(nueva);
-            localStorage.setItem('db_eventos_galeria', JSON.stringify(galeria));
-            return nueva;
-        },
-
-        eliminarImagenGaleria(id) {
-            let galeria = this.getGaleria();
-            galeria = galeria.filter(g => g.id !== id);
-            localStorage.setItem('db_eventos_galeria', JSON.stringify(galeria));
-            return true;
-        },
-
-        crearNotificacion(notificacion) {
-            const notificaciones = JSON.parse(localStorage.getItem('db_notificaciones') || '[]');
-            const nueva = { id: Date.now(), ...notificacion, fecha: new Date().toLocaleString(), leido: false };
-            notificaciones.push(nueva);
-            localStorage.setItem('db_notificaciones', JSON.stringify(notificaciones));
-            return nueva;
         }
     };
 
-    // ============================================
-    // APP - COMPLETA
-    // ============================================
     const App = {
         state: {
             authMode: 'login',
-            quizAnswers: {},
-            selectedPayment: 'pm_bdv',
             selectedRole: 'user',
             user: {
                 id: parseInt(localStorage.getItem('user_id')) || null,
                 name: localStorage.getItem('user_name') || '',
                 email: localStorage.getItem('user_email') || '',
                 role: localStorage.getItem('user_role') || 'user',
-                registerMethod: localStorage.getItem('register_method') || 'email',
-                telefono: localStorage.getItem('user_telefono') || '',
-                fechaNac: localStorage.getItem('user_fecha_nac') || '',
-                emailVerified: localStorage.getItem('email_verified') === 'true',
-                fechaRegistro: localStorage.getItem('fecha_registro') || new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' }),
-                sesiones: parseInt(localStorage.getItem('user_sesiones')) || 0,
-                ejercicios: parseInt(localStorage.getItem('user_ejercicios')) || 0,
-                diasActivo: parseInt(localStorage.getItem('user_dias_activo')) || 0
+                telefono: localStorage.getItem('user_telefono') || ''
             },
             eventos: {
                 estado: localStorage.getItem('eventos_estado') || 'inactivo',
                 motivoRechazo: localStorage.getItem('eventos_motivo_rechazo') || '',
-                fechaSolicitud: localStorage.getItem('eventos_fecha_solicitud') || '',
-                fechaAprobacion: localStorage.getItem('eventos_fecha_aprobacion') || '',
-                galeria: JSON.parse(localStorage.getItem('eventos_galeria') || '[]'),
-                notificaciones: JSON.parse(localStorage.getItem('eventos_notificaciones') || '[]')
+                galeria: JSON.parse(localStorage.getItem('eventos_galeria') || '[]')
             },
             isAuthenticated: !!localStorage.getItem('user_email'),
             legalAceptado: localStorage.getItem('legal_aceptado') === 'true',
-            breathInterval: null,
-            currentView: 'view-home',
-            assistantOpen: false,
-            isProcessing: false,
-            adminTab: 'banners'
+            currentView: 'view-home'
         },
-
-        // ============================================
-        // INICIALIZACIÓN
-        // ============================================
         init() {
             DB.init();
             this.verificarSesion();
             this.cargarEstadoEventos();
-            this.actualizarPerfilUI();
             this.actualizarHeader();
-            this.actualizarNav();
             
-            // Event listener para subir imágenes
             document.getElementById('formSubirImagen')?.addEventListener('submit', (e) => {
                 e.preventDefault();
-                const formData = new FormData(this);
+                const formData = new FormData(e.target);
                 this.subirImagenEvento(formData);
-                this.reset();
+                e.target.reset();
             });
         },
-
         verificarSesion() {
             if (this.state.isAuthenticated && this.state.user.id) {
-                // Verificar si el usuario existe en db_usuarios
                 const usuarios = DB.getUsuarios();
                 const existe = usuarios.find(u => u.id === this.state.user.id);
                 if (!existe) {
-                    // Si no existe, crear el usuario en db_usuarios
                     DB.crearUsuario({
                         id: this.state.user.id,
                         nombre: this.state.user.name,
                         email: this.state.user.email,
                         password: '',
-                        rol: this.state.user.role,
-                        telefono: this.state.user.telefono || '',
-                        especialidad: this.state.user.role === 'especialista' ? 'Especialista' : ''
+                        rol: this.state.user.role
                     });
                 }
             }
         },
-
-        // ============================================
-        // BARRERA LEGAL
-        // ============================================
         verificarLegal() {
             if (this.state.legalAceptado) return true;
             document.getElementById('modal-legal-gate')?.classList.remove('hidden');
             return false;
         },
-
         aceptarLegalYContinuar() {
             localStorage.setItem('legal_aceptado', 'true');
             this.state.legalAceptado = true;
             document.getElementById('modal-legal-gate')?.classList.add('hidden');
             this.switchView('view-auth');
         },
-
         cancelarLegal() {
             document.getElementById('modal-legal-gate')?.classList.add('hidden');
             this.switchView('view-home');
         },
-
-        // ============================================
-        // NAVEGACIÓN
-        // ============================================
         irAPerfil() {
             if (this.state.isAuthenticated) {
                 this.switchView('view-perfil-usuario');
@@ -335,26 +300,23 @@
                 this.abrirLogin();
             }
         },
-
         abrirLogin() {
             if (!this.verificarLegal()) return;
             this.switchAuthMode('login');
             this.switchView('view-auth');
         },
-
         abrirRegistro() {
             if (!this.verificarLegal()) return;
             this.switchAuthMode('register');
             this.switchView('view-auth');
         },
-
         switchView(viewId) {
             document.querySelectorAll('.app-view').forEach(v => v.classList.add('hidden'));
             const target = document.getElementById(viewId);
             if (target) target.classList.remove('hidden');
             window.scrollTo({ top: 0, behavior: 'smooth' });
-
             this.state.currentView = viewId;
+            
             document.querySelectorAll('.nav-item').forEach(item => {
                 item.classList.remove('active');
                 if (item.dataset.view === viewId) item.classList.add('active');
@@ -364,36 +326,28 @@
                 this.switchView('view-auth');
                 return;
             }
-
             if (viewId === 'view-perfil-usuario') {
-                this.actualizarPerfilUI();
                 this.cargarEstadoEventos();
             }
         },
-
-        // ============================================
-        // SELECTOR DE ROL
-        // ============================================
         selectRole(role) {
             this.state.selectedRole = role;
-            document.querySelectorAll('.role-option').forEach(el => el.classList.remove('selected'));
-            if (role === 'user') {
-                document.getElementById('role-user')?.classList.add('selected');
-            } else {
-                document.getElementById('role-spec')?.classList.add('selected');
+            document.querySelectorAll('.role-option').forEach(el => {
+                el.classList.remove('selected', 'border-[#E27D60]', 'text-[#E27D60]');
+                el.classList.add('border-[#e0deda]', 'text-[#7A8A7C]');
+            });
+            const selectedEl = document.getElementById(role === 'user' ? 'role-user' : 'role-spec');
+            if (selectedEl) {
+                selectedEl.classList.add('selected', 'border-[#E27D60]', 'text-[#E27D60]');
+                selectedEl.classList.remove('border-[#e0deda]', 'text-[#7A8A7C]');
             }
         },
-
-        // ============================================
-        // AUTENTICACIÓN
-        // ============================================
         switchAuthMode(mode) {
             this.state.authMode = mode;
             const tabLogin = document.getElementById('tab-login');
             const tabRegister = document.getElementById('tab-register');
             const fieldNombre = document.getElementById('field-nombre');
             const fieldRol = document.getElementById('field-rol');
-            const linkForgot = document.getElementById('link-forgot-container');
             const submitBtn = document.getElementById('auth-submit-btn');
             const title = document.getElementById('auth-title');
             const subtitle = document.getElementById('auth-subtitle');
@@ -403,7 +357,6 @@
                 if (tabRegister) tabRegister.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl text-[#7A8A7C] transition';
                 if (fieldNombre) fieldNombre.classList.add('hidden');
                 if (fieldRol) fieldRol.classList.add('hidden');
-                if (linkForgot) linkForgot.classList.remove('hidden');
                 if (submitBtn) submitBtn.innerText = 'Iniciar Sesión';
                 if (title) title.innerText = 'Iniciar Sesión';
                 if (subtitle) subtitle.innerText = 'Accede a tu cuenta de Atrévete HealthTech';
@@ -412,13 +365,11 @@
                 if (tabLogin) tabLogin.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl text-[#7A8A7C] transition';
                 if (fieldNombre) fieldNombre.classList.remove('hidden');
                 if (fieldRol) fieldRol.classList.remove('hidden');
-                if (linkForgot) linkForgot.classList.add('hidden');
                 if (submitBtn) submitBtn.innerText = 'Crear Mi Cuenta';
                 if (title) title.innerText = 'Crea tu Cuenta';
                 if (subtitle) subtitle.innerText = 'Únete a nuestra plataforma somática';
             }
         },
-
         procesarAuthEmail() {
             const email = document.getElementById('input-email').value;
             const password = document.getElementById('input-password').value;
@@ -436,185 +387,54 @@
             }
             document.getElementById('password-error')?.classList.add('hidden');
 
-            let nombre = 'Usuario Atrévete';
-            if (this.state.authMode === 'register' && nombreInput && nombreInput.value.trim() !== '') {
-                nombre = nombreInput.value.trim();
-            } else {
-                nombre = email.split('@')[0];
-            }
-
+            let nombre = this.state.authMode === 'register' && nombreInput?.value.trim() ? nombreInput.value.trim() : email.split('@')[0];
             const role = this.state.authMode === 'register' ? this.state.selectedRole : (this.state.user.role || 'user');
             const userId = Date.now();
-            const fechaRegistro = new Date().toISOString().split('T')[0];
 
-            // ============================================
-            // GUARDAR EN db_usuarios
-            // ============================================
             const usuarios = DB.getUsuarios();
-            const existe = usuarios.find(u => u.email === email);
-            if (existe) {
+            if (usuarios.some(u => u.email === email) && this.state.authMode === 'register') {
                 this.showToast('⚠️ Este email ya está registrado', 'error');
                 return;
             }
 
-            const nuevoUsuario = {
-                id: userId,
-                nombre: nombre,
-                email: email,
-                password: btoa(password),
-                rol: role,
-                telefono: '',
-                fechaRegistro: fechaRegistro,
-                activo: true,
-                emailVerificado: false,
-                especialidad: role === 'especialista' ? 'Especialista' : ''
-            };
-            DB.crearUsuario(nuevoUsuario);
+            DB.crearUsuario({ id: userId, nombre, email, password: btoa(password), rol: role });
 
-            // ============================================
-            // SI ES ESPECIALISTA, CREAR SOLICITUD
-            // ============================================
             if (role === 'especialista') {
-                const solicitud = {
-                    especialista_id: userId,
-                    nombre: nombre,
-                    email: email,
-                    especialidad: 'Especialista',
-                    telefono: '',
-                    estado: 'pendiente',
-                    comentario_admin: ''
-                };
-                DB.crearSolicitud(solicitud);
-                // Guardar estado del evento
+                DB.crearSolicitud({ especialista_id: userId, nombre, email, especialidad: 'Especialista', estado: 'pendiente' });
                 this.guardarEstadoEventosSincronizado(userId, 'pendiente');
-                this.showToast('📨 Solicitud de espacio de eventos enviada', 'info');
             }
 
-            // ============================================
-            // GUARDAR SESIÓN
-            // ============================================
             localStorage.setItem('user_id', userId);
             localStorage.setItem('user_name', nombre);
             localStorage.setItem('user_email', email);
             localStorage.setItem('user_role', role);
-            localStorage.setItem('register_method', 'email');
-            localStorage.setItem('email_verified', 'false');
-            localStorage.setItem('fecha_registro', fechaRegistro);
 
-            this.state.user = {
-                ...this.state.user,
-                id: userId,
-                name: nombre,
-                email: email,
-                role: role,
-                registerMethod: 'email',
-                emailVerified: false,
-                fechaRegistro: fechaRegistro
-            };
+            this.state.user = { id: userId, name: nombre, email, role };
             this.state.isAuthenticated = true;
 
-            this.actualizarPerfilUI();
             this.actualizarHeader();
-            this.actualizarNav();
             this.cargarEstadoEventos();
             this.showToast('✅ ¡Bienvenido a Atrévete HealthTech!', 'success');
             this.switchView('view-perfil-usuario');
-
-            setTimeout(() => {
-                this.showToast('📧 Se ha enviado un correo de verificación a tu cuenta', 'info');
-            }, 2000);
         },
-
-        procesarRecuperacion() {
-            const email = document.getElementById('recovery-email').value;
-            if (!email) {
-                this.showToast('Por favor ingresa tu correo electrónico.', 'error');
-                return;
-            }
-            this.showToast(`📧 Instrucciones enviadas a: ${email}`, 'success');
-            this.switchView('view-auth');
-        },
-
         cerrarSesion() {
-            localStorage.removeItem('user_id');
-            localStorage.removeItem('user_name');
-            localStorage.removeItem('user_email');
-            localStorage.removeItem('user_role');
-            localStorage.removeItem('register_method');
-            localStorage.removeItem('user_telefono');
-            localStorage.removeItem('user_fecha_nac');
-            localStorage.removeItem('email_verified');
-            localStorage.removeItem('fecha_registro');
-
+            localStorage.clear();
             this.state.isAuthenticated = false;
-            this.state.user = {
-                id: null,
-                name: '',
-                email: '',
-                role: 'user',
-                registerMethod: 'email',
-                telefono: '',
-                fechaNac: '',
-                emailVerified: false,
-                fechaRegistro: '',
-                sesiones: 0,
-                ejercicios: 0,
-                diasActivo: 0
-            };
-
-            this.actualizarPerfilUI();
+            this.state.user = { id: null, name: '', email: '', role: 'user' };
             this.actualizarHeader();
-            this.actualizarNav();
             this.showToast('👋 Sesión cerrada exitosamente', 'info');
             this.switchView('view-home');
         },
-
-        // ============================================
-        // GUARDAR ESTADO DE EVENTOS SINCRONIZADO
-        // ============================================
         guardarEstadoEventosSincronizado(especialistaId, estado, motivo = '') {
-            // Guardar en las claves del admin
             localStorage.setItem('eventos_estado_' + especialistaId, estado);
-            if (motivo) {
-                localStorage.setItem('eventos_motivo_rechazo_' + especialistaId, motivo);
-            } else {
-                localStorage.removeItem('eventos_motivo_rechazo_' + especialistaId);
-            }
-            
-            // Actualizar estado local
             this.state.eventos.estado = estado;
             this.state.eventos.motivoRechazo = motivo;
             this.guardarEventosState();
-
-            // Actualizar en db_solicitudes
-            const solicitudes = DB.getSolicitudes();
-            const solicitud = solicitudes.find(s => s.especialista_id === especialistaId);
-            if (solicitud) {
-                solicitud.estado = estado;
-                if (motivo) solicitud.comentario_admin = motivo;
-                localStorage.setItem('db_solicitudes', JSON.stringify(solicitudes));
-            }
         },
-
         guardarEventosState() {
             localStorage.setItem('eventos_estado', this.state.eventos.estado);
-            localStorage.setItem('eventos_motivo_rechazo', this.state.eventos.motivoRechazo);
-            localStorage.setItem('eventos_fecha_solicitud', this.state.eventos.fechaSolicitud);
-            localStorage.setItem('eventos_fecha_aprobacion', this.state.eventos.fechaAprobacion);
             localStorage.setItem('eventos_galeria', JSON.stringify(this.state.eventos.galeria));
-            localStorage.setItem('eventos_notificaciones', JSON.stringify(this.state.eventos.notificaciones));
-            
-            if (this.state.user.id) {
-                localStorage.setItem('eventos_estado_' + this.state.user.id, this.state.eventos.estado);
-                if (this.state.eventos.motivoRechazo) {
-                    localStorage.setItem('eventos_motivo_rechazo_' + this.state.user.id, this.state.eventos.motivoRechazo);
-                }
-            }
         },
-
-        // ============================================
-        // CARGAR ESTADO DE EVENTOS
-        // ============================================
         cargarEstadoEventos() {
             const estado = this.state.eventos.estado;
             const badge = document.getElementById('evento-status-badge');
@@ -622,7 +442,6 @@
             const contenedorPendiente = document.getElementById('evento-estado-pendiente');
             const contenedorRechazado = document.getElementById('evento-estado-rechazado');
             const contenedorInactivo = document.getElementById('evento-estado-inactivo');
-            const notificacionesContainer = document.getElementById('evento-notificaciones');
 
             if (contenedorAprobado) contenedorAprobado.classList.add('hidden');
             if (contenedorPendiente) contenedorPendiente.classList.add('hidden');
@@ -638,406 +457,77 @@
                 if (contenedorPendiente) contenedorPendiente.classList.remove('hidden');
             } else if (estado === 'rechazado') {
                 if (badge) { badge.textContent = '❌ Rechazado'; badge.className = 'text-[10px] font-bold px-3 py-1 rounded-full bg-red-100 text-red-700'; }
-                if (contenedorRechazado) {
-                    contenedorRechazado.classList.remove('hidden');
-                    const motivoEl = document.getElementById('evento-motivo-rechazo');
-                    if (motivoEl) motivoEl.textContent = 'Motivo: ' + (this.state.eventos.motivoRechazo || 'No especificado');
-                }
+                if (contenedorRechazado) contenedorRechazado.classList.remove('hidden');
             } else {
-                if (badge) { badge.textContent = '📅 Inactivo'; badge.className = 'text-[10px] font-bold px-3 py-1 rounded-full bg-gray-200 text-gray-600'; }
+                if (badge) { badge.textContent = '🔒 Inactivo'; badge.className = 'text-[10px] font-bold px-3 py-1 rounded-full bg-gray-100 text-gray-700'; }
                 if (contenedorInactivo) contenedorInactivo.classList.remove('hidden');
             }
 
-            if (this.state.eventos.notificaciones.length > 0) {
-                if (notificacionesContainer) {
-                    notificacionesContainer.classList.remove('hidden');
-                    this.renderNotificaciones();
-                }
-            } else {
-                if (notificacionesContainer) notificacionesContainer.classList.add('hidden');
+            if (this.state.isAuthenticated) {
+                const pNombre = document.getElementById('perfil-nombre');
+                const pEmail = document.getElementById('perfil-email');
+                const pAvatar = document.getElementById('perfil-avatar');
+                if (pNombre) pNombre.textContent = this.state.user.name;
+                if (pEmail) pEmail.textContent = this.state.user.email;
+                if (pAvatar) pAvatar.textContent = (this.state.user.name || 'US').substring(0,2).toUpperCase();
             }
-
-            const countEl = document.getElementById('galeria-count');
-            if (countEl) countEl.textContent = this.state.eventos.galeria.length;
         },
-
-        renderGaleria() {
-            const container = document.getElementById('galeria-container');
-            if (!container) return;
-            const imagenes = this.state.eventos.galeria;
-            if (imagenes.length === 0) {
-                container.innerHTML = '<div class="text-center text-xs text-[#7A8A7C]/60 py-4 col-span-full">No hay imágenes en tu galería. ¡Sube tus primeros eventos!</div>';
-                return;
-            }
-            container.innerHTML = imagenes.map((img, index) => `
-                <div class="galeria-item" data-id="${img.id || index}">
-                    <img src="${img.url}" alt="${img.descripcion || 'Evento'}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22%3E%3Crect fill=%22%23f0ece8%22 width=%22200%22 height=%22200%22/%3E%3Ctext x=%2250%22 y=%22110%22 font-size=%2230%22 fill=%22%23999%22 text-anchor=%22middle%22%3E📷%3C/text%3E%3C/svg%3E'">
-                    <div class="info">${img.descripcion || 'Sin descripción'}</div>
-                    <div class="acciones">
-                        <button onclick="App.editarDescripcionGaleria(${index})" class="btn-editar">✏️ Editar</button>
-                        <button onclick="App.eliminarImagenGaleria(${index})" class="btn-eliminar">🗑️ Eliminar</button>
-                    </div>
-                </div>
-            `).join('');
-        },
-
-        renderNotificaciones() {
-            const container = document.getElementById('evento-notificaciones-list');
-            if (!container) return;
-            const notifs = this.state.eventos.notificaciones;
-            if (notifs.length === 0) {
-                container.innerHTML = '<div class="text-center text-xs text-[#7A8A7C]/60 py-2">No hay notificaciones</div>';
-                return;
-            }
-            container.innerHTML = notifs.map(notif => `
-                <div class="notificacion-item">
-                    <strong>${notif.titulo}</strong>
-                    <p>${notif.mensaje}</p>
-                    <span class="fecha">${notif.fecha || new Date().toLocaleString()}</span>
-                </div>
-            `).join('');
-        },
-
-        // ============================================
-        // SOLICITAR ESPACIO DE EVENTOS
-        // ============================================
-        solicitarEspacioEventos() {
-            if (!this.state.isAuthenticated) {
-                this.showToast('⚠️ Debes iniciar sesión para solicitar el espacio', 'error');
-                this.switchView('view-auth');
-                return;
-            }
-            
-            if (!this.state.user.id) {
-                this.showToast('⚠️ Error: No se pudo identificar al usuario', 'error');
-                return;
-            }
-            
-            if (this.state.eventos.estado === 'pendiente') {
-                this.showToast('⏳ Ya tienes una solicitud pendiente', 'warning');
-                return;
-            }
-            if (this.state.eventos.estado === 'aprobado') {
-                this.showToast('✅ Tu espacio ya está activo', 'success');
-                return;
-            }
-            if (!confirm('¿Quieres solicitar la activación de tu espacio de eventos? Un administrador revisará tu solicitud.')) return;
-
-            // Crear solicitud en db_solicitudes
-            const solicitud = {
-                especialista_id: this.state.user.id,
-                nombre: this.state.user.name,
-                email: this.state.user.email,
-                especialidad: this.state.user.role === 'especialista' ? 'Especialista' : '',
-                telefono: this.state.user.telefono || '',
-                estado: 'pendiente',
-                comentario_admin: ''
-            };
-            DB.crearSolicitud(solicitud);
-
-            // Actualizar estado
-            this.state.eventos.estado = 'pendiente';
-            this.state.eventos.fechaSolicitud = new Date().toLocaleString();
-            this.state.eventos.motivoRechazo = '';
-            this.state.eventos.notificaciones.push({
-                titulo: '📨 Solicitud enviada',
-                mensaje: 'Tu solicitud para el espacio de eventos ha sido enviada. Espera la aprobación del administrador.',
-                fecha: new Date().toLocaleString()
-            });
-
-            this.guardarEstadoEventosSincronizado(this.state.user.id, 'pendiente');
-            this.guardarEventosState();
-            this.cargarEstadoEventos();
-            this.showToast('✅ Solicitud enviada correctamente', 'success');
-        },
-
-        // ============================================
-        // SUBIR IMAGEN
-        // ============================================
-        subirImagenEvento(formData) {
-            const file = formData.get('imagen');
-            const descripcion = formData.get('descripcion') || '';
-            if (!file) {
-                this.showToast('⚠️ Por favor selecciona una imagen', 'error');
-                return false;
-            }
-            const tiposPermitidos = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-            if (!tiposPermitidos.includes(file.type)) {
-                this.showToast('⚠️ Formato no permitido. Usa JPG, PNG, GIF o WEBP', 'error');
-                return false;
-            }
-            if (file.size > 5 * 1024 * 1024) {
-                this.showToast('⚠️ La imagen excede el tamaño máximo (5MB)', 'error');
-                return false;
-            }
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                this.state.eventos.galeria.push({
-                    url: e.target.result,
-                    descripcion: descripcion,
-                    fecha: new Date().toLocaleString()
-                });
-                this.guardarEventosState();
-                this.cargarEstadoEventos();
-                this.showToast('✅ Imagen subida correctamente', 'success');
-            };
-            reader.readAsDataURL(file);
-            return true;
-        },
-
-        eliminarImagenGaleria(index) {
-            if (!confirm('¿Estás seguro de eliminar esta imagen?')) return;
-            this.state.eventos.galeria.splice(index, 1);
-            this.guardarEventosState();
-            this.cargarEstadoEventos();
-            this.showToast('✅ Imagen eliminada', 'success');
-        },
-
-        editarDescripcionGaleria(index) {
-            const img = this.state.eventos.galeria[index];
-            if (!img) return;
-            const nuevaDesc = prompt('Editar descripción:', img.descripcion || '');
-            if (nuevaDesc === null) return;
-            img.descripcion = nuevaDesc.trim();
-            this.guardarEventosState();
-            this.cargarEstadoEventos();
-            this.showToast('✅ Descripción actualizada', 'success');
-        },
-
-        verEventosPublicos(especialistaId) {
-            const especialista = {
-                id: especialistaId,
-                nombre: this.state.user.name || 'Especialista',
-                email: this.state.user.email || 'correo@ejemplo.com',
-                especialidad: this.state.user.role === 'especialista' ? 'Terapeuta Somático' : 'Especialista',
-                descripcion: 'Especialista en regulación somática y bienestar integral.',
-                fotoPerfil: null
-            };
-            const imagenes = this.state.eventos.galeria;
-
-            document.getElementById('eventos-publicos-titulo').textContent = 'Eventos de ' + especialista.nombre;
-            document.getElementById('eventos-publicos-especialista').textContent = especialista.especialidad;
-            document.getElementById('eventos-publicos-nombre').textContent = especialista.nombre;
-            document.getElementById('eventos-publicos-especialidad').textContent = especialista.especialidad;
-            document.getElementById('eventos-publicos-descripcion').textContent = especialista.descripcion;
-
-            const avatarEl = document.getElementById('eventos-publicos-avatar');
-            if (avatarEl) {
-                const initials = especialista.nombre.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
-                avatarEl.textContent = initials;
-            }
-
-            const galeriaContainer = document.getElementById('eventos-publicos-galeria');
-            if (imagenes.length === 0) {
-                galeriaContainer.innerHTML = '<div class="text-center text-xs text-[#7A8A7C]/60 py-8">No hay eventos disponibles</div>';
-            } else {
-                galeriaContainer.innerHTML = imagenes.map(img => `
-                    <div class="evento-publico-card">
-                        <img src="${img.url}" alt="${img.descripcion || 'Evento'}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22200%22%3E%3Crect fill=%22%23f0ece8%22 width=%22300%22 height=%22200%22/%3E%3Ctext x=%2250%22 y=%22110%22 font-size=%2230%22 fill=%22%23999%22 text-anchor=%22middle%22%3E📷%3C/text%3E%3C/svg%3E'">
-                        <div class="info">
-                            <h4>${img.descripcion || 'Sin descripción'}</h4>
-                            <p>${img.fecha || ''}</p>
-                        </div>
-                    </div>
-                `).join('');
-            }
-            this.switchView('view-eventos-publicos');
-        },
-
-        // ============================================
-        // ACTUALIZAR UI
-        // ============================================
         actualizarHeader() {
             const loginBtns = document.getElementById('header-login-btns');
             const profileBtn = document.getElementById('header-profile-btn');
-            const headerName = document.getElementById('header-name');
-            const headerAvatar = document.getElementById('header-avatar');
-
-            if (this.state.isAuthenticated && this.state.user.name) {
+            if (this.state.isAuthenticated) {
                 if (loginBtns) loginBtns.classList.add('hidden');
                 if (profileBtn) profileBtn.classList.remove('hidden');
-                if (headerName) headerName.textContent = this.state.user.name;
-                if (headerAvatar) {
-                    const initials = this.state.user.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'US';
-                    headerAvatar.textContent = initials;
-                }
+                const headerName = document.getElementById('header-name');
+                const headerAvatar = document.getElementById('header-avatar');
+                if (headerName) headerName.textContent = this.state.user.name || 'Usuario';
+                if (headerAvatar) headerAvatar.textContent = (this.state.user.name || 'US').substring(0,2).toUpperCase();
             } else {
                 if (loginBtns) loginBtns.classList.remove('hidden');
                 if (profileBtn) profileBtn.classList.add('hidden');
             }
         },
-
-        actualizarNav() {
-            const perfilIcon = document.getElementById('nav-perfil-icon');
-            const perfilLabel = document.getElementById('nav-perfil-label');
-
-            if (this.state.isAuthenticated) {
-                if (perfilIcon) perfilIcon.textContent = '👤';
-                if (perfilLabel) perfilLabel.textContent = 'Perfil';
-            } else {
-                if (perfilIcon) perfilIcon.textContent = '🔑';
-                if (perfilLabel) perfilLabel.textContent = 'Login';
-            }
-        },
-
-        actualizarPerfilUI() {
-            const name = this.state.user.name || 'Invitado Atrévete';
-            const email = this.state.user.email || 'correo@ejemplo.com';
-            const role = this.state.user.role || 'user';
-            const telefono = this.state.user.telefono || 'No registrado';
-            const fechaNac = this.state.user.fechaNac || 'No registrada';
-            const fechaRegistro = this.state.user.fechaRegistro || 'Hoy';
-            const sesiones = this.state.user.sesiones || 0;
-            const ejercicios = this.state.user.ejercicios || 0;
-            const diasActivo = this.state.user.diasActivo || 0;
-
-            const profileName = document.getElementById('profile-name');
-            const profileEmail = document.getElementById('profile-email');
-            const profileAvatar = document.getElementById('profile-avatar');
-            const profileRole = document.getElementById('profile-role');
-            const profileRegisterMethod = document.getElementById('profile-register-method');
-            const profileVerifiedContainer = document.getElementById('profile-verified-container');
-            const profileTelefono = document.getElementById('profile-telefono-display');
-            const profileFecha = document.getElementById('profile-fecha-display');
-            const profileMiembroDesde = document.getElementById('profile-miembro-desde');
-            const profileSesiones = document.getElementById('profile-sesiones');
-            const profileEjercicios = document.getElementById('profile-ejercicios');
-            const profileDias = document.getElementById('profile-dias');
-
-            if (profileName) profileName.innerText = name;
-            if (profileEmail) profileEmail.innerText = email;
-            if (profileRole) {
-                const roleText = role === 'especialista' ? '👩‍⚕️ Especialista' : '👤 Usuario';
-                profileRole.innerText = roleText;
-            }
-            if (profileRegisterMethod) {
-                profileRegisterMethod.innerText = 'Registrado con: Email 📧';
-            }
-            if (profileVerifiedContainer) {
-                if (this.state.user.emailVerified) {
-                    profileVerifiedContainer.innerHTML = '<span class="verified-badge">✅ Correo verificado</span>';
-                } else {
-                    profileVerifiedContainer.innerHTML = '<span class="unverified-badge">⏳ Correo no verificado</span>';
-                }
-            }
-            if (profileTelefono) profileTelefono.innerText = telefono;
-            if (profileFecha) profileFecha.innerText = fechaNac;
-            if (profileMiembroDesde) profileMiembroDesde.innerText = fechaRegistro;
-            if (profileSesiones) profileSesiones.innerText = sesiones;
-            if (profileEjercicios) profileEjercicios.innerText = ejercicios;
-            if (profileDias) profileDias.innerText = diasActivo;
-
-            if (profileAvatar) {
-                profileAvatar.style.backgroundImage = 'none';
-                const initials = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'AT';
-                profileAvatar.textContent = initials;
-            }
-
-            const editNombre = document.getElementById('edit-nombre');
-            const editTelefono = document.getElementById('edit-telefono');
-            const editFechaNac = document.getElementById('edit-fecha-nac');
-            if (editNombre) editNombre.value = name;
-            if (editTelefono) editTelefono.value = this.state.user.telefono || '';
-            if (editFechaNac) editFechaNac.value = this.state.user.fechaNac || '';
-
-            this.actualizarHeader();
-            this.actualizarNav();
-        },
-
-        // ============================================
-        // EDITAR PERFIL
-        // ============================================
-        mostrarEditarPerfil() {
-            const form = document.getElementById('editar-perfil-form');
-            if (form) {
-                form.classList.remove('hidden');
-                document.getElementById('edit-nombre').value = this.state.user.name || '';
-                document.getElementById('edit-telefono').value = this.state.user.telefono || '';
-                document.getElementById('edit-fecha-nac').value = this.state.user.fechaNac || '';
-            }
-        },
-
-        cancelarEditarPerfil() {
-            const form = document.getElementById('editar-perfil-form');
-            if (form) form.classList.add('hidden');
-        },
-
-        guardarEditarPerfil() {
-            const nombre = document.getElementById('edit-nombre').value.trim();
-            const telefono = document.getElementById('edit-telefono').value.trim();
-            const fechaNac = document.getElementById('edit-fecha-nac').value;
-
-            if (!nombre) {
-                this.showToast('⚠️ El nombre es obligatorio', 'error');
+        renderGaleria() {
+            const galeriaContainer = document.getElementById('perfil-galeria-grid');
+            if (!galeriaContainer) return;
+            const galeria = this.state.eventos.galeria;
+            if (galeria.length === 0) {
+                galeriaContainer.innerHTML = '<div class="text-center text-xs text-[#7A8A7C]/60 py-4 col-span-2">No hay imágenes en la galería</div>';
                 return;
             }
-
-            localStorage.setItem('user_name', nombre);
-            localStorage.setItem('user_telefono', telefono);
-            localStorage.setItem('user_fecha_nac', fechaNac);
-
-            this.state.user.name = nombre;
-            this.state.user.telefono = telefono;
-            this.state.user.fechaNac = fechaNac;
-
-            // Actualizar en db_usuarios
-            const usuarios = DB.getUsuarios();
-            const index = usuarios.findIndex(u => u.id === this.state.user.id);
-            if (index !== -1) {
-                usuarios[index].nombre = nombre;
-                usuarios[index].telefono = telefono;
-                localStorage.setItem('db_usuarios', JSON.stringify(usuarios));
-            }
-
-            document.getElementById('editar-perfil-form').classList.add('hidden');
-            this.actualizarPerfilUI();
-            this.showToast('✅ Perfil actualizado exitosamente', 'success');
+            galeriaContainer.innerHTML = galeria.map(img => `
+                <div class="relative clay-card p-2">
+                    <img src="${img.url}" alt="${img.titulo || 'Evento'}" class="w-full h-24 object-cover rounded-lg">
+                    <p class="text-[10px] text-[#7A8A7C] font-bold mt-1 truncate">${img.titulo || ''}</p>
+                    <button onclick="App.eliminarImagen(${img.id})" class="absolute top-1 right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-[10px]">×</button>
+                </div>
+            `).join('');
         },
-
-        // ============================================
-        // TOAST
-        // ============================================
+        subirImagenEvento(formData) {
+            const titulo = formData.get('titulo') || 'Evento';
+            const url = formData.get('url') || 'https://via.placeholder.com/300';
+            const nuevaImagen = { id: Date.now(), titulo, url };
+            this.state.eventos.galeria.push(nuevaImagen);
+            this.guardarEventosState();
+            this.renderGaleria();
+            this.showToast('📸 Imagen subida exitosamente', 'success');
+        },
+        eliminarImagen(id) {
+            this.state.eventos.galeria = this.state.eventos.galeria.filter(img => img.id !== id);
+            this.guardarEventosState();
+            this.renderGaleria();
+            this.showToast('🗑️ Imagen eliminada', 'info');
+        },
         showToast(message, type = 'success') {
             const toast = document.getElementById('toast');
-            toast.className = `toast toast-${type}`;
-            toast.textContent = message;
-            toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 4000);
-        },
-
-        // ============================================
-        // MÉTODOS DE RESPIRACIÓN, QUIZ, PAGOS, CITAS
-        // (Mantén los que ya tienes)
-        // ============================================
-        // ... (tus métodos existentes de respiración, quiz, pagos, citas) ...
+            if (!toast) return;
+            toast.className = `toast toast-${type} show`;
+            toast.innerText = message;
+            setTimeout(() => { toast.classList.remove('show'); }, 3000);
+        }
     };
 
-    // ============================================
-    // INICIALIZAR APP
-    // ============================================
-    document.addEventListener('DOMContentLoaded', function() {
-        // Cargar banners
-        const savedLogo = localStorage.getItem('app_logo');
-        const savedBannerImg = localStorage.getItem('app_banner_img');
-        const savedBannerText = localStorage.getItem('app_banner_text');
-
-        if (savedLogo) {
-            document.getElementById('app-logo-img').src = savedLogo;
-        }
-        if (savedBannerImg) {
-            document.getElementById('home-hero-banner').style.backgroundImage = `url('${savedBannerImg}')`;
-        }
-        if (savedBannerText) {
-            document.getElementById('home-banner-text').innerText = savedBannerText;
-        }
-
-        App.init();
-        console.log('🚀 Atrévete HealthTech App inicializada con sincronización total');
-    });
-
-    window.App = App;
+    window.addEventListener('DOMContentLoaded', () => { App.init(); });
     </script>
 </body>
 </html>
