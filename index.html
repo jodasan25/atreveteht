@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* ============================================
-           ESTILOS BASE (MANTÉN LOS TUYOS)
+           ESTILOS BASE
            ============================================ */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         .hidden { display: none !important; }
@@ -181,10 +181,12 @@
                 <img id="app-logo-img" src="atrevetehtlogo.png" alt="Atrévete HealthTech" class="h-16 w-auto object-contain" onerror="this.style.display='none'">
             </div>
             <div id="header-auth-container" class="flex items-center gap-2">
+                <!-- BOTONES LOGIN Y REGISTRO (ocultos cuando hay sesión) -->
                 <div id="header-login-btns" class="flex items-center gap-2">
                     <button onclick="App.abrirLogin()" class="header-action-btn btn-login">🔑 Iniciar</button>
                     <button onclick="App.abrirRegistro()" class="header-action-btn btn-register">✨ Registro</button>
                 </div>
+                <!-- PERFIL (visible cuando hay sesión) -->
                 <div id="header-profile-btn" class="hidden">
                     <div onclick="App.switchView('view-perfil-usuario')" class="header-profile-btn">
                         <div id="header-avatar" class="header-profile-avatar">US</div>
@@ -524,7 +526,7 @@
                 this.iniciarCarousel();
                 this.cargarEstadoEventos();
                 this.actualizarPerfilUI();
-                this.actualizarHeader();
+                this.actualizarHeader();  // ✅ ESTO OCULTA LOS BOTONES
                 this.actualizarNav();
                 this.selectPaymentMethod('pm_bdv');
 
@@ -775,9 +777,7 @@
                 const existe = usuarios.find(u => u.email.toLowerCase() === email.toLowerCase());
 
                 if (existe) {
-                    // Si el email existe, verificar si es el mismo usuario que intenta loguearse
                     if (this.state.authMode === 'login') {
-                        // Modo login - verificar contraseña
                         const passwordCorrecta = existe.password === btoa(password);
                         if (passwordCorrecta) {
                             this.iniciarSesion(existe.id, existe.nombre, existe.email, existe.rol);
@@ -789,7 +789,6 @@
                             return;
                         }
                     } else {
-                        // Modo registro - email ya existe
                         this.showToast('⚠️ Este email ya está registrado. Por favor inicia sesión.', 'error');
                         this.switchAuthMode('login');
                         document.getElementById('input-email').value = email;
@@ -815,7 +814,6 @@
                     };
                     DB.crearUsuario(nuevoUsuario);
 
-                    // Si es especialista, crear solicitud
                     if (role === 'especialista') {
                         DB.crearSolicitud({
                             especialista_id: userId,
@@ -829,7 +827,6 @@
                         this.showToast('📨 Solicitud de espacio enviada', 'info');
                     }
 
-                    // Iniciar sesión
                     this.iniciarSesion(userId, nombre, email, role);
                 }
             },
@@ -838,14 +835,12 @@
             // FUNCIÓN PARA INICIAR SESIÓN
             // ============================================
             iniciarSesion(userId, nombre, email, role) {
-                // Guardar en localStorage
                 localStorage.setItem('user_id', userId);
                 localStorage.setItem('user_name', nombre);
                 localStorage.setItem('user_email', email);
                 localStorage.setItem('user_role', role);
                 localStorage.setItem('fecha_registro', new Date().toISOString().split('T')[0]);
 
-                // Actualizar estado
                 this.state.user = {
                     ...this.state.user,
                     id: userId,
@@ -855,14 +850,40 @@
                 };
                 this.state.isAuthenticated = true;
 
-                // Actualizar UI
                 this.actualizarPerfilUI();
-                this.actualizarHeader();
+                this.actualizarHeader(); // ✅ OCULTA BOTONES "Iniciar" y "Registro"
                 this.actualizarNav();
                 this.cargarEstadoEventos();
 
                 this.showToast('✅ ¡Bienvenido ' + nombre + '!', 'success');
                 this.switchView('view-perfil-usuario');
+            },
+
+            // ============================================
+            // ACTUALIZAR HEADER - OCULTA BOTONES
+            // ============================================
+            actualizarHeader() {
+                const loginBtns = document.getElementById('header-login-btns');
+                const profileBtn = document.getElementById('header-profile-btn');
+                const headerName = document.getElementById('header-name');
+                const headerAvatar = document.getElementById('header-avatar');
+
+                if (this.state.isAuthenticated && this.state.user.name) {
+                    // ✅ OCULTAR botones de login/registro
+                    if (loginBtns) loginBtns.classList.add('hidden');
+                    // ✅ MOSTRAR perfil
+                    if (profileBtn) profileBtn.classList.remove('hidden');
+                    if (headerName) headerName.textContent = this.state.user.name;
+                    if (headerAvatar) {
+                        const initials = this.state.user.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'US';
+                        headerAvatar.textContent = initials;
+                    }
+                } else {
+                    // ✅ MOSTRAR botones de login/registro
+                    if (loginBtns) loginBtns.classList.remove('hidden');
+                    // ✅ OCULTAR perfil
+                    if (profileBtn) profileBtn.classList.add('hidden');
+                }
             },
 
             // ============================================
@@ -886,7 +907,6 @@
                 this.state.user.telefono = telefono;
                 this.state.user.fechaNac = fechaNac;
 
-                // Actualizar en db_usuarios
                 const usuarios = DB.getUsuarios();
                 const index = usuarios.findIndex(u => u.id === this.state.user.id);
                 if (index !== -1) {
@@ -896,6 +916,7 @@
                 }
 
                 this.actualizarPerfilUI();
+                this.actualizarHeader(); // ✅ ACTUALIZA EL NOMBRE EN EL HEADER
                 this.showToast('✅ Perfil actualizado', 'success');
             },
 
@@ -911,7 +932,7 @@
                 this.state.isAuthenticated = false;
                 this.state.user = { id: null, name: '', email: '', role: 'user', telefono: '', fechaNac: '', fechaRegistro: '', sesiones: 0, ejercicios: 0, diasActivo: 0 };
                 this.actualizarPerfilUI();
-                this.actualizarHeader();
+                this.actualizarHeader(); // ✅ MUESTRA BOTONES "Iniciar" y "Registro"
                 this.actualizarNav();
                 this.showToast('👋 Sesión cerrada', 'info');
                 this.switchView('view-home');
@@ -1181,26 +1202,6 @@
             // ============================================
             // UI
             // ============================================
-            actualizarHeader() {
-                const loginBtns = document.getElementById('header-login-btns');
-                const profileBtn = document.getElementById('header-profile-btn');
-                const headerName = document.getElementById('header-name');
-                const headerAvatar = document.getElementById('header-avatar');
-
-                if (this.state.isAuthenticated && this.state.user.name) {
-                    loginBtns.classList.add('hidden');
-                    profileBtn.classList.remove('hidden');
-                    if (headerName) headerName.textContent = this.state.user.name;
-                    if (headerAvatar) {
-                        const initials = this.state.user.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'US';
-                        headerAvatar.textContent = initials;
-                    }
-                } else {
-                    loginBtns.classList.remove('hidden');
-                    profileBtn.classList.add('hidden');
-                }
-            },
-
             actualizarNav() {
                 const icon = document.getElementById('nav-perfil-icon');
                 const label = document.getElementById('nav-perfil-label');
@@ -1270,7 +1271,7 @@
                 App.state.user.fechaNac = localStorage.getItem('user_fecha_nac') || '';
                 App.state.isAuthenticated = !!localStorage.getItem('user_email');
                 App.actualizarPerfilUI();
-                App.actualizarHeader();
+                App.actualizarHeader(); // ✅ OCULTA BOTONES
                 App.actualizarNav();
                 App.cargarEstadoEventos();
             }
