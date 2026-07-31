@@ -3,101 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atrévete HealthTech - Salud Integrativa y Regulación Somática</title>
+    <title>Atrévete - Ecosistema de Salud Integrativa</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #F4F1EA;
-            color: #333333;
+        /* Estilos personalizados para animaciones y componentes específicos */
+        .app-view {
+            transition: opacity 0.3s ease-in-out;
+        }
+        .app-view.hidden {
+            display: none !important;
         }
 
-        /* Styling Claymorphism */
-        .clay-card {
-            background: #F4F1EA;
-            border-radius: 24px;
-            box-shadow: 8px 8px 16px #dbd8cf, -8px -8px 16px #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            padding: 20px;
+        /* Toast Notifications */
+        .toast {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            z-index: 9999;
         }
-
-        .clay-btn-primary {
-            background: #E27D60;
-            color: white;
-            border-radius: 16px;
-            box-shadow: 4px 4px 10px #c26b52, -4px -4px 10px #ff8f6e;
-            transition: all 0.2s ease;
-            width: 100%;
-            text-align: center;
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
         }
-        .clay-btn-primary:active {
-            box-shadow: inset 3px 3px 6px #b5644c, inset -3px -3px 6px #ff9674;
-        }
-
-        .clay-btn-secondary {
-            background: #7A8A7C;
-            color: white;
-            border-radius: 16px;
-            box-shadow: 4px 4px 10px #68766a, -4px -4px 10px #8c9e8e;
-            transition: all 0.2s ease;
-            width: 100%;
-            text-align: center;
-        }
-        .clay-btn-secondary:active {
-            box-shadow: inset 3px 3px 6px #616e63, inset -3px -3px 6px #93a695;
-        }
-
-        .clay-input {
-            width: 100%;
-            background: #F4F1EA;
-            border-radius: 14px;
-            padding: 12px 16px;
-            box-shadow: inset 3px 3px 6px #dbd8cf, inset -3px -3px 6px #ffffff;
-            border: none;
-            outline: none;
-            font-size: 0.875rem;
-            color: #4A5568;
-        }
-
-        .clay-btn-pay {
-            background: #F4F1EA;
-            border-radius: 16px;
-            padding: 12px 8px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: #7A8A7C;
-            box-shadow: 4px 4px 8px #dbd8cf, -4px -4px 8px #ffffff;
-            border: 2px solid transparent;
-            transition: all 0.2s;
-        }
-        .clay-btn-pay.active-pay {
-            border-color: #E27D60;
-            color: #E27D60;
-            box-shadow: inset 2px 2px 5px #dbd8cf, inset -2px -2px 5px #ffffff;
-        }
+        .toast-info { background-color: #3B82F6; color: white; }
+        .toast-success { background-color: #10B981; color: white; }
+        .toast-warning { background-color: #F59E0B; color: white; }
+        .toast-error { background-color: #EF4444; color: white; }
 
         /* Carrusel */
         .carousel-container {
-            position: relative;
             overflow: hidden;
-            border-radius: 24px;
-            box-shadow: 6px 6px 12px #dbd8cf, -6px -6px 12px #ffffff;
-            height: 180px;
+            position: relative;
+            border-radius: 1.5rem;
         }
         .carousel-track {
             display: flex;
-            transition: transform 0.4s ease-in-out;
-            height: 100%;
+            transition: transform 0.5s ease-in-out;
+            width: 100%;
         }
         .carousel-slide {
             min-width: 100%;
-            height: 100%;
+            height: 220px;
             background-size: cover;
             background-position: center;
             position: relative;
@@ -105,15 +55,15 @@
         .carousel-slide .overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.1) 100%);
             display: flex;
             align-items: flex-end;
-            padding: 16px;
+            padding: 1.25rem;
         }
         .carousel-slide .text {
             color: white;
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 1.125rem;
         }
         .carousel-slide .text span {
             display: block;
@@ -121,125 +71,99 @@
             font-weight: 400;
             opacity: 0.9;
         }
-        .carousel-dots {
-            position: absolute;
-            bottom: 10px;
-            right: 16px;
-            display: flex;
-            gap: 6px;
-        }
         .carousel-dots .dot {
             width: 8px;
             height: 8px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.5);
+            border-radius: 9999px;
+            background-color: rgba(255, 255, 255, 0.5);
             transition: all 0.3s;
         }
         .carousel-dots .dot.active {
-            background: #E27D60;
-            width: 16px;
-            border-radius: 8px;
+            width: 20px;
+            background-color: white;
         }
 
-        /* Toast Notifications */
-        .toast {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%) translateY(-100px);
-            background: #333;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            z-index: 100;
-            opacity: 0;
-            transition: all 0.3s ease;
+        /* Selector de Roles */
+        .role-card {
+            border: 2px solid #E5E7EB;
+            transition: all 0.2s;
         }
-        .toast.show {
-            transform: translateX(-50%) translateY(0);
-            opacity: 1;
+        .role-card.selected {
+            border-color: #7A8A7C;
+            background-color: #F3F4F6;
         }
-        .toast-success { background: #48BB78; }
-        .toast-error { background: #E53E3E; }
-        .toast-info { background: #7A8A7C; }
-        .toast-warning { background: #DD6B20; }
 
-        /* Asistente Flotante */
-        .assistant-widget {
+        /* Pasarela de Pagos */
+        .pay-btn {
+            border: 2px solid #E5E7EB;
+        }
+        .pay-btn.active-pay {
+            border-color: #7A8A7C;
+            background-color: #F0F4F1;
+        }
+
+        /* Asistente Chat Flotante */
+        #assistant-chat {
             position: fixed;
             bottom: 80px;
             right: 16px;
-            z-index: 40;
-        }
-        .assistant-chat {
-            position: fixed;
-            bottom: 140px;
-            right: 16px;
-            width: calc(100vw - 32px);
-            max-width: 360px;
-            height: 420px;
-            background: #F4F1EA;
-            border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-            border: 1px solid rgba(255,255,255,0.8);
+            width: 320px;
+            max-height: 450px;
+            background: white;
+            border-radius: 1.25rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            transform: scale(0.8) translateY(50px);
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 45;
+            transform: scale(0);
+            transform-origin: bottom right;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 9000;
         }
-        .assistant-chat.open {
-            transform: scale(1) translateY(0);
-            opacity: 1;
-            pointer-events: all;
+        #assistant-chat.open {
+            transform: scale(1);
         }
-        .assistant-messages {
+        .chat-messages {
             flex: 1;
-            padding: 12px;
+            padding: 1rem;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 0.5rem;
+            max-height: 300px;
         }
         .message {
             max-width: 80%;
-            padding: 10px 14px;
-            border-radius: 16px;
+            padding: 0.5rem 0.75rem;
+            border-radius: 1rem;
             font-size: 0.75rem;
-            line-height: 1.3;
+            line-height: 1.25;
         }
         .message.bot {
-            background: white;
-            color: #4A5568;
+            background-color: #F3F4F6;
+            color: #374151;
             align-self: flex-start;
-            border-bottom-left-radius: 4px;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+            border-bottom-left-radius: 0.25rem;
         }
         .message.user {
-            background: #7A8A7C;
+            background-color: #7A8A7C;
             color: white;
             align-self: flex-end;
-            border-bottom-right-radius: 4px;
+            border-bottom-right-radius: 0.25rem;
         }
 
-        /* Galería */
+        /* Grid Galería */
         .galeria-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 0.75rem;
         }
         .galeria-item {
             position: relative;
-            border-radius: 16px;
+            border-radius: 0.75rem;
             overflow: hidden;
-            box-shadow: 4px 4px 8px #dbd8cf, -4px -4px 8px #ffffff;
-            height: 120px;
+            background: #f3f4f6;
+            aspect-ratio: 1;
         }
         .galeria-item img {
             width: 100%;
@@ -253,452 +177,459 @@
             background: rgba(0,0,0,0.6);
             color: white;
             font-size: 0.65rem;
-            padding: 4px 8px;
+            padding: 0.25rem 0.5rem;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
         .galeria-item .acciones {
             position: absolute;
-            top: 4px;
-            right: 4px;
+            top: 0.25rem;
+            right: 0.25rem;
         }
-        .btn-eliminar {
-            background: rgba(229, 62, 62, 0.85);
+        .galeria-item .btn-eliminar {
+            background: rgba(239, 68, 68, 0.85);
             color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 2px 6px;
             font-size: 0.6rem;
-            font-weight: 700;
+            padding: 0.15rem 0.4rem;
+            border-radius: 0.25rem;
         }
 
-        /* Bottom Nav Active State */
+        /* Bottom Nav Styling */
         .nav-item.active {
-            color: #E27D60;
-        }
-        .nav-item.active svg {
-            stroke: #E27D60;
-        }
-
-        /* Selector de rol */
-        .role-btn {
-            border: 2px solid transparent;
-            transition: all 0.2s;
-        }
-        .role-btn.selected {
-            border-color: #7A8A7C;
-            background-color: rgba(122, 138, 124, 0.1);
+            color: #7A8A7C;
+            font-weight: 700;
         }
     </style>
 </head>
-<body class="min-h-screen pb-24 text-stone-800">
+<body class="bg-stone-100 text-stone-800 font-sans antialiased min-h-screen pb-20">
 
-    <!-- Toast Component -->
-    <div id="toast" class="toast">Notificación</div>
+    <!-- HEADER / BARRA SUPERIOR -->
+    <header class="sticky top-0 bg-white/90 backdrop-blur-md border-b border-stone-200 z-50 px-4 py-3 flex justify-between items-center max-w-md mx-auto">
+        <div class="flex items-center gap-2 cursor-pointer" onclick="App.switchView('view-home')">
+            <div class="w-8 h-8 rounded-full bg-[#7A8A7C] flex items-center justify-center text-white font-black text-sm">
+                A
+            </div>
+            <div>
+                <h1 class="font-bold text-sm tracking-tight text-stone-800 leading-none">Atrévete</h1>
+                <span class="text-[10px] text-stone-500 font-medium">Health & Wellbeing</span>
+            </div>
+        </div>
 
-    <!-- Header Principal -->
-    <header class="sticky top-0 z-30 bg-[#F4F1EA]/90 backdrop-blur-md px-5 py-3 border-b border-stone-200/50">
-        <div class="max-w-md mx-auto flex justify-between items-center">
-            <div class="flex items-center gap-2 cursor-pointer" onclick="App.switchView('view-home')">
-                <div class="w-9 h-9 rounded-2xl bg-[#7A8A7C] flex items-center justify-center text-white font-extrabold text-lg shadow-sm">
-                    A
-                </div>
-                <div>
-                    <h1 class="font-extrabold text-sm tracking-tight text-[#7A8A7C] leading-none">ATRÉVETE</h1>
-                    <span class="text-[9px] font-bold text-[#E27D60] tracking-widest uppercase">HealthTech</span>
-                </div>
-            </div>
+        <!-- Botones de Estado de Autenticación -->
+        <div id="header-login-btns" class="flex items-center gap-2">
+            <button onclick="App.abrirLogin()" class="text-xs font-semibold px-3 py-1.5 rounded-lg text-[#7A8A7C] hover:bg-stone-50 transition">
+                Entrar
+            </button>
+            <button onclick="App.abrirRegistro()" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-[#7A8A7C] text-white shadow-sm hover:bg-[#68776A] transition">
+                Registrarse
+            </button>
+        </div>
 
-            <!-- Header Auth Actions -->
-            <div id="header-login-btns" class="flex gap-2">
-                <button onclick="App.abrirLogin()" class="text-xs font-bold text-[#7A8A7C] px-3 py-1.5 rounded-xl border border-[#7A8A7C]/30">Entrar</button>
-                <button onclick="App.abrirRegistro()" class="text-xs font-bold text-white bg-[#E27D60] px-3 py-1.5 rounded-xl shadow-sm">Registro</button>
+        <div id="header-profile-btn" class="hidden flex items-center gap-2 cursor-pointer" onclick="App.irAPerfil()">
+            <div id="header-avatar" class="w-7 h-7 rounded-full bg-stone-200 text-[#7A8A7C] font-bold text-xs flex items-center justify-center border border-stone-300">
+                --
             </div>
-            
-            <div id="header-profile-btn" class="hidden flex items-center gap-2 cursor-pointer" onclick="App.irAPerfil()">
-                <div id="header-avatar" class="w-8 h-8 rounded-full bg-[#E27D60] text-white flex items-center justify-center font-bold text-xs shadow-sm">
-                    U
-                </div>
-                <span id="header-name" class="text-xs font-bold text-[#7A8A7C] max-w-[80px] truncate">Usuario</span>
-            </div>
+            <span id="header-name" class="text-xs font-semibold text-stone-700 max-w-[80px] truncate">Usuario</span>
         </div>
     </header>
 
-    <!-- Modal Exención Legal (Gate) -->
-    <div id="modal-legal-gate" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-5 hidden">
-        <div class="clay-card max-w-sm w-full bg-[#F4F1EA] space-y-4 text-center">
-            <div class="w-12 h-12 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center mx-auto text-2xl">
-                ⚠️
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toast" class="toast px-4 py-2.5 rounded-full shadow-lg text-xs font-semibold flex items-center gap-2">
+        <span>Notificación</span>
+    </div>
+
+    <!-- MODAL LEGAL GATE -->
+    <div id="modal-legal-gate" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[10000] flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl max-w-sm w-full p-5 shadow-2xl space-y-4">
+            <div class="text-center">
+                <div class="w-12 h-12 bg-emerald-100 text-[#7A8A7C] rounded-full flex items-center justify-center mx-auto mb-2 text-xl">
+                    🌱
+                </div>
+                <h3 class="font-bold text-lg text-stone-800">Bienvenido a Atrévete</h3>
+                <p class="text-xs text-stone-500 mt-1">Antes de explorar las herramientas de salud somática e integrativa, por favor acepta nuestras políticas de bienestar y uso consciente.</p>
             </div>
-            <h3 class="text-lg font-bold text-[#7A8A7C]">Aviso Legal Importante</h3>
-            <p class="text-xs text-stone-600 leading-relaxed text-left">
-                Las prácticas de regulación somática y educación bioenergética en <strong>Atrévete HealthTech</strong> no sustituyen el diagnóstico, tratamiento ni acompañamiento médico o psiquiátrico profesional.
-            </p>
-            <div class="pt-2 space-y-2">
-                <button onclick="App.aceptarLegalYContinuar()" class="clay-btn-primary py-3 text-xs font-bold">Comprendo y Acepto</button>
-                <button onclick="App.cancelarLegal()" class="text-xs font-bold text-stone-400 py-1">Desagradar / Salir</button>
+            <div class="bg-stone-50 p-3 rounded-xl text-[11px] text-stone-600 max-h-32 overflow-y-auto border border-stone-200 space-y-2">
+                <p>1. Esta aplicación brinda herramientas orientadas al bienestar corporal y la autoregulación del sistema nervioso.</p>
+                <p>2. Las recomendaciones no sustituyen el diagnóstico de un profesional médico certificado.</p>
+                <p>3. Respetamos tu privacidad y protegetemos tus datos de perfil según la normativa aplicable.</p>
+            </div>
+            <div class="flex gap-2">
+                <button onclick="App.cancelarLegal()" class="flex-1 py-2 text-xs font-bold text-stone-500 bg-stone-100 rounded-xl hover:bg-stone-200">Rechazar</button>
+                <button onclick="App.aceptarLegalYContinuar()" class="flex-1 py-2 text-xs font-bold text-white bg-[#7A8A7C] rounded-xl hover:bg-[#68776A] shadow-md">Aceptar y Continuar</button>
             </div>
         </div>
     </div>
 
-    <!-- ================= VISTA HOME ================= -->
-    <main id="view-home" class="app-view max-w-md mx-auto px-5 space-y-6 pt-3">
-        <!-- Carrusel Informativo -->
-        <div class="carousel-container">
-            <div id="carousel-track" class="carousel-track">
-                <!-- Se llena dinámicamente -->
-            </div>
-            <button onclick="App.carouselPrev()" class="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-black/30 text-white flex items-center justify-center text-xs">❮</button>
-            <button onclick="App.carouselNext()" class="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-black/30 text-white flex items-center justify-center text-xs">❯</button>
-            <div id="carousel-dots" class="carousel-dots"></div>
-        </div>
+    <!-- MAIN CONTAINER FOR VIEWS -->
+    <main class="max-w-md mx-auto px-4 pt-4">
 
-        <!-- Accesos Rápidos -->
-        <div class="grid grid-cols-2 gap-4">
-            <div onclick="App.switchView('view-regulacion')" class="clay-card cursor-pointer hover:opacity-95 transition-all text-center space-y-2">
-                <div class="w-10 h-10 rounded-2xl bg-[#7A8A7C]/10 text-[#7A8A7C] flex items-center justify-center mx-auto text-xl">🧘‍♀️</div>
-                <h3 class="font-bold text-xs text-[#7A8A7C]">Gimnasio Somático</h3>
-                <p class="text-[10px] text-stone-500">Ejercicios de autorregulación vagal y respiración.</p>
-            </div>
-
-            <div onclick="App.switchView('view-citas')" class="clay-card cursor-pointer hover:opacity-95 transition-all text-center space-y-2">
-                <div class="w-10 h-10 rounded-2xl bg-[#E27D60]/10 text-[#E27D60] flex items-center justify-center mx-auto text-xl">📅</div>
-                <h3 class="font-bold text-xs text-[#7A8A7C]">Agendar Citas</h3>
-                <p class="text-[10px] text-stone-500">Sesiones somáticas con especialistas.</p>
-            </div>
-        </div>
-
-        <!-- Banner Campamento -->
-        <div class="clay-card bg-gradient-to-br from-[#7A8A7C]/10 to-[#E27D60]/10 space-y-3">
-            <div class="flex justify-between items-start">
-                <span class="text-[10px] font-extrabold uppercase tracking-wider text-[#E27D60] bg-[#E27D60]/10 px-2.5 py-1 rounded-full">Próximo Evento</span>
-                <span class="text-xs font-bold text-[#7A8A7C]">Maracay, VLA</span>
-            </div>
-            <h3 class="font-bold text-base text-[#7A8A7C]">Campamento "Adultas en Fuga"</h3>
-            <p class="text-xs text-stone-600">3 días de desconexión, naturaleza, prácticas somáticas e integración bioenergética.</p>
-            <div class="flex gap-2 pt-1">
-                <button onclick="App.switchView('view-pagos')" class="clay-btn-primary py-2 text-xs font-bold">Reservar Cupo</button>
-            </div>
-        </div>
-
-        <!-- Galería Comunitaria -->
-        <div class="space-y-3">
-            <div class="flex justify-between items-center">
-                <h3 class="font-bold text-sm text-[#7A8A7C]">📸 Galería de Experiencias (<span id="galeria-count">0</span>)</h3>
-            </div>
-            
-            <form id="formSubirImagen" class="clay-card space-y-2">
-                <div class="flex gap-2">
-                    <input type="text" name="descripcion" placeholder="Descripción de la foto..." class="clay-input text-xs" required>
-                    <button type="submit" class="clay-btn-secondary py-2 px-4 text-xs font-bold whitespace-nowrap">Subir</button>
+        <!-- ================= VISTA: INICIO (HOME) ================= -->
+        <section id="view-home" class="app-view space-y-5">
+            <!-- Carrusel Principal -->
+            <div class="carousel-container shadow-md">
+                <div id="carousel-track" class="carousel-track">
+                    <!-- Dinámico vía JS -->
                 </div>
-            </form>
-
-            <div id="galeria-container" class="galeria-grid">
-                <!-- Imágenes subidas -->
-            </div>
-        </div>
-    </main>
-
-    <!-- ================= AUTHENTICATION VIEW ================= -->
-    <main id="view-auth" class="app-view max-w-md mx-auto px-5 space-y-5 pt-4 hidden">
-        <div class="text-center space-y-1">
-            <h2 id="auth-title" class="text-2xl font-bold text-[#7A8A7C]">Iniciar Sesión</h2>
-            <p id="auth-subtitle" class="text-xs text-[#7A8A7C]/80">Accede a tu panel somático personalizado</p>
-        </div>
-
-        <div class="clay-card space-y-4">
-            <div class="flex bg-stone-200/50 p-1 rounded-2xl">
-                <button id="tab-login" onclick="App.switchAuthMode('login')" class="flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[#7A8A7C] shadow-sm">Ingresar</button>
-                <button id="tab-register" onclick="App.switchAuthMode('register')" class="flex-1 py-2.5 text-xs font-bold rounded-xl text-[#7A8A7C]">Registrarme</button>
+                <div id="carousel-dots" class="carousel-dots absolute bottom-3 left-0 right-0 flex justify-center gap-1.5 z-10">
+                    <!-- Dinámico vía JS -->
+                </div>
             </div>
 
-            <form onsubmit="event.preventDefault(); App.procesarAuthEmail();" class="space-y-3">
-                <div id="field-nombre" class="hidden space-y-1">
-                    <label class="block text-xs font-bold text-[#7A8A7C]">Nombre Completo</label>
-                    <input type="text" id="input-nombre" placeholder="Ej. Ana Mendoza" class="clay-input">
+            <!-- Accesos Rápidos -->
+            <div class="grid grid-cols-4 gap-2">
+                <button onclick="App.switchView('view-citas')" class="p-3 bg-white rounded-2xl shadow-sm text-center border border-stone-200/60 hover:border-[#7A8A7C] transition">
+                    <span class="text-xl block mb-1">📅</span>
+                    <span class="text-[10px] font-bold text-stone-700 block">Citas</span>
+                </button>
+                <button onclick="App.switchView('view-galeria')" class="p-3 bg-white rounded-2xl shadow-sm text-center border border-stone-200/60 hover:border-[#7A8A7C] transition">
+                    <span class="text-xl block mb-1">🖼️</span>
+                    <span class="text-[10px] font-bold text-stone-700 block">Galería</span>
+                </button>
+                <button onclick="App.switchView('view-pagos')" class="p-3 bg-white rounded-2xl shadow-sm text-center border border-stone-200/60 hover:border-[#7A8A7C] transition">
+                    <span class="text-xl block mb-1">💳</span>
+                    <span class="text-[10px] font-bold text-stone-700 block">Pagos</span>
+                </button>
+                <button onclick="App.irAPerfil()" class="p-3 bg-white rounded-2xl shadow-sm text-center border border-stone-200/60 hover:border-[#7A8A7C] transition">
+                    <span class="text-xl block mb-1">👤</span>
+                    <span class="text-[10px] font-bold text-stone-700 block">Perfil</span>
+                </button>
+            </div>
+
+            <!-- Módulo Ejercicios Somáticos Rápidos -->
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-stone-200/60 space-y-3">
+                <div class="flex justify-between items-center">
+                    <h3 class="font-bold text-xs uppercase tracking-wider text-[#7A8A7C]">Ejercicios Somáticos</h3>
+                    <span class="text-[10px] bg-stone-100 text-stone-600 px-2 py-0.5 rounded-full font-semibold">Rutina Diario</span>
                 </div>
 
-                <div class="space-y-1">
-                    <label class="block text-xs font-bold text-[#7A8A7C]">Correo Electrónico</label>
-                    <input type="email" id="input-email" placeholder="correo@ejemplo.com" class="clay-input" required>
+                <div class="space-y-2">
+                    <div class="p-3 bg-stone-50 rounded-xl flex justify-between items-center border border-stone-100">
+                        <div>
+                            <p class="text-xs font-bold text-stone-800">Respiración 4-7-8</p>
+                            <p class="text-[10px] text-stone-500">Desacelera el ritmo cardíaco y calma la ansiedad</p>
+                        </div>
+                        <button onclick="App.completarEjercicio('Respiración 4-7-8')" class="px-2.5 py-1 text-[10px] font-bold bg-[#7A8A7C] text-white rounded-lg shadow-sm">
+                            Completar
+                        </button>
+                    </div>
+
+                    <div class="p-3 bg-stone-50 rounded-xl flex justify-between items-center border border-stone-100">
+                        <div>
+                            <p class="text-xs font-bold text-stone-800">Tapping de Orientación</p>
+                            <p class="text-[10px] text-stone-500">Estimula la reconexión con el momento presente</p>
+                        </div>
+                        <button onclick="App.completarEjercicio('Tapping de Orientación')" class="px-2.5 py-1 text-[10px] font-bold bg-[#7A8A7C] text-white rounded-lg shadow-sm">
+                            Completar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= VISTA: AUTENTICACIÓN (LOGIN/REGISTER) ================= -->
+        <section id="view-auth" class="app-view hidden">
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-stone-200/60 space-y-5">
+                <!-- Título y pestañas -->
+                <div class="text-center space-y-1">
+                    <h2 id="auth-title" class="text-xl font-bold text-stone-800">Iniciar Sesión</h2>
+                    <p id="auth-subtitle" class="text-xs text-stone-500">Accede a tu panel somático</p>
                 </div>
 
-                <div class="space-y-1">
-                    <label class="block text-xs font-bold text-[#7A8A7C]">Contraseña</label>
-                    <input type="password" id="input-password" placeholder="••••••••" class="clay-input" required>
+                <div class="flex bg-stone-100 p-1 rounded-2xl">
+                    <button id="tab-login" onclick="App.switchAuthMode('login')" class="flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[#7A8A7C] shadow-sm">
+                        Ingresar
+                    </button>
+                    <button id="tab-register" onclick="App.switchAuthMode('register')" class="flex-1 py-2.5 text-xs font-bold rounded-xl text-[#7A8A7C]">
+                        Crear Cuenta
+                    </button>
                 </div>
 
-                <div id="field-rol" class="hidden space-y-1">
-                    <label class="block text-xs font-bold text-[#7A8A7C]">Tipo de Cuenta</label>
+                <form onsubmit="event.preventDefault(); App.procesarAuthEmail();" class="space-y-3">
+                    <div id="field-nombre" class="hidden space-y-1">
+                        <label class="text-[10px] font-bold text-stone-600 uppercase">Nombre Completo</label>
+                        <input type="text" id="input-nombre" placeholder="Tu nombre" class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs focus:outline-none focus:border-[#7A8A7C]">
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-bold text-stone-600 uppercase">Correo Electrónico</label>
+                        <input type="email" id="input-email" required placeholder="correo@ejemplo.com" class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs focus:outline-none focus:border-[#7A8A7C]">
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-bold text-stone-600 uppercase">Contraseña</label>
+                        <input type="password" id="input-password" required placeholder="••••••••" class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs focus:outline-none focus:border-[#7A8A7C]">
+                    </div>
+
+                    <div id="field-rol" class="hidden space-y-1">
+                        <label class="text-[10px] font-bold text-stone-600 uppercase">Tipo de Perfil</label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div id="role-user" onclick="App.selectRole('user')" class="role-card selected p-2.5 rounded-xl cursor-pointer text-center">
+                                <span class="text-sm block">👤</span>
+                                <span class="text-[10px] font-bold block text-stone-700">Usuario</span>
+                            </div>
+                            <div id="role-spec" onclick="App.selectRole('spec')" class="role-card p-2.5 rounded-xl cursor-pointer text-center">
+                                <span class="text-sm block">👩‍⚕️</span>
+                                <span class="text-[10px] font-bold block text-stone-700">Especialista</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="auth-submit-btn" class="w-full py-3 bg-[#7A8A7C] text-white font-bold text-xs rounded-xl shadow-md hover:bg-[#68776A] transition mt-2">
+                        Iniciar Sesión
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- ================= VISTA: PERFIL DE USUARIO ================= -->
+        <section id="view-perfil-usuario" class="app-view hidden space-y-4">
+            <div class="bg-white p-5 rounded-3xl shadow-sm border border-stone-200/60 text-center relative overflow-hidden">
+                <div class="w-16 h-16 rounded-full bg-[#7A8A7C] text-white font-bold text-xl flex items-center justify-center mx-auto mb-2 shadow-inner" id="profile-avatar">
+                    --
+                </div>
+                <h2 id="profile-name" class="font-bold text-base text-stone-800">Cargando...</h2>
+                <p id="profile-email" class="text-xs text-stone-500">email@ejemplo.com</p>
+                <div id="profile-role" class="mt-2 inline-block px-3 py-0.5 bg-stone-100 text-[#7A8A7C] text-[10px] font-bold rounded-full border border-stone-200">
+                    👤 Usuario
+                </div>
+
+                <button onclick="App.cerrarSesion()" class="absolute top-4 right-4 text-[10px] font-bold text-rose-500 hover:underline">
+                    Salir
+                </button>
+            </div>
+
+            <!-- Estadísticas -->
+            <div class="grid grid-cols-3 gap-2">
+                <div class="bg-white p-3 rounded-2xl shadow-sm border border-stone-200/60 text-center">
+                    <span id="profile-sesiones" class="block font-black text-lg text-[#7A8A7C]">0</span>
+                    <span class="text-[9px] text-stone-500 font-bold uppercase">Sesiones</span>
+                </div>
+                <div class="bg-white p-3 rounded-2xl shadow-sm border border-stone-200/60 text-center">
+                    <span id="profile-ejercicios" class="block font-black text-lg text-[#7A8A7C]">0</span>
+                    <span class="text-[9px] text-stone-500 font-bold uppercase">Ejercicios</span>
+                </div>
+                <div class="bg-white p-3 rounded-2xl shadow-sm border border-stone-200/60 text-center">
+                    <span id="profile-dias" class="block font-black text-lg text-[#7A8A7C]">1</span>
+                    <span class="text-[9px] text-stone-500 font-bold uppercase">Racha Días</span>
+                </div>
+            </div>
+
+            <!-- Solicitud de Espacio para Eventos -->
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-stone-200/60 space-y-3">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-xs font-bold uppercase text-stone-700">Espacio de Eventos</h3>
+                    <span id="evento-status-badge" class="text-[10px] font-bold px-3 py-1 rounded-full bg-gray-200 text-gray-600">INACTIVO</span>
+                </div>
+
+                <div id="evento-estado-inactivo" class="text-xs text-stone-500 space-y-2">
+                    <p>¿Deseas proponer o facilitar un taller/evento somático dentro del ecosistema Atrévete?</p>
+                    <button onclick="App.solicitarEspacioEventos()" class="w-full py-2 bg-stone-800 text-white font-bold text-xs rounded-xl shadow-sm">
+                        Solicitar Espacio de Facilitador
+                    </button>
+                </div>
+                <div id="evento-estado-pendiente" class="hidden text-xs text-amber-700 bg-amber-50 p-3 rounded-xl border border-amber-200">
+                    ⏳ Tu solicitud está en revisión por el equipo administrativo. Nos pondremos en contacto pronto.
+                </div>
+                <div id="evento-estado-aprobado" class="hidden text-xs text-emerald-700 bg-emerald-50 p-3 rounded-xl border border-emerald-200">
+                    ✅ ¡Solicitud Aprobada! Ya puedes publicar eventos y gestionar convocatorias.
+                </div>
+                <div id="evento-estado-rechazado" class="hidden text-xs text-rose-700 bg-rose-50 p-3 rounded-xl border border-rose-200">
+                    ❌ Solicitud no aprobada. Puedes volver a intentar cumpliendo los requerimientos mínimos.
+                </div>
+            </div>
+
+            <!-- Editar Perfil Form -->
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-stone-200/60 space-y-3">
+                <h3 class="text-xs font-bold uppercase text-stone-700">Datos Personales</h3>
+                <form onsubmit="event.preventDefault(); App.guardarEditarPerfil();" class="space-y-2.5">
+                    <div>
+                        <label class="text-[10px] font-bold text-stone-500">Nombre</label>
+                        <input type="text" id="edit-nombre" class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs">
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-bold text-stone-500">Teléfono</label>
+                        <input type="tel" id="edit-telefono" placeholder="+58 412..." class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs">
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-bold text-stone-500">Fecha Nacimiento</label>
+                        <input type="date" id="edit-fecha-nac" class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs">
+                    </div>
+                    <button type="submit" class="w-full py-2.5 bg-[#7A8A7C] text-white font-bold text-xs rounded-xl shadow-sm">
+                        Guardar Cambios
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- ================= VISTA: CITAS ================= -->
+        <section id="view-citas" class="app-view hidden space-y-4">
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-stone-200/60 space-y-3">
+                <h3 class="font-bold text-xs uppercase tracking-wider text-[#7A8A7C]">Agendar Cita Integrativa</h3>
+                <form onsubmit="event.preventDefault(); App.agendarCita();" class="space-y-3">
+                    <div>
+                        <label class="text-[10px] font-bold text-stone-600 uppercase">Especialista / Facilitador</label>
+                        <select id="cita-especialista" class="w-full px-3 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs">
+                            <option value="Dra. Elena Ramos - Somática">Dra. Elena Ramos (Terapia Somática)</option>
+                            <option value="Lic. Carlos M. - Bioenergética">Lic. Carlos M. (Bioenergética Integrativa)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-bold text-stone-600 uppercase">Modalidad</label>
+                        <select id="cita-modalidad" class="w-full px-3 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs">
+                            <option value="Online">Online (Videollamada)</option>
+                            <option value="Presencial Maracay">Presencial (Sede Maracay)</option>
+                        </select>
+                    </div>
                     <div class="grid grid-cols-2 gap-2">
-                        <button type="button" id="role-user" onclick="App.selectRole('user')" class="role-btn selected p-2 rounded-xl text-xs font-bold text-[#7A8A7C] bg-white text-center">👤 Usuario</button>
-                        <button type="button" id="role-spec" onclick="App.selectRole('spec')" class="role-btn p-2 rounded-xl text-xs font-bold text-[#7A8A7C] bg-white text-center">👩‍⚕️ Especialista</button>
+                        <div>
+                            <label class="text-[10px] font-bold text-stone-600 uppercase">Fecha</label>
+                            <input type="date" id="cita-fecha" class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold text-stone-600 uppercase">Hora</label>
+                            <input type="time" id="cita-hora" class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs">
+                        </div>
+                    </div>
+                    <button type="submit" class="w-full py-2.5 bg-[#7A8A7C] text-white font-bold text-xs rounded-xl shadow-md">
+                        Confirmar y Agendar
+                    </button>
+                </form>
+            </div>
+
+            <!-- Listado de Citas -->
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-stone-200/60 space-y-3">
+                <h3 class="font-bold text-xs uppercase tracking-wider text-stone-700">Mis Citas Agendadas</h3>
+                <div id="citas-lista" class="space-y-2 text-xs">
+                    <!-- Dinámico vía JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= VISTA: GALERÍA ================= -->
+        <section id="view-galeria" class="app-view hidden space-y-4">
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-stone-200/60 space-y-3">
+                <div class="flex justify-between items-center">
+                    <h3 class="font-bold text-xs uppercase tracking-wider text-[#7A8A7C]">Galería de Experiencias</h3>
+                    <span class="text-[10px] text-stone-400 font-bold"><span id="galeria-count">0</span> fotos</span>
+                </div>
+
+                <!-- Formulario de Subida -->
+                <form id="formSubirImagen" class="space-y-2">
+                    <input type="text" name="descripcion" placeholder="Descripción de la vivencia o encuentro..." class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs">
+                    <button type="submit" class="w-full py-2 bg-stone-800 text-white font-bold text-xs rounded-xl shadow-sm">
+                        Subir Foto a la Galería
+                    </button>
+                </form>
+
+                <div id="galeria-container" class="galeria-grid pt-2">
+                    <!-- Dinámico vía JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= VISTA: PAGOS ================= -->
+        <section id="view-pagos" class="app-view hidden space-y-4">
+            <div class="bg-white p-5 rounded-3xl shadow-sm border border-stone-200/60 space-y-4">
+                <h3 class="font-bold text-sm text-stone-800 text-center">Pasarela de Pagos & Aportes</h3>
+
+                <div>
+                    <label class="text-[10px] font-bold text-stone-600 uppercase">Concepto / Servicio</label>
+                    <select id="pago-concepto" onchange="App.actualizarMontoPago()" class="w-full px-3 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs font-semibold">
+                        <option value="sesion" data-monto="35">Sesión Individual Somática ($35 USD)</option>
+                        <option value="campamento" data-monto="120">Campamento Adultas en Fuga ($120 USD)</option>
+                        <option value="taller" data-monto="20">Taller Regulación Nerviosa ($20 USD)</option>
+                    </select>
+                </div>
+
+                <div class="bg-stone-50 p-3 rounded-2xl border border-stone-100 text-center">
+                    <span class="text-[10px] font-bold text-stone-400 uppercase block">Total a Cancelar</span>
+                    <span id="pago-monto-display" class="text-2xl font-black text-[#7A8A7C]">$35.00 USD</span>
+                </div>
+
+                <!-- Selección Metodo Pago -->
+                <div class="space-y-1.5">
+                    <label class="text-[10px] font-bold text-stone-600 uppercase">Selecciona Método de Pago</label>
+                    <div class="grid grid-cols-3 gap-2">
+                        <button id="pay-btn-pagomovil" onclick="App.seleccionarMetodoPago('pagomovil')" class="pay-btn active-pay p-2 rounded-xl text-center">
+                            <span class="text-base block">🇻🇪</span>
+                            <span class="text-[9px] font-bold block">PagoMóvil</span>
+                        </button>
+                        <button id="pay-btn-zelle" onclick="App.seleccionarMetodoPago('zelle')" class="pay-btn p-2 rounded-xl text-center">
+                            <span class="text-base block">💵</span>
+                            <span class="text-[9px] font-bold block">Zelle / P2P</span>
+                        </button>
+                        <button id="pay-btn-tarjeta" onclick="App.seleccionarMetodoPago('tarjeta')" class="pay-btn p-2 rounded-xl text-center">
+                            <span class="text-base block">💳</span>
+                            <span class="text-[9px] font-bold block">Tarjeta</span>
+                        </button>
                     </div>
                 </div>
 
-                <button type="submit" id="auth-submit-btn" class="clay-btn-primary py-3 text-xs font-bold mt-2">Iniciar Sesión</button>
-            </form>
-        </div>
-    </main>
-
-    <!-- ================= PERFIL DE USUARIO ================= -->
-    <main id="view-perfil-usuario" class="app-view max-w-md mx-auto px-5 space-y-5 pt-3 hidden">
-        <div class="clay-card text-center space-y-3">
-            <div id="profile-avatar" class="w-20 h-20 rounded-full bg-[#E27D60] text-white flex items-center justify-center font-bold text-2xl mx-auto shadow-inner">
-                U
-            </div>
-            <div>
-                <h2 id="profile-name" class="text-lg font-bold text-[#7A8A7C]">Nombre Usuario</h2>
-                <p id="profile-email" class="text-xs text-stone-500">usuario@correo.com</p>
-                <span id="profile-role" class="inline-block mt-1 text-[10px] font-bold px-3 py-0.5 rounded-full bg-[#7A8A7C]/10 text-[#7A8A7C]">👤 Usuario</span>
-            </div>
-            <button onclick="App.cerrarSesion()" class="text-xs text-rose-500 font-bold underline pt-2">Cerrar Sesión</button>
-        </div>
-
-        <!-- Métricas / Stats -->
-        <div class="grid grid-cols-3 gap-2 text-center">
-            <div class="clay-card py-3">
-                <span id="profile-sesiones" class="block font-extrabold text-lg text-[#E27D60]">0</span>
-                <span class="text-[9px] font-bold text-stone-500 uppercase">Citas</span>
-            </div>
-            <div class="clay-card py-3">
-                <span id="profile-ejercicios" class="block font-extrabold text-lg text-[#7A8A7C]">0</span>
-                <span class="text-[9px] font-bold text-stone-500 uppercase">Practicas</span>
-            </div>
-            <div class="clay-card py-3">
-                <span id="profile-dias" class="block font-extrabold text-lg text-[#7A8A7C]">1</span>
-                <span class="text-[9px] font-bold text-stone-500 uppercase">Días</span>
-            </div>
-        </div>
-
-        <!-- Edición de Datos -->
-        <div class="clay-card space-y-3">
-            <h3 class="font-bold text-xs text-[#7A8A7C]">✏️ Editar Información</h3>
-            <div class="space-y-2">
-                <input type="text" id="edit-nombre" placeholder="Nombre completo" class="clay-input text-xs">
-                <input type="text" id="edit-telefono" placeholder="Teléfono" class="clay-input text-xs">
-                <input type="date" id="edit-fecha-nac" class="clay-input text-xs">
-                <button onclick="App.guardarEditarPerfil()" class="clay-btn-secondary py-2 text-xs font-bold">Guardar Cambios</button>
-            </div>
-        </div>
-
-        <!-- Solicitud de Espacio para Eventos -->
-        <div class="clay-card space-y-3">
-            <div class="flex justify-between items-center">
-                <h3 class="font-bold text-xs text-[#7A8A7C]">🎪 Solicitud de Espacio / Eventos</h3>
-                <span id="evento-status-badge" class="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-stone-200 text-stone-600">INACTIVO</span>
-            </div>
-            <p class="text-xs text-stone-600">¿Eres facilitador/a? Solicita espacio en la plataforma para publicar tus talleres o encuentros somáticos en Maracay.</p>
-            
-            <div id="evento-estado-inactivo">
-                <button onclick="App.solicitarEspacioEventos()" class="clay-btn-primary py-2.5 text-xs font-bold">Enviar Solicitud de Facilitador</button>
-            </div>
-            <div id="evento-estado-pendiente" class="hidden p-3 bg-amber-50 rounded-xl border border-amber-200 text-xs text-amber-800">
-                ⌛ Tu solicitud está siendo evaluada por el equipo de Atrévete HealthTech.
-            </div>
-            <div id="evento-estado-aprobado" class="hidden p-3 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-emerald-800">
-                ✅ Solicitud Aprobada. Tienes acceso para publicar eventos comunitarios.
-            </div>
-            <div id="evento-estado-rechazado" class="hidden p-3 bg-rose-50 rounded-xl border border-rose-200 text-xs text-rose-800">
-                ❌ Solicitud no aprobada. Contacta con soporte para mayor información.
-            </div>
-        </div>
-    </main>
-
-    <!-- ================= GIMNASIO SOMÁTICO (REGULACIÓN) ================= -->
-    <main id="view-regulacion" class="app-view max-w-md mx-auto px-5 space-y-5 pt-3 hidden">
-        <div class="text-center space-y-1">
-            <h2 class="text-2xl font-bold text-[#7A8A7C]">Gimnasio Somático</h2>
-            <p class="text-xs text-[#7A8A7C]/80">Ejercicios guiados para la autorregulación vagal y liberación de tensión.</p>
-        </div>
-
-        <div class="clay-card space-y-3">
-            <div class="flex justify-between items-center">
-                <span class="text-xs font-bold text-[#E27D60] bg-[#E27D60]/10 px-3 py-1 rounded-full">🫁 Respiración</span>
-                <span class="text-[10px] text-[#7A8A7C]">5 min</span>
-            </div>
-            <h3 class="font-bold text-base text-[#7A8A7C]">Técnica 4-7-8 Somática</h3>
-            <p class="text-xs text-gray-600">Inhala en 4s, retén 7s y exhala suavemente con sonido en 8s para estimular el nervio vago.</p>
-            <button onclick="App.completarEjercicio('Respiración 4-7-8')" class="clay-btn-primary py-2.5 text-xs font-bold mt-2">Iniciar Práctica</button>
-        </div>
-
-        <div class="clay-card space-y-3">
-            <div class="flex justify-between items-center">
-                <span class="text-xs font-bold text-[#7A8A7C] bg-[#7A8A7C]/10 px-3 py-1 rounded-full">🧘 Movimiento</span>
-                <span class="text-[10px] text-[#7A8A7C]">10 min</span>
-            </div>
-            <h3 class="font-bold text-base text-[#7A8A7C]">Tapping y Descarga Bioenergética</h3>
-            <p class="text-xs text-gray-600">Golpeteos suaves en pecho, brazos y rostro para liberar cargas de cortisol y reconectar con el presente.</p>
-            <button onclick="App.completarEjercicio('Tapping Somático')" class="clay-btn-secondary py-2.5 text-xs font-bold mt-2">Iniciar Práctica</button>
-        </div>
-
-        <div class="clay-card space-y-3">
-            <div class="flex justify-between items-center">
-                <span class="text-xs font-bold text-[#E27D60] bg-[#E27D60]/10 px-3 py-1 rounded-full">🌿 Meditación</span>
-                <span class="text-[10px] text-[#7A8A7C]">8 min</span>
-            </div>
-            <h3 class="font-bold text-base text-[#7A8A7C]">Escaneo Corporal & Orientación</h3>
-            <p class="text-xs text-gray-600">Observación consciente de sensaciones sin juicio, reubicando el cuerpo en un espacio seguro.</p>
-            <button onclick="App.completarEjercicio('Escaneo Corporal')" class="clay-btn-primary py-2.5 text-xs font-bold mt-2">Iniciar Práctica</button>
-        </div>
-    </main>
-
-    <!-- ================= AGENDAR CITAS ================= -->
-    <main id="view-citas" class="app-view max-w-md mx-auto px-5 space-y-5 pt-3 hidden">
-        <div class="text-center space-y-1">
-            <h2 class="text-2xl font-bold text-[#7A8A7C]">Agendar Sesión</h2>
-            <p class="text-xs text-[#7A8A7C]/80">Reserva tu acompañamiento somático individual o grupal.</p>
-        </div>
-
-        <form onsubmit="event.preventDefault(); App.agendarCita();" class="clay-card space-y-4">
-            <div>
-                <label class="block text-xs font-bold text-[#7A8A7C] mb-1">Especialista / Facilitador</label>
-                <select id="cita-especialista" class="clay-input" required>
-                    <option value="">Selecciona un profesional</option>
-                    <option value="Dra. Elena Ramos - Somática">Dra. Elena Ramos (Acompañamiento Somático)</option>
-                    <option value="Lcda. María Silva - Bioenergética">Lcda. María Silva (Terapia Bioenergética)</option>
-                    <option value="Equipo Atrévete - Grupal">Equipo Atrévete (Círculos Integrativos)</option>
-                </select>
-            </div>
-            <div>
-                <label class="block text-xs font-bold text-[#7A8A7C] mb-1">Modalidad</label>
-                <select id="cita-modalidad" class="clay-input" required>
-                    <option value="Online (Zoom)">Online (Zoom)</option>
-                    <option value="Presencial (Maracay)">Presencial (Sede Maracay)</option>
-                </select>
-            </div>
-            <div class="grid grid-cols-2 gap-3">
-                <div>
-                    <label class="block text-xs font-bold text-[#7A8A7C] mb-1">Fecha</label>
-                    <input type="date" id="cita-fecha" class="clay-input" required>
+                <!-- Instrucciones -->
+                <div id="pago-instrucciones" class="bg-emerald-50/50 p-3 rounded-xl border border-emerald-100 text-[11px] text-stone-700 space-y-1">
+                    <p><strong>Pago Móvil (Venezuela):</strong></p>
+                    <p>Banco: BNC (0191) | CI: V-18.452.123</p>
+                    <p>Teléfono: 0414-4500000 | Tasa Oficial BCV</p>
                 </div>
-                <div>
-                    <label class="block text-xs font-bold text-[#7A8A7C] mb-1">Hora</label>
-                    <input type="time" id="cita-hora" class="clay-input" required>
-                </div>
-            </div>
-            <div>
-                <label class="block text-xs font-bold text-[#7A8A7C] mb-1">Motivo de consulta</label>
-                <textarea id="cita-motivo" rows="2" placeholder="Regulación de estrés, ansiedad, sobrecarga..." class="clay-input"></textarea>
-            </div>
-            <button type="submit" class="clay-btn-primary py-3 text-xs font-bold">Confirmar Reserva ($40)</button>
-        </form>
 
-        <div class="clay-card space-y-3">
-            <h3 class="font-bold text-sm text-[#7A8A7C]">📋 Tus Sesiones Agendadas</h3>
-            <div id="citas-lista" class="space-y-2 text-xs">
-                <p class="text-stone-400 italic">No tienes citas programadas actualmente.</p>
+                <!-- Formulario Reportar Referencia -->
+                <form onsubmit="event.preventDefault(); App.procesarPago();" class="space-y-2">
+                    <input type="text" id="pago-referencia" placeholder="Número de referencia o comprobante" class="w-full px-3 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs">
+                    <button type="submit" class="w-full py-3 bg-[#7A8A7C] text-white font-bold text-xs rounded-xl shadow-md">
+                        Reportar Pago
+                    </button>
+                </form>
             </div>
-        </div>
+        </section>
+
     </main>
 
-    <!-- ================= PASARELA DE PAGOS ================= -->
-    <main id="view-pagos" class="app-view max-w-md mx-auto px-5 space-y-5 pt-3 hidden">
-        <div class="text-center space-y-1">
-            <h2 class="text-2xl font-bold text-[#7A8A7C]">Módulo de Pagos</h2>
-            <p class="text-xs text-[#7A8A7C]/80">Reserva de eventos, talleres y sesiones terapéuticas.</p>
-        </div>
-
-        <div class="clay-card space-y-4">
-            <h3 class="font-bold text-sm text-[#7A8A7C]">1. Selecciona el concepto</h3>
-            <select id="pago-concepto" class="clay-input" onchange="App.actualizarMontoPago()">
-                <option value="Campamento Adultas en Fuga" data-monto="120">Campamento Adultas en Fuga ($120)</option>
-                <option value="Sesión Somática Individual" data-monto="40">Sesión Somática Individual ($40)</option>
-                <option value="Taller de Regulación Vagal" data-monto="25">Taller de Regulación Vagal ($25)</option>
-            </select>
-
-            <div class="text-center py-2 bg-stone-100 rounded-2xl">
-                <span class="text-xs text-[#7A8A7C]">Monto a pagar:</span>
-                <div id="pago-monto-display" class="text-2xl font-extrabold text-[#E27D60]">$120.00 USD</div>
-            </div>
-
-            <h3 class="font-bold text-sm text-[#7A8A7C]">2. Método de pago</h3>
-            <div class="grid grid-cols-3 gap-2">
-                <button type="button" onclick="App.seleccionarMetodoPago('pagomovil')" id="pay-btn-pagomovil" class="clay-btn-pay active-pay">
-                    <span>📲</span>
-                    <span>Pago Móvil</span>
-                </button>
-                <button type="button" onclick="App.seleccionarMetodoPago('zelle')" id="pay-btn-zelle" class="clay-btn-pay">
-                    <span>💲</span>
-                    <span>Zelle / P2P</span>
-                </button>
-                <button type="button" onclick="App.seleccionarMetodoPago('tarjeta')" id="pay-btn-tarjeta" class="clay-btn-pay">
-                    <span>💳</span>
-                    <span>Tarjeta</span>
-                </button>
-            </div>
-
-            <div id="pago-instrucciones" class="bg-amber-50/50 p-3 rounded-2xl border border-amber-200 text-xs text-amber-900 space-y-1">
-                <p><strong>Pago Móvil (Venezuela):</strong></p>
-                <p>Banco: BNC (0191) | CI: V-18.452.123</p>
-                <p>Teléfono: 0414-4500000 | Tasa Oficial BCV</p>
-            </div>
-
-            <div>
-                <label class="block text-xs font-bold text-[#7A8A7C] mb-1">Número de Referencia / Comprobante</label>
-                <input type="text" id="pago-referencia" placeholder="Ej. 849204" class="clay-input">
-            </div>
-
-            <button onclick="App.procesarPago()" class="clay-btn-primary py-3 text-xs font-bold">Reportar y Confirmar Pago</button>
-        </div>
-    </main>
-
-    <!-- ================= ASISTENTE FLOTANTE ================= -->
-    <div class="assistant-widget">
-        <button id="assistant-toggle" onclick="App.toggleAssistant()" class="w-12 h-12 rounded-full bg-[#E27D60] text-white shadow-lg flex items-center justify-center text-xl font-bold">
-            💬
-        </button>
-    </div>
-
-    <div id="assistant-chat" class="assistant-chat">
-        <div class="bg-[#7A8A7C] text-white p-3 flex justify-between items-center">
+    <!-- ASISTENTE VIRTUAL CHAT FLOTANTE -->
+    <div id="assistant-chat">
+        <div class="p-3 bg-[#7A8A7C] text-white flex justify-between items-center">
             <div class="flex items-center gap-2">
-                <div class="w-6 h-6 rounded-full bg-white text-[#7A8A7C] flex items-center justify-center font-bold text-xs">A</div>
+                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
                 <span class="font-bold text-xs">Asistente Atrévete</span>
             </div>
             <button onclick="App.toggleAssistant()" class="text-white text-xs font-bold">✕</button>
         </div>
-        
-        <div id="assistant-messages" class="assistant-messages">
-            <div class="message bot">
-                ¡Hola! 👋 Soy tu guía en Atrévete HealthTech. ¿En qué puedo orientarte hoy sobre regulación somática o eventos?
-            </div>
+        <div id="assistant-messages" class="chat-messages">
+            <div class="message bot">¡Hola! Soy tu guía en el ecosistema Atrévete. ¿En qué te puedo orientar hoy?</div>
         </div>
-
-        <div class="p-2 border-t border-stone-200 bg-white space-y-1.5">
-            <div class="flex gap-1 overflow-x-auto pb-1">
-                <button onclick="App.sendQuickMessage('¿Qué es autorregulación?')" class="text-[9px] bg-stone-100 text-stone-600 px-2 py-1 rounded-full whitespace-nowrap">¿Qué es regulación?</button>
-                <button onclick="App.sendQuickMessage('¿Cómo agendar cita?')" class="text-[9px] bg-stone-100 text-stone-600 px-2 py-1 rounded-full whitespace-nowrap">Agendar cita</button>
-            </div>
-            <div class="flex gap-1">
-                <input type="text" id="assistant-input" placeholder="Escribe tu duda..." class="clay-input text-xs py-2" onkeypress="if(event.key==='Enter') App.sendMessage()">
-                <button onclick="App.sendMessage()" class="bg-[#7A8A7C] text-white px-3 rounded-xl text-xs font-bold">➢</button>
-            </div>
+        <div class="p-2 border-t border-stone-100 bg-stone-50 flex gap-1">
+            <input type="text" id="assistant-input" onkeypress="if(event.key === 'Enter') App.sendMessage()" placeholder="Escribe tu duda..." class="flex-1 px-3 py-1.5 text-xs bg-white border border-stone-200 rounded-lg focus:outline-none">
+            <button onclick="App.sendMessage()" class="px-3 py-1.5 bg-[#7A8A7C] text-white text-xs font-bold rounded-lg">Enviar</button>
         </div>
     </div>
 
-    <!-- ================= NAVEGACIÓN INFERIOR (BOTTOM BAR) ================= -->
-    <nav class="fixed bottom-0 left-0 right-0 z-30 bg-[#F4F1EA]/95 backdrop-blur-md border-t border-stone-200/60 py-2">
-        <div class="max-w-md mx-auto flex justify-around items-center">
-            <button onclick="App.switchView('view-home')" class="nav-item active flex flex-col items-center gap-0.5 text-[#7A8A7C]" data-view="view-home">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 00-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-                <span class="text-[10px] font-bold">Inicio</span>
-            </button>
-            <button onclick="App.switchView('view-regulacion')" class="nav-item flex flex-col items-center gap-0.5 text-stone-400" data-view="view-regulacion">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.684a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
-                <span class="text-[10px] font-bold">Somática</span>
-            </button>
-            <button onclick="App.switchView('view-citas')" class="nav-item flex flex-col items-center gap-0.5 text-stone-400" data-view="view-citas">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                <span class="text-[10px] font-bold">Citas</span>
-            </button>
-            <button onclick="App.switchView('view-pagos')" class="nav-item flex flex-col items-center gap-0.5 text-stone-400" data-view="view-pagos">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                <span class="text-[10px] font-bold">Pagos</span>
-            </button>
-        </div>
+    <!-- BOTÓN CHAT TOGGLE -->
+    <button id="assistant-toggle" onclick="App.toggleAssistant()" class="fixed bottom-20 right-4 w-12 h-12 bg-[#7A8A7C] text-white rounded-full shadow-lg flex items-center justify-center text-xl z-40 hover:scale-105 transition">
+        💬
+    </button>
+
+    <!-- BARRA NAVEGACIÓN INFERIOR (MOBILE BOTTOM NAV) -->
+    <nav class="fixed bottom-0 inset-x-0 bg-white border-t border-stone-200 px-6 py-2 z-50 max-w-md mx-auto flex justify-between items-center">
+        <button onclick="App.switchView('view-home')" data-view="view-home" class="nav-item active flex flex-col items-center gap-0.5 text-stone-400 hover:text-[#7A8A7C]">
+            <span class="text-lg">🏠</span>
+            <span class="text-[9px]">Inicio</span>
+        </button>
+        <button onclick="App.switchView('view-citas')" data-view="view-citas" class="nav-item flex flex-col items-center gap-0.5 text-stone-400 hover:text-[#7A8A7C]">
+            <span class="text-lg">📅</span>
+            <span class="text-[9px]">Citas</span>
+        </button>
+        <button onclick="App.switchView('view-galeria')" data-view="view-galeria" class="nav-item flex flex-col items-center gap-0.5 text-stone-400 hover:text-[#7A8A7C]">
+            <span class="text-lg">🖼️</span>
+            <span class="text-[9px]">Galería</span>
+        </button>
+        <button onclick="App.switchView('view-pagos')" data-view="view-pagos" class="nav-item flex flex-col items-center gap-0.5 text-stone-400 hover:text-[#7A8A7C]">
+            <span class="text-lg">💳</span>
+            <span class="text-[9px]">Pagos</span>
+        </button>
+        <button onclick="App.irAPerfil()" data-view="view-perfil-usuario" class="nav-item flex flex-col items-center gap-0.5 text-stone-400 hover:text-[#7A8A7C]">
+            <span class="text-lg">👤</span>
+            <span class="text-[9px]">Perfil</span>
+        </button>
     </nav>
 
     <!-- ================= JAVASCRIPT ENGINE ================= -->
@@ -848,7 +779,9 @@
                 localStorage.setItem('atrevete_user', JSON.stringify(user));
                 this.updateUserUI();
                 this.showToast(`Bienvenido/a, ${user.nombre}`, 'success');
-                this.switchView('view-perfil-usuario');
+                
+                // REDIRECCIÓN DIRECTA AL INICIO
+                this.switchView('view-home');
             },
 
             cerrarSesion() {
@@ -887,7 +820,7 @@
                     profileBtn.classList.add('hidden');
                 }
 
-                // Actualizar stats
+                // Actualizar estadísticas
                 document.getElementById('profile-sesiones').textContent = this.state.stats.sesiones;
                 document.getElementById('profile-ejercicios').textContent = this.state.stats.ejercicios;
                 document.getElementById('profile-dias').textContent = this.state.stats.dias;
@@ -1141,7 +1074,7 @@
 
                 const messagesContainer = document.getElementById('assistant-messages');
                 
-                // Agregar mensaje de usuario
+                // Mensaje usuario
                 const userMsg = document.createElement('div');
                 userMsg.className = 'message user';
                 userMsg.textContent = text;
@@ -1150,7 +1083,7 @@
                 input.value = '';
                 messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
-                // Generar respuesta del bot
+                // Respuesta bot
                 setTimeout(() => {
                     const botMsg = document.createElement('div');
                     botMsg.className = 'message bot';
