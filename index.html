@@ -412,7 +412,7 @@
         @keyframes slideUp { from { opacity: 0; transform: translateY(30px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
 
         /* ============================================
-           CARRUSEL / BANNER CON 10 IMÁGENES
+           CARRUSEL CON 10 IMÁGENES
            ============================================ */
         .carousel-container {
             position: relative;
@@ -778,7 +778,7 @@
         <button onclick="App.switchView('view-home')" class="clay-btn-secondary py-3 text-xs font-bold">← Volver al Inicio</button>
     </main>
 
-    <!-- ================= 3. PERFIL ================= -->
+    <!-- ================= 3. PERFIL CON BOTÓN GUARDAR ================= -->
     <main id="view-perfil-usuario" class="app-view max-w-md mx-auto px-5 space-y-5 pb-5 hidden">
         <div class="clay-card p-6 text-center space-y-4">
             <div id="profile-avatar" class="profile-avatar-large">US</div>
@@ -793,6 +793,31 @@
             <div class="profile-stat"><div class="number" id="profile-sesiones">0</div><div class="label">Sesiones</div></div>
             <div class="profile-stat"><div class="number" id="profile-ejercicios">0</div><div class="label">Ejercicios</div></div>
             <div class="profile-stat"><div class="number" id="profile-dias">0</div><div class="label">Días</div></div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- EDITAR PERFIL - CON BOTÓN VISIBLE -->
+        <!-- ============================================ -->
+        <div class="clay-card p-5 space-y-4">
+            <h4 class="font-bold text-sm text-[#7A8A7C] flex items-center gap-2">✏️ Editar Datos Personales</h4>
+            
+            <div>
+                <label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="edit-nombre">Nombre Completo</label>
+                <input type="text" id="edit-nombre" class="clay-input" value="">
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="edit-telefono">Teléfono</label>
+                <input type="tel" id="edit-telefono" placeholder="0414-1234567" class="clay-input" value="">
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="edit-fecha-nac">Fecha de Nacimiento</label>
+                <input type="date" id="edit-fecha-nac" class="clay-input" value="">
+            </div>
+            
+            <!-- BOTÓN GUARDAR - AHORA VISIBLE -->
+            <button onclick="App.guardarEditarPerfil()" class="clay-btn-primary py-3 text-sm font-bold flex items-center justify-center gap-2">
+                💾 Guardar Cambios
+            </button>
         </div>
 
         <!-- SECCIÓN EVENTOS -->
@@ -1038,6 +1063,7 @@
                     email: localStorage.getItem('user_email') || '',
                     role: localStorage.getItem('user_role') || 'user',
                     telefono: localStorage.getItem('user_telefono') || '',
+                    fechaNac: localStorage.getItem('user_fecha_nac') || '',
                     fechaRegistro: localStorage.getItem('fecha_registro') || new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' }),
                     sesiones: parseInt(localStorage.getItem('user_sesiones')) || 0,
                     ejercicios: parseInt(localStorage.getItem('user_ejercicios')) || 0,
@@ -1103,7 +1129,6 @@
                 const dots = document.getElementById('carousel-dots');
                 if (!track) return;
 
-                // Generar slides
                 track.innerHTML = this.state.carouselImages.map((img, i) => `
                     <div class="carousel-slide" style="background-image: url('${img.url}')">
                         <div class="overlay">
@@ -1112,12 +1137,10 @@
                     </div>
                 `).join('');
 
-                // Generar dots
                 dots.innerHTML = this.state.carouselImages.map((_, i) => `
                     <button class="dot ${i === 0 ? 'active' : ''}" onclick="App.irSlide(${i})" aria-label="Slide ${i+1}"></button>
                 `).join('');
 
-                // Auto-play
                 this.startAutoPlay();
             },
 
@@ -1128,10 +1151,7 @@
 
                 this.state.carouselIndex = index;
                 track.style.transform = `translateX(-${index * 100}%)`;
-
-                dots.forEach((d, i) => {
-                    d.classList.toggle('active', i === index);
-                });
+                dots.forEach((d, i) => { d.classList.toggle('active', i === index); });
             },
 
             carouselNext() {
@@ -1446,15 +1466,50 @@
                 localStorage.removeItem('user_email');
                 localStorage.removeItem('user_role');
                 localStorage.removeItem('user_telefono');
+                localStorage.removeItem('user_fecha_nac');
                 localStorage.removeItem('fecha_registro');
 
                 this.state.isAuthenticated = false;
-                this.state.user = { id: null, name: '', email: '', role: 'user', telefono: '', fechaRegistro: '', sesiones: 0, ejercicios: 0, diasActivo: 0 };
+                this.state.user = { id: null, name: '', email: '', role: 'user', telefono: '', fechaNac: '', fechaRegistro: '', sesiones: 0, ejercicios: 0, diasActivo: 0 };
                 this.actualizarPerfilUI();
                 this.actualizarHeader();
                 this.actualizarNav();
                 this.showToast('👋 Sesión cerrada', 'info');
                 this.switchView('view-home');
+            },
+
+            // ============================================
+            // GUARDAR EDITAR PERFIL
+            // ============================================
+            guardarEditarPerfil() {
+                const nombre = document.getElementById('edit-nombre').value.trim();
+                const telefono = document.getElementById('edit-telefono').value.trim();
+                const fechaNac = document.getElementById('edit-fecha-nac').value;
+
+                if (!nombre) {
+                    this.showToast('⚠️ El nombre es obligatorio', 'error');
+                    return;
+                }
+
+                localStorage.setItem('user_name', nombre);
+                localStorage.setItem('user_telefono', telefono);
+                localStorage.setItem('user_fecha_nac', fechaNac);
+
+                this.state.user.name = nombre;
+                this.state.user.telefono = telefono;
+                this.state.user.fechaNac = fechaNac;
+
+                // Actualizar en db_usuarios
+                const usuarios = DB.getUsuarios();
+                const index = usuarios.findIndex(u => u.id === this.state.user.id);
+                if (index !== -1) {
+                    usuarios[index].nombre = nombre;
+                    usuarios[index].telefono = telefono;
+                    localStorage.setItem('db_usuarios', JSON.stringify(usuarios));
+                }
+
+                this.actualizarPerfilUI();
+                this.showToast('✅ Perfil actualizado exitosamente', 'success');
             },
 
             // ============================================
@@ -1807,6 +1862,11 @@
                 document.getElementById('profile-ejercicios').textContent = this.state.user.ejercicios || 0;
                 document.getElementById('profile-dias').textContent = this.state.user.diasActivo || 0;
                 document.getElementById('profile-miembro-desde').textContent = this.state.user.fechaRegistro || 'Hoy';
+
+                // Cargar valores en el formulario de edición
+                document.getElementById('edit-nombre').value = this.state.user.name || '';
+                document.getElementById('edit-telefono').value = this.state.user.telefono || '';
+                document.getElementById('edit-fecha-nac').value = this.state.user.fechaNac || '';
             },
 
             // ============================================
@@ -1842,6 +1902,8 @@
                 App.state.user.name = localStorage.getItem('user_name') || '';
                 App.state.user.email = localStorage.getItem('user_email') || '';
                 App.state.user.role = localStorage.getItem('user_role') || 'user';
+                App.state.user.telefono = localStorage.getItem('user_telefono') || '';
+                App.state.user.fechaNac = localStorage.getItem('user_fecha_nac') || '';
                 App.state.isAuthenticated = !!localStorage.getItem('user_email');
                 App.actualizarPerfilUI();
                 App.actualizarHeader();
