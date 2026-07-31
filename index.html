@@ -181,12 +181,12 @@
                 <img id="app-logo-img" src="atrevetehtlogo.png" alt="Atrévete HealthTech" class="h-16 w-auto object-contain" onerror="this.style.display='none'">
             </div>
             <div id="header-auth-container" class="flex items-center gap-2">
-                <!-- BOTONES LOGIN Y REGISTRO (ocultos cuando hay sesión) -->
+                <!-- BOTONES LOGIN Y REGISTRO (OCULTOS CUANDO HAY SESIÓN) -->
                 <div id="header-login-btns" class="flex items-center gap-2">
                     <button onclick="App.abrirLogin()" class="header-action-btn btn-login">🔑 Iniciar</button>
                     <button onclick="App.abrirRegistro()" class="header-action-btn btn-register">✨ Registro</button>
                 </div>
-                <!-- PERFIL (visible cuando hay sesión) -->
+                <!-- PERFIL (VISIBLE CUANDO HAY SESIÓN) -->
                 <div id="header-profile-btn" class="hidden">
                     <div onclick="App.switchView('view-perfil-usuario')" class="header-profile-btn">
                         <div id="header-avatar" class="header-profile-avatar">US</div>
@@ -521,12 +521,15 @@
                 ]
             },
 
+            // ============================================
+            // INICIALIZACIÓN
+            // ============================================
             init() {
                 DB.init();
                 this.iniciarCarousel();
                 this.cargarEstadoEventos();
                 this.actualizarPerfilUI();
-                this.actualizarHeader();  // ✅ ESTO OCULTA LOS BOTONES
+                this.actualizarHeader();
                 this.actualizarNav();
                 this.selectPaymentMethod('pm_bdv');
 
@@ -673,29 +676,51 @@
             // NAVEGACIÓN
             // ============================================
             irAPerfil() {
-                if (this.state.isAuthenticated) this.switchView('view-perfil-usuario');
-                else this.abrirLogin();
+                // ✅ Si está autenticado, va al perfil; si no, va al login
+                if (this.state.isAuthenticated) {
+                    this.switchView('view-perfil-usuario');
+                } else {
+                    this.abrirLogin();
+                }
             },
 
-            abrirLogin() { if (!this.verificarLegal()) return; this.switchAuthMode('login'); this.switchView('view-auth'); },
-            abrirRegistro() { if (!this.verificarLegal()) return; this.switchAuthMode('register'); this.switchView('view-auth'); },
+            abrirLogin() { 
+                if (!this.verificarLegal()) return; 
+                this.switchAuthMode('login'); 
+                this.switchView('view-auth'); 
+            },
+            
+            abrirRegistro() { 
+                if (!this.verificarLegal()) return; 
+                this.switchAuthMode('register'); 
+                this.switchView('view-auth'); 
+            },
 
             switchView(viewId) {
                 document.querySelectorAll('.app-view').forEach(v => v.classList.add('hidden'));
                 const target = document.getElementById(viewId);
                 if (target) target.classList.remove('hidden');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
+                
                 this.state.currentView = viewId;
                 document.querySelectorAll('.nav-item').forEach(item => {
                     item.classList.remove('active');
                     if (item.dataset.view === viewId) item.classList.add('active');
                 });
+                
+                // ✅ Si intenta ir al perfil sin estar autenticado, redirige al login
                 if (viewId === 'view-perfil-usuario' && !this.state.isAuthenticated) {
                     this.switchView('view-auth');
                     return;
                 }
-                if (viewId === 'view-perfil-usuario') this.cargarEstadoEventos();
-                if (viewId === 'view-regulacion' && !this.state.breathInterval) this.iniciarRespiración();
+                
+                if (viewId === 'view-perfil-usuario') {
+                    this.cargarEstadoEventos();
+                }
+                
+                if (viewId === 'view-regulacion' && !this.state.breathInterval) {
+                    this.iniciarRespiración();
+                }
                 if (viewId !== 'view-regulacion' && this.state.breathInterval) {
                     clearInterval(this.state.breathInterval);
                     this.state.breathInterval = null;
@@ -703,7 +728,7 @@
             },
 
             // ============================================
-            // AUTENTICACIÓN - CORREGIDA
+            // AUTENTICACIÓN
             // ============================================
             switchAuthMode(mode) {
                 this.state.authMode = mode;
@@ -780,6 +805,7 @@
                     if (this.state.authMode === 'login') {
                         const passwordCorrecta = existe.password === btoa(password);
                         if (passwordCorrecta) {
+                            // ✅ LOGIN EXITOSO - REDIRIGE AL PERFIL
                             this.iniciarSesion(existe.id, existe.nombre, existe.email, existe.rol);
                             return;
                         } else {
@@ -789,6 +815,7 @@
                             return;
                         }
                     } else {
+                        // Modo registro - email ya existe
                         this.showToast('⚠️ Este email ya está registrado. Por favor inicia sesión.', 'error');
                         this.switchAuthMode('login');
                         document.getElementById('input-email').value = email;
@@ -827,20 +854,23 @@
                         this.showToast('📨 Solicitud de espacio enviada', 'info');
                     }
 
+                    // ✅ REGISTRO EXITOSO - REDIRIGE AL PERFIL
                     this.iniciarSesion(userId, nombre, email, role);
                 }
             },
 
             // ============================================
-            // FUNCIÓN PARA INICIAR SESIÓN
+            // FUNCIÓN PARA INICIAR SESIÓN - REDIRIGE AL PERFIL
             // ============================================
             iniciarSesion(userId, nombre, email, role) {
+                // Guardar en localStorage
                 localStorage.setItem('user_id', userId);
                 localStorage.setItem('user_name', nombre);
                 localStorage.setItem('user_email', email);
                 localStorage.setItem('user_role', role);
                 localStorage.setItem('fecha_registro', new Date().toISOString().split('T')[0]);
 
+                // Actualizar estado
                 this.state.user = {
                     ...this.state.user,
                     id: userId,
@@ -850,17 +880,20 @@
                 };
                 this.state.isAuthenticated = true;
 
+                // ✅ ACTUALIZAR UI - OCULTA BOTONES LOGIN/REGISTRO
                 this.actualizarPerfilUI();
-                this.actualizarHeader(); // ✅ OCULTA BOTONES "Iniciar" y "Registro"
+                this.actualizarHeader(); 
                 this.actualizarNav();
                 this.cargarEstadoEventos();
 
                 this.showToast('✅ ¡Bienvenido ' + nombre + '!', 'success');
+                
+                // ✅ REDIRIGIR AL PERFIL AUTOMÁTICAMENTE
                 this.switchView('view-perfil-usuario');
             },
 
             // ============================================
-            // ACTUALIZAR HEADER - OCULTA BOTONES
+            // ACTUALIZAR HEADER - OCULTA/MUESTRA BOTONES
             // ============================================
             actualizarHeader() {
                 const loginBtns = document.getElementById('header-login-btns');
@@ -899,6 +932,7 @@
                     return;
                 }
 
+                // Guardar en localStorage
                 localStorage.setItem('user_name', nombre);
                 localStorage.setItem('user_telefono', telefono);
                 localStorage.setItem('user_fecha_nac', fechaNac);
@@ -907,6 +941,7 @@
                 this.state.user.telefono = telefono;
                 this.state.user.fechaNac = fechaNac;
 
+                // ✅ Guardar en db_usuarios (para que aparezca en admin)
                 const usuarios = DB.getUsuarios();
                 const index = usuarios.findIndex(u => u.id === this.state.user.id);
                 if (index !== -1) {
@@ -916,7 +951,7 @@
                 }
 
                 this.actualizarPerfilUI();
-                this.actualizarHeader(); // ✅ ACTUALIZA EL NOMBRE EN EL HEADER
+                this.actualizarHeader();
                 this.showToast('✅ Perfil actualizado', 'success');
             },
 
@@ -931,8 +966,9 @@
 
                 this.state.isAuthenticated = false;
                 this.state.user = { id: null, name: '', email: '', role: 'user', telefono: '', fechaNac: '', fechaRegistro: '', sesiones: 0, ejercicios: 0, diasActivo: 0 };
+                
                 this.actualizarPerfilUI();
-                this.actualizarHeader(); // ✅ MUESTRA BOTONES "Iniciar" y "Registro"
+                this.actualizarHeader(); // ✅ MUESTRA BOTONES LOGIN/REGISTRO
                 this.actualizarNav();
                 this.showToast('👋 Sesión cerrada', 'info');
                 this.switchView('view-home');
@@ -1205,8 +1241,13 @@
             actualizarNav() {
                 const icon = document.getElementById('nav-perfil-icon');
                 const label = document.getElementById('nav-perfil-label');
-                if (this.state.isAuthenticated) { if (icon) icon.textContent = '👤'; if (label) label.textContent = 'Perfil'; } 
-                else { if (icon) icon.textContent = '🔑'; if (label) label.textContent = 'Login'; }
+                if (this.state.isAuthenticated) { 
+                    if (icon) icon.textContent = '👤'; 
+                    if (label) label.textContent = 'Perfil'; 
+                } else { 
+                    if (icon) icon.textContent = '🔑'; 
+                    if (label) label.textContent = 'Login'; 
+                }
             },
 
             actualizarPerfilUI() {
@@ -1262,6 +1303,7 @@
 
             App.init();
 
+            // ✅ Si hay usuario guardado, restaurar sesión
             if (localStorage.getItem('user_id')) {
                 App.state.user.id = parseInt(localStorage.getItem('user_id'));
                 App.state.user.name = localStorage.getItem('user_name') || '';
@@ -1270,8 +1312,9 @@
                 App.state.user.telefono = localStorage.getItem('user_telefono') || '';
                 App.state.user.fechaNac = localStorage.getItem('user_fecha_nac') || '';
                 App.state.isAuthenticated = !!localStorage.getItem('user_email');
+                
                 App.actualizarPerfilUI();
-                App.actualizarHeader(); // ✅ OCULTA BOTONES
+                App.actualizarHeader(); // ✅ OCULTA BOTONES LOGIN/REGISTRO
                 App.actualizarNav();
                 App.cargarEstadoEventos();
             }
