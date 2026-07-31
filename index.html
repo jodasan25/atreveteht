@@ -63,6 +63,10 @@
             transform: translateY(-2px);
             box-shadow: 8px 8px 16px #c06a51, -8px -8px 12px #ffffff;
         }
+        .clay-btn-primary:active {
+            transform: translateY(0);
+            box-shadow: 4px 4px 8px #c06a51, -4px -4px 8px #ffffff;
+        }
 
         .clay-btn-secondary {
             background: #F0B7A1;
@@ -298,6 +302,205 @@
         .alert-info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
         .alert-danger { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
 
+        .notificaciones-evento {
+            background: #f8f6f4;
+            border-radius: 12px;
+            padding: 12px;
+            margin: 8px 0;
+        }
+        .notificacion-item { padding: 8px 0; border-bottom: 1px solid #e5e0db; }
+        .notificacion-item:last-child { border-bottom: none; }
+        .notificacion-item .fecha { color: #999; font-size: 10px; }
+
+        .eventos-publicos { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; margin-top: 16px; }
+        .evento-publico-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.06); transition: all 0.3s ease; }
+        .evento-publico-card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(0,0,0,0.1); }
+        .evento-publico-card img { width: 100%; height: 160px; object-fit: cover; }
+        .evento-publico-card .info { padding: 12px; }
+        .evento-publico-card .info h4 { font-size: 14px; color: #4A5D4E; }
+        .evento-publico-card .info p { font-size: 11px; color: #7A8A7C; }
+
+        /* ============================================
+           ASISTENTE VIRTUAL
+           ============================================ */
+        .assistant-toggle {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            z-index: 999;
+            width: 56px;
+            height: 56px;
+            border-radius: 9999px;
+            background: #E27D60;
+            color: white;
+            border: none;
+            box-shadow: 0 8px 24px rgba(226, 125, 96, 0.4);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        .assistant-toggle:hover { transform: scale(1.05) translateY(-2px); box-shadow: 0 12px 32px rgba(226, 125, 96, 0.5); }
+        .assistant-toggle.active { transform: rotate(90deg); }
+
+        .assistant-chat {
+            position: fixed;
+            bottom: 170px;
+            right: 20px;
+            z-index: 999;
+            width: 340px;
+            max-width: calc(100vw - 40px);
+            height: 420px;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid rgba(226, 125, 96, 0.1);
+            animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+        .assistant-chat.open { display: flex; }
+        .assistant-header {
+            background: #E27D60;
+            color: white;
+            padding: 14px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        .assistant-header-title { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 14px; }
+        .assistant-header-title .dot { width: 8px; height: 8px; border-radius: 9999px; background: #4ade80; animation: pulse-dot 1.5s infinite; }
+        @keyframes pulse-dot { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
+        .assistant-close { background: rgba(255,255,255,0.2); border: none; color: white; width: 28px; height: 28px; border-radius: 9999px; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+        .assistant-close:hover { background: rgba(255,255,255,0.3); }
+        .assistant-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: #F9F6F0;
+        }
+        .assistant-messages::-webkit-scrollbar { width: 4px; }
+        .assistant-messages::-webkit-scrollbar-track { background: transparent; }
+        .assistant-messages::-webkit-scrollbar-thumb { background: rgba(226, 125, 96, 0.3); border-radius: 10px; }
+        .message { max-width: 85%; padding: 10px 14px; border-radius: 16px; font-size: 13px; line-height: 1.5; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .message.bot { background: white; color: #4A5D4E; align-self: flex-start; border-bottom-left-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+        .message.bot .typing-indicator { display: flex; gap: 4px; padding: 4px 0; }
+        .message.bot .typing-indicator span { width: 6px; height: 6px; background: rgba(226, 125, 96, 0.5); border-radius: 9999px; animation: typing 1.4s infinite; }
+        .message.bot .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .message.bot .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typing { 0%,60%,100% { transform: translateY(0); opacity: 0.4; } 30% { transform: translateY(-6px); opacity: 1; } }
+        .message.user { background: #E27D60; color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
+        .assistant-input-area { display: flex; gap: 8px; padding: 12px 16px; background: white; border-top: 1px solid #f0ece8; flex-shrink: 0; }
+        .assistant-input-area input { flex: 1; padding: 10px 14px; border: 1px solid #e5e0db; border-radius: 9999px; font-size: 13px; outline: none; background: #F9F6F0; transition: border-color 0.2s; }
+        .assistant-input-area input:focus { border-color: #E27D60; }
+        .assistant-input-area button { width: 40px; height: 40px; border-radius: 9999px; background: #E27D60; color: white; border: none; cursor: pointer; font-size: 16px; transition: all 0.2s; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+        .assistant-input-area button:hover { background: #c06a51; transform: scale(1.05); }
+        .assistant-input-area button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+        .quick-actions { display: flex; gap: 6px; padding: 8px 16px 4px 16px; flex-wrap: wrap; background: white; flex-shrink: 0; }
+        .quick-actions button { padding: 4px 12px; border-radius: 9999px; border: 1px solid #e5e0db; background: white; font-size: 10px; color: #7A8A7C; cursor: pointer; transition: all 0.2s; font-weight: 500; }
+        .quick-actions button:hover { border-color: #E27D60; color: #E27D60; background: #FFF8F6; }
+
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+        /* ============================================
+           CARRUSEL / BANNER CON 10 IMÁGENES
+           ============================================ */
+        .carousel-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 32px;
+            height: 220px;
+            box-shadow: 8px 8px 16px #e0deda, -8px -8px 16px #ffffff;
+        }
+        .carousel-track {
+            display: flex;
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            height: 100%;
+        }
+        .carousel-slide {
+            min-width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            flex-shrink: 0;
+        }
+        .carousel-slide .overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%);
+            display: flex;
+            align-items: flex-end;
+            padding: 24px 28px;
+        }
+        .carousel-slide .overlay .text {
+            color: white;
+            font-weight: 600;
+            font-size: 16px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+        .carousel-slide .overlay .text span {
+            font-size: 10px;
+            font-weight: 400;
+            opacity: 0.8;
+            display: block;
+            margin-top: 4px;
+        }
+        .carousel-dots {
+            position: absolute;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 6px;
+            z-index: 10;
+        }
+        .carousel-dots .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 9999px;
+            background: rgba(255,255,255,0.4);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            padding: 0;
+        }
+        .carousel-dots .dot.active {
+            background: white;
+            width: 20px;
+        }
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(4px);
+            border: none;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 9999px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .carousel-btn:hover { background: rgba(255,255,255,0.4); }
+        .carousel-btn.prev { left: 8px; }
+        .carousel-btn.next { right: 8px; }
+
         /* ============================================
            NAVEGACIÓN INFERIOR
            ============================================ */
@@ -370,15 +573,44 @@
         .role-option.selected .role-name { color: #E27D60; }
 
         /* ============================================
+           CLAY PAY BUTTONS
+           ============================================ */
+        .clay-btn-pay {
+            background: #FFFFFF;
+            color: #7A8A7C;
+            border-radius: 16px;
+            border: 2px solid transparent;
+            box-shadow: 4px 4px 8px #e0deda, -4px -4px 8px #ffffff;
+            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+            padding: 12px;
+            font-weight: bold;
+            font-size: 11px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+        .clay-btn-pay:hover { transform: translateY(-2px); }
+        .clay-btn-pay.active-pay {
+            border-color: #E27D60;
+            background: #FFF8F6;
+            color: #E27D60;
+            box-shadow: inset 2px 2px 4px rgba(226, 125, 96, 0.15), inset -2px -2px 4px #ffffff;
+        }
+
+        /* ============================================
            RESPONSIVE
            ============================================ */
         @media (max-width: 500px) {
             .clay-card { padding: 16px; }
-            .grid-container { grid-template-columns: 1fr 1fr; gap: 12px; }
+            .carousel-container { height: 180px; }
         }
         @media (max-width: 400px) {
-            .grid-container { grid-template-columns: 1fr; }
-            .hero h2 { font-size: 24px; }
+            .assistant-chat { width: calc(100vw - 32px); height: 380px; right: 16px; bottom: 160px; }
+            .assistant-toggle { width: 48px; height: 48px; font-size: 20px; bottom: 90px; right: 16px; }
+            .carousel-container { height: 160px; }
         }
     </style>
 </head>
@@ -386,6 +618,30 @@
 
     <!-- ================= TOAST ================= -->
     <div id="toast" class="toast"></div>
+
+    <!-- ================= BARRERA LEGAL ================= -->
+    <div id="modal-legal-gate" class="fixed inset-0 bg-black/60 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-[#F9F6F0] w-full max-w-lg rounded-3xl p-6 shadow-[8px_8px_16px_#d1cdc7,-8px_-8px_16px_#ffffff] border border-white/60 flex flex-col max-h-[90vh] modal-legal-content">
+            <div class="text-center pb-3 border-b border-gray-200">
+                <span class="text-[10px] uppercase font-bold tracking-widest text-[#E27D60]">Requisito Legal</span>
+                <h3 class="text-base font-bold text-[#4A5D4E] mt-1">Términos y Privacidad</h3>
+            </div>
+            <div class="overflow-y-auto my-4 pr-2 space-y-3 text-xs text-gray-600 text-justify max-h-[60vh] leading-relaxed">
+                <p class="font-bold text-center text-[#E27D60]">Atrévete HealthTech — Versión 2026</p>
+                <div class="bg-amber-50 p-3 border-l-4 border-amber-400 rounded-r-lg text-[11px] text-amber-900">
+                    <strong>AVISO MÉDICO:</strong> Nuestras herramientas ofrecen evaluaciones bioenergéticas holísticas. <strong>NO constituyen diagnóstico médico ni prescripción farmacológica.</strong>
+                </div>
+                <p><strong>1. Aceptación:</strong> Al aceptar, confirmas ser mayor de edad.</p>
+                <p><strong>2. Datos Personales:</strong> Se procesan bajo estricta confidencialidad.</p>
+                <p><strong>3. Eventos Presenciales:</strong> La asistencia es bajo propio riesgo.</p>
+                <p><strong>4. Pagos:</strong> No son reembolsables.</p>
+            </div>
+            <div class="pt-3 border-t border-gray-200 space-y-2">
+                <button onclick="App.aceptarLegalYContinuar()" class="w-full py-3.5 bg-[#E27D60] text-white font-bold rounded-2xl shadow-[4px_4px_8px_#d1cdc7,-4px_-4px_8px_#ffffff] hover:opacity-95 transition-all text-xs">Acepto Términos</button>
+                <button onclick="App.cancelarLegal()" class="w-full py-2 text-[11px] text-gray-400 hover:text-gray-600 font-medium">Cancelar</button>
+            </div>
+        </div>
+    </div>
 
     <!-- ================= CABECERA ================= -->
     <header class="pt-3 pb-1 px-6 max-w-md mx-auto">
@@ -408,6 +664,34 @@
         </div>
     </header>
 
+    <!-- ================= ASISTENTE VIRTUAL ================= -->
+    <button id="assistant-toggle" class="assistant-toggle" onclick="App.toggleAssistant()" aria-label="Asistente Virtual">
+        💬
+    </button>
+
+    <div id="assistant-chat" class="assistant-chat">
+        <div class="assistant-header">
+            <div class="assistant-header-title">
+                <span class="dot"></span>
+                <span>Asistente Atrévete</span>
+            </div>
+            <button class="assistant-close" onclick="App.toggleAssistant()">✕</button>
+        </div>
+        <div class="assistant-messages" id="assistant-messages">
+            <div class="message bot">¡Hola! 🌿 Soy tu asistente de Atrévete HealthTech. ¿En qué puedo ayudarte hoy?</div>
+        </div>
+        <div class="quick-actions" id="quick-actions">
+            <button onclick="App.sendQuickMessage('¿Qué es Atrévete HealthTech?')">📖 ¿Qué es?</button>
+            <button onclick="App.sendQuickMessage('¿Cómo agendo una cita?')">📅 Agendar cita</button>
+            <button onclick="App.sendQuickMessage('¿Qué es la regulación somática?')">🧘 Regulación</button>
+            <button onclick="App.sendQuickMessage('Contacto')">📞 Contacto</button>
+        </div>
+        <div class="assistant-input-area">
+            <input type="text" id="assistant-input" placeholder="Escribe tu mensaje..." onkeypress="if(event.key==='Enter') App.sendMessage()">
+            <button onclick="App.sendMessage()" id="assistant-send-btn">➤</button>
+        </div>
+    </div>
+
     <!-- ================= 1. HOME ================= -->
     <main id="view-home" class="app-view max-w-md mx-auto px-5 space-y-5 pb-5">
         <div class="text-center space-y-1 pt-2">
@@ -415,10 +699,14 @@
             <p class="text-xs text-[#7A8A7C]/80">Ecosistema somático integrativo para la regulación del sistema nervioso.</p>
         </div>
 
-        <div id="home-hero-banner" class="relative rounded-[32px] overflow-hidden shadow-md h-52 bg-cover bg-center clay-card" style="background-image: url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=800&q=80');">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-6">
-                <span id="home-banner-text" class="text-white font-semibold text-base drop-shadow">Calibra tu calma somática hoy</span>
+        <!-- CARRUSEL CON 10 IMÁGENES -->
+        <div class="carousel-container" id="carousel-container">
+            <div class="carousel-track" id="carousel-track">
+                <!-- Las 10 imágenes se generan con JavaScript -->
             </div>
+            <div class="carousel-dots" id="carousel-dots"></div>
+            <button class="carousel-btn prev" onclick="App.carouselPrev()">‹</button>
+            <button class="carousel-btn next" onclick="App.carouselNext()">›</button>
         </div>
 
         <div class="grid grid-cols-2 gap-3">
@@ -443,7 +731,7 @@
     </main>
 
     <!-- ================= 2. AUTENTICACIÓN ================= -->
-    <main id="view-auth" class="app-view max-w-md mx-auto px-5 space-y-5 hidden pb-5">
+    <main id="view-auth" class="app-view max-w-md mx-auto px-5 space-y-5 pb-5 hidden">
         <div class="text-center space-y-1 pt-2">
             <h2 id="auth-title" class="text-2xl font-bold text-[#7A8A7C]">Iniciar Sesión</h2>
             <p id="auth-subtitle" class="text-xs text-[#7A8A7C]/70">Accede a tu cuenta</p>
@@ -520,7 +808,6 @@
             </div>
 
             <div id="evento-estado-container" class="mt-3">
-                <!-- Estado: APROBADO -->
                 <div id="evento-estado-aprobado" class="hidden">
                     <div class="alert alert-success">✅ ¡Tu espacio está activo!</div>
                     <div class="eventos-form">
@@ -533,13 +820,9 @@
                     <h5 class="text-xs font-bold text-[#7A8A7C] mt-3">Galería (<span id="galeria-count">0</span>)</h5>
                     <div id="galeria-container" class="galeria-grid"></div>
                 </div>
-
-                <!-- Estado: PENDIENTE -->
                 <div id="evento-estado-pendiente" class="hidden">
                     <div class="alert alert-warning">⏳ <strong>Solicitud en revisión</strong><br>Espera la aprobación del administrador.</div>
                 </div>
-
-                <!-- Estado: RECHAZADO -->
                 <div id="evento-estado-rechazado" class="hidden">
                     <div class="alert alert-danger">
                         ❌ <strong>Solicitud rechazada</strong><br>
@@ -547,8 +830,6 @@
                     </div>
                     <button onclick="App.solicitarEspacioEventos()" class="btn-solicitar-evento w-full justify-center">🚀 Solicitar nuevamente</button>
                 </div>
-
-                <!-- Estado: INACTIVO -->
                 <div id="evento-estado-inactivo" class="hidden">
                     <div class="alert alert-info">📢 <strong>¡Activa tu espacio!</strong><br>Muestra tus eventos a todos.</div>
                     <button onclick="App.solicitarEspacioEventos()" class="btn-solicitar-evento w-full justify-center">🚀 Solicitar Espacio</button>
@@ -590,9 +871,9 @@
             </div>
             <div id="quiz-step-1" class="space-y-3">
                 <p class="text-xs font-bold text-[#7A8A7C]">1. ¿Cómo sientes tu estado corporal?</p>
-                <button onclick="App.answerQuiz(1,'ansiedad')" class="clay-btn-option w-full text-xs">🔴 Ansioso / Acelerado</button>
-                <button onclick="App.answerQuiz(1,'bloqueo')" class="clay-btn-option w-full text-xs">🟡 Agotado / Desconectado</button>
-                <button onclick="App.answerQuiz(1,'calma')" class="clay-btn-option w-full text-xs">🟢 Estable / En Calma</button>
+                <button onclick="App.answerQuiz(1,'ansiedad')" class="clay-btn-option w-full text-xs">🔴 Ansioso</button>
+                <button onclick="App.answerQuiz(1,'bloqueo')" class="clay-btn-option w-full text-xs">🟡 Agotado</button>
+                <button onclick="App.answerQuiz(1,'calma')" class="clay-btn-option w-full text-xs">🟢 En Calma</button>
             </div>
             <div id="quiz-step-2" class="space-y-3 hidden">
                 <p class="text-xs font-bold text-[#7A8A7C]">2. ¿Dónde se concentra la tensión?</p>
@@ -613,6 +894,13 @@
                 </div>
                 <div id="recommended-technique-card" class="p-4 rounded-2xl bg-white border border-[#E27D60]/30"></div>
                 <button onclick="App.resetQuiz()" class="text-xs font-bold text-[#E27D60] underline text-center w-full">🔄 Repetir</button>
+            </div>
+        </div>
+        <div class="clay-card p-5 text-center space-y-3">
+            <h3 class="font-bold text-sm text-[#7A8A7C]">Práctica Guiada: Respiración</h3>
+            <p class="text-[11px] text-[#7A8A7C]/80">Acompasa tu ritmo respiratorio.</p>
+            <div class="flex flex-col items-center py-3">
+                <div id="breath-circle" class="w-40 h-40 rounded-full bg-[#F0B7A1] flex items-center justify-center text-white font-bold text-base shadow-lg border-4 border-white transition-all duration-1000">Inhala...</div>
             </div>
         </div>
         <button onclick="App.switchView('view-home')" class="clay-btn-secondary py-3 font-bold text-xs">Volver</button>
@@ -650,10 +938,27 @@
                 <button onclick="App.selectPaymentMethod('binance')" class="clay-btn-pay p-3 text-xs font-bold">🟡 Binance</button>
             </div>
             <div id="datos-pago-box" class="bg-stone-100/90 p-3 rounded-2xl text-xs"></div>
-            <input id="input-ref-pago" type="text" placeholder="Número de referencia" class="clay-input">
-            <button onclick="App.confirmarPagoMock()" class="clay-btn-primary py-3 text-xs font-bold">Reportar Comprobante</button>
+            <div id="container-ref-pago">
+                <label class="block text-xs font-bold text-[#7A8A7C] mb-1">Número de Referencia</label>
+                <input id="input-ref-pago" type="text" placeholder="Ej. #849204" class="clay-input">
+            </div>
+            <button id="btn-enviar-pago" onclick="App.confirmarPagoMock()" class="clay-btn-primary py-3 text-xs font-bold">Reportar Comprobante</button>
         </div>
         <button onclick="App.switchView('view-home')" class="clay-btn-secondary py-3 font-bold text-xs">Cancelar</button>
+    </main>
+
+    <!-- ================= 8. PRIVACIDAD ================= -->
+    <main id="view-privacidad" class="app-view max-w-md mx-auto px-5 space-y-5 pb-5 hidden">
+        <div class="text-center space-y-1 pt-2">
+            <h2 class="text-2xl font-bold text-[#7A8A7C]">Políticas de Privacidad</h2>
+            <p class="text-xs text-[#7A8A7C]/70">Términos Legalmente Vinculantes</p>
+        </div>
+        <div class="clay-card p-5 space-y-3 text-xs text-[#7A8A7C] leading-relaxed max-h-[60vh] overflow-y-auto">
+            <p><strong>1. Protección de Datos:</strong> Tus datos se procesan bajo estricta confidencialidad.</p>
+            <p><strong>2. Confidencialidad Clínica:</strong> La información de sesiones es confidencial.</p>
+            <p><strong>3. Reservas y Pagos:</strong> Sujetos a verificación de comprobantes.</p>
+        </div>
+        <button onclick="App.switchView('view-home')" class="clay-btn-primary py-3 font-bold text-xs">Entendido</button>
     </main>
 
     <!-- ================= NAVEGACIÓN INFERIOR ================= -->
@@ -679,7 +984,7 @@
         </div>
     </nav>
 
-    <!-- ================= JAVASCRIPT ================= -->
+    <!-- ================= JAVASCRIPT COMPLETO ================= -->
     <script>
         // ============================================
         // BASE DE DATOS SIMULADA
@@ -703,6 +1008,7 @@
                     localStorage.setItem('db_solicitudes', JSON.stringify(solicitudes));
                 }
                 if (!localStorage.getItem('db_notificaciones')) localStorage.setItem('db_notificaciones', JSON.stringify([]));
+                if (!localStorage.getItem('db_eventos_galeria')) localStorage.setItem('db_eventos_galeria', JSON.stringify([]));
             },
             getUsuarios() { return JSON.parse(localStorage.getItem('db_usuarios') || '[]'); },
             getUsuario(id) { return this.getUsuarios().find(u => u.id === id); },
@@ -719,7 +1025,7 @@
         };
 
         // ============================================
-        // APP PRINCIPAL
+        // APP PRINCIPAL COMPLETA
         // ============================================
         const App = {
             state: {
@@ -746,19 +1052,39 @@
                     notificaciones: JSON.parse(localStorage.getItem('eventos_notificaciones') || '[]')
                 },
                 isAuthenticated: !!localStorage.getItem('user_email'),
+                legalAceptado: localStorage.getItem('legal_aceptado') === 'true',
                 quizAnswers: {},
-                currentView: 'view-home'
+                currentView: 'view-home',
+                assistantOpen: false,
+                isProcessing: false,
+                breathInterval: null,
+                carouselIndex: 0,
+                carouselImages: [
+                    { url: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=800&q=80', text: 'Calibra tu calma somática', sub: 'Regulación del sistema nervioso' },
+                    { url: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=800&q=80', text: 'Conecta con tu cuerpo', sub: 'Prácticas somáticas integrativas' },
+                    { url: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=800&q=80', text: 'Encuentra tu equilibrio', sub: 'Bienestar emocional y físico' },
+                    { url: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=800&q=80', text: 'Respiración consciente', sub: 'Técnicas de regulación' },
+                    { url: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=800&q=80', text: 'Movimiento y presencia', sub: 'Conciencia corporal' },
+                    { url: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=800&q=80', text: 'Comunidad de apoyo', sub: 'Conéctate con otros' },
+                    { url: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=800&q=80', text: 'Autocuidado activo', sub: 'Herramientas para el día a día' },
+                    { url: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=800&q=80', text: 'Regulación emocional', sub: 'Gestiona tus emociones' },
+                    { url: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=800&q=80', text: 'Bienestar integral', sub: 'Cuerpo, mente y espíritu' },
+                    { url: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=800&q=80', text: 'Atrévete a vivir', sub: 'Tu viaje comienza hoy' }
+                ]
             },
 
+            // ============================================
+            // INICIALIZACIÓN
+            // ============================================
             init() {
                 DB.init();
+                this.iniciarCarousel();
                 this.cargarEstadoEventos();
                 this.actualizarPerfilUI();
                 this.actualizarHeader();
                 this.actualizarNav();
                 this.selectPaymentMethod('pm_bdv');
 
-                // Evento para subir imágenes
                 document.getElementById('formSubirImagen')?.addEventListener('submit', (e) => {
                     e.preventDefault();
                     const formData = new FormData(e.target);
@@ -766,12 +1092,212 @@
                     e.target.reset();
                 });
 
-                console.log('🚀 App iniciada');
+                console.log('🚀 App iniciada con carrusel y asistente');
+            },
+
+            // ============================================
+            // CARRUSEL CON 10 IMÁGENES
+            // ============================================
+            iniciarCarousel() {
+                const track = document.getElementById('carousel-track');
+                const dots = document.getElementById('carousel-dots');
+                if (!track) return;
+
+                // Generar slides
+                track.innerHTML = this.state.carouselImages.map((img, i) => `
+                    <div class="carousel-slide" style="background-image: url('${img.url}')">
+                        <div class="overlay">
+                            <div class="text">${img.text}<span>${img.sub}</span></div>
+                        </div>
+                    </div>
+                `).join('');
+
+                // Generar dots
+                dots.innerHTML = this.state.carouselImages.map((_, i) => `
+                    <button class="dot ${i === 0 ? 'active' : ''}" onclick="App.irSlide(${i})" aria-label="Slide ${i+1}"></button>
+                `).join('');
+
+                // Auto-play
+                this.startAutoPlay();
+            },
+
+            irSlide(index) {
+                const track = document.getElementById('carousel-track');
+                const dots = document.querySelectorAll('.carousel-dots .dot');
+                if (!track) return;
+
+                this.state.carouselIndex = index;
+                track.style.transform = `translateX(-${index * 100}%)`;
+
+                dots.forEach((d, i) => {
+                    d.classList.toggle('active', i === index);
+                });
+            },
+
+            carouselNext() {
+                const total = this.state.carouselImages.length;
+                const next = (this.state.carouselIndex + 1) % total;
+                this.irSlide(next);
+                this.resetAutoPlay();
+            },
+
+            carouselPrev() {
+                const total = this.state.carouselImages.length;
+                const prev = (this.state.carouselIndex - 1 + total) % total;
+                this.irSlide(prev);
+                this.resetAutoPlay();
+            },
+
+            startAutoPlay() {
+                if (this.carouselInterval) clearInterval(this.carouselInterval);
+                this.carouselInterval = setInterval(() => this.carouselNext(), 5000);
+            },
+
+            resetAutoPlay() {
+                if (this.carouselInterval) clearInterval(this.carouselInterval);
+                this.startAutoPlay();
+            },
+
+            // ============================================
+            // ASISTENTE VIRTUAL
+            // ============================================
+            toggleAssistant() {
+                const chat = document.getElementById('assistant-chat');
+                const toggle = document.getElementById('assistant-toggle');
+                this.state.assistantOpen = !this.state.assistantOpen;
+                
+                if (this.state.assistantOpen) {
+                    chat.classList.add('open');
+                    toggle.classList.add('active');
+                    toggle.innerHTML = '✕';
+                    setTimeout(() => document.getElementById('assistant-input')?.focus(), 300);
+                } else {
+                    chat.classList.remove('open');
+                    toggle.classList.remove('active');
+                    toggle.innerHTML = '💬';
+                }
+            },
+
+            sendMessage() {
+                const input = document.getElementById('assistant-input');
+                const message = input.value.trim();
+                if (!message || this.state.isProcessing) return;
+                
+                input.value = '';
+                this.addMessage(message, 'user');
+                this.state.isProcessing = true;
+                this.showTypingIndicator();
+                
+                setTimeout(() => {
+                    this.hideTypingIndicator();
+                    const response = this.getAssistantResponse(message);
+                    this.addMessage(response, 'bot');
+                    this.state.isProcessing = false;
+                }, 1000 + Math.random() * 1000);
+            },
+
+            sendQuickMessage(text) {
+                if (this.state.isProcessing) return;
+                if (!this.state.assistantOpen) {
+                    this.toggleAssistant();
+                    setTimeout(() => {
+                        document.getElementById('assistant-input').value = text;
+                        this.sendMessage();
+                    }, 400);
+                } else {
+                    document.getElementById('assistant-input').value = text;
+                    this.sendMessage();
+                }
+            },
+
+            addMessage(text, type) {
+                const container = document.getElementById('assistant-messages');
+                const div = document.createElement('div');
+                div.className = `message ${type}`;
+                div.textContent = text;
+                container.appendChild(div);
+                container.scrollTop = container.scrollHeight;
+            },
+
+            showTypingIndicator() {
+                const container = document.getElementById('assistant-messages');
+                const div = document.createElement('div');
+                div.className = 'message bot';
+                div.id = 'typing-indicator';
+                div.innerHTML = `<div class="typing-indicator"><span></span><span></span><span></span></div>`;
+                container.appendChild(div);
+                container.scrollTop = container.scrollHeight;
+            },
+
+            hideTypingIndicator() {
+                const indicator = document.getElementById('typing-indicator');
+                if (indicator) indicator.remove();
+            },
+
+            getAssistantResponse(message) {
+                const msg = message.toLowerCase();
+                if (msg.includes('qué es') || msg.includes('que es')) {
+                    return '🌿 Atrévete HealthTech es un ecosistema somático integrativo que combina regulación del sistema nervioso, acompañamiento clínico y herramientas de bienestar emocional.';
+                }
+                if (msg.includes('cita') || msg.includes('agendar')) {
+                    return '📅 Para agendar una sesión, ve a la sección "Citas" en el menú inferior. Allí podrás seleccionar a tu especialista, elegir fecha y hora, y confirmar tu cita vía WhatsApp.';
+                }
+                if (msg.includes('regulación') || msg.includes('somática')) {
+                    return '🧘 La regulación somática es una práctica que te ayuda a conectar con las señales de tu cuerpo. En nuestro "Gimnasio Emocional" encontrarás el "Chequeo Corporal".';
+                }
+                if (msg.includes('contacto')) {
+                    return '📞 Email: hola@atrevetehealthtech.com | WhatsApp: +58 414-4031678';
+                }
+                if (msg.includes('hola') || msg.includes('buenas')) {
+                    return '¡Hola! 🌟 Es un placer saludarte. ¿Cómo puedo ayudarte hoy?';
+                }
+                if (msg.includes('gracias')) {
+                    return '¡De nada! 🙏 Estoy aquí para lo que necesites. ¡Que tengas un hermoso día! 🌸';
+                }
+                return '🤔 Gracias por tu mensaje. Estoy aquí para ayudarte con información sobre Atrévete HealthTech, citas, regulación somática, eventos o pagos. ¿Puedes ser más específico?';
+            },
+
+            // ============================================
+            // BARRERA LEGAL
+            // ============================================
+            verificarLegal() {
+                if (this.state.legalAceptado) return true;
+                document.getElementById('modal-legal-gate')?.classList.remove('hidden');
+                return false;
+            },
+
+            aceptarLegalYContinuar() {
+                localStorage.setItem('legal_aceptado', 'true');
+                this.state.legalAceptado = true;
+                document.getElementById('modal-legal-gate')?.classList.add('hidden');
+                this.switchView('view-auth');
+            },
+
+            cancelarLegal() {
+                document.getElementById('modal-legal-gate')?.classList.add('hidden');
+                this.switchView('view-home');
             },
 
             // ============================================
             // NAVEGACIÓN
             // ============================================
+            irAPerfil() {
+                if (this.state.isAuthenticated) this.switchView('view-perfil-usuario');
+                else this.abrirLogin();
+            },
+
+            abrirLogin() {
+                if (!this.verificarLegal()) return;
+                this.switchAuthMode('login');
+                this.switchView('view-auth');
+            },
+
+            abrirRegistro() {
+                if (!this.verificarLegal()) return;
+                this.switchAuthMode('register');
+                this.switchView('view-auth');
+            },
+
             switchView(viewId) {
                 document.querySelectorAll('.app-view').forEach(v => v.classList.add('hidden'));
                 const target = document.getElementById(viewId);
@@ -791,15 +1317,14 @@
                 if (viewId === 'view-perfil-usuario') {
                     this.cargarEstadoEventos();
                 }
+                if (viewId === 'view-regulacion' && !this.state.breathInterval) {
+                    this.iniciarRespiración();
+                }
+                if (viewId !== 'view-regulacion' && this.state.breathInterval) {
+                    clearInterval(this.state.breathInterval);
+                    this.state.breathInterval = null;
+                }
             },
-
-            irAPerfil() {
-                if (this.state.isAuthenticated) this.switchView('view-perfil-usuario');
-                else this.abrirLogin();
-            },
-
-            abrirLogin() { this.switchAuthMode('login'); this.switchView('view-auth'); },
-            abrirRegistro() { this.switchAuthMode('register'); this.switchView('view-auth'); },
 
             // ============================================
             // AUTENTICACIÓN
@@ -867,7 +1392,6 @@
                 const userId = Date.now();
                 const fechaRegistro = new Date().toISOString().split('T')[0];
 
-                // Guardar en db_usuarios
                 const usuarios = DB.getUsuarios();
                 const existe = usuarios.find(u => u.email === email);
                 if (existe) { this.showToast('⚠️ Email ya registrado', 'error'); return; }
@@ -886,7 +1410,6 @@
                 };
                 DB.crearUsuario(nuevoUsuario);
 
-                // Si es especialista, crear solicitud
                 if (role === 'especialista') {
                     DB.crearSolicitud({
                         especialista_id: userId,
@@ -900,7 +1423,6 @@
                     this.showToast('📨 Solicitud enviada', 'info');
                 }
 
-                // Guardar sesión
                 localStorage.setItem('user_id', userId);
                 localStorage.setItem('user_name', nombre);
                 localStorage.setItem('user_email', email);
@@ -1104,6 +1626,38 @@
                 this.showToast('✅ Descripción actualizada', 'success');
             },
 
+            verEventosPublicos(especialistaId) {
+                const especialista = {
+                    nombre: this.state.user.name || 'Especialista',
+                    especialidad: this.state.user.role === 'especialista' ? 'Terapeuta Somático' : 'Especialista'
+                };
+                const imagenes = this.state.eventos.galeria;
+
+                document.getElementById('eventos-publicos-titulo').textContent = 'Eventos de ' + especialista.nombre;
+                document.getElementById('eventos-publicos-especialista').textContent = especialista.especialidad;
+                document.getElementById('eventos-publicos-nombre').textContent = especialista.nombre;
+                document.getElementById('eventos-publicos-especialidad').textContent = especialista.especialidad;
+
+                const avatar = document.getElementById('eventos-publicos-avatar');
+                if (avatar) {
+                    const initials = especialista.nombre.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+                    avatar.textContent = initials;
+                }
+
+                const galeria = document.getElementById('eventos-publicos-galeria');
+                if (imagenes.length === 0) {
+                    galeria.innerHTML = '<div class="text-center text-xs text-[#7A8A7C]/60 py-8 col-span-2">No hay eventos disponibles</div>';
+                } else {
+                    galeria.innerHTML = imagenes.map(img => `
+                        <div class="evento-publico-card">
+                            <img src="${img.url}" alt="${img.descripcion || 'Evento'}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22200%22%3E%3Crect fill=%22%23f0ece8%22 width=%22300%22 height=%22200%22/%3E%3Ctext x=%2250%22 y=%22110%22 font-size=%2230%22 fill=%22%23999%22 text-anchor=%22middle%22%3E📷%3C/text%3E%3C/svg%3E'">
+                            <div class="info"><h4>${img.descripcion || 'Sin descripción'}</h4><p>${img.fecha || ''}</p></div>
+                        </div>
+                    `).join('');
+                }
+                this.switchView('view-eventos-publicos');
+            },
+
             // ============================================
             // PAGOS
             // ============================================
@@ -1138,7 +1692,7 @@
             },
 
             // ============================================
-            // QUIZ
+            // QUIZ Y RESPIRACIÓN
             // ============================================
             answerQuiz(step, choice) {
                 this.state.quizAnswers[`step${step}`] = choice;
@@ -1166,6 +1720,30 @@
                 document.getElementById('quiz-step-2').classList.add('hidden');
                 document.getElementById('quiz-step-3').classList.add('hidden');
                 document.getElementById('quiz-step-indicator').innerText = 'Paso 1 de 3';
+            },
+
+            iniciarRespiración() {
+                if (this.state.breathInterval) clearInterval(this.state.breathInterval);
+                const circle = document.getElementById('breath-circle');
+                if (!circle) return;
+                let breathState = 0;
+                circle.innerText = 'Inhala...';
+                circle.style.transform = 'scale(1.0)';
+                this.state.breathInterval = setInterval(() => {
+                    if (breathState === 0) {
+                        circle.innerText = 'Sostén...';
+                        circle.style.transform = 'scale(1.3)';
+                        breathState = 1;
+                    } else if (breathState === 1) {
+                        circle.innerText = 'Exhala...';
+                        circle.style.transform = 'scale(0.8)';
+                        breathState = 2;
+                    } else {
+                        circle.innerText = 'Inhala...';
+                        circle.style.transform = 'scale(1.0)';
+                        breathState = 0;
+                    }
+                }, 3500);
             },
 
             // ============================================
@@ -1247,17 +1825,18 @@
         // INICIALIZAR
         // ============================================
         document.addEventListener('DOMContentLoaded', () => {
-            // Cargar banners guardados
             const logo = localStorage.getItem('app_logo');
             const banner = localStorage.getItem('app_banner_img');
             const text = localStorage.getItem('app_banner_text');
             if (logo) document.getElementById('app-logo-img').src = logo;
-            if (banner) document.getElementById('home-hero-banner').style.backgroundImage = `url('${banner}')`;
+            if (banner) {
+                const hero = document.getElementById('home-hero-banner');
+                if (hero) hero.style.backgroundImage = `url('${banner}')`;
+            }
             if (text) document.getElementById('home-banner-text').innerText = text;
 
             App.init();
 
-            // Si hay usuario guardado, cargar sus datos
             if (localStorage.getItem('user_id')) {
                 App.state.user.id = parseInt(localStorage.getItem('user_id'));
                 App.state.user.name = localStorage.getItem('user_name') || '';
@@ -1270,6 +1849,8 @@
                 App.cargarEstadoEventos();
             }
         });
+
+        window.App = App;
     </script>
 </body>
 </html>
