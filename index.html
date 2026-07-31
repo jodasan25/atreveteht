@@ -363,7 +363,7 @@
             </div>
         </div>
 
-        <!-- ✅ BOTÓN CERRAR SESIÓN - CORREGIDO -->
+        <!-- ✅ BOTÓN CERRAR SESIÓN CON MENSAJE -->
         <button onclick="App.cerrarSesion()" class="w-full py-3 text-sm font-medium text-[#E27D60] border-2 border-[#E27D60]/30 rounded-full hover:bg-[#E27D60]/5 hover:border-[#E27D60] transition-all">Cerrar Sesión</button>
     </main>
 
@@ -887,90 +887,66 @@
 
                 this.showToast('✅ ¡Bienvenido ' + nombre + '!', 'success');
                 
-                // ✅ REDIRIGIR AL PERFIL AUTOMÁTICAMENTE
+                // ✅ REDIRIGIR AL PERFIL (NO AL INICIO)
                 this.switchView('view-perfil-usuario');
             },
 
             // ============================================
-            // ✅ ACTUALIZAR HEADER - OCULTA/MUESTRA BOTONES
-            // ============================================
-            actualizarHeader() {
-                const loginBtns = document.getElementById('header-login-btns');
-                const profileBtn = document.getElementById('header-profile-btn');
-                const headerName = document.getElementById('header-name');
-                const headerAvatar = document.getElementById('header-avatar');
-
-                if (this.state.isAuthenticated && this.state.user.name) {
-                    // ✅ OCULTAR botones de login/registro
-                    if (loginBtns) loginBtns.classList.add('hidden');
-                    // ✅ MOSTRAR perfil
-                    if (profileBtn) profileBtn.classList.remove('hidden');
-                    if (headerName) headerName.textContent = this.state.user.name;
-                    if (headerAvatar) {
-                        const initials = this.state.user.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'US';
-                        headerAvatar.textContent = initials;
-                    }
-                } else {
-                    // ✅ MOSTRAR botones de login/registro
-                    if (loginBtns) loginBtns.classList.remove('hidden');
-                    // ✅ OCULTAR perfil
-                    if (profileBtn) profileBtn.classList.add('hidden');
-                    if (headerName) headerName.textContent = 'Usuario';
-                    if (headerAvatar) headerAvatar.textContent = 'US';
-                }
-            },
-
-            // ============================================
-            // ✅ CERRAR SESIÓN - CORREGIDO
+            // ✅ CERRAR SESIÓN - CON MENSAJE EMERGENTE
             // ============================================
             cerrarSesion() {
-                // ✅ LIMPIAR TODOS LOS DATOS DE SESIÓN
-                localStorage.removeItem('user_id');
-                localStorage.removeItem('user_name');
-                localStorage.removeItem('user_email');
-                localStorage.removeItem('user_role');
-                localStorage.removeItem('user_telefono');
-                localStorage.removeItem('user_fecha_nac');
-                localStorage.removeItem('fecha_registro');
-                localStorage.removeItem('eventos_estado');
-                localStorage.removeItem('eventos_motivo_rechazo');
-                localStorage.removeItem('eventos_fecha_solicitud');
-                localStorage.removeItem('eventos_fecha_aprobacion');
-                localStorage.removeItem('eventos_galeria');
-                localStorage.removeItem('eventos_notificaciones');
+                // ✅ MOSTRAR MENSAJE EMERGENTE ANTES DE CERRAR
+                if (confirm('🌿 ¿Estás seguro de que deseas cerrar sesión?\n\n"Gracias por visitarnos, ¡vuelve pronto! Que tengas un hermoso día." 💫')) {
+                    
+                    // ✅ LIMPIAR TODOS LOS DATOS DE SESIÓN
+                    localStorage.removeItem('user_id');
+                    localStorage.removeItem('user_name');
+                    localStorage.removeItem('user_email');
+                    localStorage.removeItem('user_role');
+                    localStorage.removeItem('user_telefono');
+                    localStorage.removeItem('user_fecha_nac');
+                    localStorage.removeItem('fecha_registro');
+                    localStorage.removeItem('eventos_estado');
+                    localStorage.removeItem('eventos_motivo_rechazo');
+                    localStorage.removeItem('eventos_fecha_solicitud');
+                    localStorage.removeItem('eventos_fecha_aprobacion');
+                    localStorage.removeItem('eventos_galeria');
+                    localStorage.removeItem('eventos_notificaciones');
 
-                // ✅ ACTUALIZAR ESTADO
-                this.state.isAuthenticated = false;
-                this.state.user = { 
-                    id: null, 
-                    name: '', 
-                    email: '', 
-                    role: 'user', 
-                    telefono: '', 
-                    fechaNac: '', 
-                    fechaRegistro: '', 
-                    sesiones: 0, 
-                    ejercicios: 0, 
-                    diasActivo: 0 
-                };
-                this.state.eventos = {
-                    estado: 'inactivo',
-                    motivoRechazo: '',
-                    fechaSolicitud: '',
-                    fechaAprobacion: '',
-                    galeria: [],
-                    notificaciones: []
-                };
-                
-                // ✅ ACTUALIZAR UI
-                this.actualizarPerfilUI();
-                this.actualizarHeader(); 
-                this.actualizarNav();
-                
-                this.showToast('👋 Sesión cerrada correctamente', 'info');
-                
-                // ✅ REDIRIGIR AL HOME
-                this.switchView('view-home');
+                    // ✅ ACTUALIZAR ESTADO
+                    this.state.isAuthenticated = false;
+                    this.state.user = { 
+                        id: null, 
+                        name: '', 
+                        email: '', 
+                        role: 'user', 
+                        telefono: '', 
+                        fechaNac: '', 
+                        fechaRegistro: '', 
+                        sesiones: 0, 
+                        ejercicios: 0, 
+                        diasActivo: 0 
+                    };
+                    this.state.eventos = {
+                        estado: 'inactivo',
+                        motivoRechazo: '',
+                        fechaSolicitud: '',
+                        fechaAprobacion: '',
+                        galeria: [],
+                        notificaciones: []
+                    };
+                    
+                    // ✅ ACTUALIZAR UI
+                    this.actualizarPerfilUI();
+                    this.actualizarHeader(); 
+                    this.actualizarNav();
+                    
+                    // ✅ MOSTRAR TOAST DE DESPEDIDA
+                    this.showToast('👋 ¡Hasta luego! Vuelve pronto. 🌿', 'info');
+                    
+                    // ✅ REDIRIGIR AL HOME
+                    this.switchView('view-home');
+                }
             },
 
             // ============================================
