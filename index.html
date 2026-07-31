@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* ============================================
-           ESTILOS BASE (MANTÉN TUS ESTILOS)
+           ESTILOS BASE
            ============================================ */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         .hidden { display: none !important; }
@@ -147,7 +147,7 @@
 </head>
 <body>
 
-    <!-- TOAST -->
+    <!-- ================= TOAST ================= -->
     <div id="toast" class="toast"></div>
 
     <!-- ================= BARRERA LEGAL ================= -->
@@ -181,12 +181,10 @@
                 <img id="app-logo-img" src="atrevetehtlogo.png" alt="Atrévete HealthTech" class="h-16 w-auto object-contain" onerror="this.style.display='none'">
             </div>
             <div id="header-auth-container" class="flex items-center gap-2">
-                <!-- BOTONES LOGIN Y REGISTRO -->
                 <div id="header-login-btns" class="flex items-center gap-2">
                     <button onclick="App.abrirLogin()" class="header-action-btn btn-login">🔑 Iniciar</button>
                     <button onclick="App.abrirRegistro()" class="header-action-btn btn-register">✨ Registro</button>
                 </div>
-                <!-- PERFIL -->
                 <div id="header-profile-btn" class="hidden">
                     <div onclick="App.switchView('view-perfil-usuario')" class="header-profile-btn">
                         <div id="header-avatar" class="header-profile-avatar">US</div>
@@ -363,7 +361,6 @@
             </div>
         </div>
 
-        <!-- ✅ BOTÓN CERRAR SESIÓN CON MENSAJE -->
         <button onclick="App.cerrarSesion()" class="w-full py-3 text-sm font-medium text-[#E27D60] border-2 border-[#E27D60]/30 rounded-full hover:bg-[#E27D60]/5 hover:border-[#E27D60] transition-all">Cerrar Sesión</button>
     </main>
 
@@ -862,6 +859,8 @@
             // ✅ FUNCIÓN PARA INICIAR SESIÓN - REDIRIGE AL PERFIL
             // ============================================
             iniciarSesion(userId, nombre, email, role) {
+                console.log('✅ Iniciando sesión para:', nombre);
+                
                 // Guardar en localStorage
                 localStorage.setItem('user_id', userId);
                 localStorage.setItem('user_name', nombre);
@@ -879,7 +878,7 @@
                 };
                 this.state.isAuthenticated = true;
 
-                // ✅ ACTUALIZAR UI
+                // ✅ FORZAR ACTUALIZACIÓN DE LA UI
                 this.actualizarPerfilUI();
                 this.actualizarHeader(); 
                 this.actualizarNav();
@@ -888,7 +887,53 @@
                 this.showToast('✅ ¡Bienvenido ' + nombre + '!', 'success');
                 
                 // ✅ REDIRIGIR AL PERFIL (NO AL INICIO)
-                this.switchView('view-perfil-usuario');
+                // Usamos setTimeout para asegurar que la UI se actualice primero
+                setTimeout(() => {
+                    this.switchView('view-perfil-usuario');
+                }, 100);
+            },
+
+            // ============================================
+            // ✅ ACTUALIZAR HEADER - OCULTA/MUESTRA BOTONES
+            // ============================================
+            actualizarHeader() {
+                const loginBtns = document.getElementById('header-login-btns');
+                const profileBtn = document.getElementById('header-profile-btn');
+                const headerName = document.getElementById('header-name');
+                const headerAvatar = document.getElementById('header-avatar');
+
+                console.log('🔄 Actualizando header. Autenticado:', this.state.isAuthenticated);
+
+                if (this.state.isAuthenticated && this.state.user.name) {
+                    // ✅ OCULTAR botones de login/registro
+                    if (loginBtns) {
+                        loginBtns.classList.add('hidden');
+                        console.log('🔒 Botones login/registro ocultos');
+                    }
+                    // ✅ MOSTRAR perfil
+                    if (profileBtn) {
+                        profileBtn.classList.remove('hidden');
+                        console.log('👤 Perfil mostrado');
+                    }
+                    if (headerName) headerName.textContent = this.state.user.name;
+                    if (headerAvatar) {
+                        const initials = this.state.user.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'US';
+                        headerAvatar.textContent = initials;
+                    }
+                } else {
+                    // ✅ MOSTRAR botones de login/registro
+                    if (loginBtns) {
+                        loginBtns.classList.remove('hidden');
+                        console.log('🔓 Botones login/registro mostrados');
+                    }
+                    // ✅ OCULTAR perfil
+                    if (profileBtn) {
+                        profileBtn.classList.add('hidden');
+                        console.log('👤 Perfil oculto');
+                    }
+                    if (headerName) headerName.textContent = 'Usuario';
+                    if (headerAvatar) headerAvatar.textContent = 'US';
+                }
             },
 
             // ============================================
