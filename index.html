@@ -7,7 +7,7 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Estilos personalizados para animaciones y componentes específicos */
+        /* Estilos base y transiciones */
         .app-view {
             transition: opacity 0.3s ease-in-out;
         }
@@ -83,7 +83,7 @@
             background-color: white;
         }
 
-        /* Selector de Roles */
+        /* Roles y Selección */
         .role-card {
             border: 2px solid #E5E7EB;
             transition: all 0.2s;
@@ -102,7 +102,7 @@
             background-color: #F0F4F1;
         }
 
-        /* Asistente Chat Flotante */
+        /* Chat Flotante */
         #assistant-chat {
             position: fixed;
             bottom: 80px;
@@ -152,7 +152,7 @@
             border-bottom-right-radius: 0.25rem;
         }
 
-        /* Grid Galería */
+        /* Galería */
         .galeria-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
@@ -195,7 +195,7 @@
             border-radius: 0.25rem;
         }
 
-        /* Bottom Nav Styling */
+        /* Nav Activo */
         .nav-item.active {
             color: #7A8A7C;
             font-weight: 700;
@@ -204,7 +204,7 @@
 </head>
 <body class="bg-stone-100 text-stone-800 font-sans antialiased min-h-screen pb-20">
 
-    <!-- HEADER / BARRA SUPERIOR -->
+    <!-- BARRA SUPERIOR / HEADER -->
     <header class="sticky top-0 bg-white/90 backdrop-blur-md border-b border-stone-200 z-50 px-4 py-3 flex justify-between items-center max-w-md mx-auto">
         <div class="flex items-center gap-2 cursor-pointer" onclick="App.switchView('view-home')">
             <div class="w-8 h-8 rounded-full bg-[#7A8A7C] flex items-center justify-center text-white font-black text-sm">
@@ -216,7 +216,6 @@
             </div>
         </div>
 
-        <!-- Botones de Estado de Autenticación -->
         <div id="header-login-btns" class="flex items-center gap-2">
             <button onclick="App.abrirLogin()" class="text-xs font-semibold px-3 py-1.5 rounded-lg text-[#7A8A7C] hover:bg-stone-50 transition">
                 Entrar
@@ -234,12 +233,12 @@
         </div>
     </header>
 
-    <!-- TOAST NOTIFICATION CONTAINER -->
+    <!-- TOAST CONTAINER -->
     <div id="toast" class="toast px-4 py-2.5 rounded-full shadow-lg text-xs font-semibold flex items-center gap-2">
         <span>Notificación</span>
     </div>
 
-    <!-- MODAL LEGAL GATE -->
+    <!-- MODAL POLÍTICAS LEGALES -->
     <div id="modal-legal-gate" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[10000] flex items-center justify-center p-4 hidden">
         <div class="bg-white rounded-2xl max-w-sm w-full p-5 shadow-2xl space-y-4">
             <div class="text-center">
@@ -247,12 +246,12 @@
                     🌱
                 </div>
                 <h3 class="font-bold text-lg text-stone-800">Bienvenido a Atrévete</h3>
-                <p class="text-xs text-stone-500 mt-1">Antes de explorar las herramientas de salud somática e integrativa, por favor acepta nuestras políticas de bienestar y uso consciente.</p>
+                <p class="text-xs text-stone-500 mt-1">Acepta nuestras políticas de salud somática y autorregulación para comenzar.</p>
             </div>
             <div class="bg-stone-50 p-3 rounded-xl text-[11px] text-stone-600 max-h-32 overflow-y-auto border border-stone-200 space-y-2">
-                <p>1. Esta aplicación brinda herramientas orientadas al bienestar corporal y la autoregulación del sistema nervioso.</p>
-                <p>2. Las recomendaciones no sustituyen el diagnóstico de un profesional médico certificado.</p>
-                <p>3. Respetamos tu privacidad y protegetemos tus datos de perfil según la normativa aplicable.</p>
+                <p>1. Esta aplicación brinda herramientas enfocadas en el bienestar corporativo y la autoregulación del sistema nervioso.</p>
+                <p>2. Las orientaciones no reemplazan diagnósticos médicos ni tratamientos farmacológicos certificados.</p>
+                <p>3. Garantizamos la privacidad de tus registros y datos de perfil.</p>
             </div>
             <div class="flex gap-2">
                 <button onclick="App.cancelarLegal()" class="flex-1 py-2 text-xs font-bold text-stone-500 bg-stone-100 rounded-xl hover:bg-stone-200">Rechazar</button>
@@ -261,19 +260,15 @@
         </div>
     </div>
 
-    <!-- MAIN CONTAINER FOR VIEWS -->
+    <!-- CONTENEDOR PRINCIPAL -->
     <main class="max-w-md mx-auto px-4 pt-4">
 
-        <!-- ================= VISTA: INICIO (HOME) ================= -->
+        <!-- ================= VISTA: INICIO ================= -->
         <section id="view-home" class="app-view space-y-5">
-            <!-- Carrusel Principal -->
+            <!-- Carrusel -->
             <div class="carousel-container shadow-md">
-                <div id="carousel-track" class="carousel-track">
-                    <!-- Dinámico vía JS -->
-                </div>
-                <div id="carousel-dots" class="carousel-dots absolute bottom-3 left-0 right-0 flex justify-center gap-1.5 z-10">
-                    <!-- Dinámico vía JS -->
-                </div>
+                <div id="carousel-track" class="carousel-track"></div>
+                <div id="carousel-dots" class="carousel-dots absolute bottom-3 left-0 right-0 flex justify-center gap-1.5 z-10"></div>
             </div>
 
             <!-- Accesos Rápidos -->
@@ -296,11 +291,11 @@
                 </button>
             </div>
 
-            <!-- Módulo Ejercicios Somáticos Rápidos -->
+            <!-- Ejercicios Somáticos -->
             <div class="bg-white p-4 rounded-2xl shadow-sm border border-stone-200/60 space-y-3">
                 <div class="flex justify-between items-center">
                     <h3 class="font-bold text-xs uppercase tracking-wider text-[#7A8A7C]">Ejercicios Somáticos</h3>
-                    <span class="text-[10px] bg-stone-100 text-stone-600 px-2 py-0.5 rounded-full font-semibold">Rutina Diario</span>
+                    <span class="text-[10px] bg-stone-100 text-stone-600 px-2 py-0.5 rounded-full font-semibold">Rutina Diaria</span>
                 </div>
 
                 <div class="space-y-2">
@@ -327,10 +322,9 @@
             </div>
         </section>
 
-        <!-- ================= VISTA: AUTENTICACIÓN (LOGIN/REGISTER) ================= -->
+        <!-- ================= VISTA: AUTHENTICACION ================= -->
         <section id="view-auth" class="app-view hidden">
             <div class="bg-white p-6 rounded-3xl shadow-sm border border-stone-200/60 space-y-5">
-                <!-- Título y pestañas -->
                 <div class="text-center space-y-1">
                     <h2 id="auth-title" class="text-xl font-bold text-stone-800">Iniciar Sesión</h2>
                     <p id="auth-subtitle" class="text-xs text-stone-500">Accede a tu panel somático</p>
@@ -382,7 +376,7 @@
             </div>
         </section>
 
-        <!-- ================= VISTA: PERFIL DE USUARIO ================= -->
+        <!-- ================= VISTA: PERFIL ================= -->
         <section id="view-perfil-usuario" class="app-view hidden space-y-4">
             <div class="bg-white p-5 rounded-3xl shadow-sm border border-stone-200/60 text-center relative overflow-hidden">
                 <div class="w-16 h-16 rounded-full bg-[#7A8A7C] text-white font-bold text-xl flex items-center justify-center mx-auto mb-2 shadow-inner" id="profile-avatar">
@@ -423,23 +417,23 @@
                 </div>
 
                 <div id="evento-estado-inactivo" class="text-xs text-stone-500 space-y-2">
-                    <p>¿Deseas proponer o facilitar un taller/evento somático dentro del ecosistema Atrévete?</p>
+                    <p>¿Deseas proponer o facilitar un taller/evento somático en Atrévete?</p>
                     <button onclick="App.solicitarEspacioEventos()" class="w-full py-2 bg-stone-800 text-white font-bold text-xs rounded-xl shadow-sm">
                         Solicitar Espacio de Facilitador
                     </button>
                 </div>
                 <div id="evento-estado-pendiente" class="hidden text-xs text-amber-700 bg-amber-50 p-3 rounded-xl border border-amber-200">
-                    ⏳ Tu solicitud está en revisión por el equipo administrativo. Nos pondremos en contacto pronto.
+                    ⏳ Tu solicitud está en revisión por el equipo administrativo.
                 </div>
                 <div id="evento-estado-aprobado" class="hidden text-xs text-emerald-700 bg-emerald-50 p-3 rounded-xl border border-emerald-200">
-                    ✅ ¡Solicitud Aprobada! Ya puedes publicar eventos y gestionar convocatorias.
+                    ✅ ¡Solicitud Aprobada! Ya puedes publicar eventos y convocatorias.
                 </div>
                 <div id="evento-estado-rechazado" class="hidden text-xs text-rose-700 bg-rose-50 p-3 rounded-xl border border-rose-200">
-                    ❌ Solicitud no aprobada. Puedes volver a intentar cumpliendo los requerimientos mínimos.
+                    ❌ Solicitud no aprobada. Puedes intentar nuevamente.
                 </div>
             </div>
 
-            <!-- Editar Perfil Form -->
+            <!-- Datos Personales -->
             <div class="bg-white p-4 rounded-2xl shadow-sm border border-stone-200/60 space-y-3">
                 <h3 class="text-xs font-bold uppercase text-stone-700">Datos Personales</h3>
                 <form onsubmit="event.preventDefault(); App.guardarEditarPerfil();" class="space-y-2.5">
@@ -497,12 +491,9 @@
                 </form>
             </div>
 
-            <!-- Listado de Citas -->
             <div class="bg-white p-4 rounded-2xl shadow-sm border border-stone-200/60 space-y-3">
                 <h3 class="font-bold text-xs uppercase tracking-wider text-stone-700">Mis Citas Agendadas</h3>
-                <div id="citas-lista" class="space-y-2 text-xs">
-                    <!-- Dinámico vía JS -->
-                </div>
+                <div id="citas-lista" class="space-y-2 text-xs"></div>
             </div>
         </section>
 
@@ -514,17 +505,14 @@
                     <span class="text-[10px] text-stone-400 font-bold"><span id="galeria-count">0</span> fotos</span>
                 </div>
 
-                <!-- Formulario de Subida -->
                 <form id="formSubirImagen" class="space-y-2">
-                    <input type="text" name="descripcion" placeholder="Descripción de la vivencia o encuentro..." class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs">
+                    <input type="text" name="descripcion" placeholder="Descripción de la vivencia..." class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs">
                     <button type="submit" class="w-full py-2 bg-stone-800 text-white font-bold text-xs rounded-xl shadow-sm">
-                        Subir Foto a la Galería
+                        Subir Foto
                     </button>
                 </form>
 
-                <div id="galeria-container" class="galeria-grid pt-2">
-                    <!-- Dinámico vía JS -->
-                </div>
+                <div id="galeria-container" class="galeria-grid pt-2"></div>
             </div>
         </section>
 
@@ -547,7 +535,6 @@
                     <span id="pago-monto-display" class="text-2xl font-black text-[#7A8A7C]">$35.00 USD</span>
                 </div>
 
-                <!-- Selección Metodo Pago -->
                 <div class="space-y-1.5">
                     <label class="text-[10px] font-bold text-stone-600 uppercase">Selecciona Método de Pago</label>
                     <div class="grid grid-cols-3 gap-2">
@@ -566,14 +553,12 @@
                     </div>
                 </div>
 
-                <!-- Instrucciones -->
                 <div id="pago-instrucciones" class="bg-emerald-50/50 p-3 rounded-xl border border-emerald-100 text-[11px] text-stone-700 space-y-1">
                     <p><strong>Pago Móvil (Venezuela):</strong></p>
                     <p>Banco: BNC (0191) | CI: V-18.452.123</p>
                     <p>Teléfono: 0414-4500000 | Tasa Oficial BCV</p>
                 </div>
 
-                <!-- Formulario Reportar Referencia -->
                 <form onsubmit="event.preventDefault(); App.procesarPago();" class="space-y-2">
                     <input type="text" id="pago-referencia" placeholder="Número de referencia o comprobante" class="w-full px-3 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs">
                     <button type="submit" class="w-full py-3 bg-[#7A8A7C] text-white font-bold text-xs rounded-xl shadow-md">
@@ -585,7 +570,7 @@
 
     </main>
 
-    <!-- ASISTENTE VIRTUAL CHAT FLOTANTE -->
+    <!-- CHAT FLOTANTE -->
     <div id="assistant-chat">
         <div class="p-3 bg-[#7A8A7C] text-white flex justify-between items-center">
             <div class="flex items-center gap-2">
@@ -595,7 +580,7 @@
             <button onclick="App.toggleAssistant()" class="text-white text-xs font-bold">✕</button>
         </div>
         <div id="assistant-messages" class="chat-messages">
-            <div class="message bot">¡Hola! Soy tu guía en el ecosistema Atrévete. ¿En qué te puedo orientar hoy?</div>
+            <div class="message bot">¡Hola! Soy tu guía en Atrévete. ¿En qué te puedo orientar hoy?</div>
         </div>
         <div class="p-2 border-t border-stone-100 bg-stone-50 flex gap-1">
             <input type="text" id="assistant-input" onkeypress="if(event.key === 'Enter') App.sendMessage()" placeholder="Escribe tu duda..." class="flex-1 px-3 py-1.5 text-xs bg-white border border-stone-200 rounded-lg focus:outline-none">
@@ -603,12 +588,11 @@
         </div>
     </div>
 
-    <!-- BOTÓN CHAT TOGGLE -->
     <button id="assistant-toggle" onclick="App.toggleAssistant()" class="fixed bottom-20 right-4 w-12 h-12 bg-[#7A8A7C] text-white rounded-full shadow-lg flex items-center justify-center text-xl z-40 hover:scale-105 transition">
         💬
     </button>
 
-    <!-- BARRA NAVEGACIÓN INFERIOR (MOBILE BOTTOM NAV) -->
+    <!-- NAVEGACIÓN INFERIOR MOBILE -->
     <nav class="fixed bottom-0 inset-x-0 bg-white border-t border-stone-200 px-6 py-2 z-50 max-w-md mx-auto flex justify-between items-center">
         <button onclick="App.switchView('view-home')" data-view="view-home" class="nav-item active flex flex-col items-center gap-0.5 text-stone-400 hover:text-[#7A8A7C]">
             <span class="text-lg">🏠</span>
@@ -632,7 +616,7 @@
         </button>
     </nav>
 
-    <!-- ================= JAVASCRIPT ENGINE ================= -->
+    <!-- MOTOR JAVASCRIPT -->
     <script>
         const App = {
             state: {
@@ -673,8 +657,6 @@
                 this.renderCitas();
                 this.renderGaleria();
                 this.bindFormEvents();
-                
-                // Intervalo carrusel automático
                 setInterval(() => this.carouselNext(), 5000);
             },
 
@@ -780,7 +762,7 @@
                 this.updateUserUI();
                 this.showToast(`Bienvenido/a, ${user.nombre}`, 'success');
                 
-                // REDIRECCIÓN DIRECTA AL INICIO
+                // === REDIRECCIÓN DIRECTA AL INICIO ===
                 this.switchView('view-home');
             },
 
@@ -820,7 +802,6 @@
                     profileBtn.classList.add('hidden');
                 }
 
-                // Actualizar estadísticas
                 document.getElementById('profile-sesiones').textContent = this.state.stats.sesiones;
                 document.getElementById('profile-ejercicios').textContent = this.state.stats.ejercicios;
                 document.getElementById('profile-dias').textContent = this.state.stats.dias;
@@ -846,7 +827,7 @@
                 this.state.currentUser.eventoEstado = 'pendiente';
                 localStorage.setItem('atrevete_user', JSON.stringify(this.state.currentUser));
                 this.actualizarEstadoEventoUI('pendiente');
-                this.showToast('Solicitud enviada a revisión por el equipo', 'info');
+                this.showToast('Solicitud enviada a revisión', 'info');
             },
 
             actualizarEstadoEventoUI(estado) {
@@ -891,7 +872,7 @@
                         localStorage.setItem('atrevete_galeria', JSON.stringify(this.state.galeria));
                         this.renderGaleria();
                         inputDesc.value = '';
-                        this.showToast('Imagen cargada exitosamente a la galería', 'success');
+                        this.showToast('Imagen cargada a la galería', 'success');
                     };
                 }
             },
@@ -920,7 +901,6 @@
                 this.showToast('Elemento eliminado', 'info');
             },
 
-            // Carrusel
             renderCarousel() {
                 const track = document.getElementById('carousel-track');
                 const dots = document.getElementById('carousel-dots');
@@ -956,12 +936,6 @@
                 this.setCarouselSlide(nextIdx);
             },
 
-            carouselPrev() {
-                const prevIdx = (this.state.carouselIndex - 1 + this.state.carouselSlides.length) % this.state.carouselSlides.length;
-                this.setCarouselSlide(prevIdx);
-            },
-
-            // Ejercicios y Agendamiento
             completarEjercicio(nombre) {
                 this.state.stats.ejercicios += 1;
                 localStorage.setItem('atrevete_stats', JSON.stringify(this.state.stats));
@@ -982,7 +956,7 @@
                 const hora = document.getElementById('cita-hora').value;
 
                 if (!esp || !fecha || !hora) {
-                    this.showToast('Por favor completa los campos de fecha y especialista', 'error');
+                    this.showToast('Por favor completa todos los campos de la cita', 'error');
                     return;
                 }
 
@@ -1018,7 +992,6 @@
                 `).join('');
             },
 
-            // Pasarela Pagos
             actualizarMontoPago() {
                 const select = document.getElementById('pago-concepto');
                 const selectedOpt = select.options[select.selectedIndex];
@@ -1049,22 +1022,13 @@
                     return;
                 }
 
-                this.showToast('Pago reportado exitosamente. En proceso de verificación.', 'success');
+                this.showToast('Pago reportado exitosamente. En verificación.', 'success');
                 document.getElementById('pago-referencia').value = '';
             },
 
-            // Asistente Virtual Chat
             toggleAssistant() {
                 const chat = document.getElementById('assistant-chat');
-                const toggle = document.getElementById('assistant-toggle');
                 chat.classList.toggle('open');
-                toggle.classList.toggle('active');
-            },
-
-            sendQuickMessage(text) {
-                const input = document.getElementById('assistant-input');
-                input.value = text;
-                this.sendMessage();
             },
 
             sendMessage() {
@@ -1074,7 +1038,6 @@
 
                 const messagesContainer = document.getElementById('assistant-messages');
                 
-                // Mensaje usuario
                 const userMsg = document.createElement('div');
                 userMsg.className = 'message user';
                 userMsg.textContent = text;
@@ -1083,7 +1046,6 @@
                 input.value = '';
                 messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
-                // Respuesta bot
                 setTimeout(() => {
                     const botMsg = document.createElement('div');
                     botMsg.className = 'message bot';
@@ -1098,18 +1060,15 @@
                 if (q.includes('qué es') || q.includes('que es')) {
                     return "Atrévete HealthTech es una plataforma integrativa enfocada en la regulación del sistema nervioso y bienestar somático.";
                 } else if (q.includes('cita') || q.includes('agendar')) {
-                    return "Puedes agendar una sesión somática dirigiéndote a la sección 'Citas' en el menú inferior.";
+                    return "Puedes agendar una sesión somática dirigiéndote a la sección 'Citas' en la navegación inferior.";
                 } else if (q.includes('regulación') || q.includes('regulacion')) {
-                    return "La regulación somática implica técnicas corporales (respiración, tapping, movimiento) para reorientar el nervio vago y calmar la ansiedad.";
-                } else if (q.includes('contacto') || q.includes('teléfono')) {
-                    return "Nos ubicamos en Maracay, Venezuela. Puedes contactarnos por correo a soporte@atreveteht.app.";
+                    return "La regulación somática abarca técnicas de autoregulación corporal (respiración, tapping) para calmar el sistema nervioso.";
                 } else {
-                    return "Gracias por escribirnos. Recuerda consultar con nuestros facilitadores en la sección de Citas para atención personalizada.";
+                    return "Gracias por contactarnos. Recuerda que puedes explorar nuestras opciones en el menú inferior o agendar una cita.";
                 }
             }
         };
 
-        // Inicializar aplicación al cargar DOM
         document.addEventListener('DOMContentLoaded', () => App.init());
     </script>
 </body>
