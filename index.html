@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Atrévete HealthTech · Especialista</title>
+  <title>Atrévete HealthTech · Con Google OAuth</title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -290,7 +290,7 @@
       cursor: pointer;
     }
     .header-profile-btn:hover { border-color: #E27D60; box-shadow: 4px 4px 12px rgba(0,0,0,0.1); transform: translateY(-1px); }
-    .header-profile-avatar { width: 32px; height: 32px; border-radius: 9999px; background: #E27D60; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px; }
+    .header-profile-avatar { width: 32px; height: 32px; border-radius: 9999px; background: #E27D60; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px; background-size: cover; background-position: center; }
     .header-profile-name { font-size: 12px; font-weight: 600; color: #7A8A7C; max-width: 80px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
     .header-action-btn { padding: 8px 16px; border-radius: 9999px; font-size: 12px; font-weight: 600; transition: all 0.2s ease; cursor: pointer; border: none; }
@@ -301,7 +301,7 @@
     .btn-register:hover { background: #7A8A7C; color: white; }
 
     .profile-card { background: linear-gradient(135deg, #FFFFFF 0%, #F8F5F2 100%); }
-    .profile-avatar-large { width: 100px; height: 100px; border-radius: 9999px; border: 4px solid white; box-shadow: 0 8px 24px rgba(226, 125, 96, 0.2); }
+    .profile-avatar-large { width: 100px; height: 100px; border-radius: 9999px; border: 4px solid white; box-shadow: 0 8px 24px rgba(226, 125, 96, 0.2); background-size: cover; background-position: center; }
     .profile-stat { background: rgba(226, 125, 96, 0.06); border-radius: 16px; padding: 12px 16px; text-align: center; }
     .profile-stat .number { font-size: 20px; font-weight: 700; color: #E27D60; }
     .profile-stat .label { font-size: 10px; color: #7A8A7C; font-weight: 500; }
@@ -371,58 +371,15 @@
     .quick-actions button { padding: 4px 12px; border-radius: 9999px; border: 1px solid #e5e0db; background: white; font-size: 10px; color: #7A8A7C; cursor: pointer; transition: all 0.2s; font-weight: 500; }
     .quick-actions button:hover { border-color: #E27D60; color: #E27D60; background: #FFF8F6; }
 
-    /* Estilos para la galería y carga de imágenes */
-    .file-input-wrapper {
-      position: relative;
-      overflow: hidden;
-      display: inline-block;
-    }
-    .file-input-wrapper input[type="file"] {
-      position: absolute;
-      left: 0;
-      top: 0;
-      opacity: 0;
-      width: 100%;
-      height: 100%;
-      cursor: pointer;
-    }
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-    }
-    .gallery-item {
-      position: relative;
-      aspect-ratio: 1 / 1;
-      border-radius: 16px;
-      overflow: hidden;
-      background: #f1ede8;
-      border: 1px solid #e0deda;
-    }
-    .gallery-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .gallery-item .remove-btn {
-      position: absolute;
-      top: 6px;
-      right: 6px;
-      background: rgba(239, 68, 68, 0.9);
-      color: white;
-      border: none;
-      border-radius: 9999px;
-      width: 24px;
-      height: 24px;
-      font-size: 14px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s;
-      opacity: 0;
-    }
+    .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .gallery-item { position: relative; aspect-ratio: 1/1; border-radius: 16px; overflow: hidden; background: #f1ede8; border: 1px solid #e0deda; }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+    .gallery-item .remove-btn { position: absolute; top: 6px; right: 6px; background: rgba(239,68,68,0.9); color: white; border: none; border-radius: 9999px; width: 24px; height: 24px; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; opacity: 0; }
     .gallery-item:hover .remove-btn { opacity: 1; }
+
+    /* Modal de autorización de Google */
+    .google-auth-modal .modal-content { max-width: 400px; }
+    .google-auth-modal .google-avatar { width: 72px; height: 72px; border-radius: 9999px; background: #E27D60; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: bold; color: white; margin: 0 auto; background-size: cover; background-position: center; }
 
     @media (max-width: 400px) {
       .assistant-chat { width: calc(100vw - 32px); height: 380px; right: 16px; bottom: 160px; }
@@ -465,6 +422,32 @@
     </div>
   </div>
 
+  <!-- ================= MODAL DE AUTENTICACIÓN GOOGLE (SIMULADO) ================= -->
+  <div id="google-auth-modal" class="modal-overlay google-auth-modal">
+    <div class="modal-content">
+      <div class="text-center space-y-4">
+        <div class="flex justify-center">
+          <div id="google-auth-avatar" class="google-avatar">G</div>
+        </div>
+        <h3 class="text-xl font-bold text-[#4A5D4E]">Autorizar acceso a Google</h3>
+        <p class="text-sm text-[#7A8A7C]/70">Permite que Atrévete HealthTech acceda a tu perfil de Google para iniciar sesión.</p>
+        
+        <div class="bg-stone-50 rounded-xl p-4 text-left text-sm text-[#7A8A7C] space-y-2">
+          <p><span class="font-semibold">📧 Correo:</span> <span id="google-auth-email">cargando...</span></p>
+          <p><span class="font-semibold">👤 Nombre:</span> <span id="google-auth-name">cargando...</span></p>
+        </div>
+
+        <div class="flex flex-col gap-3 pt-2">
+          <button onclick="App.confirmarGoogleAuth()" id="btn-confirmar-google" class="clay-btn-primary w-full py-3.5 text-sm font-bold flex items-center justify-center gap-2">
+            <span id="btn-google-text">✅ Continuar como <span id="btn-google-name">Usuario</span></span>
+            <span id="btn-google-spinner" class="hidden"><span class="spinner"></span></span>
+          </button>
+          <button onclick="App.cancelarGoogleAuth()" class="w-full py-2 text-sm text-[#7A8A7C]/60 hover:text-[#7A8A7C] transition font-medium">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ================= CABECERA ================= -->
   <header class="pt-3 pb-1 px-6 max-w-md mx-auto">
     <div class="flex items-center justify-between">
@@ -472,10 +455,20 @@
         <img id="app-logo-img" src="atrevetehtlogo.png" alt="Atrévete HealthTech - Logotipo" class="h-16 w-auto object-contain">
       </div>
       <div id="header-auth-container" class="flex items-center gap-2">
+        <!-- No autenticado: botón "Iniciar sesión con Google" -->
         <div id="header-login-btns" class="flex items-center gap-2">
-          <button onclick="App.abrirLogin()" class="header-action-btn btn-login focus-visible">🔑 Iniciar Sesión</button>
-          <button onclick="App.abrirRegistro()" class="header-action-btn btn-register focus-visible">✨ Registrarse</button>
+          <button onclick="App.iniciarLoginGoogle()" class="inline-flex items-center justify-center px-5 py-2.5 bg-white border border-gray-300 rounded-xl shadow-sm hover:shadow-md transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-[#E27D60] focus:ring-offset-2">
+            <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+            </svg>
+            <span class="text-sm font-semibold text-[#4A5D4E]">Iniciar sesión con Google</span>
+          </button>
         </div>
+
+        <!-- Autenticado: perfil -->
         <div id="header-profile-btn" class="hidden">
           <div onclick="App.irAPerfil()" class="header-profile-btn">
             <div id="header-avatar" class="header-profile-avatar">US</div>
@@ -511,7 +504,7 @@
     </div>
   </div>
 
-  <!-- ================= VISTAS DE LA APP ================= -->
+  <!-- ================= VISTAS ================= -->
 
   <!-- HOME -->
   <main id="view-home" class="app-view max-w-md mx-auto px-5 space-y-5">
@@ -545,7 +538,7 @@
     </div>
   </main>
 
-  <!-- AUTENTICACIÓN -->
+  <!-- AUTENTICACIÓN (ya no se usa directamente, ahora el botón de Google está en el header) -->
   <main id="view-auth" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
     <div class="text-center space-y-1">
       <h2 id="auth-title" class="text-2xl font-bold text-[#7A8A7C]">Iniciar Sesión</h2>
@@ -588,10 +581,7 @@
 
   <!-- RECUPERACIÓN -->
   <main id="view-recovery" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
-    <div class="text-center space-y-1">
-      <h2 class="text-2xl font-bold text-[#7A8A7C]">Recuperar Contraseña</h2>
-      <p class="text-xs text-[#7A8A7C]/70">Ingresa tu correo electrónico registrado y te enviaremos las instrucciones.</p>
-    </div>
+    <div class="text-center space-y-1"><h2 class="text-2xl font-bold text-[#7A8A7C]">Recuperar Contraseña</h2><p class="text-xs text-[#7A8A7C]/70">Ingresa tu correo electrónico registrado y te enviaremos las instrucciones.</p></div>
     <form onsubmit="event.preventDefault(); App.procesarRecuperacion();" class="clay-card p-6 space-y-4">
       <div><label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="recovery-email">Correo Electrónico</label><input type="email" id="recovery-email" placeholder="correo@ejemplo.com" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible" required></div>
       <button type="submit" class="clay-btn-primary w-full py-3.5 text-xs font-bold mt-2 focus-visible">Enviar Enlace de Recuperación</button>
@@ -599,14 +589,13 @@
     <button onclick="App.switchView('view-auth')" class="clay-btn-secondary w-full py-3 text-xs font-bold focus-visible">← Volver al Ingreso</button>
   </main>
 
-  <!-- ================= PERFIL USUARIO (PACIENTE) CON EDITOR AVANZADO ================= -->
+  <!-- PERFIL USUARIO CON EDITOR -->
   <main id="view-perfil-usuario" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
-    <!-- Tarjeta de presentación -->
     <div class="clay-card profile-card p-6 text-center space-y-4 relative overflow-hidden">
       <div class="absolute top-0 right-0 w-40 h-40 bg-[#E27D60]/5 rounded-full -translate-y-20 translate-x-20"></div>
       <div class="absolute bottom-0 left-0 w-32 h-32 bg-[#E27D60]/5 rounded-full translate-y-16 -translate-x-16"></div>
       <div class="relative z-10">
-        <div id="profile-avatar" class="profile-avatar-large mx-auto bg-[#E27D60] text-white flex items-center justify-center text-4xl font-bold bg-cover bg-center" style="background-image: none;">US</div>
+        <div id="profile-avatar" class="profile-avatar-large mx-auto bg-[#E27D60] text-white flex items-center justify-center text-4xl font-bold" style="background-image: none;">US</div>
       </div>
       <div class="relative z-10">
         <h3 id="profile-name" class="text-xl font-bold text-[#4A5D4E]">Usuario</h3>
@@ -614,20 +603,18 @@
         <p id="profile-bio-display" class="text-xs text-[#7A8A7C]/60 mt-1 italic">Sin biografía aún</p>
         <div class="flex items-center justify-center gap-2 mt-1 flex-wrap">
           <span id="profile-role" class="text-xs bg-[#E27D60]/10 text-[#E27D60] font-semibold px-3 py-1 rounded-full">👤 Usuario</span>
-          <span id="profile-register-method" class="text-[10px] text-[#7A8A7C]/40">Registrado con: Email</span>
+          <span id="profile-register-method" class="text-[10px] text-[#7A8A7C]/40">Registrado con: Google</span>
         </div>
-        <div id="profile-verified-container" class="mt-2 flex justify-center"><span class="unverified-badge">⏳ Correo no verificado</span></div>
+        <div id="profile-verified-container" class="mt-2 flex justify-center"><span class="verified-badge">✅ Correo verificado</span></div>
       </div>
     </div>
 
-    <!-- Estadísticas -->
     <div class="grid grid-cols-3 gap-3">
       <div class="profile-stat"><div class="number" id="profile-sesiones">0</div><div class="label">Sesiones</div></div>
       <div class="profile-stat"><div class="number" id="profile-ejercicios">0</div><div class="label">Ejercicios</div></div>
       <div class="profile-stat"><div class="number" id="profile-dias">0</div><div class="label">Días Activo</div></div>
     </div>
 
-    <!-- Información personal -->
     <div class="clay-card p-5 space-y-3">
       <h4 class="font-bold text-sm text-[#4A5D4E] flex items-center gap-2">📋 Información Personal</h4>
       <div class="space-y-2 text-xs">
@@ -637,69 +624,37 @@
       </div>
     </div>
 
-    <!-- Botón para abrir el editor -->
-    <button onclick="App.mostrarEditarPerfil()" class="clay-btn-primary w-full py-3.5 text-sm font-bold flex items-center justify-center gap-2 focus-visible">
-      ✏️ Editar Perfil
-    </button>
+    <button onclick="App.mostrarEditarPerfil()" class="clay-btn-primary w-full py-3.5 text-sm font-bold flex items-center justify-center gap-2 focus-visible">✏️ Editar Perfil</button>
 
-    <!-- ===== FORMULARIO DE EDICIÓN AVANZADO (Integración Livewire UI) ===== -->
     <div id="editar-perfil-form" class="clay-card p-5 space-y-4 hidden">
       <h4 class="font-bold text-sm text-[#4A5D4E] flex items-center gap-2">✏️ Editar Datos Personales</h4>
-      
       <form id="profile-edit-form" onsubmit="return false;">
-        <!-- Nombre -->
-        <div>
-          <label class="block text-sm font-medium text-[#4A5D4E]">Nombre completo</label>
-          <input type="text" id="edit-nombre" class="mt-1 block w-full rounded-xl border-slate-300 shadow-sm focus:border-[#E27D60] focus:ring-[#E27D60] p-2.5 text-sm">
-        </div>
-
-        <!-- Email (solo lectura para simular unicidad) -->
-        <div>
-          <label class="block text-sm font-medium text-[#4A5D4E]">Correo electrónico</label>
-          <input type="email" id="edit-email" class="mt-1 block w-full rounded-xl border-slate-300 bg-slate-50 text-slate-500 p-2.5 text-sm" readonly>
-        </div>
-
-        <!-- Biografía / Especialidad -->
-        <div>
-          <label class="block text-sm font-medium text-[#4A5D4E]">Biografía / Especialidad</label>
-          <textarea id="edit-bio" rows="3" class="mt-1 block w-full rounded-xl border-slate-300 shadow-sm focus:border-[#E27D60] focus:ring-[#E27D60] p-2.5 text-sm"></textarea>
-        </div>
-
-        <!-- Foto de Perfil -->
+        <div><label class="block text-sm font-medium text-[#4A5D4E]">Nombre completo</label><input type="text" id="edit-nombre" class="mt-1 block w-full rounded-xl border-slate-300 shadow-sm focus:border-[#E27D60] focus:ring-[#E27D60] p-2.5 text-sm"></div>
+        <div><label class="block text-sm font-medium text-[#4A5D4E]">Correo electrónico</label><input type="email" id="edit-email" class="mt-1 block w-full rounded-xl border-slate-300 bg-slate-50 text-slate-500 p-2.5 text-sm" readonly></div>
+        <div><label class="block text-sm font-medium text-[#4A5D4E]">Biografía / Especialidad</label><textarea id="edit-bio" rows="3" class="mt-1 block w-full rounded-xl border-slate-300 shadow-sm focus:border-[#E27D60] focus:ring-[#E27D60] p-2.5 text-sm"></textarea></div>
         <div>
           <label class="block text-sm font-medium text-[#4A5D4E]">Foto de perfil</label>
           <div class="mt-1 flex items-center gap-4 flex-wrap">
-            <!-- Vista previa actual -->
             <div class="w-16 h-16 rounded-full overflow-hidden bg-slate-100 flex-shrink-0 border-2 border-slate-200">
               <img id="edit-profile-preview" src="" alt="Foto actual" class="w-full h-full object-cover hidden">
               <span id="edit-profile-placeholder" class="w-full h-full flex items-center justify-center text-slate-400 text-2xl">👤</span>
             </div>
-            <!-- Input -->
             <div class="flex-1 min-w-[150px]">
               <input type="file" id="edit-profile-photo" accept="image/*" class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:bg-[#E27D60] file:text-white file:text-sm file:font-semibold hover:file:bg-[#d06d50] cursor-pointer">
               <p class="text-[10px] text-slate-400 mt-1">Máx. 2MB · Se redimensionará a 300x300</p>
             </div>
           </div>
         </div>
-
-        <!-- Galería de Referencia -->
         <div>
           <label class="block text-sm font-medium text-[#4A5D4E]">Galería de referencia (máx. 2 imágenes)</label>
           <p class="text-xs text-slate-400">Sube fotos de tu consultorio, credenciales o resultados.</p>
-          
-          <!-- Contenedor de la galería -->
-          <div id="gallery-preview-container" class="gallery-grid mt-3">
-            <!-- Se llena dinámicamente -->
-          </div>
-
+          <div id="gallery-preview-container" class="gallery-grid mt-3"></div>
           <div class="mt-3">
             <input type="file" id="edit-gallery-photos" accept="image/*" multiple class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:bg-[#E27D60] file:text-white file:text-sm file:font-semibold hover:file:bg-[#d06d50] cursor-pointer">
             <p class="text-[10px] text-slate-400 mt-1">Máx. 2MB por imagen · Se redimensionarán a 800x800</p>
           </div>
           <div class="text-xs text-slate-400 mt-1" id="gallery-counter">0 / 2 imágenes usadas</div>
         </div>
-
-        <!-- Botones de acción -->
         <div class="flex gap-3 pt-2">
           <button onclick="App.guardarEditarPerfil()" id="btn-save-profile" class="clay-btn-primary flex-1 py-3 text-xs font-bold flex items-center justify-center gap-2 focus-visible disabled:opacity-70 disabled:cursor-not-allowed">
             <span id="btn-save-text">💾 Guardar Cambios</span>
@@ -710,22 +665,20 @@
       </form>
     </div>
 
-    <!-- Cerrar sesión -->
     <button onclick="App.cerrarSesion()" class="w-full py-3.5 text-sm font-medium text-[#E27D60] border-2 border-[#E27D60]/30 rounded-full hover:bg-[#E27D60]/5 hover:border-[#E27D60] transition-all focus-visible">Cerrar Sesión</button>
   </main>
 
-  <!-- ================= PERFIL Y DASHBOARD DEL ESPECIALISTA ================= -->
+  <!-- PERFIL ESPECIALISTA (Dashboard) -->
   <main id="view-perfil-especialista" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
-    <!-- 1. ENCABEZADO DEL PERFIL -->
     <div class="clay-card clay-card-lg relative">
       <button class="absolute top-4 right-4 text-gray-green hover:text-terracota transition-colors text-xl" onclick="alert('Configuración de perfil')">⚙️</button>
       <div class="flex items-center gap-4">
         <div class="relative flex-shrink-0">
-          <div class="w-20 h-20 rounded-full border-4 border-terracota shadow-clay-sm overflow-hidden bg-white flex items-center justify-center text-4xl font-bold text-terracota">CR</div>
+          <div class="w-20 h-20 rounded-full border-4 border-terracota shadow-clay-sm overflow-hidden bg-white flex items-center justify-center text-4xl font-bold text-terracota bg-cover bg-center" id="spec-avatar">CR</div>
           <span class="absolute bottom-0 right-0 w-4 h-4 bg-green-500 border-2 border-white rounded-full"></span>
         </div>
         <div class="flex-1 min-w-0">
-          <h2 class="text-lg font-bold text-eucalyptus truncate">Dra. Carla Rodríguez</h2>
+          <h2 class="text-lg font-bold text-eucalyptus truncate" id="spec-name">Dra. Carla Rodríguez</h2>
           <div class="flex flex-wrap items-center gap-2 mt-1">
             <span class="badge-pill badge-terracota">Especialista Certificado HealthTech</span>
             <span class="text-xs text-gray-green flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-green-500 inline-block"></span> En línea</span>
@@ -738,7 +691,6 @@
       </div>
     </div>
 
-    <!-- 2. BILLETERA E INGRESOS -->
     <div class="clay-card clay-card-lg relative overflow-hidden">
       <div class="absolute -top-12 -right-12 w-32 h-32 bg-terracota/5 rounded-full"></div>
       <div class="relative z-10">
@@ -755,23 +707,11 @@
       </div>
     </div>
 
-    <!-- 3. GRID DE MÉTRICAS RÁPIDAS -->
     <div class="grid grid-cols-2 gap-4">
-      <div class="clay-card clay-card-sm flex flex-col items-start">
-        <span class="text-2xl">📅</span>
-        <p class="text-2xl font-bold text-eucalyptus mt-2">12</p>
-        <p class="text-sm font-semibold text-eucalyptus">Citas Agendadas</p>
-        <p class="text-xs text-gray-green mt-1">2 Consultas para hoy</p>
-      </div>
-      <div class="clay-card clay-card-sm flex flex-col items-start">
-        <span class="text-2xl">🎟️</span>
-        <p class="text-2xl font-bold text-eucalyptus mt-2">34 / 40</p>
-        <p class="text-sm font-semibold text-eucalyptus">Entradas</p>
-        <p class="text-xs text-gray-green mt-1">Adultas en Fuga (2da Edición)</p>
-      </div>
+      <div class="clay-card clay-card-sm flex flex-col items-start"><span class="text-2xl">📅</span><p class="text-2xl font-bold text-eucalyptus mt-2">12</p><p class="text-sm font-semibold text-eucalyptus">Citas Agendadas</p><p class="text-xs text-gray-green mt-1">2 Consultas para hoy</p></div>
+      <div class="clay-card clay-card-sm flex flex-col items-start"><span class="text-2xl">🎟️</span><p class="text-2xl font-bold text-eucalyptus mt-2">34 / 40</p><p class="text-sm font-semibold text-eucalyptus">Entradas</p><p class="text-xs text-gray-green mt-1">Adultas en Fuga (2da Edición)</p></div>
     </div>
 
-    <!-- 4. TABS -->
     <div class="clay-card clay-card-sm p-3">
       <div class="flex gap-1 flex-wrap justify-center" id="tab-headers">
         <button class="tab-item active" data-tab="tab-citas" onclick="App.switchSpecialistTab('tab-citas')">Mis Citas</button>
@@ -780,7 +720,6 @@
       </div>
     </div>
 
-    <!-- 5. CONTENIDO TABS -->
     <div class="clay-card clay-card-lg p-4 space-y-4">
       <div id="tab-citas" class="tab-content active space-y-4">
         <div class="bg-white/50 rounded-2xl p-4 shadow-clay-sm border border-white/60">
@@ -988,7 +927,7 @@
   <!-- ================= JAVASCRIPT ================= -->
   <script>
     // ============================================
-    // APP - Objeto principal
+    // APP - Objeto principal con Google OAuth simulado
     // ============================================
     const App = {
         state: {
@@ -1000,7 +939,7 @@
                 name: localStorage.getItem('user_name') || '',
                 email: localStorage.getItem('user_email') || '',
                 role: localStorage.getItem('user_role') || 'user',
-                registerMethod: localStorage.getItem('register_method') || 'email',
+                registerMethod: localStorage.getItem('register_method') || 'google',
                 telefono: localStorage.getItem('user_telefono') || '',
                 fechaNac: localStorage.getItem('user_fecha_nac') || '',
                 bio: localStorage.getItem('user_bio') || '',
@@ -1010,18 +949,119 @@
                 ejercicios: parseInt(localStorage.getItem('user_ejercicios')) || 0,
                 diasActivo: parseInt(localStorage.getItem('user_dias_activo')) || 0,
                 profilePhoto: localStorage.getItem('profile_photo_data') || null,
-                gallery: JSON.parse(localStorage.getItem('gallery_data') || '[]')
+                gallery: JSON.parse(localStorage.getItem('gallery_data') || '[]'),
+                googleAvatar: localStorage.getItem('google_avatar') || null
             },
             isAuthenticated: !!localStorage.getItem('user_email'),
             legalAceptado: localStorage.getItem('legal_aceptado') === 'true',
             breathInterval: null,
             currentView: 'view-home',
             assistantOpen: false,
-            isProcessing: false
+            isProcessing: false,
+            googleAuthData: null
         },
 
         // ============================================
-        // ASISTENTE VIRTUAL
+        // GOOGLE OAUTH SIMULADO
+        // ============================================
+        iniciarLoginGoogle() {
+            if (!this.verificarLegal()) return;
+            
+            // Simular la obtención de datos de Google
+            // En una implementación real, esto redirigiría a Google
+            // Aquí simulamos el flujo con un modal
+            const googleUser = {
+                name: prompt('👤 Ingresa tu nombre de Google:', 'Ana María Rodríguez') || 'Usuario Google',
+                email: prompt('📧 Ingresa tu correo de Google:', 'usuario@gmail.com') || 'usuario@gmail.com',
+                avatar: 'https://ui-avatars.com/api/?name=' + encodeURIComponent(prompt('👤 Nombre para avatar:', 'Ana María Rodríguez') || 'Usuario') + '&background=E27D60&color=fff&size=128',
+                email_verified: true
+            };
+
+            if (!googleUser.email || !googleUser.email.includes('@')) {
+                this.showToast('⚠️ Por favor ingresa un correo válido', 'warning');
+                return;
+            }
+
+            this.state.googleAuthData = googleUser;
+            this.mostrarModalGoogle(googleUser);
+        },
+
+        mostrarModalGoogle(userData) {
+            const modal = document.getElementById('google-auth-modal');
+            const avatar = document.getElementById('google-auth-avatar');
+            const emailEl = document.getElementById('google-auth-email');
+            const nameEl = document.getElementById('google-auth-name');
+            const btnName = document.getElementById('btn-google-name');
+
+            if (userData.avatar) {
+                avatar.style.backgroundImage = `url('${userData.avatar}')`;
+                avatar.textContent = '';
+            } else {
+                avatar.style.backgroundImage = 'none';
+                avatar.textContent = userData.name.charAt(0).toUpperCase();
+            }
+            emailEl.textContent = userData.email;
+            nameEl.textContent = userData.name;
+            btnName.textContent = userData.name;
+
+            modal.classList.add('active');
+            document.getElementById('btn-google-text').textContent = '✅ Continuar como ' + userData.name;
+            document.getElementById('btn-google-spinner').classList.add('hidden');
+            document.getElementById('btn-confirmar-google').disabled = false;
+        },
+
+        confirmarGoogleAuth() {
+            const userData = this.state.googleAuthData;
+            if (!userData) return;
+
+            const btnText = document.getElementById('btn-google-text');
+            const btnSpinner = document.getElementById('btn-google-spinner');
+            btnText.textContent = 'Registrando...';
+            btnSpinner.classList.remove('hidden');
+            document.getElementById('btn-confirmar-google').disabled = true;
+
+            setTimeout(() => {
+                const fechaRegistro = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' });
+                
+                localStorage.setItem('user_name', userData.name);
+                localStorage.setItem('user_email', userData.email);
+                localStorage.setItem('user_role', 'user');
+                localStorage.setItem('register_method', 'google');
+                localStorage.setItem('email_verified', 'true');
+                localStorage.setItem('fecha_registro', fechaRegistro);
+                if (userData.avatar) localStorage.setItem('google_avatar', userData.avatar);
+
+                this.state.user = {
+                    ...this.state.user,
+                    name: userData.name,
+                    email: userData.email,
+                    role: 'user',
+                    registerMethod: 'google',
+                    emailVerified: true,
+                    fechaRegistro: fechaRegistro,
+                    googleAvatar: userData.avatar || null
+                };
+                this.state.isAuthenticated = true;
+                this.state.googleAuthData = null;
+
+                document.getElementById('google-auth-modal').classList.remove('active');
+                this.cargarDatosPerfil();
+                this.actualizarPerfilUI();
+                this.actualizarHeader();
+                this.actualizarNav();
+                this.showToast('✅ ¡Bienvenido a Atrévete HealthTech!', 'success');
+                this.irAPerfil();
+            }, 1500);
+        },
+
+        cancelarGoogleAuth() {
+            document.getElementById('google-auth-modal').classList.remove('active');
+            this.state.googleAuthData = null;
+            this.showToast('Autenticación con Google cancelada', 'info');
+        },
+
+        // ============================================
+        // ASISTENTE VIRTUAL (sin cambios)
         // ============================================
         toggleAssistant() {
             const chat = document.getElementById('assistant-chat');
@@ -1125,7 +1165,7 @@
                     this.switchView('view-perfil-usuario');
                 }
             } else {
-                this.abrirLogin();
+                this.iniciarLoginGoogle();
             }
         },
         abrirLogin() {
@@ -1156,7 +1196,7 @@
         },
 
         // ============================================
-        // DASHBOARD ESPECIALISTA - INTERACCIONES
+        // DASHBOARD ESPECIALISTA
         // ============================================
         toggleDisponibilidad() {
             const toggle = document.getElementById('toggle-disponibilidad');
@@ -1184,7 +1224,7 @@
         },
 
         // ============================================
-        // AUTENTICACIÓN
+        // AUTENTICACIÓN POR EMAIL (opcional)
         // ============================================
         switchAuthMode(mode) {
             this.state.authMode = mode;
@@ -1232,7 +1272,7 @@
             localStorage.setItem('email_verified', 'false'); localStorage.setItem('fecha_registro', fechaRegistro);
             this.state.user = { ...this.state.user, name: nombre, email: email, role: role, registerMethod: 'email', emailVerified: false, fechaRegistro: fechaRegistro };
             this.state.isAuthenticated = true;
-            this.cargarDatosPerfil(); // Cargar datos de perfil (bio, fotos)
+            this.cargarDatosPerfil();
             this.actualizarPerfilUI(); this.actualizarHeader(); this.actualizarNav();
             this.showToast('✅ ¡Bienvenido a Atrévete HealthTech!', 'success');
             this.irAPerfil();
@@ -1249,9 +1289,10 @@
             localStorage.removeItem('register_method'); localStorage.removeItem('user_telefono'); localStorage.removeItem('user_fecha_nac');
             localStorage.removeItem('email_verified'); localStorage.removeItem('fecha_registro');
             localStorage.removeItem('user_bio');
-            // No borramos las fotos al cerrar sesión para que persistan si vuelve a entrar, pero limpiamos estado.
+            localStorage.removeItem('google_avatar');
+            // No borramos las fotos al cerrar sesión
             this.state.isAuthenticated = false;
-            this.state.user = { name: '', email: '', role: 'user', registerMethod: 'email', telefono: '', fechaNac: '', bio: '', emailVerified: false, fechaRegistro: '', sesiones: 0, ejercicios: 0, diasActivo: 0, profilePhoto: null, gallery: [] };
+            this.state.user = { name: '', email: '', role: 'user', registerMethod: 'google', telefono: '', fechaNac: '', bio: '', emailVerified: false, fechaRegistro: '', sesiones: 0, ejercicios: 0, diasActivo: 0, profilePhoto: null, gallery: [], googleAvatar: null };
             this.actualizarPerfilUI(); this.actualizarHeader(); this.actualizarNav();
             this.showToast('👋 Sesión cerrada exitosamente', 'info');
             this.switchView('view-home');
@@ -1261,12 +1302,12 @@
         // PERFIL - CARGA DE DATOS
         // ============================================
         cargarDatosPerfil() {
-            // Cargar bio y fotos desde localStorage
             this.state.user.bio = localStorage.getItem('user_bio') || '';
             const photoData = localStorage.getItem('profile_photo_data');
             this.state.user.profilePhoto = photoData || null;
             const galleryData = localStorage.getItem('gallery_data');
             this.state.user.gallery = galleryData ? JSON.parse(galleryData) : [];
+            this.state.user.googleAvatar = localStorage.getItem('google_avatar') || null;
         },
 
         // ============================================
@@ -1285,7 +1326,6 @@
             const ejercicios = this.state.user.ejercicios || 0;
             const diasActivo = this.state.user.diasActivo || 0;
 
-            // Avatar principal
             const profileAvatar = document.getElementById('profile-avatar');
             const headerAvatar = document.getElementById('header-avatar');
             const headerName = document.getElementById('header-name');
@@ -1302,10 +1342,12 @@
             const profileEjercicios = document.getElementById('profile-ejercicios');
             const profileDias = document.getElementById('profile-dias');
 
-            // Actualizar foto de perfil
+            // Usar avatar de Google si existe
+            const avatarUrl = this.state.user.googleAvatar || this.state.user.profilePhoto;
+
             if (profileAvatar) {
-                if (this.state.user.profilePhoto) {
-                    profileAvatar.style.backgroundImage = `url('${this.state.user.profilePhoto}')`;
+                if (avatarUrl) {
+                    profileAvatar.style.backgroundImage = `url('${avatarUrl}')`;
                     profileAvatar.style.backgroundSize = 'cover';
                     profileAvatar.style.backgroundPosition = 'center';
                     profileAvatar.textContent = '';
@@ -1316,8 +1358,8 @@
                 }
             }
             if (headerAvatar) {
-                if (this.state.user.profilePhoto) {
-                    headerAvatar.style.backgroundImage = `url('${this.state.user.profilePhoto}')`;
+                if (avatarUrl) {
+                    headerAvatar.style.backgroundImage = `url('${avatarUrl}')`;
                     headerAvatar.style.backgroundSize = 'cover';
                     headerAvatar.style.backgroundPosition = 'center';
                     headerAvatar.textContent = '';
@@ -1328,12 +1370,32 @@
                 }
             }
 
+            // Actualizar especialista también
+            const specAvatar = document.getElementById('spec-avatar');
+            const specName = document.getElementById('spec-name');
+            if (specAvatar) {
+                if (avatarUrl) {
+                    specAvatar.style.backgroundImage = `url('${avatarUrl}')`;
+                    specAvatar.style.backgroundSize = 'cover';
+                    specAvatar.style.backgroundPosition = 'center';
+                    specAvatar.textContent = '';
+                } else {
+                    specAvatar.style.backgroundImage = 'none';
+                    const initials = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'AT';
+                    specAvatar.textContent = initials;
+                }
+            }
+            if (specName) specName.textContent = name;
+
             if (profileName) profileName.innerText = name;
             if (headerName) headerName.innerText = name;
             if (profileEmail) profileEmail.innerText = email;
             if (profileBioDisplay) profileBioDisplay.innerText = bio || 'Sin biografía aún';
             if (profileRole) { const roleText = role === 'spec' ? '👩‍⚕️ Especialista' : '👤 Usuario'; profileRole.innerText = roleText; }
-            if (profileRegisterMethod) profileRegisterMethod.innerText = 'Registrado con: Email 📧';
+            if (profileRegisterMethod) {
+                const method = this.state.user.registerMethod === 'google' ? 'Google 🟢' : 'Email 📧';
+                profileRegisterMethod.innerText = 'Registrado con: ' + method;
+            }
             if (profileVerifiedContainer) {
                 if (emailVerified) profileVerifiedContainer.innerHTML = '<span class="verified-badge">✅ Correo verificado</span>';
                 else profileVerifiedContainer.innerHTML = '<span class="unverified-badge">⏳ Correo no verificado</span>';
@@ -1345,7 +1407,7 @@
             if (profileEjercicios) profileEjercicios.innerText = ejercicios;
             if (profileDias) profileDias.innerText = diasActivo;
 
-            // Cargar datos en el formulario de edición (si existe)
+            // Cargar datos en el formulario de edición
             const editNombre = document.getElementById('edit-nombre');
             const editEmail = document.getElementById('edit-email');
             const editBio = document.getElementById('edit-bio');
@@ -1355,8 +1417,8 @@
             if (editEmail) editEmail.value = email;
             if (editBio) editBio.value = this.state.user.bio || '';
             if (editProfilePreview) {
-                if (this.state.user.profilePhoto) {
-                    editProfilePreview.src = this.state.user.profilePhoto;
+                if (avatarUrl) {
+                    editProfilePreview.src = avatarUrl;
                     editProfilePreview.classList.remove('hidden');
                     if (editProfilePlaceholder) editProfilePlaceholder.classList.add('hidden');
                 } else {
@@ -1365,36 +1427,23 @@
                 }
             }
 
-            // Cargar galería en el editor
             this.renderGalleryEditor();
-
             this.actualizarHeader(); this.actualizarNav();
         },
 
-        // ============================================
-        // EDITOR DE PERFIL - GALERÍA
-        // ============================================
         renderGalleryEditor() {
             const container = document.getElementById('gallery-preview-container');
             const counter = document.getElementById('gallery-counter');
             if (!container) return;
-
             const gallery = this.state.user.gallery || [];
             container.innerHTML = '';
-            
             gallery.forEach((imgData, index) => {
                 const div = document.createElement('div');
                 div.className = 'gallery-item';
-                div.innerHTML = `
-                    <img src="${imgData}" alt="Galería ${index+1}">
-                    <button class="remove-btn" onclick="App.removeGalleryImage(${index})">✕</button>
-                `;
+                div.innerHTML = `<img src="${imgData}" alt="Galería ${index+1}"><button class="remove-btn" onclick="App.removeGalleryImage(${index})">✕</button>`;
                 container.appendChild(div);
             });
-
-            if (counter) {
-                counter.textContent = `${gallery.length} / 2 imágenes usadas`;
-            }
+            if (counter) counter.textContent = `${gallery.length} / 2 imágenes usadas`;
         },
 
         removeGalleryImage(index) {
@@ -1408,14 +1457,10 @@
             }
         },
 
-        // ============================================
-        // EDITAR PERFIL - MOSTRAR/OCULTAR
-        // ============================================
         mostrarEditarPerfil() {
             const form = document.getElementById('editar-perfil-form');
             if (form) {
                 form.classList.remove('hidden');
-                // Cargar datos actuales en el formulario
                 const editNombre = document.getElementById('edit-nombre');
                 const editEmail = document.getElementById('edit-email');
                 const editBio = document.getElementById('edit-bio');
@@ -1423,7 +1468,6 @@
                 if (editEmail) editEmail.value = this.state.user.email || '';
                 if (editBio) editBio.value = this.state.user.bio || '';
                 this.renderGalleryEditor();
-                // Resetear input de archivos
                 document.getElementById('edit-profile-photo').value = '';
                 document.getElementById('edit-gallery-photos').value = '';
             }
@@ -1434,58 +1478,33 @@
             if (form) form.classList.add('hidden');
         },
 
-        // ============================================
-        // GUARDAR PERFIL (CON REDIMENSIONAMIENTO Y VALIDACIÓN)
-        // ============================================
         guardarEditarPerfil() {
             const btnSave = document.getElementById('btn-save-profile');
             const btnText = document.getElementById('btn-save-text');
             const btnSpinner = document.getElementById('btn-save-spinner');
-            
-            // Estado de carga
             btnSave.disabled = true;
             btnText.classList.add('hidden');
             btnSpinner.classList.remove('hidden');
 
-            // Validar nombre
             const nombre = document.getElementById('edit-nombre').value.trim();
-            if (!nombre) {
-                this.showToast('⚠️ El nombre es obligatorio', 'error');
-                btnSave.disabled = false;
-                btnText.classList.remove('hidden');
-                btnSpinner.classList.add('hidden');
-                return;
-            }
-
-            // Validar email
+            if (!nombre) { this.showToast('⚠️ El nombre es obligatorio', 'error'); this.resetGuardarBtn(); return; }
             const email = document.getElementById('edit-email').value.trim();
-            if (!email || !email.includes('@')) {
-                this.showToast('⚠️ Correo electrónico inválido', 'error');
-                btnSave.disabled = false;
-                btnText.classList.remove('hidden');
-                btnSpinner.classList.add('hidden');
-                return;
-            }
+            if (!email || !email.includes('@')) { this.showToast('⚠️ Correo electrónico inválido', 'error'); this.resetGuardarBtn(); return; }
 
-            // Guardar datos de texto
             const bio = document.getElementById('edit-bio').value.trim();
             localStorage.setItem('user_name', nombre);
             localStorage.setItem('user_email', email);
             localStorage.setItem('user_bio', bio);
-            
             this.state.user.name = nombre;
             this.state.user.email = email;
             this.state.user.bio = bio;
 
-            // Procesar foto de perfil si se subió
             const profileInput = document.getElementById('edit-profile-photo');
             if (profileInput.files && profileInput.files[0]) {
                 const file = profileInput.files[0];
                 if (file.size > 2 * 1024 * 1024) {
                     this.showToast('⚠️ La foto de perfil no debe superar los 2MB', 'error');
-                    btnSave.disabled = false;
-                    btnText.classList.remove('hidden');
-                    btnSpinner.classList.add('hidden');
+                    this.resetGuardarBtn();
                     return;
                 }
                 this.resizeImage(file, 300, 300, 0.8, (resizedDataUrl) => {
@@ -1501,7 +1520,6 @@
         },
 
         finalizarGuardadoPerfil() {
-            // Procesar galería
             const galleryInput = document.getElementById('edit-gallery-photos');
             const currentGallery = this.state.user.gallery || [];
             let newImages = [];
@@ -1514,7 +1532,6 @@
                     this.resetGuardarBtn();
                     return;
                 }
-
                 let processed = 0;
                 files.forEach((file, index) => {
                     if (file.size > 2 * 1024 * 1024) {
@@ -1532,22 +1549,17 @@
                             this.renderGalleryEditor();
                             this.actualizarPerfilUI();
                             this.showToast('✅ Galería actualizada', 'success');
-                            // Terminar proceso
                             this.finalizarGuardadoPerfilCompleto();
                         }
                     });
                 });
-                // Si no hay archivos, continuar
-                if (files.length === 0) {
-                    this.finalizarGuardadoPerfilCompleto();
-                }
+                if (files.length === 0) this.finalizarGuardadoPerfilCompleto();
             } else {
                 this.finalizarGuardadoPerfilCompleto();
             }
         },
 
         finalizarGuardadoPerfilCompleto() {
-            // Actualizar UI final
             this.actualizarPerfilUI();
             document.getElementById('editar-perfil-form').classList.add('hidden');
             this.showToast('✅ Perfil actualizado exitosamente', 'success');
@@ -1563,30 +1575,19 @@
             btnSpinner.classList.add('hidden');
         },
 
-        // ============================================
-        // REDIMENSIONAR IMAGEN (Canvas)
-        // ============================================
         resizeImage(file, maxWidth, maxHeight, quality, callback) {
             const reader = new FileReader();
             reader.onload = function(e) {
                 const img = new Image();
                 img.onload = function() {
-                    let width = img.width;
-                    let height = img.height;
+                    let width = img.width, height = img.height;
                     if (width > height) {
-                        if (width > maxWidth) {
-                            height *= maxWidth / width;
-                            width = maxWidth;
-                        }
+                        if (width > maxWidth) { height *= maxWidth / width; width = maxWidth; }
                     } else {
-                        if (height > maxHeight) {
-                            width *= maxHeight / height;
-                            height = maxHeight;
-                        }
+                        if (height > maxHeight) { width *= maxHeight / height; height = maxHeight; }
                     }
                     const canvas = document.createElement('canvas');
-                    canvas.width = width;
-                    canvas.height = height;
+                    canvas.width = width; canvas.height = height;
                     const ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, width, height);
                     const dataUrl = canvas.toDataURL('image/jpeg', quality);
@@ -1597,9 +1598,6 @@
             reader.readAsDataURL(file);
         },
 
-        // ============================================
-        // ACTUALIZAR HEADER/NAV
-        // ============================================
         actualizarHeader() {
             const loginBtns = document.getElementById('header-login-btns');
             const profileBtn = document.getElementById('header-profile-btn');
@@ -1610,8 +1608,9 @@
                 loginBtns.classList.add('hidden'); profileBtn.classList.remove('hidden');
                 if (headerName) headerName.textContent = this.state.user.name;
                 if (headerAvatar) {
-                    if (this.state.user.profilePhoto) {
-                        headerAvatar.style.backgroundImage = `url('${this.state.user.profilePhoto}')`;
+                    const avatarUrl = this.state.user.googleAvatar || this.state.user.profilePhoto;
+                    if (avatarUrl) {
+                        headerAvatar.style.backgroundImage = `url('${avatarUrl}')`;
                         headerAvatar.style.backgroundSize = 'cover';
                         headerAvatar.style.backgroundPosition = 'center';
                         headerAvatar.textContent = '';
@@ -1637,7 +1636,7 @@
         },
 
         // ============================================
-        // PAGOS
+        // PAGOS, QUIZ, RESPIRACIÓN, CITAS, ADMIN (sin cambios)
         // ============================================
         selectPaymentMethod(method) {
             this.state.selectedPayment = method;
@@ -1669,9 +1668,6 @@
             this.switchView('view-perfil-usuario');
         },
 
-        // ============================================
-        // QUIZ
-        // ============================================
         answerQuiz(step, choice) {
             this.state.quizAnswers[`step${step}`] = choice;
             if (step < 3) {
@@ -1696,9 +1692,6 @@
             document.getElementById('quiz-step-indicator').innerText = 'Paso 1 de 3';
         },
 
-        // ============================================
-        // RESPIRACIÓN
-        // ============================================
         iniciarRespiración() {
             if (this.state.breathInterval) clearInterval(this.state.breathInterval);
             const circle = document.getElementById('breath-circle');
@@ -1713,9 +1706,6 @@
             }, 3500);
         },
 
-        // ============================================
-        // CITAS
-        // ============================================
         procesarCitaWhatsApp() {
             const terapeuta = document.getElementById('select-terapeuta').value;
             const fecha = document.getElementById('fecha-cita').value || 'Sin fecha';
@@ -1725,9 +1715,6 @@
             window.open(`https://wa.me/584140000000?text=${mensaje}`, '_blank');
         },
 
-        // ============================================
-        // ADMIN
-        // ============================================
         verificarAdminPin() {
             const pin = document.getElementById('admin-pin-input').value;
             if (pin === '7777') {
@@ -1747,9 +1734,6 @@
             this.switchView('view-home');
         },
 
-        // ============================================
-        // TOAST
-        // ============================================
         showToast(message, type = 'success') {
             const toast = document.getElementById('toast');
             toast.className = `toast toast-${type}`;
@@ -1773,7 +1757,7 @@
         App.state.user.name = localStorage.getItem('user_name') || '';
         App.state.user.email = localStorage.getItem('user_email') || '';
         App.state.user.role = localStorage.getItem('user_role') || 'user';
-        App.state.user.registerMethod = localStorage.getItem('register_method') || 'email';
+        App.state.user.registerMethod = localStorage.getItem('register_method') || 'google';
         App.state.user.telefono = localStorage.getItem('user_telefono') || '';
         App.state.user.fechaNac = localStorage.getItem('user_fecha_nac') || '';
         App.state.user.bio = localStorage.getItem('user_bio') || '';
@@ -1784,6 +1768,7 @@
         App.state.user.diasActivo = parseInt(localStorage.getItem('user_dias_activo')) || 0;
         App.state.user.profilePhoto = localStorage.getItem('profile_photo_data') || null;
         App.state.user.gallery = JSON.parse(localStorage.getItem('gallery_data') || '[]');
+        App.state.user.googleAvatar = localStorage.getItem('google_avatar') || null;
         App.state.legalAceptado = localStorage.getItem('legal_aceptado') === 'true';
 
         App.actualizarPerfilUI();
@@ -1792,7 +1777,7 @@
 
         if (App.state.isAuthenticated) App.switchView('view-home');
         App.selectPaymentMethod('pm_bdv');
-        console.log('🚀 Atrévete HealthTech App inicializada');
+        console.log('🚀 Atrévete HealthTech App con Google OAuth (simulado)');
     });
 
     window.App = App;
