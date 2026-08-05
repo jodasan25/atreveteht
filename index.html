@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Atrévete HealthTech · Con Google OAuth</title>
+  <title>Atrévete HealthTech · Botones Optimizados</title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -43,186 +43,150 @@
       box-shadow: inset 4px 4px 8px #e0deda, inset -4px -4px 8px #ffffff;
       border: 1px solid rgba(122, 138, 124, 0.2);
     }
-    .clay-btn-primary {
+
+    /* ===== BOTONES OPTIMIZADOS ===== */
+    .btn-primary {
       background: #E27D60;
       color: #FFFFFF;
       border-radius: 9999px;
-      box-shadow: 6px 6px 12px #c06a51, 
-                  -6px -6px 12px #ffffff, 
-                  inset 3px 3px 6px #ff906e, 
-                  inset -3px -3px 6px #c06a51;
+      box-shadow: 6px 6px 12px #c06a51, -6px -6px 12px #ffffff, inset 3px 3px 6px #ff906e, inset -3px -3px 6px #c06a51;
       transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      padding: 10px 24px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-width: 100px;
     }
-    .clay-btn-primary:hover {
+    .btn-primary:hover:not(:disabled) {
       transform: translateY(-2px);
       box-shadow: 8px 8px 16px #c06a51, -8px -8px 16px #ffffff;
     }
-    .clay-btn-primary:active {
+    .btn-primary:focus-visible {
+      outline: 2px solid #E27D60;
+      outline-offset: 2px;
+    }
+    .btn-primary:active:not(:disabled) {
       transform: translateY(1px) scale(0.97);
     }
-    .clay-btn-secondary {
+    .btn-primary:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    .btn-secondary {
       background: #F0B7A1;
       color: #7A8A7C;
       border-radius: 9999px;
-      box-shadow: 6px 6px 12px #cc9b89, 
-                  -6px -6px 12px #ffffff, 
-                  inset 3px 3px 6px #ffd3bd, 
-                  inset -3px -3px 6px #cc9b89;
+      box-shadow: 6px 6px 12px #cc9b89, -6px -6px 12px #ffffff, inset 3px 3px 6px #ffd3bd, inset -3px -3px 6px #cc9b89;
       transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-    .clay-btn-secondary:hover { transform: translateY(-2px); }
-
-    /* ===== ESTILOS PARA DASHBOARD ESPECIALISTA ===== */
-    .toggle-switch {
-      width: 44px;
-      height: 24px;
-      background: #d1cdc7;
-      border-radius: 9999px;
-      position: relative;
+      border: none;
       cursor: pointer;
-      transition: background 0.2s;
-      box-shadow: inset 2px 2px 4px #b8b4ae, inset -2px -2px 4px #ffffff;
+      font-weight: 600;
+      padding: 10px 24px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-width: 100px;
+    }
+    .btn-secondary:hover:not(:disabled) { transform: translateY(-2px); }
+    .btn-secondary:focus-visible { outline: 2px solid #E27D60; outline-offset: 2px; }
+    .btn-secondary:active:not(:disabled) { transform: translateY(1px) scale(0.97); }
+    .btn-secondary:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
+
+    .btn-google {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: white;
+      border: 1px solid #DADCE0;
+      border-radius: 9999px;
+      padding: 10px 24px;
+      font-weight: 500;
+      color: #3C4043;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      min-width: 100px;
+    }
+    .btn-google:hover:not(:disabled) { background: #F8F9FA; box-shadow: 0 2px 6px rgba(0,0,0,0.12); }
+    .btn-google:focus-visible { outline: 2px solid #E27D60; outline-offset: 2px; }
+    .btn-google:active:not(:disabled) { transform: scale(0.97); }
+    .btn-google:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .btn-google svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+    .btn-outline-danger {
+      background: transparent;
+      color: #E27D60;
+      border: 1.5px solid #E27D60;
+      border-radius: 9999px;
+      padding: 10px 24px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-width: 100px;
+    }
+    .btn-outline-danger:hover:not(:disabled) { background: #E27D60; color: white; }
+    .btn-outline-danger:focus-visible { outline: 2px solid #E27D60; outline-offset: 2px; }
+    .btn-outline-danger:active:not(:disabled) { transform: scale(0.97); }
+    .btn-outline-danger:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* Spinner */
+    .spinner {
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top: 2px solid #ffffff;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      animation: spin 0.8s linear infinite;
+      display: inline-block;
       flex-shrink: 0;
+    }
+    .spinner-dark {
+      border: 2px solid rgba(0,0,0,0.1);
+      border-top: 2px solid #7A8A7C;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* ===== RESTO DE ESTILOS ===== */
+    .toggle-switch {
+      width: 44px; height: 24px; background: #d1cdc7; border-radius: 9999px; position: relative; cursor: pointer; transition: background 0.2s; box-shadow: inset 2px 2px 4px #b8b4ae, inset -2px -2px 4px #ffffff; flex-shrink: 0;
     }
     .toggle-switch.active { background: #4CAF50; }
     .toggle-switch .toggle-knob {
-      width: 20px;
-      height: 20px;
-      background: white;
-      border-radius: 9999px;
-      position: absolute;
-      top: 2px;
-      left: 2px;
-      transition: transform 0.2s;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+      width: 20px; height: 20px; background: white; border-radius: 9999px; position: absolute; top: 2px; left: 2px; transition: transform 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.15);
     }
     .toggle-switch.active .toggle-knob { transform: translateX(20px); }
 
-    .badge-pill {
-      display: inline-block;
-      padding: 4px 12px;
-      border-radius: 9999px;
-      font-size: 10px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.3px;
-    }
+    .badge-pill { display: inline-block; padding: 4px 12px; border-radius: 9999px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px; }
     .badge-green { background: #E8F5E9; color: #2E7D32; }
     .badge-yellow { background: #FFF8E1; color: #F57F17; }
     .badge-terracota { background: #FBE9E7; color: #E27D60; }
 
-    .tab-item {
-      padding: 8px 16px;
-      border-radius: 9999px;
-      font-size: 13px;
-      font-weight: 600;
-      color: #7A8A7C;
-      cursor: pointer;
-      transition: all 0.15s ease;
-      background: transparent;
-      border: 1px solid transparent;
-    }
-    .tab-item.active {
-      background: #E27D60;
-      color: white;
-      border-color: #E27D60;
-      box-shadow: 4px 4px 8px #d1cdc7, -2px -2px 6px #ffffff;
-    }
+    .tab-item { padding: 8px 16px; border-radius: 9999px; font-size: 13px; font-weight: 600; color: #7A8A7C; cursor: pointer; transition: all 0.15s ease; background: transparent; border: 1px solid transparent; }
+    .tab-item.active { background: #E27D60; color: white; border-color: #E27D60; box-shadow: 4px 4px 8px #d1cdc7, -2px -2px 6px #ffffff; }
     .tab-item:hover:not(.active) { background: rgba(226,125,96,0.08); }
     .tab-content { display: none; animation: fadeIn 0.25s ease; }
     .tab-content.active { display: block; }
-    @keyframes fadeIn {
-      0% { opacity: 0; transform: translateY(6px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ===== OTROS ESTILOS EXISTENTES ===== */
-    .clay-btn-option {
-      background: #FFFFFF;
-      color: #7A8A7C;
-      border-radius: 18px;
-      border: 2px solid transparent;
-      box-shadow: 4px 4px 10px #e0deda, -4px -4px 10px #ffffff;
-      transition: all 0.2s ease;
-      text-align: left;
-      padding: 12px 16px;
-      cursor: pointer;
-    }
-    .clay-btn-option:hover { transform: translateY(-2px); border-color: rgba(226, 125, 96, 0.4); }
-    .clay-btn-pay {
-      background: #FFFFFF;
-      color: #7A8A7C;
-      border-radius: 16px;
-      border: 2px solid transparent;
-      box-shadow: 4px 4px 8px #e0deda, -4px -4px 8px #ffffff;
-      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-      cursor: pointer;
-    }
-    .clay-btn-pay:hover { transform: translateY(-2px); }
-    .clay-btn-pay.active-pay {
-      border-color: #E27D60;
-      background: #FFF8F6;
-      color: #E27D60;
-      box-shadow: inset 2px 2px 4px rgba(226, 125, 96, 0.15), inset -2px -2px 4px #ffffff;
-    }
-    .clay-nav {
-      background: rgba(253, 251, 247, 0.95);
-      backdrop-filter: blur(12px);
-      border-radius: 24px 24px 0 0;
-      box-shadow: 0 -8px 16px rgba(0,0,0,0.04), inset 0 2px 4px #ffffff;
-      padding: 8px 12px 12px 12px;
-    }
-    .nav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2px;
-      padding: 6px 10px;
-      border-radius: 16px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      min-width: 48px;
-      position: relative;
-    }
-    .nav-item:hover { background: rgba(226, 125, 96, 0.08); }
-    .nav-item.active { background: rgba(226, 125, 96, 0.15); }
-    .nav-item .nav-icon { font-size: 20px; line-height: 1; }
-    .nav-item .nav-label {
-      font-size: 9px;
-      font-weight: 600;
-      color: #7A8A7C;
-      transition: color 0.2s ease;
-    }
-    .nav-item.active .nav-label { color: #E27D60; }
-    .nav-item .nav-badge {
-      position: absolute;
-      top: 2px;
-      right: 4px;
-      background: #E27D60;
-      color: white;
-      font-size: 8px;
-      font-weight: bold;
-      padding: 1px 5px;
-      border-radius: 9999px;
-      min-width: 16px;
-      text-align: center;
-    }
+    @keyframes fadeIn { 0% { opacity: 0; transform: translateY(6px); } 100% { opacity: 1; transform: translateY(0); } }
 
     /* Toast */
     .toast {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 9999;
-      padding: 16px 24px;
-      border-radius: 16px;
-      color: white;
-      font-weight: bold;
-      font-size: 14px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-      transform: translateX(120%);
-      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-      max-width: 90%;
+      position: fixed; top: 20px; right: 20px; z-index: 9999; padding: 16px 24px; border-radius: 16px; color: white; font-weight: bold; font-size: 14px; box-shadow: 0 8px 24px rgba(0,0,0,0.2); transform: translateX(120%); transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); max-width: 90%;
     }
     .toast.show { transform: translateX(0); }
     .toast-success { background: #4CAF50; }
@@ -230,47 +194,12 @@
     .toast-info { background: #2196F3; }
     .toast-warning { background: #FF9800; }
 
-    .spinner {
-      border: 3px solid rgba(255,255,255,0.3);
-      border-top: 3px solid #ffffff;
-      border-radius: 50%;
-      width: 20px;
-      height: 20px;
-      animation: spin 0.8s linear infinite;
-      display: inline-block;
-      margin-right: 8px;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    .focus-visible:focus-visible { outline: 2px solid #E27D60; outline-offset: 2px; }
-
-    /* Modal Legal */
     .modal-overlay {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(8px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 10000;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; z-index: 10000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
     }
     .modal-overlay.active { opacity: 1; pointer-events: all; }
     .modal-content {
-      background: white;
-      border-radius: 32px;
-      padding: 32px;
-      max-width: 420px;
-      width: 92%;
-      transform: scale(0.9) translateY(20px);
-      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-      max-height: 90vh;
-      overflow-y: auto;
+      background: white; border-radius: 32px; padding: 32px; max-width: 420px; width: 92%; transform: scale(0.9) translateY(20px); transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); max-height: 90vh; overflow-y: auto;
     }
     .modal-overlay.active .modal-content { transform: scale(1) translateY(0); }
 
@@ -278,27 +207,11 @@
     .unverified-badge { display: inline-flex; align-items: center; gap: 6px; background: #FFF3E0; color: #E65100; padding: 4px 12px; border-radius: 9999px; font-size: 11px; font-weight: bold; }
 
     .header-profile-btn {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 14px 6px 6px;
-      border-radius: 9999px;
-      background: white;
-      border: 1px solid #E27D60/30;
-      box-shadow: 2px 2px 8px rgba(0,0,0,0.05);
-      transition: all 0.2s ease;
-      cursor: pointer;
+      display: flex; align-items: center; gap: 8px; padding: 6px 14px 6px 6px; border-radius: 9999px; background: white; border: 1px solid #E27D60/30; box-shadow: 2px 2px 8px rgba(0,0,0,0.05); transition: all 0.2s ease; cursor: pointer;
     }
     .header-profile-btn:hover { border-color: #E27D60; box-shadow: 4px 4px 12px rgba(0,0,0,0.1); transform: translateY(-1px); }
     .header-profile-avatar { width: 32px; height: 32px; border-radius: 9999px; background: #E27D60; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px; background-size: cover; background-position: center; }
     .header-profile-name { font-size: 12px; font-weight: 600; color: #7A8A7C; max-width: 80px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-
-    .header-action-btn { padding: 8px 16px; border-radius: 9999px; font-size: 12px; font-weight: 600; transition: all 0.2s ease; cursor: pointer; border: none; }
-    .header-action-btn:hover { transform: translateY(-1px); }
-    .btn-login { background: #E27D60; color: white; box-shadow: 3px 3px 8px rgba(226, 125, 96, 0.3); }
-    .btn-login:hover { box-shadow: 5px 5px 12px rgba(226, 125, 96, 0.4); }
-    .btn-register { background: transparent; color: #7A8A7C; border: 1.5px solid #7A8A7C; }
-    .btn-register:hover { background: #7A8A7C; color: white; }
 
     .profile-card { background: linear-gradient(135deg, #FFFFFF 0%, #F8F5F2 100%); }
     .profile-avatar-large { width: 100px; height: 100px; border-radius: 9999px; border: 4px solid white; box-shadow: 0 8px 24px rgba(226, 125, 96, 0.2); background-size: cover; background-position: center; }
@@ -306,16 +219,14 @@
     .profile-stat .number { font-size: 20px; font-weight: 700; color: #E27D60; }
     .profile-stat .label { font-size: 10px; color: #7A8A7C; font-weight: 500; }
 
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(30px) scale(0.95); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
-    }
-    .modal-legal-content { animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .gallery-item { position: relative; aspect-ratio: 1/1; border-radius: 16px; overflow: hidden; background: #f1ede8; border: 1px solid #e0deda; }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+    .gallery-item .remove-btn { position: absolute; top: 6px; right: 6px; background: rgba(239,68,68,0.9); color: white; border: none; border-radius: 9999px; width: 24px; height: 24px; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; opacity: 0; }
+    .gallery-item:hover .remove-btn { opacity: 1; }
 
     .role-selector { display: flex; gap: 10px; }
-    .role-option {
-      flex: 1; padding: 12px; border-radius: 16px; border: 2px solid #e5e0db; background: white; text-align: center; cursor: pointer; transition: all 0.2s ease;
-    }
+    .role-option { flex: 1; padding: 12px; border-radius: 16px; border: 2px solid #e5e0db; background: white; text-align: center; cursor: pointer; transition: all 0.2s ease; }
     .role-option:hover { border-color: #E27D60; }
     .role-option.selected { border-color: #E27D60; background: #FFF8F6; box-shadow: inset 0 0 0 2px #E27D60; }
     .role-option .role-icon { font-size: 24px; display: block; margin-bottom: 4px; }
@@ -323,24 +234,29 @@
     .role-option .role-desc { font-size: 9px; color: #7A8A7C/60; }
     .role-option.selected .role-name { color: #E27D60; }
 
+    /* Nav inferior */
+    .clay-nav {
+      background: rgba(253, 251, 247, 0.95); backdrop-filter: blur(12px); border-radius: 24px 24px 0 0; box-shadow: 0 -8px 16px rgba(0,0,0,0.04), inset 0 2px 4px #ffffff; padding: 8px 12px 12px 12px;
+    }
+    .nav-item {
+      display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 10px; border-radius: 16px; cursor: pointer; transition: all 0.2s ease; min-width: 48px; position: relative;
+    }
+    .nav-item:hover { background: rgba(226, 125, 96, 0.08); }
+    .nav-item.active { background: rgba(226, 125, 96, 0.15); }
+    .nav-item .nav-icon { font-size: 20px; line-height: 1; }
+    .nav-item .nav-label { font-size: 9px; font-weight: 600; color: #7A8A7C; transition: color 0.2s ease; }
+    .nav-item.active .nav-label { color: #E27D60; }
+    .nav-item .nav-badge { position: absolute; top: 2px; right: 4px; background: #E27D60; color: white; font-size: 8px; font-weight: bold; padding: 1px 5px; border-radius: 9999px; min-width: 16px; text-align: center; }
+
     /* Asistente */
     .assistant-toggle {
-      position: fixed; bottom: 100px; right: 20px; z-index: 999;
-      width: 56px; height: 56px; border-radius: 9999px; background: #E27D60;
-      color: white; border: none; box-shadow: 0 8px 24px rgba(226, 125, 96, 0.4);
-      cursor: pointer; transition: all 0.3s ease;
-      display: flex; align-items: center; justify-content: center; font-size: 24px;
+      position: fixed; bottom: 100px; right: 20px; z-index: 999; width: 56px; height: 56px; border-radius: 9999px; background: #E27D60; color: white; border: none; box-shadow: 0 8px 24px rgba(226, 125, 96, 0.4); cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; font-size: 24px;
     }
     .assistant-toggle:hover { transform: scale(1.05) translateY(-2px); box-shadow: 0 12px 32px rgba(226, 125, 96, 0.5); }
     .assistant-toggle.active { transform: rotate(90deg); }
 
     .assistant-chat {
-      position: fixed; bottom: 170px; right: 20px; z-index: 999;
-      width: 340px; max-width: calc(100vw - 40px); height: 420px;
-      background: white; border-radius: 24px; box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-      display: none; flex-direction: column; overflow: hidden;
-      border: 1px solid rgba(226, 125, 96, 0.1);
-      animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+      position: fixed; bottom: 170px; right: 20px; z-index: 999; width: 340px; max-width: calc(100vw - 40px); height: 420px; background: white; border-radius: 24px; box-shadow: 0 20px 60px rgba(0,0,0,0.15); display: none; flex-direction: column; overflow: hidden; border: 1px solid rgba(226, 125, 96, 0.1); animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
     }
     .assistant-chat.open { display: flex; }
     .assistant-header { background: #E27D60; color: white; padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
@@ -371,20 +287,16 @@
     .quick-actions button { padding: 4px 12px; border-radius: 9999px; border: 1px solid #e5e0db; background: white; font-size: 10px; color: #7A8A7C; cursor: pointer; transition: all 0.2s; font-weight: 500; }
     .quick-actions button:hover { border-color: #E27D60; color: #E27D60; background: #FFF8F6; }
 
-    .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-    .gallery-item { position: relative; aspect-ratio: 1/1; border-radius: 16px; overflow: hidden; background: #f1ede8; border: 1px solid #e0deda; }
-    .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
-    .gallery-item .remove-btn { position: absolute; top: 6px; right: 6px; background: rgba(239,68,68,0.9); color: white; border: none; border-radius: 9999px; width: 24px; height: 24px; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; opacity: 0; }
-    .gallery-item:hover .remove-btn { opacity: 1; }
-
-    /* Modal de autorización de Google */
-    .google-auth-modal .modal-content { max-width: 400px; }
-    .google-auth-modal .google-avatar { width: 72px; height: 72px; border-radius: 9999px; background: #E27D60; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: bold; color: white; margin: 0 auto; background-size: cover; background-position: center; }
-
     @media (max-width: 400px) {
       .assistant-chat { width: calc(100vw - 32px); height: 380px; right: 16px; bottom: 160px; }
       .assistant-toggle { width: 48px; height: 48px; font-size: 20px; bottom: 90px; right: 16px; }
     }
+
+    .clay-btn-option { background: #FFFFFF; color: #7A8A7C; border-radius: 18px; border: 2px solid transparent; box-shadow: 4px 4px 10px #e0deda, -4px -4px 10px #ffffff; transition: all 0.2s ease; text-align: left; padding: 12px 16px; cursor: pointer; }
+    .clay-btn-option:hover { transform: translateY(-2px); border-color: rgba(226, 125, 96, 0.4); }
+    .clay-btn-pay { background: #FFFFFF; color: #7A8A7C; border-radius: 16px; border: 2px solid transparent; box-shadow: 4px 4px 8px #e0deda, -4px -4px 8px #ffffff; transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1); cursor: pointer; }
+    .clay-btn-pay:hover { transform: translateY(-2px); }
+    .clay-btn-pay.active-pay { border-color: #E27D60; background: #FFF8F6; color: #E27D60; box-shadow: inset 2px 2px 4px rgba(226, 125, 96, 0.15), inset -2px -2px 4px #ffffff; }
   </style>
 </head>
 <body>
@@ -415,30 +327,28 @@
           <p>Este acuerdo se rige bajo las leyes de la República Bolivariana de Venezuela y cualquier disputa se someterá de manera exclusiva a los Tribunales Ordinarios competentes.</p>
         </div>
         <div class="pt-3 border-t border-gray-200 space-y-2">
-          <button onclick="App.aceptarLegalYContinuar()" class="w-full py-3.5 bg-[#E27D60] text-white font-bold rounded-2xl shadow-[4px_4px_8px_#d1cdc7,-4px_-4px_8px_#ffffff] hover:opacity-95 transition-all text-xs tracking-wide">Acepto Términos, Políticas y Acelero mi Ingreso</button>
+          <button onclick="App.aceptarLegalYContinuar()" class="btn-primary w-full">Acepto Términos, Políticas y Acelero mi Ingreso</button>
           <button onclick="App.cancelarLegal()" class="w-full py-2 text-[11px] text-gray-400 hover:text-gray-600 font-medium">Cancelar y Volver al Inicio</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ================= MODAL DE AUTENTICACIÓN GOOGLE (SIMULADO) ================= -->
+  <!-- ================= MODAL DE AUTENTICACIÓN GOOGLE ================= -->
   <div id="google-auth-modal" class="modal-overlay google-auth-modal">
     <div class="modal-content">
       <div class="text-center space-y-4">
         <div class="flex justify-center">
-          <div id="google-auth-avatar" class="google-avatar">G</div>
+          <div id="google-auth-avatar" class="w-20 h-20 rounded-full bg-[#E27D60] text-white flex items-center justify-center text-3xl font-bold bg-cover bg-center">G</div>
         </div>
         <h3 class="text-xl font-bold text-[#4A5D4E]">Autorizar acceso a Google</h3>
         <p class="text-sm text-[#7A8A7C]/70">Permite que Atrévete HealthTech acceda a tu perfil de Google para iniciar sesión.</p>
-        
         <div class="bg-stone-50 rounded-xl p-4 text-left text-sm text-[#7A8A7C] space-y-2">
           <p><span class="font-semibold">📧 Correo:</span> <span id="google-auth-email">cargando...</span></p>
           <p><span class="font-semibold">👤 Nombre:</span> <span id="google-auth-name">cargando...</span></p>
         </div>
-
         <div class="flex flex-col gap-3 pt-2">
-          <button onclick="App.confirmarGoogleAuth()" id="btn-confirmar-google" class="clay-btn-primary w-full py-3.5 text-sm font-bold flex items-center justify-center gap-2">
+          <button onclick="App.confirmarGoogleAuth()" id="btn-confirmar-google" class="btn-primary w-full">
             <span id="btn-google-text">✅ Continuar como <span id="btn-google-name">Usuario</span></span>
             <span id="btn-google-spinner" class="hidden"><span class="spinner"></span></span>
           </button>
@@ -455,25 +365,33 @@
         <img id="app-logo-img" src="atrevetehtlogo.png" alt="Atrévete HealthTech - Logotipo" class="h-16 w-auto object-contain">
       </div>
       <div id="header-auth-container" class="flex items-center gap-2">
-        <!-- No autenticado: botón "Iniciar sesión con Google" -->
+        <!-- No autenticado -->
         <div id="header-login-btns" class="flex items-center gap-2">
-          <button onclick="App.iniciarLoginGoogle()" class="inline-flex items-center justify-center px-5 py-2.5 bg-white border border-gray-300 rounded-xl shadow-sm hover:shadow-md transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-[#E27D60] focus:ring-offset-2">
-            <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <button onclick="App.iniciarLoginGoogle()" class="btn-google" id="btn-google-login">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
               <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
               <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
               <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
             </svg>
-            <span class="text-sm font-semibold text-[#4A5D4E]">Iniciar sesión con Google</span>
+            <span>Iniciar sesión con Google</span>
+            <span class="spinner spinner-dark hidden" id="btn-google-login-spinner"></span>
           </button>
         </div>
 
-        <!-- Autenticado: perfil -->
+        <!-- Autenticado -->
         <div id="header-profile-btn" class="hidden">
           <div onclick="App.irAPerfil()" class="header-profile-btn">
             <div id="header-avatar" class="header-profile-avatar">US</div>
             <span id="header-name" class="header-profile-name">Usuario</span>
           </div>
+          <!-- Botón Cerrar Sesión (estilo formulario POST simulado) -->
+          <form id="logout-form" onsubmit="event.preventDefault(); App.cerrarSesion();" class="inline">
+            <button type="submit" id="btn-logout-header" class="btn-outline-danger text-xs py-1.5 px-3">
+              <span id="logout-text">🚪 Salir</span>
+              <span id="logout-spinner" class="hidden"><span class="spinner"></span></span>
+            </button>
+          </form>
         </div>
       </div>
     </div>
@@ -518,8 +436,8 @@
       </div>
     </div>
     <div class="grid grid-cols-2 gap-3">
-      <button onclick="App.switchView('view-regulacion')" class="clay-btn-primary py-3.5 text-center font-bold text-xs focus-visible">🫁 Regulación Somática</button>
-      <button onclick="App.switchView('view-citas')" class="clay-btn-secondary py-3.5 text-center font-bold text-xs focus-visible">📅 Agendar Sesión</button>
+      <button onclick="App.switchView('view-regulacion')" class="btn-primary py-3.5 text-center text-xs">🫁 Regulación Somática</button>
+      <button onclick="App.switchView('view-citas')" class="btn-secondary py-3.5 text-center text-xs">📅 Agendar Sesión</button>
     </div>
     <section class="space-y-3">
       <div class="clay-card p-6 border-2 border-[#E27D60] bg-orange-50/20">
@@ -530,7 +448,7 @@
           <span>📍 Maracay, Venezuela</span>
           <span>📅 26 Sep, 2026</span>
         </div>
-        <button onclick="App.switchView('view-pagos')" class="clay-btn-primary w-full py-3 font-bold text-sm focus-visible">Reservar Mi Cupo ($120)</button>
+        <button onclick="App.switchView('view-pagos')" class="btn-primary w-full py-3 text-sm">Reservar Mi Cupo ($120)</button>
       </div>
     </section>
     <div class="text-center pt-1">
@@ -538,15 +456,15 @@
     </div>
   </main>
 
-  <!-- AUTENTICACIÓN (ya no se usa directamente, ahora el botón de Google está en el header) -->
+  <!-- AUTENTICACIÓN -->
   <main id="view-auth" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
     <div class="text-center space-y-1">
       <h2 id="auth-title" class="text-2xl font-bold text-[#7A8A7C]">Iniciar Sesión</h2>
       <p id="auth-subtitle" class="text-xs text-[#7A8A7C]/70">Accede a tu cuenta de Atrévete HealthTech</p>
     </div>
     <div class="flex p-1 bg-stone-200/60 rounded-2xl" role="tablist">
-      <button id="tab-login" onclick="App.switchAuthMode('login')" class="flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[#7A8A7C] shadow-sm transition focus-visible" role="tab" aria-selected="true">🔑 Iniciar Sesión</button>
-      <button id="tab-register" onclick="App.switchAuthMode('register')" class="flex-1 py-2.5 text-xs font-bold rounded-xl text-[#7A8A7C] transition focus-visible" role="tab" aria-selected="false">✨ Registrarse</button>
+      <button id="tab-login" onclick="App.switchAuthMode('login')" class="tab-item active" role="tab" aria-selected="true">🔑 Iniciar Sesión</button>
+      <button id="tab-register" onclick="App.switchAuthMode('register')" class="tab-item" role="tab" aria-selected="false">✨ Registrarse</button>
     </div>
     <form onsubmit="event.preventDefault(); App.procesarAuthEmail();" class="clay-card p-6 space-y-4" novalidate>
       <div id="field-nombre" class="hidden">
@@ -573,10 +491,10 @@
       <div id="link-forgot-container" class="text-right">
         <button type="button" onclick="App.switchView('view-recovery')" class="text-[11px] text-[#E27D60] font-semibold hover:underline focus-visible">¿Olvidaste tu contraseña?</button>
       </div>
-      <button type="submit" id="auth-submit-btn" class="clay-btn-primary w-full py-3.5 text-xs font-bold mt-2 focus-visible">Iniciar Sesión</button>
+      <button type="submit" id="auth-submit-btn" class="btn-primary w-full text-xs">Iniciar Sesión</button>
     </form>
     <p class="text-[10px] text-center text-[#7A8A7C]/70 mt-4">Al registrarte o agendar, aceptas nuestras <button onclick="App.switchView('view-privacidad')" class="underline font-semibold text-[#E27D60] focus-visible">Políticas de Privacidad y Términos Legalmente Vinculantes</button>.</p>
-    <button onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold focus-visible">Volver al Inicio</button>
+    <button onclick="App.switchView('view-home')" class="btn-secondary w-full py-3 text-xs">Volver al Inicio</button>
   </main>
 
   <!-- RECUPERACIÓN -->
@@ -584,12 +502,12 @@
     <div class="text-center space-y-1"><h2 class="text-2xl font-bold text-[#7A8A7C]">Recuperar Contraseña</h2><p class="text-xs text-[#7A8A7C]/70">Ingresa tu correo electrónico registrado y te enviaremos las instrucciones.</p></div>
     <form onsubmit="event.preventDefault(); App.procesarRecuperacion();" class="clay-card p-6 space-y-4">
       <div><label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="recovery-email">Correo Electrónico</label><input type="email" id="recovery-email" placeholder="correo@ejemplo.com" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible" required></div>
-      <button type="submit" class="clay-btn-primary w-full py-3.5 text-xs font-bold mt-2 focus-visible">Enviar Enlace de Recuperación</button>
+      <button type="submit" class="btn-primary w-full text-xs">Enviar Enlace de Recuperación</button>
     </form>
-    <button onclick="App.switchView('view-auth')" class="clay-btn-secondary w-full py-3 text-xs font-bold focus-visible">← Volver al Ingreso</button>
+    <button onclick="App.switchView('view-auth')" class="btn-secondary w-full py-3 text-xs">← Volver al Ingreso</button>
   </main>
 
-  <!-- PERFIL USUARIO CON EDITOR -->
+  <!-- PERFIL USUARIO -->
   <main id="view-perfil-usuario" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
     <div class="clay-card profile-card p-6 text-center space-y-4 relative overflow-hidden">
       <div class="absolute top-0 right-0 w-40 h-40 bg-[#E27D60]/5 rounded-full -translate-y-20 translate-x-20"></div>
@@ -624,7 +542,7 @@
       </div>
     </div>
 
-    <button onclick="App.mostrarEditarPerfil()" class="clay-btn-primary w-full py-3.5 text-sm font-bold flex items-center justify-center gap-2 focus-visible">✏️ Editar Perfil</button>
+    <button onclick="App.mostrarEditarPerfil()" class="btn-primary w-full py-3.5 text-sm">✏️ Editar Perfil</button>
 
     <div id="editar-perfil-form" class="clay-card p-5 space-y-4 hidden">
       <h4 class="font-bold text-sm text-[#4A5D4E] flex items-center gap-2">✏️ Editar Datos Personales</h4>
@@ -656,19 +574,25 @@
           <div class="text-xs text-slate-400 mt-1" id="gallery-counter">0 / 2 imágenes usadas</div>
         </div>
         <div class="flex gap-3 pt-2">
-          <button onclick="App.guardarEditarPerfil()" id="btn-save-profile" class="clay-btn-primary flex-1 py-3 text-xs font-bold flex items-center justify-center gap-2 focus-visible disabled:opacity-70 disabled:cursor-not-allowed">
+          <button onclick="App.guardarEditarPerfil()" id="btn-save-profile" class="btn-primary flex-1 text-xs">
             <span id="btn-save-text">💾 Guardar Cambios</span>
             <span id="btn-save-spinner" class="hidden"><span class="spinner"></span></span>
           </button>
-          <button onclick="App.cancelarEditarPerfil()" class="clay-btn-secondary flex-1 py-3 text-xs font-bold focus-visible">Cancelar</button>
+          <button onclick="App.cancelarEditarPerfil()" class="btn-secondary flex-1 text-xs">Cancelar</button>
         </div>
       </form>
     </div>
 
-    <button onclick="App.cerrarSesion()" class="w-full py-3.5 text-sm font-medium text-[#E27D60] border-2 border-[#E27D60]/30 rounded-full hover:bg-[#E27D60]/5 hover:border-[#E27D60] transition-all focus-visible">Cerrar Sesión</button>
+    <!-- Cerrar Sesión (también aquí) -->
+    <form id="logout-form-bottom" onsubmit="event.preventDefault(); App.cerrarSesion();" class="mt-4">
+      <button type="submit" id="btn-logout-bottom" class="btn-outline-danger w-full text-sm">
+        <span id="logout-bottom-text">🚪 Cerrar Sesión</span>
+        <span id="logout-bottom-spinner" class="hidden"><span class="spinner"></span></span>
+      </button>
+    </form>
   </main>
 
-  <!-- PERFIL ESPECIALISTA (Dashboard) -->
+  <!-- PERFIL ESPECIALISTA -->
   <main id="view-perfil-especialista" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
     <div class="clay-card clay-card-lg relative">
       <button class="absolute top-4 right-4 text-gray-green hover:text-terracota transition-colors text-xl" onclick="alert('Configuración de perfil')">⚙️</button>
@@ -698,7 +622,7 @@
         <p class="text-3xl font-bold text-eucalyptus mt-1">$1,250.00 <span class="text-base font-normal text-gray-green">USD</span></p>
         <p class="text-sm text-gray-green mt-0.5">Acumulado del mes: <span class="font-semibold text-eucalyptus">$3,480.00 USD</span></p>
         <div class="flex flex-wrap items-center gap-3 mt-4">
-          <button class="clay-btn clay-btn-primary text-sm px-6 py-2.5" onclick="alert('Modal de solicitud de retiro')">Solicitar Retiro de Fondos</button>
+          <button class="btn-primary text-sm px-6 py-2.5" onclick="alert('Modal de solicitud de retiro')">Solicitar Retiro de Fondos</button>
           <div class="flex items-center gap-2">
             <span class="badge-pill bg-white/80 text-eucalyptus border border-cream shadow-clay-sm text-[10px]">🇻🇪 Pago Móvil BDV</span>
             <span class="badge-pill bg-white/80 text-eucalyptus border border-cream shadow-clay-sm text-[10px]">🟡 Binance Pay</span>
@@ -733,9 +657,9 @@
                 <span class="badge-pill badge-green">Confirmada y Pagada</span>
               </div>
               <div class="flex flex-wrap gap-2 mt-3">
-                <button class="clay-btn text-xs py-1.5 px-4 text-terracota border-terracota/30" onclick="alert('Iniciar escáner cuántico')">🔬 Iniciar Escáner</button>
-                <button class="clay-btn text-xs py-1.5 px-4" onclick="alert('Ver ficha del paciente')">📄 Ver Ficha</button>
-                <button class="clay-btn text-xs py-1.5 px-4" onclick="alert('Reagendar cita')">🔄 Reagendar</button>
+                <button class="btn-primary text-xs py-1.5 px-4" onclick="alert('Iniciar escáner cuántico')">🔬 Iniciar Escáner</button>
+                <button class="btn-secondary text-xs py-1.5 px-4" onclick="alert('Ver ficha del paciente')">📄 Ver Ficha</button>
+                <button class="btn-secondary text-xs py-1.5 px-4" onclick="alert('Reagendar cita')">🔄 Reagendar</button>
               </div>
             </div>
           </div>
@@ -751,8 +675,8 @@
                 <span class="badge-pill badge-yellow">Pendiente por Confirmar</span>
               </div>
               <div class="flex flex-wrap gap-2 mt-3">
-                <button class="clay-btn text-xs py-1.5 px-4" onclick="alert('Confirmar cita')">✅ Confirmar</button>
-                <button class="clay-btn text-xs py-1.5 px-4" onclick="alert('Ver ficha del paciente')">📄 Ver Ficha</button>
+                <button class="btn-primary text-xs py-1.5 px-4" onclick="alert('Confirmar cita')">✅ Confirmar</button>
+                <button class="btn-secondary text-xs py-1.5 px-4" onclick="alert('Ver ficha del paciente')">📄 Ver Ficha</button>
               </div>
             </div>
           </div>
@@ -772,8 +696,8 @@
           <div class="flex justify-between items-center mt-3">
             <p class="text-sm font-semibold text-eucalyptus">Recaudación: <span class="text-terracota">$1,700.00 USD</span></p>
             <div class="flex gap-2">
-              <button class="clay-btn text-xs py-1.5 px-3" onclick="alert('Ver lista de asistentes')">👥 Ver Asistentes</button>
-              <button class="clay-btn text-xs py-1.5 px-3" onclick="alert('Validar ticket QR')">📱 Validar Ticket QR</button>
+              <button class="btn-secondary text-xs py-1.5 px-3" onclick="alert('Ver lista de asistentes')">👥 Ver Asistentes</button>
+              <button class="btn-primary text-xs py-1.5 px-3" onclick="alert('Validar ticket QR')">📱 Validar Ticket QR</button>
             </div>
           </div>
         </div>
@@ -814,10 +738,10 @@
       </div>
       <div id="datos-pago-box" class="bg-stone-100/90 p-4 rounded-2xl border border-stone-200/80 space-y-1.5 text-xs text-[#7A8A7C]"></div>
       <div id="container-ref-pago"><label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="input-ref-pago">Número de Referencia / Hash / Comprobante</label><input id="input-ref-pago" type="text" placeholder="Ej. #849204 o Hash de transferencia" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible"></div>
-      <button id="btn-enviar-pago" onclick="App.confirmarPagoMock()" class="clay-btn-primary w-full py-3.5 text-xs font-bold focus-visible">Reportar / Enviar Comprobante</button>
+      <button id="btn-enviar-pago" onclick="App.confirmarPagoMock()" class="btn-primary w-full text-xs">Reportar / Enviar Comprobante</button>
     </div>
     <p class="text-[10px] text-center text-[#7A8A7C]/70 mt-2">Al registrarte o agendar, aceptas nuestras <button onclick="App.switchView('view-privacidad')" class="underline font-semibold text-[#E27D60] focus-visible">Políticas de Privacidad y Términos Legalmente Vinculantes</button>.</p>
-    <button onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold focus-visible">Cancelar</button>
+    <button onclick="App.switchView('view-home')" class="btn-secondary w-full py-3 text-xs">Cancelar</button>
   </main>
 
   <!-- REGULACIÓN SOMÁTICA -->
@@ -833,22 +757,16 @@
           <button onclick="App.answerQuiz(1, 'calma')" class="clay-btn-option w-full text-xs focus-visible">🟢 <strong>Estable / En Calma:</strong> Quiero mantener mi balance y centrar mi mente.</button>
         </div>
       </div>
-      <div id="quiz-step-2" class="space-y-3 hidden">
-        <p class="text-xs font-bold text-[#7A8A7C]">2. ¿Dónde se concentra la mayor tensión física?</p>
-        <div class="space-y-2">
-          <button onclick="App.answerQuiz(2, 'pecho')" class="clay-btn-option w-full text-xs focus-visible">🫁 <strong>Pecho / Respiración:</strong> Siento opresión al inhalar o aire entrecortado.</button>
-          <button onclick="App.answerQuiz(2, 'cuello')" class="clay-btn-option w-full text-xs focus-visible">💆 <strong>Cuello / Mandíbula:</strong> Dientes apretados, hombros rígidos o cefalea.</button>
-          <button onclick="App.answerQuiz(2, 'estomago')" class="clay-btn-option w-full text-xs focus-visible">🫃 <strong>Estómago / Plexo:</strong> Sensación de nudo en el abdomen o digestión lenta.</button>
-        </div>
-      </div>
-      <div id="quiz-step-3" class="space-y-3 hidden">
-        <p class="text-xs font-bold text-[#7A8A7C]">3. ¿Qué necesita tu cuerpo en este instante?</p>
-        <div class="space-y-2">
-          <button onclick="App.answerQuiz(3, 'bajar')" class="clay-btn-option w-full text-xs focus-visible">⚓ <strong>Bajar revoluciones:</strong> Calmar la aceleración y soltar el control.</button>
-          <button onclick="App.answerQuiz(3, 'activar')" class="clay-btn-option w-full text-xs focus-visible">⚡ <strong>Salir del aletargamiento:</strong> Movilizar la energía estancada.</button>
-          <button onclick="App.answerQuiz(3, 'liberar')" class="clay-btn-option w-full text-xs focus-visible">🕊️ <strong>Descargar tensión:</strong> Soltar cargas emocionales del día.</button>
-        </div>
-      </div>
+      <div id="quiz-step-2" class="space-y-3 hidden"><p class="text-xs font-bold text-[#7A8A7C]">2. ¿Dónde se concentra la mayor tensión física?</p><div class="space-y-2">
+        <button onclick="App.answerQuiz(2, 'pecho')" class="clay-btn-option w-full text-xs focus-visible">🫁 <strong>Pecho / Respiración:</strong> Siento opresión al inhalar o aire entrecortado.</button>
+        <button onclick="App.answerQuiz(2, 'cuello')" class="clay-btn-option w-full text-xs focus-visible">💆 <strong>Cuello / Mandíbula:</strong> Dientes apretados, hombros rígidos o cefalea.</button>
+        <button onclick="App.answerQuiz(2, 'estomago')" class="clay-btn-option w-full text-xs focus-visible">🫃 <strong>Estómago / Plexo:</strong> Sensación de nudo en el abdomen o digestión lenta.</button>
+      </div></div>
+      <div id="quiz-step-3" class="space-y-3 hidden"><p class="text-xs font-bold text-[#7A8A7C]">3. ¿Qué necesita tu cuerpo en este instante?</p><div class="space-y-2">
+        <button onclick="App.answerQuiz(3, 'bajar')" class="clay-btn-option w-full text-xs focus-visible">⚓ <strong>Bajar revoluciones:</strong> Calmar la aceleración y soltar el control.</button>
+        <button onclick="App.answerQuiz(3, 'activar')" class="clay-btn-option w-full text-xs focus-visible">⚡ <strong>Salir del aletargamiento:</strong> Movilizar la energía estancada.</button>
+        <button onclick="App.answerQuiz(3, 'liberar')" class="clay-btn-option w-full text-xs focus-visible">🕊️ <strong>Descargar tensión:</strong> Soltar cargas emocionales del día.</button>
+      </div></div>
       <div id="quiz-result" class="space-y-4 hidden">
         <div class="p-3 rounded-2xl bg-orange-100/50 text-xs text-[#7A8A7C]"><p id="quiz-diagnosis-title" class="font-bold text-[#E27D60] text-sm mb-1"></p><p id="quiz-diagnosis-desc"></p></div>
         <div id="recommended-technique-card" class="p-4 rounded-2xl bg-white border border-[#E27D60]/30 shadow-sm space-y-2"></div>
@@ -860,7 +778,7 @@
       <p class="text-[11px] text-[#7A8A7C]/80">Acompasa tu ritmo respiratorio con el círculo para activar el nervio vago ventral.</p>
       <div class="flex flex-col items-center justify-center py-4"><div id="breath-circle" class="w-40 h-40 rounded-full bg-[#F0B7A1] flex items-center justify-center text-white font-bold text-base shadow-lg border-4 border-white transition-all duration-1000">Inhala...</div></div>
     </div>
-    <button onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold text-xs focus-visible">Volver al Inicio</button>
+    <button onclick="App.switchView('view-home')" class="btn-secondary w-full py-3 text-xs">Volver al Inicio</button>
   </main>
 
   <!-- CITAS -->
@@ -875,9 +793,9 @@
       </select>
       <div><label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="fecha-cita">Fecha de la Cita:</label><input type="date" id="fecha-cita" class="w-full p-3 rounded-xl border border-[#7A8A7C]/20 bg-white text-xs text-[#7A8A7C] focus-visible"></div>
       <div><label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="hora-cita">Hora de la Cita:</label><input type="time" id="hora-cita" class="w-full p-3 rounded-xl border border-[#7A8A7C]/20 bg-white text-xs text-[#7A8A7C] focus-visible"></div>
-      <button onclick="App.procesarCitaWhatsApp()" class="clay-btn-primary w-full py-3.5 font-bold text-xs focus-visible">Confirmar Cita vía WhatsApp</button>
+      <button onclick="App.procesarCitaWhatsApp()" class="btn-primary w-full text-xs">Confirmar Cita vía WhatsApp</button>
     </div>
-    <button onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold text-xs focus-visible">Volver</button>
+    <button onclick="App.switchView('view-home')" class="btn-secondary w-full py-3 text-xs">Volver</button>
   </main>
 
   <!-- PRIVACIDAD -->
@@ -888,7 +806,7 @@
       <section class="space-y-1.5"><h3 class="font-extrabold text-[#E27D60] text-sm">2. Confidencialidad Clínica y Somática</h3><p>Toda la información obtenida a través de nuestros test de regulación somática, interacciones y sesiones agendadas se rige bajo estricta confidencialidad profesional médico-paciente.</p></section>
       <section class="space-y-1.5"><h3 class="font-extrabold text-[#E27D60] text-sm">3. Condiciones de Reserva y Pagos</h3><p>Las reservas para campamentos, eventos presenciales o consultas quedan sujetas a la verificación exitosa de los comprobantes de pago reportados mediante nuestros canales oficiales.</p></section>
     </div>
-    <button onclick="App.switchView('view-auth')" class="clay-btn-primary w-full py-3.5 font-bold text-xs focus-visible">Entendido / Volver</button>
+    <button onclick="App.switchView('view-auth')" class="btn-primary w-full text-xs">Entendido / Volver</button>
   </main>
 
   <!-- ADMIN LOGIN -->
@@ -896,19 +814,19 @@
     <div class="text-center space-y-1"><h2 class="text-2xl font-bold text-[#E27D60]">Acceso Administrativo</h2><p class="text-xs text-[#7A8A7C]/70">Área restringida para gestión visual y banners.</p></div>
     <form onsubmit="event.preventDefault(); App.verificarAdminPin();" class="clay-card p-6 space-y-4">
       <div><label class="block text-xs font-bold text-[#7A8A7C] mb-1">Clave de Acceso</label><input type="password" id="admin-pin-input" placeholder="••••" class="w-full p-3 text-xs clay-input focus:outline-none text-center tracking-widest text-lg" required></div>
-      <button type="submit" class="clay-btn-primary w-full py-3.5 font-bold text-xs focus-visible">Desbloquear Panel</button>
+      <button type="submit" class="btn-primary w-full text-xs">Desbloquear Panel</button>
     </form>
-    <button onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 font-bold text-xs focus-visible">Volver al Inicio</button>
+    <button onclick="App.switchView('view-home')" class="btn-secondary w-full py-3 text-xs">Volver al Inicio</button>
   </main>
 
   <!-- ADMIN DASHBOARD -->
   <main id="view-admin-dashboard" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
-    <div class="flex justify-between items-center border-b border-stone-200 pb-3"><div><h2 class="text-xl font-bold text-[#7A8A7C]">Gestor Visual Admin</h2><p class="text-[10px] text-[#7A8A7C]/70">Actualiza logotipos e imágenes en tiempo real</p></div><button onclick="App.switchView('view-home')" class="px-3 py-1.5 bg-stone-200 text-[#7A8A7C] text-xs font-bold rounded-xl focus-visible">Salir</button></div>
+    <div class="flex justify-between items-center border-b border-stone-200 pb-3"><div><h2 class="text-xl font-bold text-[#7A8A7C]">Gestor Visual Admin</h2><p class="text-[10px] text-[#7A8A7C]/70">Actualiza logotipos e imágenes en tiempo real</p></div><button onclick="App.switchView('view-home')" class="btn-secondary text-xs py-1.5 px-4">Salir</button></div>
     <form onsubmit="event.preventDefault(); App.guardarCambiosAdmin();" class="clay-card p-5 space-y-4">
       <div><label class="block text-xs font-bold text-[#7A8A7C] mb-1">URL del Logotipo (Header)</label><input type="url" id="admin-logo-url" placeholder="https://ejemplo.com/logo.png" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible"></div>
       <div><label class="block text-xs font-bold text-[#7A8A7C] mb-1">URL de la Imagen Banner Principal (Home)</label><input type="url" id="admin-banner-img-url" placeholder="https://images.unsplash.com/..." class="w-full p-3 text-xs clay-input focus:outline-none focus-visible"></div>
       <div><label class="block text-xs font-bold text-[#7A8A7C] mb-1">Texto Destacado del Banner Principal</label><input type="text" id="admin-banner-text" placeholder="Ej. Calibra tu calma somática hoy" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible"></div>
-      <button type="submit" class="clay-btn-primary w-full py-3.5 font-bold text-xs mt-2 focus-visible">💾 Guardar y Aplicar Cambios</button>
+      <button type="submit" class="btn-primary w-full text-xs">💾 Guardar y Aplicar Cambios</button>
     </form>
     <div class="clay-card p-4 bg-orange-50/40 text-[11px] text-[#7A8A7C] space-y-1"><p class="font-bold text-[#E27D60]">💡 Nota de Seguridad:</p><p>Los cambios realizados se aplican de inmediato en la aplicación y se guardan en el almacenamiento local del navegador.</p></div>
   </main>
@@ -926,9 +844,9 @@
 
   <!-- ================= JAVASCRIPT ================= -->
   <script>
-    // ============================================
-    // APP - Objeto principal con Google OAuth simulado
-    // ============================================
+    // ============================================================
+    // APP - Objeto principal con botones optimizados
+    // ============================================================
     const App = {
         state: {
             authMode: 'login',
@@ -961,29 +879,55 @@
             googleAuthData: null
         },
 
-        // ============================================
+        // ============================================================
+        // UTILIDAD: Botón con estado de carga (simula Livewire)
+        // ============================================================
+        async withLoading(buttonId, action) {
+            const btn = document.getElementById(buttonId);
+            if (!btn || btn.disabled) return;
+            btn.disabled = true;
+            btn.classList.add('opacity-50', 'cursor-not-allowed');
+            // Buscar spinners internos
+            const textSpan = btn.querySelector('span:not(.spinner)');
+            const spinner = btn.querySelector('.spinner');
+            if (textSpan) textSpan.classList.add('hidden');
+            if (spinner) spinner.classList.remove('hidden');
+            try {
+                await action();
+            } catch (e) {
+                console.error(e);
+            } finally {
+                btn.disabled = false;
+                btn.classList.remove('opacity-50', 'cursor-not-allowed');
+                if (textSpan) textSpan.classList.remove('hidden');
+                if (spinner) spinner.classList.add('hidden');
+            }
+        },
+
+        // ============================================================
         // GOOGLE OAUTH SIMULADO
-        // ============================================
+        // ============================================================
         iniciarLoginGoogle() {
             if (!this.verificarLegal()) return;
-            
-            // Simular la obtención de datos de Google
-            // En una implementación real, esto redirigiría a Google
-            // Aquí simulamos el flujo con un modal
-            const googleUser = {
-                name: prompt('👤 Ingresa tu nombre de Google:', 'Ana María Rodríguez') || 'Usuario Google',
-                email: prompt('📧 Ingresa tu correo de Google:', 'usuario@gmail.com') || 'usuario@gmail.com',
-                avatar: 'https://ui-avatars.com/api/?name=' + encodeURIComponent(prompt('👤 Nombre para avatar:', 'Ana María Rodríguez') || 'Usuario') + '&background=E27D60&color=fff&size=128',
-                email_verified: true
-            };
-
-            if (!googleUser.email || !googleUser.email.includes('@')) {
-                this.showToast('⚠️ Por favor ingresa un correo válido', 'warning');
-                return;
-            }
-
-            this.state.googleAuthData = googleUser;
-            this.mostrarModalGoogle(googleUser);
+            const self = this;
+            this.withLoading('btn-google-login', async () => {
+                return new Promise((resolve) => {
+                    const googleUser = {
+                        name: prompt('👤 Ingresa tu nombre de Google:', 'Ana María Rodríguez') || 'Usuario Google',
+                        email: prompt('📧 Ingresa tu correo de Google:', 'usuario@gmail.com') || 'usuario@gmail.com',
+                        avatar: 'https://ui-avatars.com/api/?name=' + encodeURIComponent(prompt('👤 Nombre para avatar:', 'Ana María Rodríguez') || 'Usuario') + '&background=E27D60&color=fff&size=128',
+                        email_verified: true
+                    };
+                    if (!googleUser.email || !googleUser.email.includes('@')) {
+                        self.showToast('⚠️ Por favor ingresa un correo válido', 'warning');
+                        resolve();
+                        return;
+                    }
+                    self.state.googleAuthData = googleUser;
+                    self.mostrarModalGoogle(googleUser);
+                    resolve();
+                });
+            });
         },
 
         mostrarModalGoogle(userData) {
@@ -1011,47 +955,45 @@
         },
 
         confirmarGoogleAuth() {
-            const userData = this.state.googleAuthData;
-            if (!userData) return;
+            const self = this;
+            this.withLoading('btn-confirmar-google', async () => {
+                return new Promise((resolve) => {
+                    const userData = self.state.googleAuthData;
+                    if (!userData) { resolve(); return; }
+                    setTimeout(() => {
+                        const fechaRegistro = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' });
+                        localStorage.setItem('user_name', userData.name);
+                        localStorage.setItem('user_email', userData.email);
+                        localStorage.setItem('user_role', 'user');
+                        localStorage.setItem('register_method', 'google');
+                        localStorage.setItem('email_verified', 'true');
+                        localStorage.setItem('fecha_registro', fechaRegistro);
+                        if (userData.avatar) localStorage.setItem('google_avatar', userData.avatar);
 
-            const btnText = document.getElementById('btn-google-text');
-            const btnSpinner = document.getElementById('btn-google-spinner');
-            btnText.textContent = 'Registrando...';
-            btnSpinner.classList.remove('hidden');
-            document.getElementById('btn-confirmar-google').disabled = true;
+                        self.state.user = {
+                            ...self.state.user,
+                            name: userData.name,
+                            email: userData.email,
+                            role: 'user',
+                            registerMethod: 'google',
+                            emailVerified: true,
+                            fechaRegistro: fechaRegistro,
+                            googleAvatar: userData.avatar || null
+                        };
+                        self.state.isAuthenticated = true;
+                        self.state.googleAuthData = null;
 
-            setTimeout(() => {
-                const fechaRegistro = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' });
-                
-                localStorage.setItem('user_name', userData.name);
-                localStorage.setItem('user_email', userData.email);
-                localStorage.setItem('user_role', 'user');
-                localStorage.setItem('register_method', 'google');
-                localStorage.setItem('email_verified', 'true');
-                localStorage.setItem('fecha_registro', fechaRegistro);
-                if (userData.avatar) localStorage.setItem('google_avatar', userData.avatar);
-
-                this.state.user = {
-                    ...this.state.user,
-                    name: userData.name,
-                    email: userData.email,
-                    role: 'user',
-                    registerMethod: 'google',
-                    emailVerified: true,
-                    fechaRegistro: fechaRegistro,
-                    googleAvatar: userData.avatar || null
-                };
-                this.state.isAuthenticated = true;
-                this.state.googleAuthData = null;
-
-                document.getElementById('google-auth-modal').classList.remove('active');
-                this.cargarDatosPerfil();
-                this.actualizarPerfilUI();
-                this.actualizarHeader();
-                this.actualizarNav();
-                this.showToast('✅ ¡Bienvenido a Atrévete HealthTech!', 'success');
-                this.irAPerfil();
-            }, 1500);
+                        document.getElementById('google-auth-modal').classList.remove('active');
+                        self.cargarDatosPerfil();
+                        self.actualizarPerfilUI();
+                        self.actualizarHeader();
+                        self.actualizarNav();
+                        self.showToast('✅ ¡Bienvenido a Atrévete HealthTech!', 'success');
+                        self.irAPerfil();
+                        resolve();
+                    }, 1500);
+                });
+            });
         },
 
         cancelarGoogleAuth() {
@@ -1060,9 +1002,56 @@
             this.showToast('Autenticación con Google cancelada', 'info');
         },
 
-        // ============================================
+        // ============================================================
+        // CERRAR SESIÓN (SIMULA POST + CSRF)
+        // ============================================================
+        cerrarSesion() {
+            const self = this;
+            // Usamos el mismo mecanismo de carga para ambos botones de logout
+            const logoutBtn = document.getElementById('btn-logout-header') || document.getElementById('btn-logout-bottom');
+            if (logoutBtn) {
+                this.withLoading(logoutBtn.id, async () => {
+                    return new Promise((resolve) => {
+                        // Simula la destrucción de sesión (como Auth::logout())
+                        setTimeout(() => {
+                            // Invalidar sesión y regenerar token (simulado)
+                            localStorage.removeItem('user_name');
+                            localStorage.removeItem('user_email');
+                            localStorage.removeItem('user_role');
+                            localStorage.removeItem('register_method');
+                            localStorage.removeItem('user_telefono');
+                            localStorage.removeItem('user_fecha_nac');
+                            localStorage.removeItem('email_verified');
+                            localStorage.removeItem('fecha_registro');
+                            localStorage.removeItem('user_bio');
+                            localStorage.removeItem('google_avatar');
+                            // No borramos fotos de perfil ni galería para que persistan
+
+                            self.state.isAuthenticated = false;
+                            self.state.user = {
+                                name: '', email: '', role: 'user', registerMethod: 'google',
+                                telefono: '', fechaNac: '', bio: '', emailVerified: false,
+                                fechaRegistro: '', sesiones: 0, ejercicios: 0, diasActivo: 0,
+                                profilePhoto: null, gallery: [], googleAvatar: null
+                            };
+                            self.actualizarPerfilUI();
+                            self.actualizarHeader();
+                            self.actualizarNav();
+                            self.showToast('👋 Sesión cerrada exitosamente', 'info');
+                            self.switchView('view-home');
+                            resolve();
+                        }, 800);
+                    });
+                });
+            } else {
+                // Fallback si no se encuentra el botón
+                this.showToast('Error al cerrar sesión', 'error');
+            }
+        },
+
+        // ============================================================
         // ASISTENTE VIRTUAL (sin cambios)
-        // ============================================
+        // ============================================================
         toggleAssistant() {
             const chat = document.getElementById('assistant-chat');
             const toggle = document.getElementById('assistant-toggle');
@@ -1135,9 +1124,9 @@
             return '🤔 Gracias por tu mensaje. Estoy aquí para ayudarte con información sobre Atrévete HealthTech, citas, regulación somática, pagos o cualquier otra consulta.';
         },
 
-        // ============================================
+        // ============================================================
         // BARRERA LEGAL
-        // ============================================
+        // ============================================================
         verificarLegal() {
             if (this.state.legalAceptado) return true;
             document.getElementById('modal-legal-gate').classList.add('active');
@@ -1154,9 +1143,9 @@
             this.switchView('view-home');
         },
 
-        // ============================================
+        // ============================================================
         // NAVEGACIÓN
-        // ============================================
+        // ============================================================
         irAPerfil() {
             if (this.state.isAuthenticated) {
                 if (this.state.user.role === 'spec') {
@@ -1195,9 +1184,9 @@
             if (viewId === 'view-regulacion') this.iniciarRespiración();
         },
 
-        // ============================================
+        // ============================================================
         // DASHBOARD ESPECIALISTA
-        // ============================================
+        // ============================================================
         toggleDisponibilidad() {
             const toggle = document.getElementById('toggle-disponibilidad');
             toggle.classList.toggle('active');
@@ -1213,9 +1202,9 @@
             if (activeTab) activeTab.classList.add('active');
         },
 
-        // ============================================
+        // ============================================================
         // SELECTOR DE ROL
-        // ============================================
+        // ============================================================
         selectRole(role) {
             this.state.selectedRole = role;
             document.querySelectorAll('.role-option').forEach(el => el.classList.remove('selected'));
@@ -1223,9 +1212,9 @@
             else document.getElementById('role-spec').classList.add('selected');
         },
 
-        // ============================================
+        // ============================================================
         // AUTENTICACIÓN POR EMAIL (opcional)
-        // ============================================
+        // ============================================================
         switchAuthMode(mode) {
             this.state.authMode = mode;
             const tabLogin = document.getElementById('tab-login');
@@ -1237,46 +1226,57 @@
             const title = document.getElementById('auth-title');
             const subtitle = document.getElementById('auth-subtitle');
             if (mode === 'login') {
-                tabLogin.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[#7A8A7C] shadow-sm transition';
-                tabRegister.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl text-[#7A8A7C] transition';
+                tabLogin.className = 'tab-item active';
+                tabRegister.className = 'tab-item';
                 fieldNombre.classList.add('hidden'); fieldRol.classList.add('hidden');
                 linkForgot.classList.remove('hidden');
-                submitBtn.innerText = 'Iniciar Sesión';
+                submitBtn.textContent = 'Iniciar Sesión';
                 title.innerText = 'Iniciar Sesión';
                 subtitle.innerText = 'Accede a tu cuenta de Atrévete HealthTech';
             } else {
-                tabRegister.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl bg-white text-[#7A8A7C] shadow-sm transition';
-                tabLogin.className = 'flex-1 py-2.5 text-xs font-bold rounded-xl text-[#7A8A7C] transition';
+                tabRegister.className = 'tab-item active';
+                tabLogin.className = 'tab-item';
                 fieldNombre.classList.remove('hidden'); fieldRol.classList.remove('hidden');
                 linkForgot.classList.add('hidden');
-                submitBtn.innerText = 'Crear Mi Cuenta';
+                submitBtn.textContent = 'Crear Mi Cuenta';
                 title.innerText = 'Crea tu Cuenta';
                 subtitle.innerText = 'Únete a nuestra plataforma somática';
             }
         },
         procesarAuthEmail() {
-            const email = document.getElementById('input-email').value;
-            const password = document.getElementById('input-password').value;
-            const nombreInput = document.getElementById('input-nombre');
-            if (!email || !email.includes('@')) { document.getElementById('email-error').classList.remove('hidden'); return; }
-            document.getElementById('email-error').classList.add('hidden');
-            if (password.length < 6) { document.getElementById('password-error').classList.remove('hidden'); return; }
-            document.getElementById('password-error').classList.add('hidden');
-            let nombre = 'Usuario Atrévete';
-            if (this.state.authMode === 'register' && nombreInput && nombreInput.value.trim() !== '') nombre = nombreInput.value.trim();
-            else nombre = email.split('@')[0];
-            const role = this.state.authMode === 'register' ? this.state.selectedRole : (this.state.user.role || 'user');
-            const fechaRegistro = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' });
-            localStorage.setItem('user_name', nombre); localStorage.setItem('user_email', email);
-            localStorage.setItem('user_role', role); localStorage.setItem('register_method', 'email');
-            localStorage.setItem('email_verified', 'false'); localStorage.setItem('fecha_registro', fechaRegistro);
-            this.state.user = { ...this.state.user, name: nombre, email: email, role: role, registerMethod: 'email', emailVerified: false, fechaRegistro: fechaRegistro };
-            this.state.isAuthenticated = true;
-            this.cargarDatosPerfil();
-            this.actualizarPerfilUI(); this.actualizarHeader(); this.actualizarNav();
-            this.showToast('✅ ¡Bienvenido a Atrévete HealthTech!', 'success');
-            this.irAPerfil();
-            setTimeout(() => this.showToast('📧 Se ha enviado un correo de verificación a tu cuenta', 'info'), 2000);
+            const self = this;
+            this.withLoading('auth-submit-btn', async () => {
+                return new Promise((resolve) => {
+                    const email = document.getElementById('input-email').value;
+                    const password = document.getElementById('input-password').value;
+                    const nombreInput = document.getElementById('input-nombre');
+                    if (!email || !email.includes('@')) { document.getElementById('email-error').classList.remove('hidden'); resolve(); return; }
+                    document.getElementById('email-error').classList.add('hidden');
+                    if (password.length < 6) { document.getElementById('password-error').classList.remove('hidden'); resolve(); return; }
+                    document.getElementById('password-error').classList.add('hidden');
+                    let nombre = 'Usuario Atrévete';
+                    if (self.state.authMode === 'register' && nombreInput && nombreInput.value.trim() !== '') nombre = nombreInput.value.trim();
+                    else nombre = email.split('@')[0];
+                    const role = self.state.authMode === 'register' ? self.state.selectedRole : (self.state.user.role || 'user');
+                    const fechaRegistro = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' });
+                    localStorage.setItem('user_name', nombre);
+                    localStorage.setItem('user_email', email);
+                    localStorage.setItem('user_role', role);
+                    localStorage.setItem('register_method', 'email');
+                    localStorage.setItem('email_verified', 'false');
+                    localStorage.setItem('fecha_registro', fechaRegistro);
+                    self.state.user = { ...self.state.user, name: nombre, email: email, role: role, registerMethod: 'email', emailVerified: false, fechaRegistro: fechaRegistro };
+                    self.state.isAuthenticated = true;
+                    self.cargarDatosPerfil();
+                    self.actualizarPerfilUI();
+                    self.actualizarHeader();
+                    self.actualizarNav();
+                    self.showToast('✅ ¡Bienvenido a Atrévete HealthTech!', 'success');
+                    self.irAPerfil();
+                    setTimeout(() => self.showToast('📧 Se ha enviado un correo de verificación a tu cuenta', 'info'), 2000);
+                    resolve();
+                });
+            });
         },
         procesarRecuperacion() {
             const email = document.getElementById('recovery-email').value;
@@ -1284,35 +1284,17 @@
             this.showToast(`📧 Instrucciones enviadas a: ${email}`, 'success');
             this.switchView('view-auth');
         },
-        cerrarSesion() {
-            localStorage.removeItem('user_name'); localStorage.removeItem('user_email'); localStorage.removeItem('user_role');
-            localStorage.removeItem('register_method'); localStorage.removeItem('user_telefono'); localStorage.removeItem('user_fecha_nac');
-            localStorage.removeItem('email_verified'); localStorage.removeItem('fecha_registro');
-            localStorage.removeItem('user_bio');
-            localStorage.removeItem('google_avatar');
-            // No borramos las fotos al cerrar sesión
-            this.state.isAuthenticated = false;
-            this.state.user = { name: '', email: '', role: 'user', registerMethod: 'google', telefono: '', fechaNac: '', bio: '', emailVerified: false, fechaRegistro: '', sesiones: 0, ejercicios: 0, diasActivo: 0, profilePhoto: null, gallery: [], googleAvatar: null };
-            this.actualizarPerfilUI(); this.actualizarHeader(); this.actualizarNav();
-            this.showToast('👋 Sesión cerrada exitosamente', 'info');
-            this.switchView('view-home');
-        },
 
-        // ============================================
-        // PERFIL - CARGA DE DATOS
-        // ============================================
+        // ============================================================
+        // PERFIL - CARGA Y ACTUALIZACIÓN
+        // ============================================================
         cargarDatosPerfil() {
             this.state.user.bio = localStorage.getItem('user_bio') || '';
-            const photoData = localStorage.getItem('profile_photo_data');
-            this.state.user.profilePhoto = photoData || null;
-            const galleryData = localStorage.getItem('gallery_data');
-            this.state.user.gallery = galleryData ? JSON.parse(galleryData) : [];
+            this.state.user.profilePhoto = localStorage.getItem('profile_photo_data') || null;
+            this.state.user.gallery = JSON.parse(localStorage.getItem('gallery_data') || '[]');
             this.state.user.googleAvatar = localStorage.getItem('google_avatar') || null;
         },
 
-        // ============================================
-        // PERFIL - ACTUALIZAR UI
-        // ============================================
         actualizarPerfilUI() {
             const name = this.state.user.name || 'Invitado Atrévete';
             const email = this.state.user.email || 'correo@ejemplo.com';
@@ -1325,6 +1307,8 @@
             const sesiones = this.state.user.sesiones || 0;
             const ejercicios = this.state.user.ejercicios || 0;
             const diasActivo = this.state.user.diasActivo || 0;
+
+            const avatarUrl = this.state.user.googleAvatar || this.state.user.profilePhoto;
 
             const profileAvatar = document.getElementById('profile-avatar');
             const headerAvatar = document.getElementById('header-avatar');
@@ -1341,9 +1325,6 @@
             const profileSesiones = document.getElementById('profile-sesiones');
             const profileEjercicios = document.getElementById('profile-ejercicios');
             const profileDias = document.getElementById('profile-dias');
-
-            // Usar avatar de Google si existe
-            const avatarUrl = this.state.user.googleAvatar || this.state.user.profilePhoto;
 
             if (profileAvatar) {
                 if (avatarUrl) {
@@ -1369,8 +1350,6 @@
                     headerAvatar.textContent = initials;
                 }
             }
-
-            // Actualizar especialista también
             const specAvatar = document.getElementById('spec-avatar');
             const specName = document.getElementById('spec-name');
             if (specAvatar) {
@@ -1391,7 +1370,10 @@
             if (headerName) headerName.innerText = name;
             if (profileEmail) profileEmail.innerText = email;
             if (profileBioDisplay) profileBioDisplay.innerText = bio || 'Sin biografía aún';
-            if (profileRole) { const roleText = role === 'spec' ? '👩‍⚕️ Especialista' : '👤 Usuario'; profileRole.innerText = roleText; }
+            if (profileRole) {
+                const roleText = role === 'spec' ? '👩‍⚕️ Especialista' : '👤 Usuario';
+                profileRole.innerText = roleText;
+            }
             if (profileRegisterMethod) {
                 const method = this.state.user.registerMethod === 'google' ? 'Google 🟢' : 'Email 📧';
                 profileRegisterMethod.innerText = 'Registrado con: ' + method;
@@ -1407,7 +1389,6 @@
             if (profileEjercicios) profileEjercicios.innerText = ejercicios;
             if (profileDias) profileDias.innerText = diasActivo;
 
-            // Cargar datos en el formulario de edición
             const editNombre = document.getElementById('edit-nombre');
             const editEmail = document.getElementById('edit-email');
             const editBio = document.getElementById('edit-bio');
@@ -1426,9 +1407,9 @@
                     if (editProfilePlaceholder) editProfilePlaceholder.classList.remove('hidden');
                 }
             }
-
             this.renderGalleryEditor();
-            this.actualizarHeader(); this.actualizarNav();
+            this.actualizarHeader();
+            this.actualizarNav();
         },
 
         renderGalleryEditor() {
@@ -1479,47 +1460,46 @@
         },
 
         guardarEditarPerfil() {
-            const btnSave = document.getElementById('btn-save-profile');
-            const btnText = document.getElementById('btn-save-text');
-            const btnSpinner = document.getElementById('btn-save-spinner');
-            btnSave.disabled = true;
-            btnText.classList.add('hidden');
-            btnSpinner.classList.remove('hidden');
+            const self = this;
+            this.withLoading('btn-save-profile', async () => {
+                return new Promise((resolve) => {
+                    const nombre = document.getElementById('edit-nombre').value.trim();
+                    if (!nombre) { self.showToast('⚠️ El nombre es obligatorio', 'error'); resolve(); return; }
+                    const email = document.getElementById('edit-email').value.trim();
+                    if (!email || !email.includes('@')) { self.showToast('⚠️ Correo electrónico inválido', 'error'); resolve(); return; }
 
-            const nombre = document.getElementById('edit-nombre').value.trim();
-            if (!nombre) { this.showToast('⚠️ El nombre es obligatorio', 'error'); this.resetGuardarBtn(); return; }
-            const email = document.getElementById('edit-email').value.trim();
-            if (!email || !email.includes('@')) { this.showToast('⚠️ Correo electrónico inválido', 'error'); this.resetGuardarBtn(); return; }
+                    const bio = document.getElementById('edit-bio').value.trim();
+                    localStorage.setItem('user_name', nombre);
+                    localStorage.setItem('user_email', email);
+                    localStorage.setItem('user_bio', bio);
+                    self.state.user.name = nombre;
+                    self.state.user.email = email;
+                    self.state.user.bio = bio;
 
-            const bio = document.getElementById('edit-bio').value.trim();
-            localStorage.setItem('user_name', nombre);
-            localStorage.setItem('user_email', email);
-            localStorage.setItem('user_bio', bio);
-            this.state.user.name = nombre;
-            this.state.user.email = email;
-            this.state.user.bio = bio;
-
-            const profileInput = document.getElementById('edit-profile-photo');
-            if (profileInput.files && profileInput.files[0]) {
-                const file = profileInput.files[0];
-                if (file.size > 2 * 1024 * 1024) {
-                    this.showToast('⚠️ La foto de perfil no debe superar los 2MB', 'error');
-                    this.resetGuardarBtn();
-                    return;
-                }
-                this.resizeImage(file, 300, 300, 0.8, (resizedDataUrl) => {
-                    localStorage.setItem('profile_photo_data', resizedDataUrl);
-                    this.state.user.profilePhoto = resizedDataUrl;
-                    this.actualizarPerfilUI();
-                    this.showToast('✅ Foto de perfil actualizada', 'success');
-                    this.finalizarGuardadoPerfil();
+                    const profileInput = document.getElementById('edit-profile-photo');
+                    if (profileInput.files && profileInput.files[0]) {
+                        const file = profileInput.files[0];
+                        if (file.size > 2 * 1024 * 1024) {
+                            self.showToast('⚠️ La foto de perfil no debe superar los 2MB', 'error');
+                            resolve();
+                            return;
+                        }
+                        self.resizeImage(file, 300, 300, 0.8, (resizedDataUrl) => {
+                            localStorage.setItem('profile_photo_data', resizedDataUrl);
+                            self.state.user.profilePhoto = resizedDataUrl;
+                            self.actualizarPerfilUI();
+                            self.showToast('✅ Foto de perfil actualizada', 'success');
+                            self.finalizarGuardadoPerfil(resolve);
+                        });
+                    } else {
+                        self.finalizarGuardadoPerfil(resolve);
+                    }
                 });
-            } else {
-                this.finalizarGuardadoPerfil();
-            }
+            });
         },
 
-        finalizarGuardadoPerfil() {
+        finalizarGuardadoPerfil(resolve) {
+            const self = this;
             const galleryInput = document.getElementById('edit-gallery-photos');
             const currentGallery = this.state.user.gallery || [];
             let newImages = [];
@@ -1529,50 +1509,41 @@
                 const total = currentGallery.length + files.length;
                 if (total > 2) {
                     this.showToast('⚠️ Solo puedes tener hasta 2 imágenes en la galería', 'error');
-                    this.resetGuardarBtn();
+                    if (resolve) resolve();
                     return;
                 }
                 let processed = 0;
                 files.forEach((file, index) => {
                     if (file.size > 2 * 1024 * 1024) {
-                        this.showToast(`⚠️ La imagen ${index+1} supera los 2MB`, 'error');
-                        this.resetGuardarBtn();
+                        self.showToast(`⚠️ La imagen ${index+1} supera los 2MB`, 'error');
+                        if (resolve) resolve();
                         return;
                     }
-                    this.resizeImage(file, 800, 800, 0.8, (resizedDataUrl) => {
+                    self.resizeImage(file, 800, 800, 0.8, (resizedDataUrl) => {
                         newImages.push(resizedDataUrl);
                         processed++;
                         if (processed === files.length) {
                             const updatedGallery = [...currentGallery, ...newImages];
                             localStorage.setItem('gallery_data', JSON.stringify(updatedGallery));
-                            this.state.user.gallery = updatedGallery;
-                            this.renderGalleryEditor();
-                            this.actualizarPerfilUI();
-                            this.showToast('✅ Galería actualizada', 'success');
-                            this.finalizarGuardadoPerfilCompleto();
+                            self.state.user.gallery = updatedGallery;
+                            self.renderGalleryEditor();
+                            self.actualizarPerfilUI();
+                            self.showToast('✅ Galería actualizada', 'success');
+                            self.finalizarGuardadoPerfilCompleto(resolve);
                         }
                     });
                 });
-                if (files.length === 0) this.finalizarGuardadoPerfilCompleto();
+                if (files.length === 0) self.finalizarGuardadoPerfilCompleto(resolve);
             } else {
-                this.finalizarGuardadoPerfilCompleto();
+                self.finalizarGuardadoPerfilCompleto(resolve);
             }
         },
 
-        finalizarGuardadoPerfilCompleto() {
+        finalizarGuardadoPerfilCompleto(resolve) {
             this.actualizarPerfilUI();
             document.getElementById('editar-perfil-form').classList.add('hidden');
             this.showToast('✅ Perfil actualizado exitosamente', 'success');
-            this.resetGuardarBtn();
-        },
-
-        resetGuardarBtn() {
-            const btnSave = document.getElementById('btn-save-profile');
-            const btnText = document.getElementById('btn-save-text');
-            const btnSpinner = document.getElementById('btn-save-spinner');
-            btnSave.disabled = false;
-            btnText.classList.remove('hidden');
-            btnSpinner.classList.add('hidden');
+            if (resolve) resolve();
         },
 
         resizeImage(file, maxWidth, maxHeight, quality, callback) {
@@ -1605,7 +1576,8 @@
             const headerAvatar = document.getElementById('header-avatar');
 
             if (this.state.isAuthenticated && this.state.user.name) {
-                loginBtns.classList.add('hidden'); profileBtn.classList.remove('hidden');
+                loginBtns.classList.add('hidden');
+                profileBtn.classList.remove('hidden');
                 if (headerName) headerName.textContent = this.state.user.name;
                 if (headerAvatar) {
                     const avatarUrl = this.state.user.googleAvatar || this.state.user.profilePhoto;
@@ -1620,7 +1592,10 @@
                         headerAvatar.textContent = initials;
                     }
                 }
-            } else { loginBtns.classList.remove('hidden'); profileBtn.classList.add('hidden'); }
+            } else {
+                loginBtns.classList.remove('hidden');
+                profileBtn.classList.add('hidden');
+            }
         },
 
         actualizarNav() {
@@ -1635,9 +1610,9 @@
             }
         },
 
-        // ============================================
-        // PAGOS, QUIZ, RESPIRACIÓN, CITAS, ADMIN (sin cambios)
-        // ============================================
+        // ============================================================
+        // PAGOS, QUIZ, RESPIRACIÓN, CITAS, ADMIN
+        // ============================================================
         selectPaymentMethod(method) {
             this.state.selectedPayment = method;
             document.querySelectorAll('.clay-btn-pay').forEach(btn => btn.classList.remove('active-pay'));
@@ -1662,10 +1637,16 @@
             }
         },
         confirmarPagoMock() {
-            const ref = document.getElementById('input-ref-pago').value;
-            if (!ref) { this.showToast('⚠️ Por favor ingresa el número de referencia', 'error'); return; }
-            this.showToast('✅ ¡Comprobante reportado con éxito! En verificación.', 'success');
-            this.switchView('view-perfil-usuario');
+            const self = this;
+            this.withLoading('btn-enviar-pago', async () => {
+                return new Promise((resolve) => {
+                    const ref = document.getElementById('input-ref-pago').value;
+                    if (!ref) { self.showToast('⚠️ Por favor ingresa el número de referencia', 'error'); resolve(); return; }
+                    self.showToast('✅ ¡Comprobante reportado con éxito! En verificación.', 'success');
+                    self.switchView('view-perfil-usuario');
+                    resolve();
+                });
+            });
         },
 
         answerQuiz(step, choice) {
@@ -1707,33 +1688,57 @@
         },
 
         procesarCitaWhatsApp() {
-            const terapeuta = document.getElementById('select-terapeuta').value;
-            const fecha = document.getElementById('fecha-cita').value || 'Sin fecha';
-            const hora = document.getElementById('hora-cita').value || 'Sin hora';
-            if (!fecha || !hora) { this.showToast('⚠️ Por favor selecciona fecha y hora', 'error'); return; }
-            const mensaje = encodeURIComponent(`Hola, deseo confirmar mi cita con ${terapeuta}.\n📅 Fecha: ${fecha}\n🕐 Hora: ${hora}`);
-            window.open(`https://wa.me/584140000000?text=${mensaje}`, '_blank');
+            const self = this;
+            this.withLoading('select-terapeuta', async () => {
+                return new Promise((resolve) => {
+                    const terapeuta = document.getElementById('select-terapeuta').value;
+                    const fecha = document.getElementById('fecha-cita').value || 'Sin fecha';
+                    const hora = document.getElementById('hora-cita').value || 'Sin hora';
+                    if (!fecha || !hora) { self.showToast('⚠️ Por favor selecciona fecha y hora', 'error'); resolve(); return; }
+                    const mensaje = encodeURIComponent(`Hola, deseo confirmar mi cita con ${terapeuta}.\n📅 Fecha: ${fecha}\n🕐 Hora: ${hora}`);
+                    window.open(`https://wa.me/584140000000?text=${mensaje}`, '_blank');
+                    resolve();
+                });
+            });
         },
 
         verificarAdminPin() {
-            const pin = document.getElementById('admin-pin-input').value;
-            if (pin === '7777') {
-                document.getElementById('admin-pin-input').value = '';
-                this.switchView('view-admin-dashboard');
-                this.showToast('🔓 Panel administrativo desbloqueado', 'success');
-            } else this.showToast('❌ PIN incorrecto. Acceso denegado.', 'error');
-        },
-        guardarCambiosAdmin() {
-            const newLogo = document.getElementById('admin-logo-url').value;
-            const newBannerImg = document.getElementById('admin-banner-img-url').value;
-            const newBannerText = document.getElementById('admin-banner-text').value;
-            if (newLogo) { localStorage.setItem('app_logo', newLogo); document.getElementById('app-logo-img').src = newLogo; }
-            if (newBannerImg) { localStorage.setItem('app_banner_img', newBannerImg); document.getElementById('home-hero-banner').style.backgroundImage = `url('${newBannerImg}')`; }
-            if (newBannerText) { localStorage.setItem('app_banner_text', newBannerText); document.getElementById('home-banner-text').innerText = newBannerText; }
-            this.showToast('✅ ¡Imágenes y banners actualizados con éxito!', 'success');
-            this.switchView('view-home');
+            const self = this;
+            this.withLoading('admin-pin-input', async () => {
+                return new Promise((resolve) => {
+                    const pin = document.getElementById('admin-pin-input').value;
+                    if (pin === '7777') {
+                        document.getElementById('admin-pin-input').value = '';
+                        self.switchView('view-admin-dashboard');
+                        self.showToast('🔓 Panel administrativo desbloqueado', 'success');
+                    } else {
+                        self.showToast('❌ PIN incorrecto. Acceso denegado.', 'error');
+                    }
+                    resolve();
+                });
+            });
         },
 
+        guardarCambiosAdmin() {
+            const self = this;
+            this.withLoading('admin-logo-url', async () => {
+                return new Promise((resolve) => {
+                    const newLogo = document.getElementById('admin-logo-url').value;
+                    const newBannerImg = document.getElementById('admin-banner-img-url').value;
+                    const newBannerText = document.getElementById('admin-banner-text').value;
+                    if (newLogo) { localStorage.setItem('app_logo', newLogo); document.getElementById('app-logo-img').src = newLogo; }
+                    if (newBannerImg) { localStorage.setItem('app_banner_img', newBannerImg); document.getElementById('home-hero-banner').style.backgroundImage = `url('${newBannerImg}')`; }
+                    if (newBannerText) { localStorage.setItem('app_banner_text', newBannerText); document.getElementById('home-banner-text').innerText = newBannerText; }
+                    self.showToast('✅ ¡Imágenes y banners actualizados con éxito!', 'success');
+                    self.switchView('view-home');
+                    resolve();
+                });
+            });
+        },
+
+        // ============================================================
+        // TOAST
+        // ============================================================
         showToast(message, type = 'success') {
             const toast = document.getElementById('toast');
             toast.className = `toast toast-${type}`;
@@ -1743,9 +1748,9 @@
         }
     };
 
-    // ============================================
+    // ============================================================
     // INICIALIZACIÓN
-    // ============================================
+    // ============================================================
     document.addEventListener('DOMContentLoaded', function() {
         const savedLogo = localStorage.getItem('app_logo');
         const savedBannerImg = localStorage.getItem('app_banner_img');
@@ -1777,7 +1782,7 @@
 
         if (App.state.isAuthenticated) App.switchView('view-home');
         App.selectPaymentMethod('pm_bdv');
-        console.log('🚀 Atrévete HealthTech App con Google OAuth (simulado)');
+        console.log('🚀 Atrévete HealthTech App con botones optimizados');
     });
 
     window.App = App;
