@@ -371,6 +371,59 @@
     .quick-actions button { padding: 4px 12px; border-radius: 9999px; border: 1px solid #e5e0db; background: white; font-size: 10px; color: #7A8A7C; cursor: pointer; transition: all 0.2s; font-weight: 500; }
     .quick-actions button:hover { border-color: #E27D60; color: #E27D60; background: #FFF8F6; }
 
+    /* Estilos para la galería y carga de imágenes */
+    .file-input-wrapper {
+      position: relative;
+      overflow: hidden;
+      display: inline-block;
+    }
+    .file-input-wrapper input[type="file"] {
+      position: absolute;
+      left: 0;
+      top: 0;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    .gallery-item {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #f1ede8;
+      border: 1px solid #e0deda;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .gallery-item .remove-btn {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      background: rgba(239, 68, 68, 0.9);
+      color: white;
+      border: none;
+      border-radius: 9999px;
+      width: 24px;
+      height: 24px;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      opacity: 0;
+    }
+    .gallery-item:hover .remove-btn { opacity: 1; }
+
     @media (max-width: 400px) {
       .assistant-chat { width: calc(100vw - 32px); height: 380px; right: 16px; bottom: 160px; }
       .assistant-toggle { width: 48px; height: 48px; font-size: 20px; bottom: 90px; right: 16px; }
@@ -546,15 +599,19 @@
     <button onclick="App.switchView('view-auth')" class="clay-btn-secondary w-full py-3 text-xs font-bold focus-visible">← Volver al Ingreso</button>
   </main>
 
-  <!-- PERFIL USUARIO (PACIENTE) -->
+  <!-- ================= PERFIL USUARIO (PACIENTE) CON EDITOR AVANZADO ================= -->
   <main id="view-perfil-usuario" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
+    <!-- Tarjeta de presentación -->
     <div class="clay-card profile-card p-6 text-center space-y-4 relative overflow-hidden">
       <div class="absolute top-0 right-0 w-40 h-40 bg-[#E27D60]/5 rounded-full -translate-y-20 translate-x-20"></div>
       <div class="absolute bottom-0 left-0 w-32 h-32 bg-[#E27D60]/5 rounded-full translate-y-16 -translate-x-16"></div>
-      <div class="relative z-10"><div id="profile-avatar" class="profile-avatar-large mx-auto bg-[#E27D60] text-white flex items-center justify-center text-4xl font-bold">US</div></div>
       <div class="relative z-10">
-        <h3 id="profile-name" class="text-xl font-bold text-[#7A8A7C]">Usuario</h3>
+        <div id="profile-avatar" class="profile-avatar-large mx-auto bg-[#E27D60] text-white flex items-center justify-center text-4xl font-bold bg-cover bg-center" style="background-image: none;">US</div>
+      </div>
+      <div class="relative z-10">
+        <h3 id="profile-name" class="text-xl font-bold text-[#4A5D4E]">Usuario</h3>
         <p id="profile-email" class="text-sm text-[#7A8A7C]/70">correo@ejemplo.com</p>
+        <p id="profile-bio-display" class="text-xs text-[#7A8A7C]/60 mt-1 italic">Sin biografía aún</p>
         <div class="flex items-center justify-center gap-2 mt-1 flex-wrap">
           <span id="profile-role" class="text-xs bg-[#E27D60]/10 text-[#E27D60] font-semibold px-3 py-1 rounded-full">👤 Usuario</span>
           <span id="profile-register-method" class="text-[10px] text-[#7A8A7C]/40">Registrado con: Email</span>
@@ -562,33 +619,102 @@
         <div id="profile-verified-container" class="mt-2 flex justify-center"><span class="unverified-badge">⏳ Correo no verificado</span></div>
       </div>
     </div>
+
+    <!-- Estadísticas -->
     <div class="grid grid-cols-3 gap-3">
       <div class="profile-stat"><div class="number" id="profile-sesiones">0</div><div class="label">Sesiones</div></div>
       <div class="profile-stat"><div class="number" id="profile-ejercicios">0</div><div class="label">Ejercicios</div></div>
       <div class="profile-stat"><div class="number" id="profile-dias">0</div><div class="label">Días Activo</div></div>
     </div>
+
+    <!-- Información personal -->
     <div class="clay-card p-5 space-y-3">
-      <h4 class="font-bold text-sm text-[#7A8A7C] flex items-center gap-2">📋 Información Personal</h4>
+      <h4 class="font-bold text-sm text-[#4A5D4E] flex items-center gap-2">📋 Información Personal</h4>
       <div class="space-y-2 text-xs">
         <div class="flex justify-between py-2 border-b border-stone-100"><span class="text-[#7A8A7C]/60">📱 Teléfono</span><span id="profile-telefono-display" class="text-[#7A8A7C] font-medium">No registrado</span></div>
         <div class="flex justify-between py-2 border-b border-stone-100"><span class="text-[#7A8A7C]/60">🎂 Fecha de Nacimiento</span><span id="profile-fecha-display" class="text-[#7A8A7C] font-medium">No registrada</span></div>
         <div class="flex justify-between py-2"><span class="text-[#7A8A7C]/60">📅 Miembro desde</span><span id="profile-miembro-desde" class="text-[#7A8A7C] font-medium">Hoy</span></div>
       </div>
     </div>
-    <div class="space-y-3">
-      <button onclick="App.mostrarEditarPerfil()" class="clay-btn-primary w-full py-3.5 text-sm font-bold flex items-center justify-center gap-2 focus-visible">✏️ Editar Perfil</button>
-      <button onclick="App.cerrarSesion()" class="w-full py-3.5 text-sm font-medium text-[#E27D60] border-2 border-[#E27D60]/30 rounded-full hover:bg-[#E27D60]/5 hover:border-[#E27D60] transition-all focus-visible">Cerrar Sesión</button>
-    </div>
+
+    <!-- Botón para abrir el editor -->
+    <button onclick="App.mostrarEditarPerfil()" class="clay-btn-primary w-full py-3.5 text-sm font-bold flex items-center justify-center gap-2 focus-visible">
+      ✏️ Editar Perfil
+    </button>
+
+    <!-- ===== FORMULARIO DE EDICIÓN AVANZADO (Integración Livewire UI) ===== -->
     <div id="editar-perfil-form" class="clay-card p-5 space-y-4 hidden">
-      <h4 class="font-bold text-sm text-[#7A8A7C] flex items-center gap-2">✏️ Editar Datos Personales</h4>
-      <div><label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="edit-nombre">Nombre Completo</label><input type="text" id="edit-nombre" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible"></div>
-      <div><label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="edit-telefono">Teléfono</label><input type="tel" id="edit-telefono" placeholder="0414-1234567" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible"></div>
-      <div><label class="block text-xs font-bold text-[#7A8A7C] mb-1" for="edit-fecha-nac">Fecha de Nacimiento</label><input type="date" id="edit-fecha-nac" class="w-full p-3 text-xs clay-input focus:outline-none focus-visible"></div>
-      <div class="flex gap-3"><button onclick="App.guardarEditarPerfil()" class="clay-btn-primary flex-1 py-3 text-xs font-bold focus-visible">💾 Guardar Cambios</button><button onclick="App.cancelarEditarPerfil()" class="clay-btn-secondary flex-1 py-3 text-xs font-bold focus-visible">Cancelar</button></div>
+      <h4 class="font-bold text-sm text-[#4A5D4E] flex items-center gap-2">✏️ Editar Datos Personales</h4>
+      
+      <form id="profile-edit-form" onsubmit="return false;">
+        <!-- Nombre -->
+        <div>
+          <label class="block text-sm font-medium text-[#4A5D4E]">Nombre completo</label>
+          <input type="text" id="edit-nombre" class="mt-1 block w-full rounded-xl border-slate-300 shadow-sm focus:border-[#E27D60] focus:ring-[#E27D60] p-2.5 text-sm">
+        </div>
+
+        <!-- Email (solo lectura para simular unicidad) -->
+        <div>
+          <label class="block text-sm font-medium text-[#4A5D4E]">Correo electrónico</label>
+          <input type="email" id="edit-email" class="mt-1 block w-full rounded-xl border-slate-300 bg-slate-50 text-slate-500 p-2.5 text-sm" readonly>
+        </div>
+
+        <!-- Biografía / Especialidad -->
+        <div>
+          <label class="block text-sm font-medium text-[#4A5D4E]">Biografía / Especialidad</label>
+          <textarea id="edit-bio" rows="3" class="mt-1 block w-full rounded-xl border-slate-300 shadow-sm focus:border-[#E27D60] focus:ring-[#E27D60] p-2.5 text-sm"></textarea>
+        </div>
+
+        <!-- Foto de Perfil -->
+        <div>
+          <label class="block text-sm font-medium text-[#4A5D4E]">Foto de perfil</label>
+          <div class="mt-1 flex items-center gap-4 flex-wrap">
+            <!-- Vista previa actual -->
+            <div class="w-16 h-16 rounded-full overflow-hidden bg-slate-100 flex-shrink-0 border-2 border-slate-200">
+              <img id="edit-profile-preview" src="" alt="Foto actual" class="w-full h-full object-cover hidden">
+              <span id="edit-profile-placeholder" class="w-full h-full flex items-center justify-center text-slate-400 text-2xl">👤</span>
+            </div>
+            <!-- Input -->
+            <div class="flex-1 min-w-[150px]">
+              <input type="file" id="edit-profile-photo" accept="image/*" class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:bg-[#E27D60] file:text-white file:text-sm file:font-semibold hover:file:bg-[#d06d50] cursor-pointer">
+              <p class="text-[10px] text-slate-400 mt-1">Máx. 2MB · Se redimensionará a 300x300</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Galería de Referencia -->
+        <div>
+          <label class="block text-sm font-medium text-[#4A5D4E]">Galería de referencia (máx. 2 imágenes)</label>
+          <p class="text-xs text-slate-400">Sube fotos de tu consultorio, credenciales o resultados.</p>
+          
+          <!-- Contenedor de la galería -->
+          <div id="gallery-preview-container" class="gallery-grid mt-3">
+            <!-- Se llena dinámicamente -->
+          </div>
+
+          <div class="mt-3">
+            <input type="file" id="edit-gallery-photos" accept="image/*" multiple class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:bg-[#E27D60] file:text-white file:text-sm file:font-semibold hover:file:bg-[#d06d50] cursor-pointer">
+            <p class="text-[10px] text-slate-400 mt-1">Máx. 2MB por imagen · Se redimensionarán a 800x800</p>
+          </div>
+          <div class="text-xs text-slate-400 mt-1" id="gallery-counter">0 / 2 imágenes usadas</div>
+        </div>
+
+        <!-- Botones de acción -->
+        <div class="flex gap-3 pt-2">
+          <button onclick="App.guardarEditarPerfil()" id="btn-save-profile" class="clay-btn-primary flex-1 py-3 text-xs font-bold flex items-center justify-center gap-2 focus-visible disabled:opacity-70 disabled:cursor-not-allowed">
+            <span id="btn-save-text">💾 Guardar Cambios</span>
+            <span id="btn-save-spinner" class="hidden"><span class="spinner"></span></span>
+          </button>
+          <button onclick="App.cancelarEditarPerfil()" class="clay-btn-secondary flex-1 py-3 text-xs font-bold focus-visible">Cancelar</button>
+        </div>
+      </form>
     </div>
+
+    <!-- Cerrar sesión -->
+    <button onclick="App.cerrarSesion()" class="w-full py-3.5 text-sm font-medium text-[#E27D60] border-2 border-[#E27D60]/30 rounded-full hover:bg-[#E27D60]/5 hover:border-[#E27D60] transition-all focus-visible">Cerrar Sesión</button>
   </main>
 
-  <!-- ================= PERFIL Y DASHBOARD DEL ESPECIALISTA (NUEVO) ================= -->
+  <!-- ================= PERFIL Y DASHBOARD DEL ESPECIALISTA ================= -->
   <main id="view-perfil-especialista" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
     <!-- 1. ENCABEZADO DEL PERFIL -->
     <div class="clay-card clay-card-lg relative">
@@ -656,7 +782,6 @@
 
     <!-- 5. CONTENIDO TABS -->
     <div class="clay-card clay-card-lg p-4 space-y-4">
-      <!-- TAB 1: CITAS -->
       <div id="tab-citas" class="tab-content active space-y-4">
         <div class="bg-white/50 rounded-2xl p-4 shadow-clay-sm border border-white/60">
           <div class="flex items-start gap-3">
@@ -695,8 +820,6 @@
         </div>
         <p class="text-center text-xs text-gray-green">+10 citas más este mes</p>
       </div>
-
-      <!-- TAB 2: EVENTOS -->
       <div id="tab-eventos" class="tab-content space-y-4">
         <div class="bg-white/50 rounded-2xl p-4 shadow-clay-sm border border-white/60">
           <div class="flex items-center gap-3 mb-2">
@@ -717,8 +840,6 @@
         </div>
         <p class="text-center text-xs text-gray-green">Próximamente más eventos</p>
       </div>
-
-      <!-- TAB 3: RETIROS -->
       <div id="tab-retiros" class="tab-content space-y-3">
         <div class="bg-white/50 rounded-2xl p-3 shadow-clay-sm border border-white/60 flex justify-between items-center">
           <div><p class="text-sm font-semibold text-eucalyptus">Retiro #001</p><p class="text-xs text-gray-green">15 Jul 2026 · $450.00 USD</p></div>
@@ -882,11 +1003,14 @@
                 registerMethod: localStorage.getItem('register_method') || 'email',
                 telefono: localStorage.getItem('user_telefono') || '',
                 fechaNac: localStorage.getItem('user_fecha_nac') || '',
+                bio: localStorage.getItem('user_bio') || '',
                 emailVerified: localStorage.getItem('email_verified') === 'true',
                 fechaRegistro: localStorage.getItem('fecha_registro') || new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' }),
                 sesiones: parseInt(localStorage.getItem('user_sesiones')) || 0,
                 ejercicios: parseInt(localStorage.getItem('user_ejercicios')) || 0,
-                diasActivo: parseInt(localStorage.getItem('user_dias_activo')) || 0
+                diasActivo: parseInt(localStorage.getItem('user_dias_activo')) || 0,
+                profilePhoto: localStorage.getItem('profile_photo_data') || null,
+                gallery: JSON.parse(localStorage.getItem('gallery_data') || '[]')
             },
             isAuthenticated: !!localStorage.getItem('user_email'),
             legalAceptado: localStorage.getItem('legal_aceptado') === 'true',
@@ -1108,6 +1232,7 @@
             localStorage.setItem('email_verified', 'false'); localStorage.setItem('fecha_registro', fechaRegistro);
             this.state.user = { ...this.state.user, name: nombre, email: email, role: role, registerMethod: 'email', emailVerified: false, fechaRegistro: fechaRegistro };
             this.state.isAuthenticated = true;
+            this.cargarDatosPerfil(); // Cargar datos de perfil (bio, fotos)
             this.actualizarPerfilUI(); this.actualizarHeader(); this.actualizarNav();
             this.showToast('✅ ¡Bienvenido a Atrévete HealthTech!', 'success');
             this.irAPerfil();
@@ -1123,45 +1248,35 @@
             localStorage.removeItem('user_name'); localStorage.removeItem('user_email'); localStorage.removeItem('user_role');
             localStorage.removeItem('register_method'); localStorage.removeItem('user_telefono'); localStorage.removeItem('user_fecha_nac');
             localStorage.removeItem('email_verified'); localStorage.removeItem('fecha_registro');
+            localStorage.removeItem('user_bio');
+            // No borramos las fotos al cerrar sesión para que persistan si vuelve a entrar, pero limpiamos estado.
             this.state.isAuthenticated = false;
-            this.state.user = { name: '', email: '', role: 'user', registerMethod: 'email', telefono: '', fechaNac: '', emailVerified: false, fechaRegistro: '', sesiones: 0, ejercicios: 0, diasActivo: 0 };
+            this.state.user = { name: '', email: '', role: 'user', registerMethod: 'email', telefono: '', fechaNac: '', bio: '', emailVerified: false, fechaRegistro: '', sesiones: 0, ejercicios: 0, diasActivo: 0, profilePhoto: null, gallery: [] };
             this.actualizarPerfilUI(); this.actualizarHeader(); this.actualizarNav();
             this.showToast('👋 Sesión cerrada exitosamente', 'info');
             this.switchView('view-home');
         },
 
         // ============================================
-        // ACTUALIZAR UI
+        // PERFIL - CARGA DE DATOS
         // ============================================
-        actualizarHeader() {
-            const loginBtns = document.getElementById('header-login-btns');
-            const profileBtn = document.getElementById('header-profile-btn');
-            const headerName = document.getElementById('header-name');
-            const headerAvatar = document.getElementById('header-avatar');
-            if (this.state.isAuthenticated && this.state.user.name) {
-                loginBtns.classList.add('hidden'); profileBtn.classList.remove('hidden');
-                if (headerName) headerName.textContent = this.state.user.name;
-                if (headerAvatar) {
-                    const initials = this.state.user.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'US';
-                    headerAvatar.textContent = initials;
-                }
-            } else { loginBtns.classList.remove('hidden'); profileBtn.classList.add('hidden'); }
+        cargarDatosPerfil() {
+            // Cargar bio y fotos desde localStorage
+            this.state.user.bio = localStorage.getItem('user_bio') || '';
+            const photoData = localStorage.getItem('profile_photo_data');
+            this.state.user.profilePhoto = photoData || null;
+            const galleryData = localStorage.getItem('gallery_data');
+            this.state.user.gallery = galleryData ? JSON.parse(galleryData) : [];
         },
-        actualizarNav() {
-            const perfilIcon = document.getElementById('nav-perfil-icon');
-            const perfilLabel = document.getElementById('nav-perfil-label');
-            if (this.state.isAuthenticated) {
-                if (perfilIcon) perfilIcon.textContent = '👤';
-                if (perfilLabel) perfilLabel.textContent = 'Perfil';
-            } else {
-                if (perfilIcon) perfilIcon.textContent = '🔑';
-                if (perfilLabel) perfilLabel.textContent = 'Login';
-            }
-        },
+
+        // ============================================
+        // PERFIL - ACTUALIZAR UI
+        // ============================================
         actualizarPerfilUI() {
             const name = this.state.user.name || 'Invitado Atrévete';
             const email = this.state.user.email || 'correo@ejemplo.com';
             const role = this.state.user.role || 'user';
+            const bio = this.state.user.bio || '';
             const emailVerified = this.state.user.emailVerified || false;
             const telefono = this.state.user.telefono || 'No registrado';
             const fechaNac = this.state.user.fechaNac || 'No registrada';
@@ -1170,10 +1285,13 @@
             const ejercicios = this.state.user.ejercicios || 0;
             const diasActivo = this.state.user.diasActivo || 0;
 
-            // Actualizar perfil de usuario normal
+            // Avatar principal
+            const profileAvatar = document.getElementById('profile-avatar');
+            const headerAvatar = document.getElementById('header-avatar');
+            const headerName = document.getElementById('header-name');
             const profileName = document.getElementById('profile-name');
             const profileEmail = document.getElementById('profile-email');
-            const profileAvatar = document.getElementById('profile-avatar');
+            const profileBioDisplay = document.getElementById('profile-bio-display');
             const profileRole = document.getElementById('profile-role');
             const profileRegisterMethod = document.getElementById('profile-register-method');
             const profileVerifiedContainer = document.getElementById('profile-verified-container');
@@ -1184,8 +1302,36 @@
             const profileEjercicios = document.getElementById('profile-ejercicios');
             const profileDias = document.getElementById('profile-dias');
 
+            // Actualizar foto de perfil
+            if (profileAvatar) {
+                if (this.state.user.profilePhoto) {
+                    profileAvatar.style.backgroundImage = `url('${this.state.user.profilePhoto}')`;
+                    profileAvatar.style.backgroundSize = 'cover';
+                    profileAvatar.style.backgroundPosition = 'center';
+                    profileAvatar.textContent = '';
+                } else {
+                    profileAvatar.style.backgroundImage = 'none';
+                    const initials = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'AT';
+                    profileAvatar.textContent = initials;
+                }
+            }
+            if (headerAvatar) {
+                if (this.state.user.profilePhoto) {
+                    headerAvatar.style.backgroundImage = `url('${this.state.user.profilePhoto}')`;
+                    headerAvatar.style.backgroundSize = 'cover';
+                    headerAvatar.style.backgroundPosition = 'center';
+                    headerAvatar.textContent = '';
+                } else {
+                    headerAvatar.style.backgroundImage = 'none';
+                    const initials = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'US';
+                    headerAvatar.textContent = initials;
+                }
+            }
+
             if (profileName) profileName.innerText = name;
+            if (headerName) headerName.innerText = name;
             if (profileEmail) profileEmail.innerText = email;
+            if (profileBioDisplay) profileBioDisplay.innerText = bio || 'Sin biografía aún';
             if (profileRole) { const roleText = role === 'spec' ? '👩‍⚕️ Especialista' : '👤 Usuario'; profileRole.innerText = roleText; }
             if (profileRegisterMethod) profileRegisterMethod.innerText = 'Registrado con: Email 📧';
             if (profileVerifiedContainer) {
@@ -1198,42 +1344,296 @@
             if (profileSesiones) profileSesiones.innerText = sesiones;
             if (profileEjercicios) profileEjercicios.innerText = ejercicios;
             if (profileDias) profileDias.innerText = diasActivo;
-            if (profileAvatar) {
-                profileAvatar.style.backgroundImage = 'none';
-                const initials = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'AT';
-                profileAvatar.textContent = initials;
-            }
+
+            // Cargar datos en el formulario de edición (si existe)
             const editNombre = document.getElementById('edit-nombre');
-            const editTelefono = document.getElementById('edit-telefono');
-            const editFechaNac = document.getElementById('edit-fecha-nac');
+            const editEmail = document.getElementById('edit-email');
+            const editBio = document.getElementById('edit-bio');
+            const editProfilePreview = document.getElementById('edit-profile-preview');
+            const editProfilePlaceholder = document.getElementById('edit-profile-placeholder');
             if (editNombre) editNombre.value = name;
-            if (editTelefono) editTelefono.value = this.state.user.telefono || '';
-            if (editFechaNac) editFechaNac.value = this.state.user.fechaNac || '';
+            if (editEmail) editEmail.value = email;
+            if (editBio) editBio.value = this.state.user.bio || '';
+            if (editProfilePreview) {
+                if (this.state.user.profilePhoto) {
+                    editProfilePreview.src = this.state.user.profilePhoto;
+                    editProfilePreview.classList.remove('hidden');
+                    if (editProfilePlaceholder) editProfilePlaceholder.classList.add('hidden');
+                } else {
+                    editProfilePreview.classList.add('hidden');
+                    if (editProfilePlaceholder) editProfilePlaceholder.classList.remove('hidden');
+                }
+            }
+
+            // Cargar galería en el editor
+            this.renderGalleryEditor();
+
             this.actualizarHeader(); this.actualizarNav();
         },
 
         // ============================================
-        // EDITAR PERFIL (Usuario Normal)
+        // EDITOR DE PERFIL - GALERÍA
+        // ============================================
+        renderGalleryEditor() {
+            const container = document.getElementById('gallery-preview-container');
+            const counter = document.getElementById('gallery-counter');
+            if (!container) return;
+
+            const gallery = this.state.user.gallery || [];
+            container.innerHTML = '';
+            
+            gallery.forEach((imgData, index) => {
+                const div = document.createElement('div');
+                div.className = 'gallery-item';
+                div.innerHTML = `
+                    <img src="${imgData}" alt="Galería ${index+1}">
+                    <button class="remove-btn" onclick="App.removeGalleryImage(${index})">✕</button>
+                `;
+                container.appendChild(div);
+            });
+
+            if (counter) {
+                counter.textContent = `${gallery.length} / 2 imágenes usadas`;
+            }
+        },
+
+        removeGalleryImage(index) {
+            const gallery = this.state.user.gallery || [];
+            if (index >= 0 && index < gallery.length) {
+                gallery.splice(index, 1);
+                this.state.user.gallery = gallery;
+                localStorage.setItem('gallery_data', JSON.stringify(gallery));
+                this.renderGalleryEditor();
+                this.showToast('Imagen eliminada de la galería', 'info');
+            }
+        },
+
+        // ============================================
+        // EDITAR PERFIL - MOSTRAR/OCULTAR
         // ============================================
         mostrarEditarPerfil() {
             const form = document.getElementById('editar-perfil-form');
             if (form) {
                 form.classList.remove('hidden');
-                document.getElementById('edit-nombre').value = this.state.user.name || '';
-                document.getElementById('edit-telefono').value = this.state.user.telefono || '';
-                document.getElementById('edit-fecha-nac').value = this.state.user.fechaNac || '';
+                // Cargar datos actuales en el formulario
+                const editNombre = document.getElementById('edit-nombre');
+                const editEmail = document.getElementById('edit-email');
+                const editBio = document.getElementById('edit-bio');
+                if (editNombre) editNombre.value = this.state.user.name || '';
+                if (editEmail) editEmail.value = this.state.user.email || '';
+                if (editBio) editBio.value = this.state.user.bio || '';
+                this.renderGalleryEditor();
+                // Resetear input de archivos
+                document.getElementById('edit-profile-photo').value = '';
+                document.getElementById('edit-gallery-photos').value = '';
             }
         },
-        cancelarEditarPerfil() { const form = document.getElementById('editar-perfil-form'); if (form) form.classList.add('hidden'); },
+
+        cancelarEditarPerfil() {
+            const form = document.getElementById('editar-perfil-form');
+            if (form) form.classList.add('hidden');
+        },
+
+        // ============================================
+        // GUARDAR PERFIL (CON REDIMENSIONAMIENTO Y VALIDACIÓN)
+        // ============================================
         guardarEditarPerfil() {
+            const btnSave = document.getElementById('btn-save-profile');
+            const btnText = document.getElementById('btn-save-text');
+            const btnSpinner = document.getElementById('btn-save-spinner');
+            
+            // Estado de carga
+            btnSave.disabled = true;
+            btnText.classList.add('hidden');
+            btnSpinner.classList.remove('hidden');
+
+            // Validar nombre
             const nombre = document.getElementById('edit-nombre').value.trim();
-            const telefono = document.getElementById('edit-telefono').value.trim();
-            const fechaNac = document.getElementById('edit-fecha-nac').value;
-            if (!nombre) { this.showToast('⚠️ El nombre es obligatorio', 'error'); return; }
-            localStorage.setItem('user_name', nombre); localStorage.setItem('user_telefono', telefono); localStorage.setItem('user_fecha_nac', fechaNac);
-            this.state.user.name = nombre; this.state.user.telefono = telefono; this.state.user.fechaNac = fechaNac;
+            if (!nombre) {
+                this.showToast('⚠️ El nombre es obligatorio', 'error');
+                btnSave.disabled = false;
+                btnText.classList.remove('hidden');
+                btnSpinner.classList.add('hidden');
+                return;
+            }
+
+            // Validar email
+            const email = document.getElementById('edit-email').value.trim();
+            if (!email || !email.includes('@')) {
+                this.showToast('⚠️ Correo electrónico inválido', 'error');
+                btnSave.disabled = false;
+                btnText.classList.remove('hidden');
+                btnSpinner.classList.add('hidden');
+                return;
+            }
+
+            // Guardar datos de texto
+            const bio = document.getElementById('edit-bio').value.trim();
+            localStorage.setItem('user_name', nombre);
+            localStorage.setItem('user_email', email);
+            localStorage.setItem('user_bio', bio);
+            
+            this.state.user.name = nombre;
+            this.state.user.email = email;
+            this.state.user.bio = bio;
+
+            // Procesar foto de perfil si se subió
+            const profileInput = document.getElementById('edit-profile-photo');
+            if (profileInput.files && profileInput.files[0]) {
+                const file = profileInput.files[0];
+                if (file.size > 2 * 1024 * 1024) {
+                    this.showToast('⚠️ La foto de perfil no debe superar los 2MB', 'error');
+                    btnSave.disabled = false;
+                    btnText.classList.remove('hidden');
+                    btnSpinner.classList.add('hidden');
+                    return;
+                }
+                this.resizeImage(file, 300, 300, 0.8, (resizedDataUrl) => {
+                    localStorage.setItem('profile_photo_data', resizedDataUrl);
+                    this.state.user.profilePhoto = resizedDataUrl;
+                    this.actualizarPerfilUI();
+                    this.showToast('✅ Foto de perfil actualizada', 'success');
+                    this.finalizarGuardadoPerfil();
+                });
+            } else {
+                this.finalizarGuardadoPerfil();
+            }
+        },
+
+        finalizarGuardadoPerfil() {
+            // Procesar galería
+            const galleryInput = document.getElementById('edit-gallery-photos');
+            const currentGallery = this.state.user.gallery || [];
+            let newImages = [];
+
+            if (galleryInput.files && galleryInput.files.length > 0) {
+                const files = Array.from(galleryInput.files);
+                const total = currentGallery.length + files.length;
+                if (total > 2) {
+                    this.showToast('⚠️ Solo puedes tener hasta 2 imágenes en la galería', 'error');
+                    this.resetGuardarBtn();
+                    return;
+                }
+
+                let processed = 0;
+                files.forEach((file, index) => {
+                    if (file.size > 2 * 1024 * 1024) {
+                        this.showToast(`⚠️ La imagen ${index+1} supera los 2MB`, 'error');
+                        this.resetGuardarBtn();
+                        return;
+                    }
+                    this.resizeImage(file, 800, 800, 0.8, (resizedDataUrl) => {
+                        newImages.push(resizedDataUrl);
+                        processed++;
+                        if (processed === files.length) {
+                            const updatedGallery = [...currentGallery, ...newImages];
+                            localStorage.setItem('gallery_data', JSON.stringify(updatedGallery));
+                            this.state.user.gallery = updatedGallery;
+                            this.renderGalleryEditor();
+                            this.actualizarPerfilUI();
+                            this.showToast('✅ Galería actualizada', 'success');
+                            // Terminar proceso
+                            this.finalizarGuardadoPerfilCompleto();
+                        }
+                    });
+                });
+                // Si no hay archivos, continuar
+                if (files.length === 0) {
+                    this.finalizarGuardadoPerfilCompleto();
+                }
+            } else {
+                this.finalizarGuardadoPerfilCompleto();
+            }
+        },
+
+        finalizarGuardadoPerfilCompleto() {
+            // Actualizar UI final
+            this.actualizarPerfilUI();
             document.getElementById('editar-perfil-form').classList.add('hidden');
-            this.actualizarPerfilUI(); this.showToast('✅ Perfil actualizado exitosamente', 'success');
+            this.showToast('✅ Perfil actualizado exitosamente', 'success');
+            this.resetGuardarBtn();
+        },
+
+        resetGuardarBtn() {
+            const btnSave = document.getElementById('btn-save-profile');
+            const btnText = document.getElementById('btn-save-text');
+            const btnSpinner = document.getElementById('btn-save-spinner');
+            btnSave.disabled = false;
+            btnText.classList.remove('hidden');
+            btnSpinner.classList.add('hidden');
+        },
+
+        // ============================================
+        // REDIMENSIONAR IMAGEN (Canvas)
+        // ============================================
+        resizeImage(file, maxWidth, maxHeight, quality, callback) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    let width = img.width;
+                    let height = img.height;
+                    if (width > height) {
+                        if (width > maxWidth) {
+                            height *= maxWidth / width;
+                            width = maxWidth;
+                        }
+                    } else {
+                        if (height > maxHeight) {
+                            width *= maxHeight / height;
+                            height = maxHeight;
+                        }
+                    }
+                    const canvas = document.createElement('canvas');
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    const dataUrl = canvas.toDataURL('image/jpeg', quality);
+                    callback(dataUrl);
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        },
+
+        // ============================================
+        // ACTUALIZAR HEADER/NAV
+        // ============================================
+        actualizarHeader() {
+            const loginBtns = document.getElementById('header-login-btns');
+            const profileBtn = document.getElementById('header-profile-btn');
+            const headerName = document.getElementById('header-name');
+            const headerAvatar = document.getElementById('header-avatar');
+
+            if (this.state.isAuthenticated && this.state.user.name) {
+                loginBtns.classList.add('hidden'); profileBtn.classList.remove('hidden');
+                if (headerName) headerName.textContent = this.state.user.name;
+                if (headerAvatar) {
+                    if (this.state.user.profilePhoto) {
+                        headerAvatar.style.backgroundImage = `url('${this.state.user.profilePhoto}')`;
+                        headerAvatar.style.backgroundSize = 'cover';
+                        headerAvatar.style.backgroundPosition = 'center';
+                        headerAvatar.textContent = '';
+                    } else {
+                        headerAvatar.style.backgroundImage = 'none';
+                        const initials = this.state.user.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'US';
+                        headerAvatar.textContent = initials;
+                    }
+                }
+            } else { loginBtns.classList.remove('hidden'); profileBtn.classList.add('hidden'); }
+        },
+
+        actualizarNav() {
+            const perfilIcon = document.getElementById('nav-perfil-icon');
+            const perfilLabel = document.getElementById('nav-perfil-label');
+            if (this.state.isAuthenticated) {
+                if (perfilIcon) perfilIcon.textContent = '👤';
+                if (perfilLabel) perfilLabel.textContent = 'Perfil';
+            } else {
+                if (perfilIcon) perfilIcon.textContent = '🔑';
+                if (perfilLabel) perfilLabel.textContent = 'Login';
+            }
         },
 
         // ============================================
@@ -1376,11 +1776,14 @@
         App.state.user.registerMethod = localStorage.getItem('register_method') || 'email';
         App.state.user.telefono = localStorage.getItem('user_telefono') || '';
         App.state.user.fechaNac = localStorage.getItem('user_fecha_nac') || '';
+        App.state.user.bio = localStorage.getItem('user_bio') || '';
         App.state.user.emailVerified = localStorage.getItem('email_verified') === 'true';
         App.state.user.fechaRegistro = localStorage.getItem('fecha_registro') || new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' });
         App.state.user.sesiones = parseInt(localStorage.getItem('user_sesiones')) || 0;
         App.state.user.ejercicios = parseInt(localStorage.getItem('user_ejercicios')) || 0;
         App.state.user.diasActivo = parseInt(localStorage.getItem('user_dias_activo')) || 0;
+        App.state.user.profilePhoto = localStorage.getItem('profile_photo_data') || null;
+        App.state.user.gallery = JSON.parse(localStorage.getItem('gallery_data') || '[]');
         App.state.legalAceptado = localStorage.getItem('legal_aceptado') === 'true';
 
         App.actualizarPerfilUI();
