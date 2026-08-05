@@ -3,486 +3,478 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Atrévete Health Tech</title>
-  
-  <!-- Tailwind CSS para los estilos rápidos -->
+  <title>Perfil Especialista · Atrévete HealthTech</title>
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Estilos base personalizados -->
+  <!-- Fuente y estilos base -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet">
   <style>
-    /* Clases Clay y utilidades */
-    .clay-input { background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; transition: all 0.2s; }
-    .clay-input:focus { border-color: #E27D60; box-shadow: 0 0 0 3px rgba(226, 125, 96, 0.2); }
-    .clay-btn-primary { background-color: #E27D60; color: white; border-radius: 12px; transition: all 0.2s; }
-    .clay-btn-primary:hover { background-color: #d16b50; }
-    .clay-btn-primary:disabled { opacity: 0.7; cursor: not-allowed; }
-    .clay-btn-secondary { background-color: #f1f5f9; color: #475569; border-radius: 12px; transition: all 0.2s; }
-    .clay-btn-secondary:hover { background-color: #e2e8f0; }
-    .clay-card { background-color: white; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); }
-    
-    /* Pestañas (Roles) */
-    .selected { border: 2px solid #E27D60; background-color: #fff6f3; color: #E27D60; }
-
-    /* Notificaciones (Toast) */
-    .toast { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); padding: 12px 24px; border-radius: 50px; color: white; font-size: 14px; font-weight: bold; transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); z-index: 9999; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.2); opacity: 0; }
-    .toast.show { bottom: 30px; opacity: 1; }
-    .toast-success { background-color: #10B981; }
-    .toast-error { background-color: #EF4444; }
-    .toast-info { background-color: #3B82F6; }
-
-    /* Asistente Flotante */
-    #assistant-toggle { position: fixed; bottom: 20px; right: 20px; width: 56px; height: 56px; background-color: #E27D60; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; box-shadow: 0 4px 12px rgba(226, 125, 96, 0.4); z-index: 1000; transition: transform 0.2s; border: none; }
-    #assistant-toggle:hover { transform: scale(1.05); }
-    #assistant-chat { position: fixed; bottom: 90px; right: 20px; width: 320px; height: 450px; max-height: 80vh; background: white; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); display: none; flex-direction: column; z-index: 1000; overflow: hidden; border: 1px solid #e2e8f0; }
-    #assistant-chat.open { display: flex; animation: slideUp 0.3s ease; }
-    @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-    .message { max-width: 80%; padding: 10px 14px; margin-bottom: 12px; border-radius: 12px; font-size: 13px; line-height: 1.4; word-wrap: break-word; }
-    .message.user { align-self: flex-end; background-color: #E27D60; color: white; border-bottom-right-radius: 4px; }
-    .message.bot { align-self: flex-start; background-color: #f1f5f9; color: #334155; border-bottom-left-radius: 4px; }
-
-    /* Animaciones (Spinner & Typing) */
-    .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: white; animation: spin 1s ease-in-out infinite; margin-right: 8px; vertical-align: middle; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .typing-indicator span { display: inline-block; width: 6px; height: 6px; background-color: #94a3b8; border-radius: 50%; margin: 0 2px; animation: bounce 1.4s infinite ease-in-out both; }
-    .typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
-    .typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
-    @keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
+    /* Reset y base */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: #F9F6F0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 16px 12px 90px 12px;
+    }
+    /* Contenedor principal mobile-first */
+    .app-container {
+      max-width: 420px;
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    /* Estilos Claymorphism */
+    .clay-card {
+      background: #F9F6F0;
+      border-radius: 32px;
+      border: 1px solid rgba(255,255,255,0.8);
+      box-shadow: 8px 8px 16px #d1cdc7, -8px -8px 16px #ffffff;
+      padding: 20px;
+      transition: all 0.15s ease;
+    }
+    .clay-card-sm {
+      border-radius: 24px;
+      padding: 16px;
+    }
+    .clay-card-lg {
+      border-radius: 36px;
+      padding: 24px;
+    }
+    /* Sombras para elementos interactivos */
+    .clay-btn {
+      background: #F9F6F0;
+      border: 1px solid rgba(255,255,255,0.8);
+      box-shadow: 4px 4px 8px #d1cdc7, -4px -4px 8px #ffffff;
+      transition: all 0.15s ease;
+      border-radius: 9999px;
+      padding: 10px 20px;
+      font-weight: 600;
+      color: #4A5D4E;
+      cursor: pointer;
+    }
+    .clay-btn:hover {
+      box-shadow: 2px 2px 4px #d1cdc7, -2px -2px 4px #ffffff;
+      transform: scale(0.98);
+    }
+    .clay-btn-primary {
+      background: #E27D60;
+      color: white;
+      border-color: #E27D60;
+      box-shadow: 6px 6px 12px #c06a51, -4px -4px 8px #ffffff;
+    }
+    .clay-btn-primary:hover {
+      background: #d06d50;
+      box-shadow: 4px 4px 8px #c06a51, -2px -2px 6px #ffffff;
+    }
+    /* Toggle switch personalizado */
+    .toggle-switch {
+      width: 44px;
+      height: 24px;
+      background: #d1cdc7;
+      border-radius: 9999px;
+      position: relative;
+      cursor: pointer;
+      transition: background 0.2s;
+      box-shadow: inset 2px 2px 4px #b8b4ae, inset -2px -2px 4px #ffffff;
+    }
+    .toggle-switch.active {
+      background: #4CAF50;
+    }
+    .toggle-switch .toggle-knob {
+      width: 20px;
+      height: 20px;
+      background: white;
+      border-radius: 9999px;
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      transition: transform 0.2s;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+    .toggle-switch.active .toggle-knob {
+      transform: translateX(20px);
+    }
+    /* Badges */
+    .badge-pill {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    .badge-green {
+      background: #E8F5E9;
+      color: #2E7D32;
+    }
+    .badge-yellow {
+      background: #FFF8E1;
+      color: #F57F17;
+    }
+    .badge-terracota {
+      background: #FBE9E7;
+      color: #E27D60;
+    }
+    /* Tabs */
+    .tab-item {
+      padding: 8px 16px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #7A8A7C;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      background: transparent;
+      border: 1px solid transparent;
+    }
+    .tab-item.active {
+      background: #E27D60;
+      color: white;
+      border-color: #E27D60;
+      box-shadow: 4px 4px 8px #d1cdc7, -2px -2px 6px #ffffff;
+    }
+    .tab-item:hover:not(.active) {
+      background: rgba(226,125,96,0.08);
+    }
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.25s ease;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(6px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    /* Bottom navigation */
+    .bottom-nav {
+      position: fixed;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 32px);
+      max-width: 420px;
+      background: #F9F6F0;
+      border-radius: 40px;
+      border: 1px solid rgba(255,255,255,0.8);
+      box-shadow: 8px 8px 16px #d1cdc7, -8px -8px 16px #ffffff;
+      padding: 8px 12px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      z-index: 100;
+    }
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 6px 12px;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      color: #7A8A7C;
+      font-size: 10px;
+      font-weight: 500;
+      gap: 2px;
+      border: 1px solid transparent;
+    }
+    .nav-item.active {
+      color: #E27D60;
+      background: rgba(226,125,96,0.08);
+      border-color: rgba(226,125,96,0.2);
+    }
+    .nav-item .nav-icon {
+      font-size: 20px;
+      line-height: 1;
+    }
+    /* Utilidades */
+    .text-eucalyptus { color: #4A5D4E; }
+    .text-terracota { color: #E27D60; }
+    .text-gray-green { color: #7A8A7C; }
+    .bg-cream { background-color: #F9F6F0; }
+    .border-cream { border-color: rgba(255,255,255,0.8); }
+    .shadow-clay { box-shadow: 8px 8px 16px #d1cdc7, -8px -8px 16px #ffffff; }
+    .shadow-clay-sm { box-shadow: 4px 4px 8px #d1cdc7, -4px -4px 8px #ffffff; }
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: #f1ede8; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb { background: #E27D60; border-radius: 10px; }
   </style>
 </head>
-<body class="bg-[#f8fafc] text-gray-800 font-sans pb-24 antialiased">
+<body>
 
-  <!-- ================= NOTIFICACIONES ================= -->
-  <div id="toast" class="toast"></div>
+<div class="app-container" id="app">
 
-  <!-- ================= BARRERA LEGAL (MODAL) ================= -->
-  <div id="modal-legal-gate" class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[2000] hidden px-5">
-    <div class="clay-card p-6 w-full max-w-sm text-center">
-      <div class="text-4xl mb-4">⚖️</div>
-      <h2 class="text-xl font-bold text-[#4A5D4E] mb-2">Acuerdo de Servicio</h2>
-      <p class="text-xs text-gray-500 mb-6 leading-relaxed">
-        Al acceder a Atrévete Health Tech, confirmas tu mayoría de edad y aceptas nuestros términos de privacidad y procesamiento de datos bajo las leyes vigentes de Venezuela.
-      </p>
-      <div class="flex space-x-3">
-        <button onclick="App.cancelarLegal()" class="clay-btn-secondary flex-1 py-3 text-xs font-bold">Rechazar</button>
-        <button onclick="App.aceptarLegalYContinuar()" class="clay-btn-primary flex-1 py-3 text-xs font-bold shadow-lg shadow-[#E27D60]/30">Aceptar y Entrar</button>
+  <!-- ==================== ENCABEZADO DEL PERFIL ==================== -->
+  <div class="clay-card clay-card-lg relative">
+    <!-- Botón configuración (engranaje) -->
+    <button class="absolute top-4 right-4 text-gray-green hover:text-terracota transition-colors text-xl" aria-label="Configuración de perfil">
+      ⚙️
+    </button>
+
+    <div class="flex items-center gap-4">
+      <!-- Avatar con indicador de estado -->
+      <div class="relative flex-shrink-0">
+        <div class="w-20 h-20 rounded-full border-4 border-terracota shadow-clay-sm overflow-hidden bg-white flex items-center justify-center text-4xl font-bold text-terracota">
+          CR
+        </div>
+        <span class="absolute bottom-0 right-0 w-4 h-4 bg-green-500 border-2 border-white rounded-full"></span>
+      </div>
+      <!-- Info -->
+      <div class="flex-1 min-w-0">
+        <h2 class="text-lg font-bold text-eucalyptus truncate">Dra. Carla Rodríguez</h2>
+        <div class="flex flex-wrap items-center gap-2 mt-1">
+          <span class="badge-pill badge-terracota">Especialista Certificado HealthTech</span>
+          <span class="text-xs text-gray-green flex items-center gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-green-500 inline-block"></span> En línea
+          </span>
+        </div>
+        <!-- Toggle Disponibilidad -->
+        <div class="flex items-center gap-3 mt-3">
+          <span class="text-xs font-medium text-gray-green">Disponible para Citas</span>
+          <div id="toggle-disponibilidad" class="toggle-switch active" onclick="App.toggleDisponibilidad()">
+            <div class="toggle-knob"></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- ================= HEADER (CABECERA GLOBAL) ================= -->
-  <header class="max-w-md mx-auto px-5 py-6 flex justify-between items-center">
-    <div class="flex flex-col">
-      <h1 class="text-2xl font-black text-[#4A5D4E] leading-none">Atrévete</h1>
-      <span class="text-[10px] uppercase font-bold tracking-widest text-[#E27D60]">Health Tech</span>
-    </div>
-    
-    <!-- Controles de Usuario -->
-    <div id="header-login-btns">
-      <button onclick="App.abrirLogin()" class="bg-white px-4 py-2 rounded-full text-xs font-bold text-[#4A5D4E] shadow-sm border border-gray-100 hover:bg-gray-50">Ingresar</button>
-    </div>
-    <div id="header-profile-btn" class="hidden">
-      <button onclick="App.switchView('view-perfil-usuario')" class="w-10 h-10 rounded-full bg-[#E27D60] text-white font-bold text-sm shadow-md flex items-center justify-center hover:scale-105 transition-transform">
-        US
-      </button>
-    </div>
-  </header>
-
-  <!-- ================= VISTA: HOME (MENÚ PRINCIPAL) ================= -->
-  <main id="view-home" class="app-view max-w-md mx-auto px-5 space-y-6">
-    <div class="bg-gradient-to-r from-[#4A5D4E] to-[#6b8270] rounded-2xl p-6 text-white shadow-lg">
-      <h2 class="text-xl font-bold mb-1">Bienvenido a tu ecosistema</h2>
-      <p class="text-xs text-white/80">Selecciona el módulo al que deseas acceder hoy.</p>
-    </div>
-
-    <div class="grid grid-cols-2 gap-4">
-      <button onclick="App.switchView('view-regulacion')" class="clay-card p-5 flex flex-col items-center justify-center space-y-3 hover:-translate-y-1 transition-transform">
-        <div class="w-12 h-12 rounded-full bg-[#f1f5f9] flex items-center justify-center text-2xl">🧘</div>
-        <span class="text-xs font-bold text-gray-700">Regulación Somática</span>
-      </button>
-      <button onclick="App.switchView('view-citas')" class="clay-card p-5 flex flex-col items-center justify-center space-y-3 hover:-translate-y-1 transition-transform">
-        <div class="w-12 h-12 rounded-full bg-[#f1f5f9] flex items-center justify-center text-2xl">🗓️</div>
-        <span class="text-xs font-bold text-gray-700">Agendar Citas</span>
-      </button>
-      <button onclick="App.switchView('view-pagos')" class="clay-card p-5 flex flex-col items-center justify-center space-y-3 hover:-translate-y-1 transition-transform">
-        <div class="w-12 h-12 rounded-full bg-[#f1f5f9] flex items-center justify-center text-2xl">💳</div>
-        <span class="text-xs font-bold text-gray-700">Reservar Cupos</span>
-      </button>
-      <button onclick="App.switchView('view-privacidad')" class="clay-card p-5 flex flex-col items-center justify-center space-y-3 hover:-translate-y-1 transition-transform">
-        <div class="w-12 h-12 rounded-full bg-[#f1f5f9] flex items-center justify-center text-2xl">🛡️</div>
-        <span class="text-xs font-bold text-gray-700">Privacidad B2B</span>
-      </button>
-    </div>
-  </main>
-
-  <!-- ================= VISTA: AUTENTICACIÓN ================= -->
-  <main id="view-auth" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
-    <div class="text-center space-y-1">
-      <h2 id="auth-title" class="text-2xl font-bold text-[#4A5D4E]">Iniciar Sesión</h2>
-      <p id="auth-subtitle" class="text-xs text-gray-500">Accede a tu cuenta de Atrévete HealthTech</p>
-    </div>
-
-    <!-- Pestañas Login/Registro -->
-    <div class="flex bg-gray-200 rounded-xl p-1">
-      <button type="button" id="tab-login" onclick="App.switchAuthMode('login')" class="flex-1 py-2.5 text-xs font-bold rounded-lg bg-white shadow-sm text-gray-800 transition-all">Ingreso</button>
-      <button type="button" id="tab-register" onclick="App.switchAuthMode('register')" class="flex-1 py-2.5 text-xs font-bold rounded-lg text-gray-500 transition-all hover:text-gray-700">Registro</button>
-    </div>
-
-    <!-- Formulario Principal -->
-    <form id="form-auth" onsubmit="event.preventDefault(); App.procesarAuthEmail();" class="clay-card p-5 space-y-4">
-      <div id="field-nombre" class="hidden">
-        <label class="sr-only">Tu Nombre</label>
-        <input type="text" id="input-nombre" placeholder="Nombre completo" class="w-full p-3.5 text-sm clay-input outline-none">
-      </div>
-      <div>
-        <label class="sr-only">Correo electrónico</label>
-        <input type="email" id="input-email" placeholder="Correo electrónico" class="w-full p-3.5 text-sm clay-input outline-none" required>
-      </div>
-      <div>
-        <label class="sr-only">Contraseña</label>
-        <input type="password" id="input-password" placeholder="Contraseña (mín. 6 caracteres)" class="w-full p-3.5 text-sm clay-input outline-none" required minlength="6">
-      </div>
+  <!-- ==================== BILLETERA E INGRESOS ==================== -->
+  <div class="clay-card clay-card-lg relative overflow-hidden">
+    <div class="absolute -top-12 -right-12 w-32 h-32 bg-terracota/5 rounded-full"></div>
+    <div class="relative z-10">
+      <p class="text-xs font-medium text-gray-green uppercase tracking-wider">Balance Disponible para Retiro</p>
+      <p class="text-3xl font-bold text-eucalyptus mt-1">$1,250.00 <span class="text-base font-normal text-gray-green">USD</span></p>
+      <p class="text-sm text-gray-green mt-0.5">Acumulado del mes: <span class="font-semibold text-eucalyptus">$3,480.00 USD</span></p>
       
-      <!-- Selección de Rol (Solo Registro) -->
-      <div id="field-rol" class="hidden space-y-2">
-        <p class="text-xs text-gray-500 text-center mb-1">¿Cómo usarás la plataforma?</p>
-        <div class="flex space-x-2">
-          <button type="button" id="role-user" onclick="App.selectRole('user')" class="flex-1 py-3 border rounded-xl text-xs font-bold selected transition-colors">Usuario / Paciente</button>
-          <button type="button" id="role-spec" onclick="App.selectRole('spec')" class="flex-1 py-3 border rounded-xl text-xs font-bold text-gray-500 transition-colors">Especialista</button>
+      <div class="flex flex-wrap items-center gap-3 mt-4">
+        <button class="clay-btn clay-btn-primary text-sm px-6 py-2.5" onclick="alert('Modal de solicitud de retiro')">
+          Solicitar Retiro de Fondos
+        </button>
+        <div class="flex items-center gap-2">
+          <span class="badge-pill bg-white/80 text-eucalyptus border border-cream shadow-clay-sm text-[10px]">🇻🇪 Pago Móvil BDV</span>
+          <span class="badge-pill bg-white/80 text-eucalyptus border border-cream shadow-clay-sm text-[10px]">🟡 Binance Pay</span>
         </div>
       </div>
-      
-      <button type="submit" id="auth-submit-btn" class="clay-btn-primary w-full py-4 text-sm font-bold shadow-md shadow-[#E27D60]/20">Iniciar Sesión</button>
-      
-      <div id="link-forgot-container" class="text-center pt-2">
-        <button type="button" onclick="document.getElementById('recovery-section').classList.toggle('hidden')" class="text-xs font-bold text-[#E27D60] hover:underline">¿Olvidaste tu contraseña?</button>
-      </div>
-    </form>
-
-    <!-- Sección de Recuperación (Oculta por defecto) -->
-    <div id="recovery-section" class="clay-card p-5 space-y-4 hidden border-t-4 border-[#E27D60]">
-      <p class="text-sm font-bold text-center text-[#4A5D4E]">Recuperación de Acceso</p>
-      <form id="form-recovery" onsubmit="event.preventDefault(); App.procesarRecuperacion();" class="space-y-3">
-        <div>
-          <input type="email" id="recovery-email" placeholder="Tu correo de registro" class="w-full p-3.5 text-sm clay-input outline-none" required>
-        </div>
-        <button type="submit" class="clay-btn-primary w-full py-3.5 text-xs font-bold">Enviar Instrucciones</button>
-      </form>
-    </div>
-    
-    <button type="button" onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold">Volver al Inicio</button>
-  </main>
-
-  <!-- ================= VISTAS DE MÓDULOS (Placeholder) ================= -->
-  <main id="view-regulacion" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
-    <div class="text-center space-y-1">
-      <h2 class="text-2xl font-bold text-[#4A5D4E]">Regulación Somática</h2>
-    </div>
-    <div class="clay-card p-8 text-center">
-      <div class="text-4xl mb-4">🧬</div>
-      <p class="text-sm text-gray-600 mb-6">El módulo de Escáner Bioenergético se encuentra actualmente en desarrollo y pruebas para tu ecosistema.</p>
-      <button type="button" onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold">Volver al Menú</button>
-    </div>
-  </main>
-
-  <main id="view-citas" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
-    <div class="text-center space-y-1">
-      <h2 class="text-2xl font-bold text-[#4A5D4E]">Agendar Sesión</h2>
-    </div>
-    <div class="clay-card p-8 text-center">
-      <div class="text-4xl mb-4">⏳</div>
-      <p class="text-sm text-gray-600 mb-6">Calendario de disponibilidad de especialistas temporalmente en mantenimiento.</p>
-      <button type="button" onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold">Volver al Menú</button>
-    </div>
-  </main>
-
-  <main id="view-pagos" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
-    <div class="text-center space-y-1">
-      <h2 class="text-2xl font-bold text-[#4A5D4E]">Reservar Cupo</h2>
-      <p class="text-xs text-gray-500">Campamento Adultas en Fuga - Maracay</p>
-    </div>
-    <div class="clay-card p-8 text-center">
-      <div class="text-4xl mb-4">🚀</div>
-      <p class="text-sm text-gray-600 mb-6">La pasarela de pago B2B y criptomonedas está en proceso de integración.</p>
-      <button type="button" onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold">Volver al Menú</button>
-    </div>
-  </main>
-
-  <main id="view-privacidad" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
-    <div class="text-center space-y-1">
-      <h2 class="text-2xl font-bold text-[#4A5D4E]">Políticas y Privacidad</h2>
-    </div>
-    <div class="clay-card p-6 text-sm text-gray-600 leading-relaxed text-justify h-80 overflow-y-auto">
-      <p class="mb-4"><strong>Jurisdicción:</strong> Este software opera bajo las normativas vigentes en Maracay, Venezuela.</p>
-      <p class="mb-4"><strong>Uso de Datos:</strong> Atrévete Health Tech almacena información para la automatización de comunicación B2B, sin fines de venta a terceros.</p>
-      <p>Al utilizar nuestra plataforma y asistentes virtuales (Botente/HeyGen), aceptas la interacción con modelos de inteligencia artificial.</p>
-    </div>
-    <button type="button" onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold">Entendido</button>
-  </main>
-
-  <main id="view-perfil-usuario" class="app-view max-w-md mx-auto px-5 space-y-6 hidden">
-    <div class="text-center space-y-1">
-      <h2 class="text-2xl font-bold text-[#4A5D4E]">Mi Perfil</h2>
-    </div>
-    <div class="clay-card p-8 flex flex-col items-center text-center">
-      <div class="w-20 h-20 rounded-full bg-[#E27D60] text-white flex items-center justify-center text-2xl font-black mb-4 shadow-md">
-        US
-      </div>
-      <h3 class="font-bold text-gray-800 text-lg">Usuario Activo</h3>
-      <p class="text-xs text-[#10B981] font-bold mb-6 bg-[#10B981]/10 px-3 py-1 rounded-full mt-1">Conectado</p>
-      
-      <button type="button" onclick="App.cerrarSesion()" class="bg-red-50 text-red-600 hover:bg-red-100 w-full py-3 rounded-xl text-xs font-bold transition-colors">Cerrar Sesión Segura</button>
-    </div>
-    <button type="button" onclick="App.switchView('view-home')" class="clay-btn-secondary w-full py-3 text-xs font-bold">Volver al Menú Principal</button>
-  </main>
-
-  <!-- ================= ASISTENTE IA (CHATBOT) ================= -->
-  <button id="assistant-toggle" onclick="App.toggleAssistant()">💬</button>
-  
-  <div id="assistant-chat">
-    <!-- Chat Header -->
-    <div class="bg-[#4A5D4E] p-4 flex justify-between items-center text-white">
-      <div class="flex items-center space-x-2">
-        <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center text-sm">🤖</div>
-        <div>
-          <h4 class="font-bold text-sm leading-tight">IA Atrévete</h4>
-          <p class="text-[10px] text-white/70">En línea</p>
-        </div>
-      </div>
-      <button onclick="App.toggleAssistant()" class="text-white/70 hover:text-white text-xl">&times;</button>
-    </div>
-    
-    <!-- Chat Messages -->
-    <div id="assistant-messages" class="flex-1 p-4 overflow-y-auto bg-gray-50 flex flex-col">
-      <div class="message bot">
-        ¡Hola! 👋 Soy el asistente virtual de Atrévete. ¿Necesitas ayuda con el acceso o información sobre nuestros módulos?
-      </div>
-    </div>
-    
-    <!-- Chat Input -->
-    <div class="p-3 bg-white border-t border-gray-100 flex items-center space-x-2">
-      <input 
-        type="text" 
-        id="assistant-input" 
-        placeholder="Escribe tu mensaje..." 
-        class="flex-1 bg-gray-100 p-2.5 rounded-xl text-xs outline-none focus:ring-2 focus:ring-[#E27D60]/50"
-        onkeypress="if(event.key === 'Enter') App.sendMessage()"
-      >
-      <button onclick="App.sendMessage()" class="bg-[#E27D60] text-white w-10 h-10 rounded-xl flex items-center justify-center hover:bg-[#d16b50] transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>
-      </button>
     </div>
   </div>
 
-  <!-- ================= LÓGICA JAVASCRIPT (ROBUSTA) ================= -->
-  <script>
-    const App = {
-      state: {
-        authMode: 'login',
-        role: 'user',
-        isAssistantOpen: false,
-        isAuthenticated: false
-      },
+  <!-- ==================== GRID DE MÉTRICAS RÁPIDAS ==================== -->
+  <div class="grid grid-cols-2 gap-4">
+    <!-- Tarjeta Agenda -->
+    <div class="clay-card clay-card-sm flex flex-col items-start">
+      <span class="text-2xl">📅</span>
+      <p class="text-2xl font-bold text-eucalyptus mt-2">12</p>
+      <p class="text-sm font-semibold text-eucalyptus">Citas Agendadas</p>
+      <p class="text-xs text-gray-green mt-1">2 Consultas para hoy</p>
+    </div>
+    <!-- Tarjeta Eventos -->
+    <div class="clay-card clay-card-sm flex flex-col items-start">
+      <span class="text-2xl">🎟️</span>
+      <p class="text-2xl font-bold text-eucalyptus mt-2">34 / 40</p>
+      <p class="text-sm font-semibold text-eucalyptus">Entradas</p>
+      <p class="text-xs text-gray-green mt-1">Adultas en Fuga (2da Edición)</p>
+    </div>
+  </div>
 
-      init() {
-        const modalLegal = document.getElementById('modal-legal-gate');
-        if (modalLegal) modalLegal.classList.remove('hidden');
-      },
+  <!-- ==================== NAVEGACIÓN POR PESTAÑAS ==================== -->
+  <div class="clay-card clay-card-sm p-3">
+    <div class="flex gap-1 flex-wrap justify-center" id="tab-headers">
+      <button class="tab-item active" data-tab="tab-citas" onclick="App.switchTab('tab-citas')">Mis Citas</button>
+      <button class="tab-item" data-tab="tab-eventos" onclick="App.switchTab('tab-eventos')">Mis Eventos</button>
+      <button class="tab-item" data-tab="tab-retiros" onclick="App.switchTab('tab-retiros')">Historial de Retiros</button>
+    </div>
+  </div>
 
-      switchView(viewId) {
-        document.querySelectorAll('.app-view').forEach(el => el.classList.add('hidden'));
-        const target = document.getElementById(viewId);
-        if (target) {
-          target.classList.remove('hidden');
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-      },
+  <!-- ==================== CONTENIDO DE PESTAÑAS ==================== -->
+  <div class="clay-card clay-card-lg p-4 space-y-4">
+    <!-- Pestaña 1: Mis Citas -->
+    <div id="tab-citas" class="tab-content active space-y-4">
+      <!-- Cita 1 -->
+      <div class="bg-white/50 rounded-2xl p-4 shadow-clay-sm border border-white/60">
+        <div class="flex items-start gap-3">
+          <div class="w-12 h-12 rounded-full bg-terracota/20 flex items-center justify-center text-lg font-bold text-terracota flex-shrink-0">MG</div>
+          <div class="flex-1 min-w-0">
+            <h4 class="font-bold text-eucalyptus text-sm truncate">María Elena Gómez</h4>
+            <p class="text-xs text-gray-green">Escáner Cuántico + Evaluación Bioenergética</p>
+            <div class="flex flex-wrap items-center gap-2 mt-1">
+              <span class="text-xs text-gray-green">📅 Hoy · 2:30 PM (Sesión Online)</span>
+              <span class="badge-pill badge-green">Confirmada y Pagada</span>
+            </div>
+            <div class="flex flex-wrap gap-2 mt-3">
+              <button class="clay-btn text-xs py-1.5 px-4 text-terracota border-terracota/30" onclick="alert('Iniciar escáner cuántico')">🔬 Iniciar Escáner</button>
+              <button class="clay-btn text-xs py-1.5 px-4" onclick="alert('Ver ficha del paciente')">📄 Ver Ficha</button>
+              <button class="clay-btn text-xs py-1.5 px-4" onclick="alert('Reagendar cita')">🔄 Reagendar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Cita 2 -->
+      <div class="bg-white/50 rounded-2xl p-4 shadow-clay-sm border border-white/60">
+        <div class="flex items-start gap-3">
+          <div class="w-12 h-12 rounded-full bg-terracota/20 flex items-center justify-center text-lg font-bold text-terracota flex-shrink-0">CM</div>
+          <div class="flex-1 min-w-0">
+            <h4 class="font-bold text-eucalyptus text-sm truncate">Carlos Mendoza</h4>
+            <p class="text-xs text-gray-green">Regulación Somática Presencial</p>
+            <div class="flex flex-wrap items-center gap-2 mt-1">
+              <span class="text-xs text-gray-green">📅 Mañana · 10:00 AM (Presencial)</span>
+              <span class="badge-pill badge-yellow">Pendiente por Confirmar</span>
+            </div>
+            <div class="flex flex-wrap gap-2 mt-3">
+              <button class="clay-btn text-xs py-1.5 px-4" onclick="alert('Confirmar cita')">✅ Confirmar</button>
+              <button class="clay-btn text-xs py-1.5 px-4" onclick="alert('Ver ficha del paciente')">📄 Ver Ficha</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Mensaje de más citas -->
+      <p class="text-center text-xs text-gray-green">+10 citas más este mes</p>
+    </div>
 
-      aceptarLegalYContinuar() {
-        const modal = document.getElementById('modal-legal-gate');
-        if (modal) modal.classList.add('hidden');
-        this.showToast('Bienvenido a Atrévete Health Tech', 'success');
-      },
+    <!-- Pestaña 2: Mis Eventos -->
+    <div id="tab-eventos" class="tab-content space-y-4">
+      <div class="bg-white/50 rounded-2xl p-4 shadow-clay-sm border border-white/60">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="text-3xl">⛺</span>
+          <div>
+            <h4 class="font-bold text-eucalyptus text-sm">Adultas en Fuga · 2da Edición</h4>
+            <p class="text-xs text-gray-green">Maracay, Venezuela · 26 Sep 2026</p>
+          </div>
+        </div>
+        <!-- Barra de progreso -->
+        <div class="mt-2">
+          <div class="flex justify-between text-xs text-gray-green">
+            <span>Progreso de ventas</span>
+            <span>34 / 40 cupos (85%)</span>
+          </div>
+          <div class="w-full h-2 bg-stone-200 rounded-full overflow-hidden mt-1">
+            <div class="h-full bg-terracota rounded-full" style="width: 85%;"></div>
+          </div>
+        </div>
+        <div class="flex justify-between items-center mt-3">
+          <p class="text-sm font-semibold text-eucalyptus">Recaudación: <span class="text-terracota">$1,700.00 USD</span></p>
+          <div class="flex gap-2">
+            <button class="clay-btn text-xs py-1.5 px-3" onclick="alert('Ver lista de asistentes')">👥 Ver Asistentes</button>
+            <button class="clay-btn text-xs py-1.5 px-3" onclick="alert('Validar ticket QR')">📱 Validar Ticket QR</button>
+          </div>
+        </div>
+      </div>
+      <p class="text-center text-xs text-gray-green">Próximamente más eventos</p>
+    </div>
 
-      cancelarLegal() {
-        this.showToast('Es obligatorio aceptar las políticas para acceder', 'error');
-      },
+    <!-- Pestaña 3: Historial de Retiros -->
+    <div id="tab-retiros" class="tab-content space-y-3">
+      <div class="bg-white/50 rounded-2xl p-3 shadow-clay-sm border border-white/60 flex justify-between items-center">
+        <div>
+          <p class="text-sm font-semibold text-eucalyptus">Retiro #001</p>
+          <p class="text-xs text-gray-green">15 Jul 2026 · $450.00 USD</p>
+        </div>
+        <span class="badge-pill badge-green">Completado</span>
+      </div>
+      <div class="bg-white/50 rounded-2xl p-3 shadow-clay-sm border border-white/60 flex justify-between items-center">
+        <div>
+          <p class="text-sm font-semibold text-eucalyptus">Retiro #002</p>
+          <p class="text-xs text-gray-green">01 Jul 2026 · $320.00 USD</p>
+        </div>
+        <span class="badge-pill badge-green">Completado</span>
+      </div>
+      <div class="bg-white/50 rounded-2xl p-3 shadow-clay-sm border border-white/60 flex justify-between items-center">
+        <div>
+          <p class="text-sm font-semibold text-eucalyptus">Retiro #003</p>
+          <p class="text-xs text-gray-green">20 Jun 2026 · $180.00 USD</p>
+        </div>
+        <span class="badge-pill badge-yellow">En proceso</span>
+      </div>
+      <p class="text-center text-xs text-gray-green mt-2">Mostrando últimos 3 retiros</p>
+    </div>
+  </div>
 
-      abrirLogin() {
-        this.switchAuthMode('login');
-        this.switchView('view-auth');
-      },
+  <!-- ==================== BOTTOM NAVIGATION BAR ==================== -->
+  <nav class="bottom-nav">
+    <div class="nav-item active" onclick="App.navigate('home')">
+      <span class="nav-icon">🏠</span>
+      <span>Inicio</span>
+    </div>
+    <div class="nav-item" onclick="App.navigate('citas')">
+      <span class="nav-icon">📅</span>
+      <span>Agenda</span>
+    </div>
+    <div class="nav-item" onclick="App.navigate('eventos')">
+      <span class="nav-icon">🎪</span>
+      <span>Eventos</span>
+    </div>
+    <div class="nav-item" onclick="App.navigate('billetera')">
+      <span class="nav-icon">💰</span>
+      <span>Billetera</span>
+    </div>
+  </nav>
 
-      switchAuthMode(mode) {
-        this.state.authMode = mode;
-        const isLogin = mode === 'login';
-        
-        const el = (id) => document.getElementById(id);
-        
-        if (el('auth-title')) el('auth-title').textContent = isLogin ? 'Iniciar Sesión' : 'Registro Seguro';
-        if (el('auth-subtitle')) el('auth-subtitle').textContent = isLogin ? 'Accede a tu cuenta de Atrévete HealthTech' : 'Únete a nuestra plataforma somática';
-        if (el('auth-submit-btn')) el('auth-submit-btn').textContent = isLogin ? 'Ingresar a mi cuenta' : 'Completar Registro';
-        
-        const toggle = (id, force) => { if (el(id)) el(id).classList.toggle('hidden', force); };
-        toggle('field-nombre', isLogin);
-        toggle('field-rol', isLogin);
-        toggle('link-forgot-container', !isLogin);
+</div>
 
-        const tabLogin = el('tab-login');
-        const tabReg = el('tab-register');
-        
-        if (tabLogin && tabReg) {
-          if (isLogin) {
-            tabLogin.className = 'flex-1 py-2.5 text-xs font-bold rounded-lg bg-white shadow-sm text-gray-800 transition-all';
-            tabReg.className = 'flex-1 py-2.5 text-xs font-bold rounded-lg text-gray-500 transition-all hover:text-gray-700';
-          } else {
-            tabReg.className = 'flex-1 py-2.5 text-xs font-bold rounded-lg bg-white shadow-sm text-gray-800 transition-all';
-            tabLogin.className = 'flex-1 py-2.5 text-xs font-bold rounded-lg text-gray-500 transition-all hover:text-gray-700';
-          }
-        }
-      },
+<!-- ==================== JAVASCRIPT ==================== -->
+<script>
+  // Objeto App para manejar interacciones
+  const App = {
+    // Toggle de disponibilidad
+    toggleDisponibilidad() {
+      const toggle = document.getElementById('toggle-disponibilidad');
+      toggle.classList.toggle('active');
+      const estado = toggle.classList.contains('active') ? 'habilitada' : 'deshabilitada';
+      // Opcional: mostrar toast o mensaje
+      console.log(`Disponibilidad ${estado}`);
+    },
 
-      selectRole(role) {
-        this.state.role = role;
-        const roleUser = document.getElementById('role-user');
-        const roleSpec = document.getElementById('role-spec');
-        
-        if (roleUser) {
-          roleUser.classList.toggle('selected', role === 'user');
-          roleUser.classList.toggle('text-gray-500', role !== 'user');
-        }
-        if (roleSpec) {
-          roleSpec.classList.toggle('selected', role === 'spec');
-          roleSpec.classList.toggle('text-gray-500', role !== 'spec');
-        }
-      },
+    // Cambio de pestañas
+    switchTab(tabId) {
+      // Ocultar todos los contenidos
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      // Mostrar el seleccionado
+      const target = document.getElementById(tabId);
+      if (target) target.classList.add('active');
 
-      procesarAuthEmail() {
-        const inputEmail = document.getElementById('input-email');
-        const inputPassword = document.getElementById('input-password');
-        if (!inputEmail || !inputPassword) return;
+      // Actualizar estilos de los tabs
+      document.querySelectorAll('.tab-item').forEach(el => el.classList.remove('active'));
+      const activeTab = document.querySelector(`.tab-item[data-tab="${tabId}"]`);
+      if (activeTab) activeTab.classList.add('active');
+    },
 
-        const email = inputEmail.value.trim();
-        const password = inputPassword.value;
-        
-        if (!email || password.length < 6) {
-          this.showToast('Datos inválidos. Revisa correo y contraseña.', 'error');
-          return;
-        }
-
-        const btn = document.getElementById('auth-submit-btn');
-        if (!btn) return;
-
-        const originalText = btn.textContent;
-        btn.innerHTML = '<span class="spinner"></span> Conectando...';
-        btn.disabled = true;
-
-        setTimeout(() => {
-          this.state.isAuthenticated = true;
-          
-          const loginBtns = document.getElementById('header-login-btns');
-          const profileBtn = document.getElementById('header-profile-btn');
-          if (loginBtns) loginBtns.classList.add('hidden');
-          if (profileBtn) profileBtn.classList.remove('hidden');
-          
-          btn.textContent = originalText;
-          btn.disabled = false;
-          
-          inputEmail.value = '';
-          inputPassword.value = '';
-          
-          this.showToast(this.state.authMode === 'login' ? '¡Sesión iniciada con éxito!' : 'Cuenta creada correctamente', 'success');
-          this.switchView('view-home');
-        }, 1500);
-      },
-
-      cerrarSesion() {
-        this.state.isAuthenticated = false;
-        const loginBtns = document.getElementById('header-login-btns');
-        const profileBtn = document.getElementById('header-profile-btn');
-        
-        if (loginBtns) loginBtns.classList.remove('hidden');
-        if (profileBtn) profileBtn.classList.add('hidden');
-        
-        this.showToast('Sesión cerrada. ¡Hasta pronto!', 'info');
-        this.switchView('view-home');
-      },
-
-      procesarRecuperacion() {
-        const inputEmail = document.getElementById('recovery-email');
-        if (!inputEmail) return;
-
-        const email = inputEmail.value.trim();
-        if (email) {
-          this.showToast('Enlace de recuperación enviado al correo', 'success');
-          inputEmail.value = '';
-          setTimeout(() => {
-            document.getElementById('recovery-section').classList.add('hidden');
-          }, 1500);
-        } else {
-          this.showToast('Ingresa un correo válido', 'error');
-        }
-      },
-
-      toggleAssistant() {
-        this.state.isAssistantOpen = !this.state.isAssistantOpen;
-        const chatWindow = document.getElementById('assistant-chat');
-        const chatToggle = document.getElementById('assistant-toggle');
-        
-        if (chatWindow) chatWindow.classList.toggle('open', this.state.isAssistantOpen);
-        if (chatToggle) chatToggle.style.transform = this.state.isAssistantOpen ? 'scale(0)' : 'scale(1)';
-      },
-
-      sendMessage() {
-        const input = document.getElementById('assistant-input');
-        if (!input) return;
-
-        const text = input.value.trim();
-        if (!text) return;
-
-        this.appendMessage('user', text);
-        input.value = '';
-        
-        const messagesContainer = document.getElementById('assistant-messages');
-        if (!messagesContainer) return;
-
-        const typingDiv = document.createElement('div');
-        typingDiv.className = 'message bot typing-indicator-container';
-        typingDiv.innerHTML = '<div class="typing-indicator"><span></span><span></span><span></span></div>';
-        messagesContainer.appendChild(typingDiv);
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
-
-        setTimeout(() => {
-          typingDiv.remove();
-          this.appendMessage('bot', 'Estoy configurando la conexión con mi base de datos para responder a tus consultas corporativas y de salud.');
-        }, 1500);
-      },
-
-      appendMessage(sender, text) {
-        const container = document.getElementById('assistant-messages');
-        if (!container) return;
-
-        const div = document.createElement('div');
-        div.className = `message ${sender}`;
-        div.textContent = text; 
-        
-        container.appendChild(div);
-        container.scrollTop = container.scrollHeight;
-      },
-
-      showToast(message, type = 'info') {
-        const toast = document.getElementById('toast');
-        if (!toast) return;
-
-        toast.textContent = message;
-        toast.className = `toast toast-${type} show`;
-        
-        setTimeout(() => {
-          toast.classList.remove('show');
-        }, 3500);
+    // Navegación inferior (simulada)
+    navigate(section) {
+      // Actualizar item activo
+      document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+      const items = document.querySelectorAll('.nav-item');
+      const indexMap = { 'home': 0, 'citas': 1, 'eventos': 2, 'billetera': 3 };
+      const idx = indexMap[section];
+      if (idx !== undefined && items[idx]) {
+        items[idx].classList.add('active');
       }
-    };
+      // Aquí se podría redirigir o mostrar otra vista según la sección
+      alert(`Navegando a: ${section.charAt(0).toUpperCase() + section.slice(1)} (simulación)`);
+    }
+  };
 
-    document.addEventListener('DOMContentLoaded', () => App.init());
-  </script>
+  // Inicialización: asegurar que la primera pestaña esté activa
+  document.addEventListener('DOMContentLoaded', function() {
+    // Por defecto, la pestaña "Mis Citas" ya tiene active en HTML
+    // Pero aseguramos que el contenido coincida
+    const defaultTab = document.querySelector('.tab-item.active');
+    if (defaultTab) {
+      const tabId = defaultTab.dataset.tab;
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      const target = document.getElementById(tabId);
+      if (target) target.classList.add('active');
+    }
+  });
+</script>
+
 </body>
 </html>
