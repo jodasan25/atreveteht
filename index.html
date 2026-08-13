@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Atrévete HealthTech · Regulación del Sistema Nervioso</title>
+  <title>Atrévete HealthTech · Sistema Nervioso</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     /* ===== BASE ===== */
@@ -70,20 +70,32 @@
     .btn.loading .btn-text { display: none; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* ===== TERMÓMETRO ===== */
-    .state-card {
+    /* ===== TERMÓMETRO INTERACTIVO ===== */
+    .state-option {
       padding: 16px; border-radius: 20px; cursor: pointer;
       transition: all 0.2s ease; border: 2px solid transparent;
       background: rgba(255,255,255,0.5);
+      display: flex; align-items: center; gap: 12px;
     }
-    .state-card:hover { transform: translateY(-2px); background: white; }
-    .state-card.selected {
+    .state-option:hover { transform: translateY(-2px); background: white; }
+    .state-option.selected {
       border-color: #E27D60; background: #FFF8F6;
       box-shadow: 0 4px 12px rgba(226,125,96,0.15);
     }
-    .state-card .icon { font-size: 2rem; }
-    .state-card .label { font-weight: 600; color: #4A5D4E; }
-    .state-card .desc { font-size: 0.75rem; color: #7A8A7C; }
+    .state-option .icon { font-size: 1.8rem; }
+    .state-option .label { font-weight: 600; color: #4A5D4E; }
+    .state-option .desc { font-size: 0.75rem; color: #7A8A7C; }
+
+    /* ===== SANTUARIO / PRÁCTICAS ===== */
+    .practice-card {
+      background: white; border-radius: 24px; padding: 16px;
+      border: 1px solid #e5e0db; transition: all 0.2s;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .practice-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.04); }
+    .practice-card .p-icon { font-size: 2rem; }
+    .practice-card .p-title { font-weight: 600; color: #4A5D4E; }
+    .practice-card .p-desc { font-size: 0.75rem; color: #7A8A7C; }
 
     /* ===== ESPECIALISTAS ===== */
     .specialist-card {
@@ -97,7 +109,7 @@
       letter-spacing: 0.5px; text-transform: uppercase;
     }
 
-    /* ===== NAV INFERIOR ===== */
+    /* ===== NAV INFERIOR HOLÍSTICO ===== */
     .clay-nav {
       background: rgba(253,251,247,0.95); backdrop-filter: blur(12px);
       border-radius: 24px 24px 0 0; padding: 8px 12px 12px;
@@ -209,6 +221,17 @@
       .assistant-chat { width: calc(100vw - 32px); height: 380px; right: 16px; bottom: 160px; }
       .assistant-toggle { width: 48px; height: 48px; font-size: 20px; bottom: 90px; right: 16px; }
     }
+
+    /* ===== COUNTDOWN ===== */
+    .countdown-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
+    }
+    .countdown-item {
+      background: rgba(226,125,96,0.06); border-radius: 16px; padding: 10px 0;
+      text-align: center;
+    }
+    .countdown-item .number { font-size: 1.5rem; font-weight: 700; color: #E27D60; }
+    .countdown-item .label { font-size: 0.6rem; color: #7A8A7C; text-transform: uppercase; letter-spacing: 0.5px; }
   </style>
 </head>
 <body>
@@ -260,7 +283,6 @@
       <img id="app-logo" src="atrevetehtlogo.png" alt="Atrévete" class="h-14 w-auto object-contain">
     </div>
     <div id="auth-buttons" class="flex items-center gap-2">
-      <!-- No autenticado -->
       <div id="login-btns" class="flex gap-2">
         <button onclick="App.loginGoogle()" class="btn btn-google text-xs py-1.5 px-3">
           <svg viewBox="0 0 24 24" width="16" height="16"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
@@ -268,7 +290,6 @@
           <span class="spinner"></span>
         </button>
       </div>
-      <!-- Autenticado -->
       <div id="user-menu" class="hidden flex items-center gap-2">
         <div onclick="App.goProfile()" class="header-profile-btn">
           <div id="header-avatar" class="header-avatar">US</div>
@@ -308,42 +329,40 @@
 
   <!-- ================= VISTAS ================= -->
 
-  <!-- ===== 1. HOME / TERMÓMETRO ===== -->
+  <!-- ===== 1. HOME / TERMÓMETRO INTERACTIVO ===== -->
   <main id="view-home" class="app-view max-w-md mx-auto px-5 space-y-5">
     <div class="text-center pt-2">
-      <h2 class="text-2xl font-bold text-[#4A5D4E]">🌿 ¿Cómo está tu sistema nervioso hoy?</h2>
-      <p class="text-xs text-[#7A8A7C]/70">Selecciona tu estado actual y te guiaré con una práctica de 2 minutos.</p>
+      <h2 class="text-2xl font-bold text-[#4A5D4E]">🌿 Hola, <span id="greeting-name">amiga</span></h2>
+      <p class="text-xs text-[#7A8A7C]/70">¿Cómo se siente tu cuerpo hoy?</p>
     </div>
 
     <div class="clay-card p-5 space-y-4">
       <div id="states-container" class="space-y-3">
-        <!-- Lucha/Huida -->
-        <div class="state-card" data-state="fight" onclick="App.selectState('fight')">
-          <div class="flex items-center gap-3">
-            <span class="icon">🔥</span>
-            <div><div class="label">Lucha / Huida</div><div class="desc">Ansiedad, hiperactividad, mente acelerada</div></div>
-          </div>
+        <!-- Acelerada / Ansiosa -->
+        <div class="state-option" data-state="fight" onclick="App.selectState('fight')">
+          <span class="icon">⚡</span>
+          <div><div class="label">Acelerada / Ansiosa</div><div class="desc">Lucha o Huida · mente inquieta, corazón rápido</div></div>
         </div>
-        <!-- Congelamiento -->
-        <div class="state-card" data-state="freeze" onclick="App.selectState('freeze')">
-          <div class="flex items-center gap-3">
-            <span class="icon">🧊</span>
-            <div><div class="label">Congelamiento</div><div class="desc">Apatía, desconexión, agotamiento</div></div>
-          </div>
+        <!-- Desconectada / Agotada -->
+        <div class="state-option" data-state="freeze" onclick="App.selectState('freeze')">
+          <span class="icon">❄️</span>
+          <div><div class="label">Desconectada / Agotada</div><div class="desc">Congelamiento · apatía, pesadez, cansancio</div></div>
         </div>
-        <!-- Seguro/Social -->
-        <div class="state-card" data-state="safe" onclick="App.selectState('safe')">
-          <div class="flex items-center gap-3">
-            <span class="icon">🌊</span>
-            <div><div class="label">Seguro / Social</div><div class="desc">Calma, creatividad, conexión</div></div>
-          </div>
+        <!-- En Centro / Tranquila -->
+        <div class="state-option" data-state="safe" onclick="App.selectState('safe')">
+          <span class="icon">🌱</span>
+          <div><div class="label">En Centro / Tranquila</div><div class="desc">Regulada · calma, conexión, presencia</div></div>
         </div>
       </div>
 
-      <div id="practice-result" class="hidden mt-4 p-4 rounded-2xl bg-white/80 border border-[#E27D60]/30">
-        <h4 id="practice-title" class="font-bold text-[#E27D60] text-sm"></h4>
-        <p id="practice-desc" class="text-xs text-[#4A5D4E] mt-1"></p>
-        <button id="btn-do-practice" class="btn btn-primary w-full mt-3 text-sm">▶️ Realizar Ahora</button>
+      <!-- Botón de práctica dinámico -->
+      <button id="btn-dynamic-practice" class="btn btn-primary w-full text-sm" onclick="App.irAPractica()">
+        <span class="btn-text">🧘 Regulación Somática</span>
+        <span class="spinner"></span>
+      </button>
+
+      <div id="practice-preview" class="hidden mt-2 p-3 rounded-xl bg-white/80 border border-[#E27D60]/30 text-xs text-[#4A5D4E]">
+        <span id="preview-text">Selecciona un estado para ver la práctica recomendada.</span>
       </div>
     </div>
 
@@ -351,44 +370,54 @@
     <div class="clay-card p-5 border-l-4 border-[#E27D60]">
       <div class="flex items-center justify-between">
         <div>
-          <span class="text-[10px] font-bold uppercase tracking-wider text-[#E27D60]">🔥 Evento VIP</span>
-          <h4 class="font-bold text-[#4A5D4E]">Mujeres en Fuga · 26 Sep</h4>
-          <p class="text-xs text-[#7A8A7C]/70">Maracay, Venezuela</p>
+          <span class="text-[10px] font-bold uppercase tracking-wider text-[#E27D60]">🔥 PREVENTA EXCLUSIVA</span>
+          <h4 class="font-bold text-[#4A5D4E]">Campamento Mujeres en Fuga</h4>
+          <p class="text-xs text-[#7A8A7C]/70">26 de septiembre · Maracay</p>
         </div>
-        <span class="badge-pill bg-[#E27D60] text-white px-3 py-1 rounded-full text-xs font-bold">Cupos limitados</span>
+        <span class="bg-[#E27D60] text-white px-3 py-1 rounded-full text-xs font-bold">34/40 cupos</span>
       </div>
       <button onclick="App.goEvent()" class="btn btn-secondary w-full mt-3 text-sm">Ver detalles y validar entrada</button>
     </div>
 
-    <!-- Acceso rápido a especialistas -->
+    <!-- Acceso a especialistas -->
     <div class="flex justify-center">
-      <button onclick="App.goSpecialists()" class="btn btn-outline w-full text-sm">🛡️ Conoce a nuestros especialistas</button>
+      <button onclick="App.goSpecialists()" class="btn btn-outline w-full text-sm">🛡️ Red de Especialistas Curados</button>
     </div>
   </main>
 
-  <!-- ===== 2. PRÁCTICA (micro-práctica) ===== -->
-  <main id="view-practice" class="app-view max-w-md mx-auto px-5 space-y-5 hidden">
+  <!-- ===== 2. SANTUARIO (Prácticas) ===== -->
+  <main id="view-santuario" class="app-view max-w-md mx-auto px-5 space-y-5 hidden">
     <div class="text-center pt-2">
-      <h2 class="text-2xl font-bold text-[#4A5D4E]">🧘 Tu práctica de 2 minutos</h2>
-      <p id="practice-sub" class="text-xs text-[#7A8A7C]/70">Sigue las instrucciones para regular tu sistema nervioso</p>
-    </div>
-    <div class="clay-card p-6 space-y-4">
-      <div id="practice-content" class="space-y-3">
-        <!-- Contenido dinámico -->
-      </div>
-      <button onclick="App.finishPractice()" class="btn btn-primary w-full">✅ Hecho, volver al inicio</button>
-    </div>
-  </main>
-
-  <!-- ===== 3. ESPECIALISTAS (Marketplace) ===== -->
-  <main id="view-specialists" class="app-view max-w-md mx-auto px-5 space-y-5 hidden">
-    <div class="text-center pt-2">
-      <h2 class="text-2xl font-bold text-[#4A5D4E]">🛡️ Especialistas del Gremio</h2>
-      <p class="text-xs text-[#7A8A7C]/70">Profesionales aprobados por su calidad y confianza</p>
+      <h2 class="text-2xl font-bold text-[#4A5D4E]">🌿 Santuario Somático</h2>
+      <p class="text-xs text-[#7A8A7C]/70">Prácticas de 3 minutos para regular tu sistema nervioso</p>
     </div>
 
     <div class="space-y-3">
-      <!-- Especialista 1 -->
+      <div class="practice-card" onclick="App.iniciarPractica('fight')">
+        <span class="p-icon">⚡</span>
+        <div><div class="p-title">Respiración Fisiológica</div><div class="p-desc">Para aceleración / ansiedad · 4-2-6</div></div>
+      </div>
+      <div class="practice-card" onclick="App.iniciarPractica('freeze')">
+        <span class="p-icon">❄️</span>
+        <div><div class="p-title">Movimiento Somático Suave</div><div class="p-desc">Para desconexión / agotamiento · balanceo</div></div>
+      </div>
+      <div class="practice-card" onclick="App.iniciarPractica('safe')">
+        <span class="p-icon">🌱</span>
+        <div><div class="p-title">Respiración de la Calma</div><div class="p-desc">Para centro / tranquilidad · 5 respiraciones</div></div>
+      </div>
+    </div>
+
+    <button onclick="App.goHome()" class="btn btn-secondary w-full text-sm">Volver al Termómetro</button>
+  </main>
+
+  <!-- ===== 3. ESPECIALISTAS (Gremio) ===== -->
+  <main id="view-specialists" class="app-view max-w-md mx-auto px-5 space-y-5 hidden">
+    <div class="text-center pt-2">
+      <h2 class="text-2xl font-bold text-[#4A5D4E]">🛡️ Tu Gremio Clínico</h2>
+      <p class="text-xs text-[#7A8A7C]/70">Especialistas curados por Atrévete · Confianza y excelencia</p>
+    </div>
+
+    <div class="space-y-3">
       <div class="specialist-card">
         <div class="flex items-center gap-3">
           <div class="w-12 h-12 rounded-full bg-[#E27D60]/20 flex items-center justify-center text-xl font-bold text-[#E27D60]">CR</div>
@@ -397,15 +426,11 @@
               <span class="font-bold text-[#4A5D4E]">Dra. Carla Rodríguez</span>
               <span class="badge-gremio">Aprobada</span>
             </div>
-            <p class="text-xs text-[#7A8A7C]">Terapeuta Somática · 12 años de experiencia</p>
+            <p class="text-xs text-[#7A8A7C]">Terapeuta Somática · 12 años</p>
           </div>
         </div>
-        <div class="mt-2 flex justify-end">
-          <button onclick="App.bookSpecialist('Dra. Carla Rodríguez')" class="btn btn-primary text-xs py-1.5 px-4">Reservar sesión</button>
-        </div>
+        <button onclick="App.bookSpecialist('Dra. Carla Rodríguez')" class="btn btn-primary text-xs py-1.5 px-4 mt-2 w-full">Reservar sesión</button>
       </div>
-
-      <!-- Especialista 2 -->
       <div class="specialist-card">
         <div class="flex items-center gap-3">
           <div class="w-12 h-12 rounded-full bg-[#E27D60]/20 flex items-center justify-center text-xl font-bold text-[#E27D60]">MG</div>
@@ -414,15 +439,11 @@
               <span class="font-bold text-[#4A5D4E]">Lic. María González</span>
               <span class="badge-gremio">Aprobada</span>
             </div>
-            <p class="text-xs text-[#7A8A7C]">Coach en Regulación Emocional · 8 años</p>
+            <p class="text-xs text-[#7A8A7C]">Coach Regulación Emocional · 8 años</p>
           </div>
         </div>
-        <div class="mt-2 flex justify-end">
-          <button onclick="App.bookSpecialist('Lic. María González')" class="btn btn-primary text-xs py-1.5 px-4">Reservar sesión</button>
-        </div>
+        <button onclick="App.bookSpecialist('Lic. María González')" class="btn btn-primary text-xs py-1.5 px-4 mt-2 w-full">Reservar sesión</button>
       </div>
-
-      <!-- Especialista 3 -->
       <div class="specialist-card">
         <div class="flex items-center gap-3">
           <div class="w-12 h-12 rounded-full bg-[#E27D60]/20 flex items-center justify-center text-xl font-bold text-[#E27D60]">AP</div>
@@ -434,17 +455,15 @@
             <p class="text-xs text-[#7A8A7C]">Psicóloga Clínica · 15 años</p>
           </div>
         </div>
-        <div class="mt-2 flex justify-end">
-          <button onclick="App.bookSpecialist('Lic. Ana Pérez')" class="btn btn-primary text-xs py-1.5 px-4">Reservar sesión</button>
-        </div>
+        <button onclick="App.bookSpecialist('Lic. Ana Pérez')" class="btn btn-primary text-xs py-1.5 px-4 mt-2 w-full">Reservar sesión</button>
       </div>
     </div>
 
-    <p class="text-center text-[10px] text-[#7A8A7C]/50">Todos nuestros especialistas han pasado por un riguroso proceso de selección.</p>
-    <button onclick="App.goHome()" class="btn btn-secondary w-full text-sm">Volver al inicio</button>
+    <p class="text-center text-[10px] text-[#7A8A7C]/50">* Todos los especialistas han pasado por un riguroso proceso de selección.</p>
+    <button onclick="App.goHome()" class="btn btn-secondary w-full text-sm">Volver al Termómetro</button>
   </main>
 
-  <!-- ===== 4. EVENTO (Mujeres en Fuga) ===== -->
+  <!-- ===== 4. EVENTO (con countdown y preparación somática) ===== -->
   <main id="view-event" class="app-view max-w-md mx-auto px-5 space-y-5 hidden">
     <div class="text-center pt-2">
       <h2 class="text-2xl font-bold text-[#4A5D4E]">⛺ Mujeres en Fuga</h2>
@@ -452,13 +471,23 @@
     </div>
 
     <div class="clay-card p-5 space-y-4">
-      <div class="relative h-40 rounded-2xl overflow-hidden bg-gradient-to-br from-[#E27D60]/20 to-[#F0B7A1]/20 flex items-center justify-center">
-        <span class="text-6xl">🏕️</span>
+      <div class="relative h-32 rounded-2xl overflow-hidden bg-gradient-to-br from-[#E27D60]/20 to-[#F0B7A1]/20 flex items-center justify-center">
+        <span class="text-5xl">🏕️</span>
       </div>
+
       <div>
         <h4 class="font-bold text-[#4A5D4E]">Una experiencia inmersiva para reconectar con tu cuerpo</h4>
         <p class="text-xs text-[#7A8A7C] mt-1">Talleres de regulación somática, círculos de mujeres y naturaleza.</p>
       </div>
+
+      <!-- Cuenta regresiva -->
+      <div class="countdown-grid" id="countdown-container">
+        <div class="countdown-item"><div class="number" id="cd-days">--</div><div class="label">Días</div></div>
+        <div class="countdown-item"><div class="number" id="cd-hours">--</div><div class="label">Horas</div></div>
+        <div class="countdown-item"><div class="number" id="cd-minutes">--</div><div class="label">Minutos</div></div>
+        <div class="countdown-item"><div class="number" id="cd-seconds">--</div><div class="label">Segundos</div></div>
+      </div>
+
       <div class="flex justify-between text-sm">
         <span>🎟️ Entradas vendidas: <strong>34/40</strong></span>
         <span class="text-[#E27D60] font-bold">$120 USD</span>
@@ -467,10 +496,12 @@
         <div class="h-full bg-[#E27D60] rounded-full" style="width:85%"></div>
       </div>
 
-      <div class="bg-stone-50 p-3 rounded-xl text-xs space-y-2">
-        <p><span class="font-semibold">📅 Fecha:</span> Sábado 26 de septiembre, 2026</p>
-        <p><span class="font-semibold">📍 Lugar:</span> Maracay, estado Aragua (dirección exacta al confirmar)</p>
-        <p><span class="font-semibold">🎁 Incluye:</span> Talleres, alimentación, material y regalo sorpresa.</p>
+      <!-- Preparación somática (solo si ha reservado) -->
+      <div id="prep-somatica" class="hidden bg-stone-50 p-3 rounded-xl text-xs space-y-2">
+        <p class="font-semibold text-[#E27D60]">🧘 Preparación Somática para el Campamento</p>
+        <p>Día 1: Respiración consciente · <button class="text-[#E27D60] underline" onclick="App.iniciarPractica('safe')">Escuchar audio</button></p>
+        <p>Día 2: Movimiento suave · <button class="text-[#E27D60] underline" onclick="App.iniciarPractica('freeze')">Escuchar audio</button></p>
+        <p class="text-[10px] text-[#7A8A7C]/60">* Desbloquea una práctica nueva cada día hasta el evento</p>
       </div>
 
       <div class="flex gap-3">
@@ -489,10 +520,10 @@
       </div>
     </div>
 
-    <button onclick="App.goHome()" class="btn btn-secondary w-full text-sm">Volver al inicio</button>
+    <button onclick="App.goHome()" class="btn btn-secondary w-full text-sm">Volver al Termómetro</button>
   </main>
 
-  <!-- ===== 5. PERFIL (simplificado) ===== -->
+  <!-- ===== 5. PERFIL (con pagos integrados) ===== -->
   <main id="view-profile" class="app-view max-w-md mx-auto px-5 space-y-5 hidden">
     <div class="clay-card p-6 text-center space-y-3">
       <div id="profile-avatar" class="w-24 h-24 rounded-full bg-[#E27D60] text-white flex items-center justify-center text-3xl font-bold mx-auto bg-cover bg-center">US</div>
@@ -505,6 +536,7 @@
       </div>
     </div>
 
+    <!-- Información personal -->
     <div class="clay-card p-5 space-y-3">
       <h4 class="font-bold text-sm text-[#4A5D4E]">📋 Datos personales</h4>
       <div class="space-y-2 text-xs">
@@ -523,21 +555,51 @@
       </div>
     </div>
 
+    <!-- Sección de pagos (antes pestaña independiente) -->
+    <div class="clay-card p-5 space-y-3">
+      <h4 class="font-bold text-sm text-[#4A5D4E]">💳 Facturación y pagos</h4>
+      <div class="text-xs space-y-2">
+        <div class="flex justify-between py-1 border-b border-stone-100">
+          <span class="text-[#7A8A7C]/60">Método por defecto</span>
+          <span class="font-medium">Pago Móvil BDV</span>
+        </div>
+        <div class="flex justify-between py-1 border-b border-stone-100">
+          <span class="text-[#7A8A7C]/60">Último pago</span>
+          <span class="font-medium">$120.00 (26/08/2026)</span>
+        </div>
+        <button onclick="App.verFacturacion()" class="btn btn-secondary w-full text-xs py-2">Gestionar métodos de pago</button>
+      </div>
+    </div>
+
     <button onclick="App.editProfile()" class="btn btn-primary w-full text-sm">✏️ Editar perfil</button>
     <button onclick="App.logout()" class="btn btn-outline w-full text-sm">🚪 Cerrar sesión</button>
-    <button onclick="App.goHome()" class="btn btn-secondary w-full text-sm">Volver al inicio</button>
+    <button onclick="App.goHome()" class="btn btn-secondary w-full text-sm">Volver al Termómetro</button>
   </main>
 
-  <!-- ================= NAV INFERIOR ================= -->
+  <!-- ===== PRÁCTICA (micro-práctica) ===== -->
+  <main id="view-practice" class="app-view max-w-md mx-auto px-5 space-y-5 hidden">
+    <div class="text-center pt-2">
+      <h2 class="text-2xl font-bold text-[#4A5D4E]">🧘 Tu práctica de 3 minutos</h2>
+      <p id="practice-sub" class="text-xs text-[#7A8A7C]/70">Sigue las instrucciones para regular tu sistema nervioso</p>
+    </div>
+    <div class="clay-card p-6 space-y-4">
+      <div id="practice-content" class="space-y-3">
+        <!-- Contenido dinámico -->
+      </div>
+      <button onclick="App.finishPractice()" class="btn btn-primary w-full">✅ Hecho, volver al inicio</button>
+    </div>
+  </main>
+
+  <!-- ================= NAV INFERIOR HOLÍSTICO ================= -->
   <nav class="clay-nav">
     <div class="flex justify-around items-center">
       <div onclick="App.goHome()" class="nav-item active" data-view="view-home">
-        <span class="nav-icon">🌿</span>
+        <span class="nav-icon">🌡️</span>
         <span class="nav-label">Termómetro</span>
       </div>
-      <div onclick="App.goSpecialists()" class="nav-item" data-view="view-specialists">
-        <span class="nav-icon">🛡️</span>
-        <span class="nav-label">Gremio</span>
+      <div onclick="App.goSantuario()" class="nav-item" data-view="view-santuario">
+        <span class="nav-icon">🌿</span>
+        <span class="nav-label">Santuario</span>
       </div>
       <div onclick="App.goEvent()" class="nav-item" data-view="view-event">
         <span class="nav-icon">⛺</span>
@@ -565,7 +627,8 @@
           birth: localStorage.getItem('user_birth') || '',
           since: localStorage.getItem('user_since') || new Date().toLocaleDateString('es-ES', { day:'2-digit', month:'long', year:'numeric' }),
           avatar: localStorage.getItem('user_avatar') || null,
-          founder: localStorage.getItem('founder_status') === 'true'
+          founder: localStorage.getItem('founder_status') === 'true',
+          hasReserved: localStorage.getItem('has_reserved') === 'true'
         },
         isAuthenticated: !!localStorage.getItem('user_email'),
         legalAccepted: localStorage.getItem('legal_accepted') === 'true',
@@ -579,8 +642,9 @@
           document.getElementById('modal-legal-gate').classList.add('active');
         }
         this.syncUI();
-        this.selectPaymentMethod('pm_bdv');
-        console.log('🌿 Atrévete HealthTech · Regulación del Sistema Nervioso');
+        this.startCountdown();
+        this.actualizarSaludo();
+        console.log('🌿 Atrévete HealthTech · Sistema Nervioso');
       },
 
       // ===== BARRERA LEGAL =====
@@ -626,6 +690,7 @@
         this.state.isAuthenticated = true;
         document.getElementById('modal-google').classList.remove('active');
         this.syncUI();
+        this.actualizarSaludo();
         this.toast('✅ ¡Bienvenida a Atrévete HealthTech!', 'success');
         this.goHome();
       },
@@ -644,21 +709,30 @@
         localStorage.removeItem('user_bio');
         localStorage.removeItem('user_phone');
         localStorage.removeItem('user_birth');
+        localStorage.removeItem('has_reserved');
         this.state.isAuthenticated = false;
-        this.state.user = { ...this.state.user, name: '', email: '', avatar: null };
+        this.state.user = { ...this.state.user, name: '', email: '', avatar: null, hasReserved: false };
         this.syncUI();
+        this.actualizarSaludo();
         this.toast('👋 Sesión cerrada', 'info');
         this.goHome();
       },
 
       // ===== NAVEGACIÓN =====
       goHome() { this.switchView('view-home'); },
-      goPractice() { this.switchView('view-practice'); },
+      goSantuario() { this.switchView('view-santuario'); },
       goSpecialists() { this.switchView('view-specialists'); },
       goEvent() { this.switchView('view-event'); },
       goProfile() { 
         if (!this.state.isAuthenticated) { this.loginGoogle(); return; }
         this.switchView('view-profile');
+      },
+      irAPractica() {
+        if (!this.state.selectedState) {
+          this.toast('Selecciona primero un estado en el Termómetro', 'warning');
+          return;
+        }
+        this.iniciarPractica(this.state.selectedState);
       },
 
       switchView(viewId) {
@@ -672,41 +746,38 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
       },
 
-      // ===== TERMÓMETRO =====
-      selectState(state) {
-        this.state.selectedState = state;
-        document.querySelectorAll('.state-card').forEach(c => c.classList.remove('selected'));
-        document.querySelector(`.state-card[data-state="${state}"]`).classList.add('selected');
-        const result = document.getElementById('practice-result');
-        result.classList.remove('hidden');
-        const title = document.getElementById('practice-title');
-        const desc = document.getElementById('practice-desc');
-        const btn = document.getElementById('btn-do-practice');
-
-        const practices = {
-          fight: {
-            title: '🔥 Respiración Fisiológica',
-            desc: 'Inhala por la nariz 4s, sostén 2s, exhala por la boca 6s. Repite 6 veces para calmar el sistema nervioso.'
-          },
-          freeze: {
-            title: '🧊 Movimiento Somático Suave',
-            desc: 'Siéntate cómoda. Mueve lentamente los hombros, luego el cuello y finalmente balancea suavemente el torso. Siente tu cuerpo desde adentro.'
-          },
-          safe: {
-            title: '🌊 Respiración de la Calma',
-            desc: 'Coloca una mano en el pecho y otra en el vientre. Respira profundamente 5 veces, sintiendo el movimiento de tus manos.'
-          }
-        };
-        const p = practices[state];
-        title.textContent = p.title;
-        desc.textContent = p.desc;
-        btn.onclick = () => this.iniciarPractica(state);
+      // ===== SALUDO PERSONALIZADO =====
+      actualizarSaludo() {
+        const name = this.state.user.name || 'amiga';
+        document.getElementById('greeting-name').textContent = name;
       },
 
+      // ===== TERMÓMETRO INTERACTIVO =====
+      selectState(state) {
+        this.state.selectedState = state;
+        document.querySelectorAll('.state-option').forEach(c => c.classList.remove('selected'));
+        document.querySelector(`.state-option[data-state="${state}"]`).classList.add('selected');
+        
+        const btn = document.getElementById('btn-dynamic-practice');
+        const preview = document.getElementById('practice-preview');
+        const previewText = document.getElementById('preview-text');
+        preview.classList.remove('hidden');
+
+        const practices = {
+          fight: { text: '⚡ Respiración Fisiológica · 4-2-6', label: 'Acelerada / Ansiosa' },
+          freeze: { text: '❄️ Movimiento Somático Suave · balanceo', label: 'Desconectada / Agotada' },
+          safe: { text: '🌱 Respiración de la Calma · 5 respiraciones', label: 'En Centro / Tranquila' }
+        };
+        const p = practices[state];
+        btn.querySelector('.btn-text').textContent = `🧘 Práctica: ${p.label}`;
+        previewText.textContent = `✨ Recomendación: ${p.text}`;
+      },
+
+      // ===== PRÁCTICAS =====
       iniciarPractica(state) {
         const practices = {
           fight: 'Respiración fisiológica: Inhala 4s, sostén 2s, exhala 6s. Repite 6 ciclos.',
-          freeze: 'Movimiento somático: Balancea suavemente tu torso de lado a lado durante 2 minutos.',
+          freeze: 'Movimiento somático: Balancea suavemente tu torso de lado a lado durante 3 minutos.',
           safe: 'Respiración consciente: 5 respiraciones profundas conectando con tu cuerpo.'
         };
         document.getElementById('practice-content').innerHTML = `
@@ -716,16 +787,15 @@
               ${state === 'fight' ? '4-2-6' : state === 'freeze' ? '🔄' : '🌊'}
             </div>
           </div>
-          <p class="text-xs text-[#7A8A7C]/70 text-center">⏱️ 2 minutos · sigue el ritmo</p>
+          <p class="text-xs text-[#7A8A7C]/70 text-center">⏱️ 3 minutos · sigue el ritmo</p>
         `;
-        this.goPractice();
-        // Simular duración de práctica
+        this.goSantuario();
+        // Simular duración
         setTimeout(() => {
           this.toast('✅ Práctica completada. ¡Tu sistema nervioso te lo agradece!', 'success');
-        }, 120000);
-        // Por simplicidad, mostramos toast después de 3s para demo
+        }, 180000);
         setTimeout(() => {
-          this.toast('⏳ Recuerda: la práctica se completa en 2 minutos. Respira y confía.', 'info');
+          this.toast('⏳ Recuerda: la práctica se completa en 3 minutos. Respira y confía.', 'info');
         }, 3000);
       },
 
@@ -743,13 +813,21 @@
       // ===== EVENTO =====
       reserveEvent() {
         if (!this.state.isAuthenticated) { this.loginGoogle(); return; }
+        localStorage.setItem('has_reserved', 'true');
+        this.state.user.hasReserved = true;
         this.toast('🎟️ ¡Reserva confirmada! Te esperamos el 26 de septiembre.', 'success');
+        this.syncUI();
+        document.getElementById('prep-somatica').classList.remove('hidden');
       },
 
       validateTicket() {
         const code = prompt('Ingresa el código de tu entrada:');
         if (code === 'FUGA2026') {
           this.toast('✅ Entrada válida. ¡Bienvenida al campamento!', 'success');
+          localStorage.setItem('has_reserved', 'true');
+          this.state.user.hasReserved = true;
+          this.syncUI();
+          document.getElementById('prep-somatica').classList.remove('hidden');
         } else if (code) {
           this.toast('❌ Código inválido. Verifica con la organización.', 'error');
         }
@@ -763,10 +841,34 @@
           document.getElementById('founder-status').textContent = '✨ Estatus Fundadora activado. Disfruta de beneficios exclusivos.';
           document.getElementById('founder-status').className = 'text-[10px] text-[#E27D60] font-semibold';
           this.toast('👑 ¡Felicidades! Ahora eres miembro Fundadora.', 'success');
+          this.syncUI();
         } else if (code) {
           document.getElementById('founder-status').textContent = '❌ Código incorrecto. Intenta de nuevo.';
           document.getElementById('founder-status').className = 'text-[10px] text-red-500';
         }
+      },
+
+      startCountdown() {
+        const eventDate = new Date('2026-09-26T00:00:00').getTime();
+        setInterval(() => {
+          const now = new Date().getTime();
+          const diff = eventDate - now;
+          if (diff <= 0) {
+            document.getElementById('cd-days').textContent = '00';
+            document.getElementById('cd-hours').textContent = '00';
+            document.getElementById('cd-minutes').textContent = '00';
+            document.getElementById('cd-seconds').textContent = '00';
+            return;
+          }
+          const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+          document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
+          document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+          document.getElementById('cd-minutes').textContent = String(minutes).padStart(2, '0');
+          document.getElementById('cd-seconds').textContent = String(seconds).padStart(2, '0');
+        }, 1000);
       },
 
       // ===== PERFIL =====
@@ -781,7 +883,16 @@
         localStorage.setItem('user_bio', bio);
         this.state.user = { ...this.state.user, name, phone, birth, bio };
         this.syncUI();
+        this.actualizarSaludo();
         this.toast('✅ Perfil actualizado', 'success');
+      },
+
+      verFacturacion() {
+        this.toast('💳 Abriendo panel de facturación...', 'info');
+        // Simulación
+        setTimeout(() => {
+          this.toast('📄 Métodos de pago: Pago Móvil BDV, Binance Pay', 'info');
+        }, 500);
       },
 
       // ===== SINCRONIZACIÓN UI =====
@@ -825,15 +936,22 @@
           pAvatar.style.backgroundImage = 'none';
           pAvatar.textContent = (u.name || 'U').charAt(0).toUpperCase();
         }
-        // Nav
-        document.querySelectorAll('.nav-item').forEach(item => {
-          item.classList.toggle('active', item.dataset.view === this.state.currentView);
-        });
-        // Founder code hint
+        // Evento - preparación somática
+        if (u.hasReserved) {
+          document.getElementById('prep-somatica').classList.remove('hidden');
+        } else {
+          document.getElementById('prep-somatica').classList.add('hidden');
+        }
+        // Founder status en evento
         if (u.founder) {
           document.getElementById('founder-status').textContent = '👑 Estatus Fundadora activo';
           document.getElementById('founder-status').className = 'text-[10px] text-[#E27D60] font-semibold';
         }
+        // Nav
+        document.querySelectorAll('.nav-item').forEach(item => {
+          item.classList.toggle('active', item.dataset.view === this.state.currentView);
+        });
+        this.actualizarSaludo();
       },
 
       // ===== ASISTENTE =====
@@ -856,7 +974,7 @@
         setTimeout(() => {
           const responses = [
             '🌿 Gracias por tu mensaje. ¿Te gustaría saber más sobre el Termómetro del Sistema Nervioso?',
-            '🧘 Recuerda que las prácticas de 2 minutos son ideales para regular tu estado.',
+            '🧘 Recuerda que las prácticas de 3 minutos son ideales para regular tu estado.',
             '🛡️ Todos nuestros especialistas están aprobados por el Gremio. Puedes reservar con confianza.',
             '⛺ El campamento Mujeres en Fuga será una experiencia transformadora. ¡No te lo pierdas!',
             '✨ ¿Sabías que puedes activar el Estatus Fundadora con el código especial del evento?'
@@ -885,15 +1003,6 @@
         el.classList.add('show');
         clearTimeout(this._toastTimer);
         this._toastTimer = setTimeout(() => el.classList.remove('show'), 4000);
-      },
-
-      // ===== PAGOS (legado) =====
-      selectPaymentMethod(method) {
-        // Mantenido para compatibilidad
-        document.querySelectorAll('.clay-btn-pay')?.forEach(b => b.classList.remove('active-pay'));
-        const map = { 'pm_bdv': 'pay-bdv', 'pm_bnc': 'pay-bnc', 'zelle': 'pay-zelle', 'binance': 'pay-binance' };
-        const target = document.getElementById(map[method]);
-        if (target) target.classList.add('active-pay');
       }
     };
 
