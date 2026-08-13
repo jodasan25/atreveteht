@@ -90,7 +90,7 @@
     .practice-card {
       background: white; border-radius: 24px; padding: 16px;
       border: 1px solid #e5e0db; transition: all 0.2s;
-      display: flex; align-items: center; gap: 14px;
+      display: flex; align-items: center; gap: 14px; cursor: pointer;
     }
     .practice-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.04); }
     .practice-card .p-icon { font-size: 2rem; }
@@ -179,7 +179,7 @@
     .assistant-chat.open { display: flex; }
     .assistant-header {
       background: #E27D60; color: white; padding: 14px 18px;
-      display: flex; justify-content: space-between; align-items: center;
+      display: flex; justify-between: space-between; align-items: center;
     }
     .assistant-header-title { display: flex; align-items: center; gap: 10px; font-weight: 600; }
     .assistant-header-title .dot { width: 8px; height: 8px; border-radius: 9999px; background: #4ade80; animation: pulse-dot 1.5s infinite; }
@@ -203,7 +203,7 @@
     .header-profile-btn {
       display: flex; align-items: center; gap: 8px;
       padding: 6px 14px 6px 6px; border-radius: 9999px;
-      background: white; border: 1px solid #E27D60/30;
+      background: white; border: 1px solid rgba(226,125,96,0.3);
       box-shadow: 2px 2px 8px rgba(0,0,0,0.05);
       cursor: pointer; transition: all 0.2s;
     }
@@ -243,6 +243,7 @@
       transition: all 0.2s;
       cursor: pointer;
       box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      text-decoration: none;
     }
     .btn-google-simple:hover {
       background: #F8F9FA;
@@ -287,14 +288,14 @@
   <!-- ================= CABECERA ================= -->
   <header class="pt-3 pb-1 px-6 max-w-md mx-auto flex items-center justify-between">
     <div class="cursor-pointer" onclick="App.goHome()">
-      <img id="app-logo" src="atrevetehtlogo.png" alt="Atrévete" class="h-14 w-auto object-contain">
+      <img id="app-logo" src="atrevetehtlogo.png" alt="Atrévete" class="h-14 w-auto object-contain" onerror="this.src='https://via.placeholder.com/150x50?text=Atr%C3%A9vete+HT'">
     </div>
     <div id="auth-buttons" class="flex items-center gap-2">
       <!-- Botón de Google (visible solo cuando NO autenticado) -->
       <div id="login-btn-wrapper">
-        <a id="google-login-btn" href="#" class="btn-google-simple text-sm" style="display: none;">
+        <a id="google-login-btn" href="#" class="btn-google-simple text-sm">
           <svg viewBox="0 0 24 24" width="20" height="20"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
-          <span>Iniciar sesión con Google</span>
+          <span>Iniciar sesión</span>
         </a>
       </div>
 
@@ -540,11 +541,11 @@
       <div class="text-xs space-y-2">
         <div class="flex justify-between py-1 border-b border-stone-100">
           <span class="text-[#7A8A7C]/60">Método por defecto</span>
-          <span class="font-medium">Pago Móvil BDV</span>
+          <span class="font-medium">Pago Móvil BDV / Binance</span>
         </div>
         <div class="flex justify-between py-1 border-b border-stone-100">
           <span class="text-[#7A8A7C]/60">Último pago</span>
-          <span class="font-medium">$120.00 (26/08/2026)</span>
+          <span class="font-medium">$120.00 (2026)</span>
         </div>
         <button onclick="App.verFacturacion()" class="btn btn-secondary w-full text-xs py-2">Gestionar métodos de pago</button>
       </div>
@@ -591,15 +592,17 @@
 
   <!-- ================= JAVASCRIPT ================= -->
   <script>
-    // ============================================================
-    // APP - Autenticación con Google OAuth 2.0 (redirección)
-    // ============================================================
+    // CONFIGURACIÓN DE GOOGLE OAUTH 2.0
+    const GOOGLE_CLIENT_ID = "TU_GOOGLE_CLIENT_ID.apps.googleusercontent.com"; // Reemplazar con tu ID real de Google Cloud
+
     const App = {
+      selectedStateKey: null,
+
       state: {
         user: {
           name: localStorage.getItem('user_name') || '',
           email: localStorage.getItem('user_email') || '',
-          role: localStorage.getItem('user_role') || 'user',
+          role: localStorage.getItem('user_role') || 'usuario',
           bio: localStorage.getItem('user_bio') || '',
           phone: localStorage.getItem('user_phone') || '',
           birth: localStorage.getItem('user_birth') || '',
@@ -608,294 +611,271 @@
           founder: localStorage.getItem('founder_status') === 'true',
           hasReserved: localStorage.getItem('has_reserved') === 'true'
         },
-        isAuthenticated: !!localStorage.getItem('user_email'),
-        legalAccepted: localStorage.getItem('legal_accepted') === 'true',
-        selectedState: null,
-        currentView: 'view-home'
+        isAuthenticated: !!localStorage.getItem('user_email')
       },
 
-      // ============================================================
-      // INICIALIZACIÓN
-      // ============================================================
       init() {
-        if (!this.state.legalAccepted) {
-          document.getElementById('modal-legal-gate').classList.add('active');
-        }
-        this.syncUI();
+        this.handleOAuthCallback();
+        this.setupGoogleAuthButton();
+        this.checkLegalGate();
+        this.updateAuthUI();
         this.startCountdown();
-        this.actualizarSaludo();
-
-        // Verificar si hay token en la URL (callback de Google)
-        this.handleGoogleCallback();
-
-        // Si no está autenticado, mostrar el botón de Google
-        if (!this.state.isAuthenticated) {
-          this.mostrarBotonGoogle();
+        
+        if (this.state.user.founder) {
+          const prep = document.getElementById('prep-somatica');
+          if (prep) prep.classList.remove('hidden');
         }
-
-        console.log('🌿 Atrévete HealthTech · Autenticación Google OAuth 2.0');
       },
 
-      // ============================================================
-      // GOOGLE OAUTH 2.0 - REDIRECCIÓN
-      // ============================================================
-      mostrarBotonGoogle() {
-        const btn = document.getElementById('google-login-btn');
-        if (!btn) return;
-
-        // Construir la URL de autorización
-        // REEMPLAZA ESTE CLIENT ID CON EL TUYO
-        const CLIENT_ID = '759730169795-6p7ohp6qqh56msefe2k7t5f7k2p3i9p9.apps.googleusercontent.com';
-        const REDIRECT_URI = window.location.origin + window.location.pathname;
-        const SCOPE = 'email profile';
-        const AUTH_URL = `https://accounts.google.com/o/oauth2/auth?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=${encodeURIComponent(SCOPE)}&prompt=select_account`;
-
-        btn.href = AUTH_URL;
-        btn.style.display = 'inline-flex';
-      },
-
-      handleGoogleCallback() {
-        // Verificar si la URL tiene fragmento con access_token
+      // Manejar la respuesta del redireccionamiento OAuth de Google
+      handleOAuthCallback() {
         const hash = window.location.hash;
-        if (hash && hash.includes('access_token')) {
-          const params = new URLSearchParams(hash.substring(1));
+        if (hash.includes('access_token=')) {
+          const params = new URLSearchParams(hash.replace('#', '?'));
           const accessToken = params.get('access_token');
+
           if (accessToken) {
-            // Obtener información del usuario con el token
-            fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
+            // Consultar datos del usuario a la API de Google
+            fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
               headers: { Authorization: `Bearer ${accessToken}` }
             })
             .then(res => res.json())
             .then(data => {
-              if (data.id) {
-                const userData = {
-                  name: data.name,
-                  email: data.email,
-                  avatar: data.picture,
-                  email_verified: true
-                };
-                this.autenticarUsuario(userData);
-                // Limpiar el hash de la URL
-                window.history.replaceState(null, '', window.location.pathname);
-              }
+              this.setUserSession({
+                name: data.name,
+                email: data.email,
+                avatar: data.picture
+              });
+              this.showToast(`¡Bienvenida/o, ${data.given_name || data.name}!`, 'success');
+              // Limpiar el hash de la URL
+              window.history.replaceState(null, null, window.location.pathname);
             })
             .catch(err => {
-              console.error('Error al obtener datos de usuario:', err);
-              this.toast('Error al obtener datos de Google', 'error');
+              console.error('Error al obtener datos de usuario de Google:', err);
+              this.showToast('Error al autenticar con Google', 'error');
             });
           }
         }
       },
 
-      autenticarUsuario(userData) {
+      setupGoogleAuthButton() {
+        const btn = document.getElementById('google-login-btn');
+        if (!btn) return;
+        const redirectUri = window.location.origin + window.location.pathname;
+        const scope = 'openid profile email';
+        const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${encodeURIComponent(GOOGLE_CLIENT_ID)}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=token&scope=${encodeURIComponent(scope)}`;
+        btn.href = authUrl;
+      },
+
+      setUserSession(userData) {
+        this.state.user.name = userData.name;
+        this.state.user.email = userData.email;
+        this.state.user.avatar = userData.avatar || null;
+        this.state.isAuthenticated = true;
+
         localStorage.setItem('user_name', userData.name);
         localStorage.setItem('user_email', userData.email);
-        localStorage.setItem('user_avatar', userData.avatar || '');
-        localStorage.setItem('user_role', 'user');
-        localStorage.setItem('user_since', new Date().toLocaleDateString('es-ES', { day:'2-digit', month:'long', year:'numeric' }));
-        this.state.user = {
-          ...this.state.user,
-          name: userData.name,
-          email: userData.email,
-          avatar: userData.avatar || null
-        };
-        this.state.isAuthenticated = true;
-        this.syncUI();
-        this.actualizarSaludo();
-        // Ocultar el botón de Google
-        document.getElementById('google-login-btn').style.display = 'none';
-        this.toast('✅ ¡Bienvenida a Atrévete HealthTech!', 'success');
-        this.goHome();
+        if (userData.avatar) localStorage.setItem('user_avatar', userData.avatar);
+
+        this.updateAuthUI();
       },
 
-      // ============================================================
-      // BARRERA LEGAL
-      // ============================================================
-      aceptarLegal() {
-        localStorage.setItem('legal_accepted', 'true');
-        this.state.legalAccepted = true;
-        document.getElementById('modal-legal-gate').classList.remove('active');
-        // Si ya estaba autenticado, no hacer nada; si no, mostrar botón
-        if (!this.state.isAuthenticated) this.mostrarBotonGoogle();
-      },
-      cancelarLegal() {
-        document.getElementById('modal-legal-gate').classList.remove('active');
-      },
-
-      // ============================================================
-      // LOGOUT
-      // ============================================================
       logout() {
-        if (!confirm('¿Cerrar sesión?')) return;
-        localStorage.removeItem('user_name');
-        localStorage.removeItem('user_email');
-        localStorage.removeItem('user_avatar');
-        localStorage.removeItem('user_role');
-        localStorage.removeItem('user_bio');
-        localStorage.removeItem('user_phone');
-        localStorage.removeItem('user_birth');
-        localStorage.removeItem('has_reserved');
+        localStorage.clear();
         this.state.isAuthenticated = false;
-        this.state.user = { ...this.state.user, name: '', email: '', avatar: null, hasReserved: false };
-        this.syncUI();
-        this.actualizarSaludo();
-        this.mostrarBotonGoogle(); // Volver a mostrar el botón
-        this.toast('👋 Sesión cerrada', 'info');
+        this.state.user = {
+          name: '', email: '', role: 'usuario', bio: '', phone: '', birth: '',
+          since: new Date().toLocaleDateString('es-ES', { day:'2-digit', month:'long', year:'numeric' }),
+          avatar: null, founder: false, hasReserved: false
+        };
+        this.updateAuthUI();
         this.goHome();
+        this.showToast('Sesión cerrada correctamente', 'info');
       },
 
-      // ============================================================
-      // NAVEGACIÓN
-      // ============================================================
-      goHome() { this.switchView('view-home'); },
-      goSantuario() { this.switchView('view-santuario'); },
-      goSpecialists() { this.switchView('view-specialists'); },
-      goEvent() { this.switchView('view-event'); },
-      goProfile() {
-        if (!this.state.isAuthenticated) {
-          this.toast('Inicia sesión primero', 'info');
-          return;
+      updateAuthUI() {
+        const loginBtnWrapper = document.getElementById('login-btn-wrapper');
+        const googleLoginBtn = document.getElementById('google-login-btn');
+        const userMenu = document.getElementById('user-menu');
+        const greetingName = document.getElementById('greeting-name');
+        const headerName = document.getElementById('header-name');
+        const headerAvatar = document.getElementById('header-avatar');
+
+        if (this.state.isAuthenticated) {
+          if (loginBtnWrapper) loginBtnWrapper.classList.add('hidden');
+          if (userMenu) userMenu.classList.remove('hidden');
+
+          const firstName = this.state.user.name.split(' ')[0] || 'amiga';
+          if (greetingName) greetingName.textContent = firstName;
+          if (headerName) headerName.textContent = firstName;
+
+          if (headerAvatar) {
+            if (this.state.user.avatar) {
+              headerAvatar.style.backgroundImage = `url(${this.state.user.avatar})`;
+              headerAvatar.textContent = '';
+            } else {
+              headerAvatar.style.backgroundImage = 'none';
+              headerAvatar.textContent = firstName.substring(0, 2).toUpperCase();
+            }
+          }
+        } else {
+          if (loginBtnWrapper) loginBtnWrapper.classList.remove('hidden');
+          if (googleLoginBtn) googleLoginBtn.style.display = 'inline-flex';
+          if (userMenu) userMenu.classList.add('hidden');
+          if (greetingName) greetingName.textContent = 'amiga';
         }
-        this.switchView('view-profile');
-      },
-      irAPractica() {
-        if (!this.state.selectedState) {
-          this.toast('Selecciona primero un estado en el Termómetro', 'warning');
-          return;
+
+        // Actualizar vista de Perfil
+        const profileAvatar = document.getElementById('profile-avatar');
+        const profileName = document.getElementById('profile-name');
+        const profileEmail = document.getElementById('profile-email');
+        const profileRole = document.getElementById('profile-role');
+        const profileBio = document.getElementById('profile-bio');
+        const profilePhone = document.getElementById('profile-phone');
+        const profileBirth = document.getElementById('profile-birth');
+        const profileSince = document.getElementById('profile-since');
+
+        if (profileName) profileName.textContent = this.state.user.name || 'Invitado';
+        if (profileEmail) profileEmail.textContent = this.state.user.email || 'No registrado';
+        if (profileRole) profileRole.textContent = this.state.user.role;
+        if (profileBio) profileBio.textContent = this.state.user.bio || 'Sin biografía aún';
+        if (profilePhone) profilePhone.textContent = this.state.user.phone || 'No registrado';
+        if (profileBirth) profileBirth.textContent = this.state.user.birth || 'No registrada';
+        if (profileSince) profileSince.textContent = this.state.user.since;
+
+        if (profileAvatar) {
+          if (this.state.user.avatar) {
+            profileAvatar.style.backgroundImage = `url(${this.state.user.avatar})`;
+            profileAvatar.textContent = '';
+          } else {
+            profileAvatar.style.backgroundImage = 'none';
+            profileAvatar.textContent = (this.state.user.name || 'US').substring(0, 2).toUpperCase();
+          }
         }
-        this.iniciarPractica(this.state.selectedState);
       },
 
-      switchView(viewId) {
+      // NAV Y VISTAS
+      showView(viewId) {
         document.querySelectorAll('.app-view').forEach(v => v.classList.add('hidden'));
         const target = document.getElementById(viewId);
         if (target) target.classList.remove('hidden');
-        this.state.currentView = viewId;
+
         document.querySelectorAll('.nav-item').forEach(item => {
-          item.classList.toggle('active', item.dataset.view === viewId);
+          if (item.getAttribute('data-view') === viewId) {
+            item.classList.add('active');
+          } else {
+            item.classList.remove('active');
+          }
         });
         window.scrollTo({ top: 0, behavior: 'smooth' });
       },
 
-      // ============================================================
-      // SALUDO
-      // ============================================================
-      actualizarSaludo() {
-        const name = this.state.user.name || 'amiga';
-        document.getElementById('greeting-name').textContent = name;
+      goHome() { this.showView('view-home'); },
+      goSantuario() { this.showView('view-santuario'); },
+      goSpecialists() { this.showView('view-specialists'); },
+      goEvent() { this.showView('view-event'); },
+      goProfile() {
+        if (!this.state.isAuthenticated) {
+          this.showToast('Por favor inicia sesión con Google primero', 'warning');
+          return;
+        }
+        this.showView('view-profile');
       },
 
-      // ============================================================
-      // TERMÓMETRO
-      // ============================================================
-      selectState(state) {
-        this.state.selectedState = state;
-        document.querySelectorAll('.state-option').forEach(c => c.classList.remove('selected'));
-        document.querySelector(`.state-option[data-state="${state}"]`).classList.add('selected');
+      // BARRERA LEGAL
+      checkLegalGate() {
+        if (localStorage.getItem('legal_accepted') !== 'true') {
+          const modal = document.getElementById('modal-legal-gate');
+          if (modal) modal.classList.add('active');
+        }
+      },
+      aceptarLegal() {
+        localStorage.setItem('legal_accepted', 'true');
+        const modal = document.getElementById('modal-legal-gate');
+        if (modal) modal.classList.remove('active');
+        this.showToast('Términos aceptados correctamente', 'success');
+      },
+      cancelarLegal() {
+        alert('Debes aceptar las condiciones para utilizar Atrévete HealthTech.');
+      },
 
-        const btn = document.getElementById('btn-dynamic-practice');
+      // TERMÓMETRO & PRÁCTICAS
+      selectState(key) {
+        this.selectedStateKey = key;
+        document.querySelectorAll('.state-option').forEach(el => {
+          if (el.getAttribute('data-state') === key) {
+            el.classList.add('selected');
+          } else {
+            el.classList.remove('selected');
+          }
+        });
+
         const preview = document.getElementById('practice-preview');
-        const previewText = document.getElementById('preview-text');
-        preview.classList.remove('hidden');
-
-        const practices = {
-          fight: { text: '⚡ Respiración Fisiológica · 4-2-6', label: 'Acelerada / Ansiosa' },
-          freeze: { text: '❄️ Movimiento Somático Suave · balanceo', label: 'Desconectada / Agotada' },
-          safe: { text: '🌱 Respiración de la Calma · 5 respiraciones', label: 'En Centro / Tranquila' }
-        };
-        const p = practices[state];
-        btn.querySelector('.btn-text').textContent = `🧘 Práctica: ${p.label}`;
-        previewText.textContent = `✨ Recomendación: ${p.text}`;
+        const text = document.getElementById('preview-text');
+        if (preview && text) {
+          preview.classList.remove('hidden');
+          if (key === 'fight') text.innerHTML = '⚡ <strong>Recomendado:</strong> Respiración Fisiológica (4-2-6) para desacelerar.';
+          if (key === 'freeze') text.innerHTML = '❄️ <strong>Recomendado:</strong> Movimiento Somático Suave para salir de la apatía.';
+          if (key === 'safe') text.innerHTML = '🌱 <strong>Recomendado:</strong> Respiración de la Calma para mantener tu centro.';
+        }
       },
 
-      // ============================================================
-      // PRÁCTICAS
-      // ============================================================
-      iniciarPractica(state) {
-        const practices = {
-          fight: 'Respiración fisiológica: Inhala 4s, sostén 2s, exhala 6s. Repite 6 ciclos.',
-          freeze: 'Movimiento somático: Balancea suavemente tu torso de lado a lado durante 3 minutos.',
-          safe: 'Respiración consciente: 5 respiraciones profundas conectando con tu cuerpo.'
-        };
-        document.getElementById('practice-content').innerHTML = `
-          <p class="text-sm text-[#4A5D4E]">${practices[state]}</p>
-          <div class="flex justify-center py-4">
-            <div class="w-32 h-32 rounded-full bg-[#F0B7A1] flex items-center justify-center text-white font-bold text-lg animate-pulse shadow-lg">
-              ${state === 'fight' ? '4-2-6' : state === 'freeze' ? '🔄' : '🌊'}
+      irAPractica() {
+        if (!this.selectedStateKey) {
+          this.showToast('Selecciona primero cómo te sientes hoy', 'info');
+          return;
+        }
+        this.iniciarPractica(this.selectedStateKey);
+      },
+
+      iniciarPractica(type) {
+        const sub = document.getElementById('practice-sub');
+        const content = document.getElementById('practice-content');
+
+        if (type === 'fight') {
+          if (sub) sub.textContent = 'Pausa de Desaceleración · Sistema Nervioso Simpático';
+          if (content) content.innerHTML = `
+            <div class="p-4 bg-orange-50 rounded-2xl border border-orange-200">
+              <h4 class="font-bold text-orange-800 text-sm mb-2">⚡ Respiración Fisiológica (3 Minutos)</h4>
+              <p class="text-xs text-orange-900 leading-relaxed mb-3">1. Inhala profundo por la nariz durante 4 segundos.<br>2. Sostén el aire 2 segundos.<br>3. Exhala lentamente por la boca en 6 segundos como si soplaras un pitillo.</p>
+              <div class="p-3 bg-white rounded-xl text-center font-mono text-lg font-bold text-[#E27D60]">Inhala... Sostén... Exhala...</div>
             </div>
-          </div>
-          <p class="text-xs text-[#7A8A7C]/70 text-center">⏱️ 3 minutos · sigue el ritmo</p>
-        `;
-        this.switchView('view-practice');
-        setTimeout(() => {
-          this.toast('✅ Práctica completada. ¡Tu sistema nervioso te lo agradece!', 'success');
-        }, 3000);
+          `;
+        } else if (type === 'freeze') {
+          if (sub) sub.textContent = 'Reconexión Corporal · Sistema Dorsal Vagal';
+          if (content) content.innerHTML = `
+            <div class="p-4 bg-blue-50 rounded-2xl border border-blue-200">
+              <h4 class="font-bold text-blue-800 text-sm mb-2">❄️ Balanceo Somático (3 Minutos)</h4>
+              <p class="text-xs text-blue-900 leading-relaxed mb-3">1. Coloca ambas plantas de los pies sobre el suelo.<br>2. Comienza a balancear tus hombros suavemente de lado a lado.<br>3. Pon una mano en tu pecho y siente el latido de tu corazón.</p>
+              <div class="p-3 bg-white rounded-xl text-center font-mono text-lg font-bold text-blue-600">Siente el contacto con la tierra...</div>
+            </div>
+          `;
+        } else {
+          if (sub) sub.textContent = 'Anclaje de Seguridad · Ventral Vagal';
+          if (content) content.innerHTML = `
+            <div class="p-4 bg-emerald-50 rounded-2xl border border-emerald-200">
+              <h4 class="font-bold text-emerald-800 text-sm mb-2">🌱 Respiración del Centro (3 Minutos)</h4>
+              <p class="text-xs text-emerald-900 leading-relaxed mb-3">1. Mira a tu alrededor y nombra 3 cosas de color verde.<br>2. Haz 5 respiraciones naturales y profundas.<br>3. Repite en mente: "Aquí y ahora estoy a salvo".</p>
+              <div class="p-3 bg-white rounded-xl text-center font-mono text-lg font-bold text-emerald-600">Estoy presente y en centro.</div>
+            </div>
+          `;
+        }
+        this.showView('view-practice');
       },
 
       finishPractice() {
+        this.showToast('¡Práctica completada! Tu cuerpo te lo agradece 🌿', 'success');
         this.goHome();
-        this.toast('🌿 Has vuelto al inicio. ¿Cómo te sientes ahora?', 'info');
       },
 
-      // ============================================================
-      // ESPECIALISTAS
-      // ============================================================
-      bookSpecialist(name) {
-        if (!this.state.isAuthenticated) {
-          this.toast('Inicia sesión para reservar', 'info');
-          return;
-        }
-        this.toast(`📅 Solicitud de sesión enviada a ${name}. Te contactaremos en 24h.`, 'success');
-      },
-
-      // ============================================================
-      // EVENTO
-      // ============================================================
-      reserveEvent() {
-        if (!this.state.isAuthenticated) {
-          this.toast('Inicia sesión para reservar', 'info');
-          return;
-        }
-        localStorage.setItem('has_reserved', 'true');
-        this.state.user.hasReserved = true;
-        this.toast('🎟️ ¡Reserva confirmada! Te esperamos el 26 de septiembre.', 'success');
-        this.syncUI();
-        document.getElementById('prep-somatica').classList.remove('hidden');
-      },
-
-      validateTicket() {
-        const code = prompt('Ingresa el código de tu entrada:');
-        if (code === 'FUGA2026') {
-          this.toast('✅ Entrada válida. ¡Bienvenida al campamento!', 'success');
-          localStorage.setItem('has_reserved', 'true');
-          this.state.user.hasReserved = true;
-          this.syncUI();
-          document.getElementById('prep-somatica').classList.remove('hidden');
-        } else if (code) {
-          this.toast('❌ Código inválido. Verifica con la organización.', 'error');
-        }
-      },
-
-      activateFounder() {
-        const code = document.getElementById('founder-code').value.trim();
-        if (code === 'FUNDADORA2026') {
-          localStorage.setItem('founder_status', 'true');
-          this.state.user.founder = true;
-          document.getElementById('founder-status').textContent = '✨ Estatus Fundadora activado. Disfruta de beneficios exclusivos.';
-          document.getElementById('founder-status').className = 'text-[10px] text-[#E27D60] font-semibold';
-          this.toast('👑 ¡Felicidades! Ahora eres miembro Fundadora.', 'success');
-          this.syncUI();
-        } else if (code) {
-          document.getElementById('founder-status').textContent = '❌ Código incorrecto. Intenta de nuevo.';
-          document.getElementById('founder-status').className = 'text-[10px] text-red-500';
-        }
-      },
-
+      // CUENTA REGRESIVA EVENTO
       startCountdown() {
-        const eventDate = new Date('2026-09-26T00:00:00').getTime();
-        setInterval(() => {
+        const targetDate = new Date('2026-09-26T08:00:00').getTime();
+
+        const updateTimer = () => {
           const now = new Date().getTime();
-          const diff = eventDate - now;
+          const diff = targetDate - now;
+
           if (diff <= 0) {
             document.getElementById('cd-days').textContent = '00';
             document.getElementById('cd-hours').textContent = '00';
@@ -903,171 +883,158 @@
             document.getElementById('cd-seconds').textContent = '00';
             return;
           }
+
           const days = Math.floor(diff / (1000 * 60 * 60 * 24));
           const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
           const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
           const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-          document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
-          document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
-          document.getElementById('cd-minutes').textContent = String(minutes).padStart(2, '0');
-          document.getElementById('cd-seconds').textContent = String(seconds).padStart(2, '0');
-        }, 1000);
+
+          const elD = document.getElementById('cd-days');
+          const elH = document.getElementById('cd-hours');
+          const elM = document.getElementById('cd-minutes');
+          const elS = document.getElementById('cd-seconds');
+
+          if (elD) elD.textContent = String(days).padStart(2, '0');
+          if (elH) elH.textContent = String(hours).padStart(2, '0');
+          if (elM) elM.textContent = String(minutes).padStart(2, '0');
+          if (elS) elS.textContent = String(seconds).padStart(2, '0');
+        };
+
+        updateTimer();
+        setInterval(updateTimer, 1000);
       },
 
-      // ============================================================
-      // PERFIL
-      // ============================================================
+      // ACCIONES DE EVENTO Y ESPECIALISTAS
+      reserveEvent() {
+        if (!this.state.isAuthenticated) {
+          this.showToast('Inicia sesión con Google para reservar tu cupo', 'warning');
+          return;
+        }
+        this.showToast('Redirigiendo a pasarela de pago (Pago Móvil / Binance)...', 'info');
+      },
+
+      validateTicket() {
+        this.showToast('Escanea el código QR de tu entrada en puerta', 'info');
+      },
+
+      activateFounder() {
+        const code = document.getElementById('founder-code').value.trim();
+        const status = document.getElementById('founder-status');
+
+        if (code.toUpperCase() === 'ATREVETE2026') {
+          this.state.user.founder = true;
+          localStorage.setItem('founder_status', 'true');
+          if (status) {
+            status.textContent = '✨ Estatus Fundadora activado correctamente.';
+            status.className = 'text-[10px] text-emerald-600 font-bold mt-1';
+          }
+          const prep = document.getElementById('prep-somatica');
+          if (prep) prep.classList.remove('hidden');
+          this.showToast('¡Estatus Fundadora Activado!', 'success');
+        } else {
+          if (status) {
+            status.textContent = '❌ Código no válido. Verifica e intenta de nuevo.';
+            status.className = 'text-[10px] text-red-500 font-bold mt-1';
+          }
+        }
+      },
+
+      bookSpecialist(name) {
+        if (!this.state.isAuthenticated) {
+          this.showToast('Debes iniciar sesión para agendar una sesión', 'warning');
+          return;
+        }
+        this.showToast(`Solicitando agenda con ${name}...`, 'success');
+      },
+
       editProfile() {
-        const name = prompt('Nombre:', this.state.user.name) || this.state.user.name;
-        const phone = prompt('Teléfono:', this.state.user.phone) || '';
-        const birth = prompt('Fecha de nacimiento (DD/MM/AAAA):', this.state.user.birth) || '';
-        const bio = prompt('Biografía:', this.state.user.bio) || '';
-        localStorage.setItem('user_name', name);
-        localStorage.setItem('user_phone', phone);
-        localStorage.setItem('user_birth', birth);
-        localStorage.setItem('user_bio', bio);
-        this.state.user = { ...this.state.user, name, phone, birth, bio };
-        this.syncUI();
-        this.actualizarSaludo();
-        this.toast('✅ Perfil actualizado', 'success');
+        const newBio = prompt('Ingresa tu biografía breve:', this.state.user.bio);
+        if (newBio !== null) {
+          this.state.user.bio = newBio;
+          localStorage.setItem('user_bio', newBio);
+          this.updateAuthUI();
+          this.showToast('Perfil actualizado', 'success');
+        }
       },
 
       verFacturacion() {
-        this.toast('💳 Abriendo panel de facturación...', 'info');
-        setTimeout(() => {
-          this.toast('📄 Métodos de pago: Pago Móvil BDV, Binance Pay', 'info');
-        }, 500);
+        this.showToast('Plataforma conectada con Binance Pay y BDV', 'info');
       },
 
-      // ============================================================
-      // SINCRONIZACIÓN UI
-      // ============================================================
-      syncUI() {
-        const u = this.state.user;
-        const isAuth = this.state.isAuthenticated;
-
-        // Mostrar/ocultar botón de Google
-        const googleBtn = document.getElementById('google-login-btn');
-        if (googleBtn) {
-          googleBtn.style.display = isAuth ? 'none' : 'inline-flex';
-        }
-
-        // Mostrar/ocultar menú de usuario
-        document.getElementById('user-menu').classList.toggle('hidden', !isAuth);
-
-        if (isAuth) {
-          document.getElementById('header-name').textContent = u.name;
-          const avatar = document.getElementById('header-avatar');
-          if (u.avatar) {
-            avatar.style.backgroundImage = `url('${u.avatar}')`;
-            avatar.textContent = '';
-          } else {
-            avatar.style.backgroundImage = 'none';
-            avatar.textContent = u.name.charAt(0).toUpperCase();
-          }
-        }
-
-        // Perfil
-        document.getElementById('profile-name').textContent = u.name || 'Invitada';
-        document.getElementById('profile-email').textContent = u.email || 'correo@ejemplo.com';
-        document.getElementById('profile-bio').textContent = u.bio || 'Sin biografía aún';
-        document.getElementById('profile-phone').textContent = u.phone || 'No registrado';
-        document.getElementById('profile-birth').textContent = u.birth || 'No registrada';
-        document.getElementById('profile-since').textContent = u.since || 'Hoy';
-        document.getElementById('profile-role').textContent = u.role === 'spec' ? '👩‍⚕️ Especialista' : '👤 Usuario';
-        if (u.founder) {
-          document.getElementById('profile-status').textContent = '👑 Fundadora';
-          document.getElementById('profile-status').className = 'text-xs bg-[#E27D60] text-white font-semibold px-3 py-1 rounded-full';
-        } else {
-          document.getElementById('profile-status').textContent = '✅ Verificado';
-          document.getElementById('profile-status').className = 'text-xs bg-emerald-100 text-emerald-800 font-semibold px-3 py-1 rounded-full';
-        }
-        const pAvatar = document.getElementById('profile-avatar');
-        if (u.avatar) {
-          pAvatar.style.backgroundImage = `url('${u.avatar}')`;
-          pAvatar.textContent = '';
-        } else {
-          pAvatar.style.backgroundImage = 'none';
-          pAvatar.textContent = (u.name || 'U').charAt(0).toUpperCase();
-        }
-
-        if (u.hasReserved) {
-          document.getElementById('prep-somatica').classList.remove('hidden');
-        } else {
-          document.getElementById('prep-somatica').classList.add('hidden');
-        }
-        if (u.founder) {
-          document.getElementById('founder-status').textContent = '👑 Estatus Fundadora activo';
-          document.getElementById('founder-status').className = 'text-[10px] text-[#E27D60] font-semibold';
-        }
-
-        document.querySelectorAll('.nav-item').forEach(item => {
-          item.classList.toggle('active', item.dataset.view === this.state.currentView);
-        });
-        this.actualizarSaludo();
-      },
-
-      // ============================================================
-      // ASISTENTE
-      // ============================================================
+      // ASISTENTE DE IA
       toggleAssistant() {
         const chat = document.getElementById('assistant-chat');
-        const toggle = document.getElementById('assistant-toggle');
-        chat.classList.toggle('open');
-        toggle.classList.toggle('active');
-        toggle.innerHTML = chat.classList.contains('open') ? '✕' : '💬';
-        if (chat.classList.contains('open')) {
-          document.getElementById('chat-input').focus();
+        const btn = document.getElementById('assistant-toggle');
+        if (chat && btn) {
+          chat.classList.toggle('open');
+          btn.classList.toggle('active');
         }
       },
-      sendMessage() {
+
+      quickAsk(question) {
         const input = document.getElementById('chat-input');
-        const text = input.value.trim();
-        if (!text) return;
-        this.addMessage(text, 'user');
-        input.value = '';
-        setTimeout(() => {
-          const responses = [
-            '🌿 Gracias por tu mensaje. ¿Te gustaría saber más sobre el Termómetro del Sistema Nervioso?',
-            '🧘 Recuerda que las prácticas de 3 minutos son ideales para regular tu estado.',
-            '🛡️ Todos nuestros especialistas están aprobados por el Gremio. Puedes reservar con confianza.',
-            '⛺ El campamento Mujeres en Fuga será una experiencia transformadora. ¡No te lo pierdas!',
-            '✨ ¿Sabías que puedes activar el Estatus Fundadora con el código especial del evento?'
-          ];
-          this.addMessage(responses[Math.floor(Math.random() * responses.length)], 'bot');
-        }, 800);
-      },
-      quickAsk(text) {
-        document.getElementById('chat-input').value = text;
-        this.sendMessage();
-      },
-      addMessage(text, type) {
-        const container = document.getElementById('chat-messages');
-        const div = document.createElement('div');
-        div.className = `message ${type}`;
-        div.textContent = text;
-        container.appendChild(div);
-        container.scrollTop = container.scrollHeight;
+        if (input) {
+          input.value = question;
+          this.sendMessage();
+        }
       },
 
-      // ============================================================
-      // TOAST
-      // ============================================================
-      toast(message, type = 'success') {
-        const el = document.getElementById('toast');
-        el.className = `toast toast-${type}`;
-        el.textContent = message;
-        el.classList.add('show');
-        clearTimeout(this._toastTimer);
-        this._toastTimer = setTimeout(() => el.classList.remove('show'), 4000);
+      sendMessage() {
+        const input = document.getElementById('chat-input');
+        const container = document.getElementById('chat-messages');
+        if (!input || !container) return;
+
+        const text = input.value.trim();
+        if (!text) return;
+
+        // Añadir mensaje usuario
+        const uMsg = document.createElement('div');
+        uMsg.className = 'message user';
+        uMsg.textContent = text;
+        container.appendChild(uMsg);
+
+        input.value = '';
+        container.scrollTop = container.scrollHeight;
+
+        // Respuesta simulada de la IA
+        setTimeout(() => {
+          const bMsg = document.createElement('div');
+          bMsg.className = 'message bot';
+
+          const query = text.toLowerCase();
+          if (query.includes('termómetro') || query.includes('funciona')) {
+            bMsg.textContent = '🌡️ El Termómetro evalúa si estás en estado Lucha/Huida (Acelerada), Congelamiento (Agotada) o Ventral Vagal (Centro) para darte la técnica exacta.';
+          } else if (query.includes('gremio') || query.includes('especialista')) {
+            bMsg.textContent = '🛡️ El Gremio es nuestra red de especialistas curadas e idóneas para acompañar tu salud emocional con los más altos estándares.';
+          } else if (query.includes('campamento') || query.includes('evento')) {
+            bMsg.textContent = '⛺ "Mujeres en Fuga" es el 26 de septiembre en Maracay. Tendremos talleres somáticos, conexión y naturaleza.';
+          } else {
+            bMsg.textContent = '🌿 Entiendo. Te sugiero hacer una prueba en el Termómetro de autorregulación o escribir a nuestro soporte.';
+          }
+
+          container.appendChild(bMsg);
+          container.scrollTop = container.scrollHeight;
+        }, 600);
+      },
+
+      // TOAST NOTIFICATIONS
+      showToast(msg, type = 'info') {
+        const toast = document.getElementById('toast');
+        if (!toast) return;
+
+        toast.className = `toast toast-${type} show`;
+        toast.textContent = msg;
+
+        setTimeout(() => {
+          toast.classList.remove('show');
+        }, 3000);
       }
     };
 
-    // ============================================================
-    // INICIALIZACIÓN
-    // ============================================================
-    document.addEventListener('DOMContentLoaded', () => App.init());
-    window.App = App;
+    // Inicialización al cargar la página
+    document.addEventListener('DOMContentLoaded', () => {
+      App.init();
+    });
   </script>
 </body>
 </html>
