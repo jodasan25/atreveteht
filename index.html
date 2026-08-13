@@ -56,11 +56,6 @@
       background: transparent; color: #E27D60; border: 1.5px solid #E27D60;
     }
     .btn-outline:hover:not(:disabled) { background: #E27D60; color: #fff; }
-    .btn-google {
-      background: #fff; color: #3C4043; border: 1px solid #DADCE0; gap: 10px;
-    }
-    .btn-google:hover:not(:disabled) { background: #F8F9FA; box-shadow: 0 2px 6px rgba(0,0,0,0.12); }
-    .btn-google svg { width: 20px; height: 20px; flex-shrink: 0; }
     .btn .spinner {
       display: none; width: 20px; height: 20px;
       border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff;
@@ -69,6 +64,16 @@
     .btn.loading .spinner { display: inline-block; }
     .btn.loading .btn-text { display: none; }
     @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ===== BOTÓN GOOGLE SIMPLE ===== */
+    .btn-google-simple {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      background: white; border: 1px solid #DADCE0; border-radius: 9999px;
+      padding: 10px 24px; font-weight: 500; color: #3C4043;
+      transition: all 0.2s; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+    .btn-google-simple:hover { background: #F8F9FA; box-shadow: 0 2px 6px rgba(0,0,0,0.12); }
+    .btn-google-simple svg { width: 20px; height: 20px; }
 
     /* ===== TERMÓMETRO ===== */
     .state-option {
@@ -90,12 +95,9 @@
     .practice-card {
       background: white; border-radius: 24px; padding: 16px;
       border: 1px solid #e5e0db; transition: all 0.2s;
-      display: flex; align-items: center; gap: 14px; cursor: pointer;
+      display: flex; align-items: center; gap: 14px;
     }
     .practice-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.04); }
-    .practice-card .p-icon { font-size: 2rem; }
-    .practice-card .p-title { font-weight: 600; color: #4A5D4E; }
-    .practice-card .p-desc { font-size: 0.75rem; color: #7A8A7C; }
 
     /* ===== ESPECIALISTAS ===== */
     .specialist-card {
@@ -179,7 +181,7 @@
     .assistant-chat.open { display: flex; }
     .assistant-header {
       background: #E27D60; color: white; padding: 14px 18px;
-      display: flex; justify-between: space-between; align-items: center;
+      display: flex; justify-content: space-between; align-items: center;
     }
     .assistant-header-title { display: flex; align-items: center; gap: 10px; font-weight: 600; }
     .assistant-header-title .dot { width: 8px; height: 8px; border-radius: 9999px; background: #4ade80; animation: pulse-dot 1.5s infinite; }
@@ -203,7 +205,7 @@
     .header-profile-btn {
       display: flex; align-items: center; gap: 8px;
       padding: 6px 14px 6px 6px; border-radius: 9999px;
-      background: white; border: 1px solid rgba(226,125,96,0.3);
+      background: white; border: 1px solid #E27D60/30;
       box-shadow: 2px 2px 8px rgba(0,0,0,0.05);
       cursor: pointer; transition: all 0.2s;
     }
@@ -228,35 +230,53 @@
     .countdown-item .number { font-size: 1.5rem; font-weight: 700; color: #E27D60; }
     .countdown-item .label { font-size: 0.6rem; color: #7A8A7C; text-transform: uppercase; letter-spacing: 0.5px; }
 
-    /* ===== BOTÓN GOOGLE SIMPLE ===== */
-    .btn-google-simple {
-      display: inline-flex;
+    /* ===== FLUJO DE PRÁCTICA SOMÁTICA ===== */
+    .practice-step {
+      animation: fadeIn 0.4s ease;
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(12px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .breath-circle {
+      width: 160px;
+      height: 160px;
+      border-radius: 9999px;
+      background: #F0B7A1;
+      display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
+      color: white;
+      font-weight: bold;
+      font-size: 1.1rem;
+      margin: 0 auto;
+      transition: transform 4s cubic-bezier(0.45, 0.05, 0.55, 0.95);
+      box-shadow: 0 8px 32px rgba(226,125,96,0.2);
+      border: 4px solid rgba(255,255,255,0.6);
+    }
+    .state-diagnosis-btn {
+      padding: 16px;
+      border-radius: 20px;
+      border: 2px solid #e5e0db;
       background: white;
-      border: 1px solid #DADCE0;
-      border-radius: 9999px;
-      padding: 10px 24px;
-      font-weight: 500;
-      color: #3C4043;
-      transition: all 0.2s;
       cursor: pointer;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-      text-decoration: none;
+      transition: all 0.2s ease;
+      text-align: left;
+      width: 100%;
     }
-    .btn-google-simple:hover {
-      background: #F8F9FA;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+    .state-diagnosis-btn:hover {
+      border-color: #E27D60;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
     }
-    .btn-google-simple svg {
-      width: 20px;
-      height: 20px;
-    }
+    .state-diagnosis-btn .icon { font-size: 1.8rem; }
+    .state-diagnosis-btn .label { font-weight: 600; color: #4A5D4E; }
+    .state-diagnosis-btn .desc { font-size: 0.75rem; color: #7A8A7C; }
 
     @media (max-width: 400px) {
       .assistant-chat { width: calc(100vw - 32px); height: 380px; right: 16px; bottom: 160px; }
       .assistant-toggle { width: 48px; height: 48px; font-size: 20px; bottom: 90px; right: 16px; }
+      .breath-circle { width: 130px; height: 130px; font-size: 0.9rem; }
     }
   </style>
 </head>
@@ -288,17 +308,13 @@
   <!-- ================= CABECERA ================= -->
   <header class="pt-3 pb-1 px-6 max-w-md mx-auto flex items-center justify-between">
     <div class="cursor-pointer" onclick="App.goHome()">
-      <img id="app-logo" src="atrevetehtlogo.png" alt="Atrévete" class="h-14 w-auto object-contain" onerror="this.src='https://via.placeholder.com/150x50?text=Atr%C3%A9vete+HT'">
+      <img id="app-logo" src="atrevetehtlogo.png" alt="Atrévete" class="h-14 w-auto object-contain">
     </div>
     <div id="auth-buttons" class="flex items-center gap-2">
-      <!-- Botón de Google (visible solo cuando NO autenticado) -->
-      <div id="login-btn-wrapper">
-        <a id="google-login-btn" href="#" class="btn-google-simple text-sm">
-          <svg viewBox="0 0 24 24" width="20" height="20"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
-          <span>Iniciar sesión</span>
-        </a>
-      </div>
-
+      <a id="google-login-btn" href="#" class="btn-google-simple text-sm" style="display: none;">
+        <svg viewBox="0 0 24 24" width="20" height="20"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+        <span>Iniciar sesión con Google</span>
+      </a>
       <div id="user-menu" class="hidden flex items-center gap-2">
         <div onclick="App.goProfile()" class="header-profile-btn">
           <div id="header-avatar" class="header-avatar">US</div>
@@ -358,7 +374,8 @@
         </div>
       </div>
 
-      <button id="btn-dynamic-practice" class="btn btn-primary w-full text-sm" onclick="App.irAPractica()">
+      <!-- Botón de práctica que inicia el FLUJO COMPLETO DE 4 PASOS -->
+      <button id="btn-dynamic-practice" class="btn btn-primary w-full text-sm" onclick="App.iniciarFlujoPractica()">
         <span class="btn-text">🧘 Regulación Somática</span>
         <span class="spinner"></span>
       </button>
@@ -391,16 +408,16 @@
       <p class="text-xs text-[#7A8A7C]/70">Prácticas de 3 minutos para regular tu sistema nervioso</p>
     </div>
     <div class="space-y-3">
-      <div class="practice-card" onclick="App.iniciarPractica('fight')">
-        <span class="p-icon">⚡</span>
+      <div class="practice-card" onclick="App.iniciarFlujoPracticaConEstado('fight')">
+        <span class="p-icon text-3xl">⚡</span>
         <div><div class="p-title">Respiración Fisiológica</div><div class="p-desc">Para aceleración / ansiedad · 4-2-6</div></div>
       </div>
-      <div class="practice-card" onclick="App.iniciarPractica('freeze')">
-        <span class="p-icon">❄️</span>
+      <div class="practice-card" onclick="App.iniciarFlujoPracticaConEstado('freeze')">
+        <span class="p-icon text-3xl">❄️</span>
         <div><div class="p-title">Movimiento Somático Suave</div><div class="p-desc">Para desconexión / agotamiento · balanceo</div></div>
       </div>
-      <div class="practice-card" onclick="App.iniciarPractica('safe')">
-        <span class="p-icon">🌱</span>
+      <div class="practice-card" onclick="App.iniciarFlujoPracticaConEstado('safe')">
+        <span class="p-icon text-3xl">🌱</span>
         <div><div class="p-title">Respiración de la Calma</div><div class="p-desc">Para centro / tranquilidad · 5 respiraciones</div></div>
       </div>
     </div>
@@ -487,8 +504,8 @@
       </div>
       <div id="prep-somatica" class="hidden bg-stone-50 p-3 rounded-xl text-xs space-y-2">
         <p class="font-semibold text-[#E27D60]">🧘 Preparación Somática para el Campamento</p>
-        <p>Día 1: Respiración consciente · <button class="text-[#E27D60] underline" onclick="App.iniciarPractica('safe')">Escuchar audio</button></p>
-        <p>Día 2: Movimiento suave · <button class="text-[#E27D60] underline" onclick="App.iniciarPractica('freeze')">Escuchar audio</button></p>
+        <p>Día 1: Respiración consciente · <button class="text-[#E27D60] underline" onclick="App.iniciarFlujoPracticaConEstado('safe')">Escuchar audio</button></p>
+        <p>Día 2: Movimiento suave · <button class="text-[#E27D60] underline" onclick="App.iniciarFlujoPracticaConEstado('freeze')">Escuchar audio</button></p>
         <p class="text-[10px] text-[#7A8A7C]/60">* Desbloquea una práctica nueva cada día hasta el evento</p>
       </div>
       <div class="flex gap-3">
@@ -541,11 +558,11 @@
       <div class="text-xs space-y-2">
         <div class="flex justify-between py-1 border-b border-stone-100">
           <span class="text-[#7A8A7C]/60">Método por defecto</span>
-          <span class="font-medium">Pago Móvil BDV / Binance</span>
+          <span class="font-medium">Pago Móvil BDV</span>
         </div>
         <div class="flex justify-between py-1 border-b border-stone-100">
           <span class="text-[#7A8A7C]/60">Último pago</span>
-          <span class="font-medium">$120.00 (2026)</span>
+          <span class="font-medium">$120.00 (26/08/2026)</span>
         </div>
         <button onclick="App.verFacturacion()" class="btn btn-secondary w-full text-xs py-2">Gestionar métodos de pago</button>
       </div>
@@ -555,15 +572,105 @@
     <button onclick="App.goHome()" class="btn btn-secondary w-full text-sm">Volver al Termómetro</button>
   </main>
 
-  <!-- PRÁCTICA -->
+  <!-- ================= FLUJO DE PRÁCTICA SOMÁTICA (4 PASOS) ================= -->
   <main id="view-practice" class="app-view max-w-md mx-auto px-5 space-y-5 hidden">
-    <div class="text-center pt-2">
-      <h2 class="text-2xl font-bold text-[#4A5D4E]">🧘 Tu práctica de 3 minutos</h2>
-      <p id="practice-sub" class="text-xs text-[#7A8A7C]/70">Sigue las instrucciones para regular tu sistema nervioso</p>
+    <!-- STEP 1: DIAGNÓSTICO INSTANTÁNEO -->
+    <div id="practice-step-0" class="practice-step">
+      <div class="text-center pt-2">
+        <h2 class="text-xl font-bold text-[#4A5D4E]">🌿 Detente un segundo. Siente tu cuerpo.</h2>
+        <p class="text-xs text-[#7A8A7C]/70 mt-1">No intentes pensar tu bienestar, siéntelo. Tu cuerpo tiene la respuesta.</p>
+      </div>
+      <div class="clay-card p-5 space-y-4 mt-4">
+        <p class="text-sm font-semibold text-[#4A5D4E]">¿En qué estado se encuentra tu sistema nervioso ahora mismo?</p>
+        <div class="space-y-3">
+          <button class="state-diagnosis-btn" onclick="App.seleccionarEstadoPractica('fight')">
+            <div class="flex items-start gap-3">
+              <span class="icon">⚡</span>
+              <div>
+                <div class="label">Hiperactivado / Ansioso</div>
+                <div class="desc">Mente acelerada, tensión muscular, respiración corta, agobio.</div>
+              </div>
+            </div>
+          </button>
+          <button class="state-diagnosis-btn" onclick="App.seleccionarEstadoPractica('freeze')">
+            <div class="flex items-start gap-3">
+              <span class="icon">❄️</span>
+              <div>
+                <div class="label">Congelado / Agotado</div>
+                <div class="desc">Sensación de pesadez, apatía, desconexión, fatiga profunda.</div>
+              </div>
+            </div>
+          </button>
+          <button class="state-diagnosis-btn" onclick="App.seleccionarEstadoPractica('safe')">
+            <div class="flex items-start gap-3">
+              <span class="icon">🌱</span>
+              <div>
+                <div class="label">Descentrado / Ligera Inquietud</div>
+                <div class="desc">Necesito un reajuste rápido para volver a mi centro y enfocarme.</div>
+              </div>
+            </div>
+          </button>
+        </div>
+        <button onclick="App.cerrarPractica()" class="btn btn-secondary w-full text-sm mt-2">Cancelar</button>
+      </div>
     </div>
-    <div class="clay-card p-6 space-y-4">
-      <div id="practice-content" class="space-y-3"></div>
-      <button onclick="App.finishPractice()" class="btn btn-primary w-full">✅ Hecho, volver al inicio</button>
+
+    <!-- STEP 2: MICRO-DOSIS PRESCRIPTIVA -->
+    <div id="practice-step-1" class="practice-step hidden">
+      <div class="text-center pt-2">
+        <h2 class="text-xl font-bold text-[#4A5D4E]">🧘 Tu Micro-Dosis Somática</h2>
+        <p class="text-xs text-[#7A8A7C]/70">Solo 2 a 5 minutos para devolverle la seguridad a tu cuerpo.</p>
+      </div>
+      <div class="clay-card p-5 space-y-4 mt-4">
+        <div id="prescription-content" class="text-center space-y-3">
+          <!-- Se llena dinámicamente -->
+        </div>
+        <button id="btn-start-practice" class="btn btn-primary w-full" onclick="App.ejecutarPractica()">
+          <span class="btn-text">Comenzar práctica</span>
+          <span class="spinner"></span>
+        </button>
+        <button onclick="App.cerrarPractica()" class="btn btn-secondary w-full text-sm">Cancelar</button>
+      </div>
+    </div>
+
+    <!-- STEP 3: EJECUCIÓN (SANTUARIO VISUAL) -->
+    <div id="practice-step-2" class="practice-step hidden">
+      <div class="text-center pt-2">
+        <h2 class="text-xl font-bold text-[#4A5D4E]">🌊 Sintonizando con tu sistema nervioso...</h2>
+        <p class="text-xs text-[#7A8A7C]/70">Preparando tu dosis de calma.</p>
+      </div>
+      <div class="clay-card p-5 space-y-5 mt-4 text-center">
+        <div class="breath-circle" id="breath-circle">Inhala...</div>
+        <p id="timer-organic" class="text-sm text-[#7A8A7C] font-medium">Respira con el círculo</p>
+        <p id="practice-instruction" class="text-xs text-[#7A8A7C]/70">Sigue el ritmo de la respiración</p>
+        <!-- Sin barra de progreso numérica estresante -->
+        <button id="btn-skip-practice" class="btn btn-secondary w-full text-sm" onclick="App.finalizarPractica()" style="margin-top: 8px;">
+          <span class="btn-text">⏳ Terminar ahora</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP 4: RE-CALIBRACIÓN Y CIERRE -->
+    <div id="practice-step-3" class="practice-step hidden">
+      <div class="text-center pt-2">
+        <h2 class="text-xl font-bold text-[#4A5D4E]">🌿 ¿Cómo se siente tu cuerpo ahora?</h2>
+        <p class="text-xs text-[#7A8A7C]/70">Has devuelto tu cuerpo a un estado de seguridad. Tu bienestar no es una meta, es tu estado natural.</p>
+      </div>
+      <div class="clay-card p-5 space-y-4 mt-4">
+        <div class="grid grid-cols-3 gap-2">
+          <button onclick="App.cerrarPractica()" class="btn btn-secondary text-xs py-2">Más Calma</button>
+          <button onclick="App.cerrarPractica()" class="btn btn-secondary text-xs py-2">Igual</button>
+          <button onclick="App.cerrarPractica()" class="btn btn-secondary text-xs py-2">Más Conectada</button>
+        </div>
+        <div class="border-t border-stone-200 pt-3 space-y-2">
+          <button onclick="App.cerrarPractica()" class="btn btn-primary w-full text-sm">
+            <span class="btn-text">Volver a mi día con mi cuerpo habitado</span>
+          </button>
+          <button onclick="App.goSpecialistsFromPractice()" class="btn btn-outline w-full text-sm">
+            Conectar con un Especialista del Gremio
+          </button>
+        </div>
+      </div>
     </div>
   </main>
 
@@ -592,17 +699,15 @@
 
   <!-- ================= JAVASCRIPT ================= -->
   <script>
-    // CONFIGURACIÓN DE GOOGLE OAUTH 2.0
-    const GOOGLE_CLIENT_ID = "TU_GOOGLE_CLIENT_ID.apps.googleusercontent.com"; // Reemplazar con tu ID real de Google Cloud
-
+    // ============================================================
+    // APP - Con flujo de práctica somática de 4 pasos
+    // ============================================================
     const App = {
-      selectedStateKey: null,
-
       state: {
         user: {
           name: localStorage.getItem('user_name') || '',
           email: localStorage.getItem('user_email') || '',
-          role: localStorage.getItem('user_role') || 'usuario',
+          role: localStorage.getItem('user_role') || 'user',
           bio: localStorage.getItem('user_bio') || '',
           phone: localStorage.getItem('user_phone') || '',
           birth: localStorage.getItem('user_birth') || '',
@@ -611,271 +716,381 @@
           founder: localStorage.getItem('founder_status') === 'true',
           hasReserved: localStorage.getItem('has_reserved') === 'true'
         },
-        isAuthenticated: !!localStorage.getItem('user_email')
+        isAuthenticated: !!localStorage.getItem('user_email'),
+        legalAccepted: localStorage.getItem('legal_accepted') === 'true',
+        selectedState: null,
+        currentView: 'view-home',
+        practiceState: null, // fight, freeze, safe
+        practiceInterval: null,
+        breathState: 0 // 0=inhala, 1=sostén, 2=exhala
       },
 
+      // ============================================================
+      // INICIALIZACIÓN
+      // ============================================================
       init() {
-        this.handleOAuthCallback();
-        this.setupGoogleAuthButton();
-        this.checkLegalGate();
-        this.updateAuthUI();
-        this.startCountdown();
-        
-        if (this.state.user.founder) {
-          const prep = document.getElementById('prep-somatica');
-          if (prep) prep.classList.remove('hidden');
+        if (!this.state.legalAccepted) {
+          document.getElementById('modal-legal-gate').classList.add('active');
         }
+        this.syncUI();
+        this.startCountdown();
+        this.actualizarSaludo();
+        this.handleGoogleCallback();
+        if (!this.state.isAuthenticated) {
+          this.mostrarBotonGoogle();
+        }
+        console.log('🌿 Atrévete HealthTech · Flujo Somático 4 Pasos');
       },
 
-      // Manejar la respuesta del redireccionamiento OAuth de Google
-      handleOAuthCallback() {
+      // ============================================================
+      // GOOGLE OAUTH
+      // ============================================================
+      mostrarBotonGoogle() {
+        const btn = document.getElementById('google-login-btn');
+        if (!btn) return;
+        const CLIENT_ID = '759730169795-6p7ohp6qqh56msefe2k7t5f7k2p3i9p9.apps.googleusercontent.com';
+        const REDIRECT_URI = window.location.origin + window.location.pathname;
+        const SCOPE = 'email profile';
+        const AUTH_URL = `https://accounts.google.com/o/oauth2/auth?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=${encodeURIComponent(SCOPE)}&prompt=select_account`;
+        btn.href = AUTH_URL;
+        btn.style.display = 'inline-flex';
+      },
+      handleGoogleCallback() {
         const hash = window.location.hash;
-        if (hash.includes('access_token=')) {
-          const params = new URLSearchParams(hash.replace('#', '?'));
+        if (hash && hash.includes('access_token')) {
+          const params = new URLSearchParams(hash.substring(1));
           const accessToken = params.get('access_token');
-
           if (accessToken) {
-            // Consultar datos del usuario a la API de Google
-            fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+            fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
               headers: { Authorization: `Bearer ${accessToken}` }
             })
             .then(res => res.json())
             .then(data => {
-              this.setUserSession({
-                name: data.name,
-                email: data.email,
-                avatar: data.picture
-              });
-              this.showToast(`¡Bienvenida/o, ${data.given_name || data.name}!`, 'success');
-              // Limpiar el hash de la URL
-              window.history.replaceState(null, null, window.location.pathname);
+              if (data.id) {
+                const userData = { name: data.name, email: data.email, avatar: data.picture, email_verified: true };
+                this.autenticarUsuario(userData);
+                window.history.replaceState(null, '', window.location.pathname);
+              }
             })
-            .catch(err => {
-              console.error('Error al obtener datos de usuario de Google:', err);
-              this.showToast('Error al autenticar con Google', 'error');
-            });
+            .catch(err => console.error('Error al obtener datos de usuario:', err));
           }
         }
       },
-
-      setupGoogleAuthButton() {
-        const btn = document.getElementById('google-login-btn');
-        if (!btn) return;
-        const redirectUri = window.location.origin + window.location.pathname;
-        const scope = 'openid profile email';
-        const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${encodeURIComponent(GOOGLE_CLIENT_ID)}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=token&scope=${encodeURIComponent(scope)}`;
-        btn.href = authUrl;
-      },
-
-      setUserSession(userData) {
-        this.state.user.name = userData.name;
-        this.state.user.email = userData.email;
-        this.state.user.avatar = userData.avatar || null;
-        this.state.isAuthenticated = true;
-
+      autenticarUsuario(userData) {
         localStorage.setItem('user_name', userData.name);
         localStorage.setItem('user_email', userData.email);
-        if (userData.avatar) localStorage.setItem('user_avatar', userData.avatar);
-
-        this.updateAuthUI();
-      },
-
-      logout() {
-        localStorage.clear();
-        this.state.isAuthenticated = false;
-        this.state.user = {
-          name: '', email: '', role: 'usuario', bio: '', phone: '', birth: '',
-          since: new Date().toLocaleDateString('es-ES', { day:'2-digit', month:'long', year:'numeric' }),
-          avatar: null, founder: false, hasReserved: false
-        };
-        this.updateAuthUI();
+        localStorage.setItem('user_avatar', userData.avatar || '');
+        localStorage.setItem('user_role', 'user');
+        localStorage.setItem('user_since', new Date().toLocaleDateString('es-ES', { day:'2-digit', month:'long', year:'numeric' }));
+        this.state.user = { ...this.state.user, name: userData.name, email: userData.email, avatar: userData.avatar || null };
+        this.state.isAuthenticated = true;
+        this.syncUI();
+        this.actualizarSaludo();
+        document.getElementById('google-login-btn').style.display = 'none';
+        this.toast('✅ ¡Bienvenida a Atrévete HealthTech!', 'success');
         this.goHome();
-        this.showToast('Sesión cerrada correctamente', 'info');
       },
 
-      updateAuthUI() {
-        const loginBtnWrapper = document.getElementById('login-btn-wrapper');
-        const googleLoginBtn = document.getElementById('google-login-btn');
-        const userMenu = document.getElementById('user-menu');
-        const greetingName = document.getElementById('greeting-name');
-        const headerName = document.getElementById('header-name');
-        const headerAvatar = document.getElementById('header-avatar');
-
-        if (this.state.isAuthenticated) {
-          if (loginBtnWrapper) loginBtnWrapper.classList.add('hidden');
-          if (userMenu) userMenu.classList.remove('hidden');
-
-          const firstName = this.state.user.name.split(' ')[0] || 'amiga';
-          if (greetingName) greetingName.textContent = firstName;
-          if (headerName) headerName.textContent = firstName;
-
-          if (headerAvatar) {
-            if (this.state.user.avatar) {
-              headerAvatar.style.backgroundImage = `url(${this.state.user.avatar})`;
-              headerAvatar.textContent = '';
-            } else {
-              headerAvatar.style.backgroundImage = 'none';
-              headerAvatar.textContent = firstName.substring(0, 2).toUpperCase();
-            }
-          }
-        } else {
-          if (loginBtnWrapper) loginBtnWrapper.classList.remove('hidden');
-          if (googleLoginBtn) googleLoginBtn.style.display = 'inline-flex';
-          if (userMenu) userMenu.classList.add('hidden');
-          if (greetingName) greetingName.textContent = 'amiga';
-        }
-
-        // Actualizar vista de Perfil
-        const profileAvatar = document.getElementById('profile-avatar');
-        const profileName = document.getElementById('profile-name');
-        const profileEmail = document.getElementById('profile-email');
-        const profileRole = document.getElementById('profile-role');
-        const profileBio = document.getElementById('profile-bio');
-        const profilePhone = document.getElementById('profile-phone');
-        const profileBirth = document.getElementById('profile-birth');
-        const profileSince = document.getElementById('profile-since');
-
-        if (profileName) profileName.textContent = this.state.user.name || 'Invitado';
-        if (profileEmail) profileEmail.textContent = this.state.user.email || 'No registrado';
-        if (profileRole) profileRole.textContent = this.state.user.role;
-        if (profileBio) profileBio.textContent = this.state.user.bio || 'Sin biografía aún';
-        if (profilePhone) profilePhone.textContent = this.state.user.phone || 'No registrado';
-        if (profileBirth) profileBirth.textContent = this.state.user.birth || 'No registrada';
-        if (profileSince) profileSince.textContent = this.state.user.since;
-
-        if (profileAvatar) {
-          if (this.state.user.avatar) {
-            profileAvatar.style.backgroundImage = `url(${this.state.user.avatar})`;
-            profileAvatar.textContent = '';
-          } else {
-            profileAvatar.style.backgroundImage = 'none';
-            profileAvatar.textContent = (this.state.user.name || 'US').substring(0, 2).toUpperCase();
-          }
-        }
+      // ============================================================
+      // BARRERA LEGAL
+      // ============================================================
+      aceptarLegal() {
+        localStorage.setItem('legal_accepted', 'true');
+        this.state.legalAccepted = true;
+        document.getElementById('modal-legal-gate').classList.remove('active');
+        if (!this.state.isAuthenticated) this.mostrarBotonGoogle();
+      },
+      cancelarLegal() {
+        document.getElementById('modal-legal-gate').classList.remove('active');
       },
 
-      // NAV Y VISTAS
-      showView(viewId) {
+      // ============================================================
+      // LOGOUT
+      // ============================================================
+      logout() {
+        if (!confirm('¿Cerrar sesión?')) return;
+        localStorage.removeItem('user_name'); localStorage.removeItem('user_email');
+        localStorage.removeItem('user_avatar'); localStorage.removeItem('user_role');
+        localStorage.removeItem('user_bio'); localStorage.removeItem('user_phone');
+        localStorage.removeItem('user_birth'); localStorage.removeItem('has_reserved');
+        this.state.isAuthenticated = false;
+        this.state.user = { ...this.state.user, name: '', email: '', avatar: null, hasReserved: false };
+        this.syncUI(); this.actualizarSaludo();
+        this.mostrarBotonGoogle();
+        this.toast('👋 Sesión cerrada', 'info');
+        this.goHome();
+      },
+
+      // ============================================================
+      // NAVEGACIÓN
+      // ============================================================
+      goHome() { this.switchView('view-home'); },
+      goSantuario() { this.switchView('view-santuario'); },
+      goSpecialists() { this.switchView('view-specialists'); },
+      goEvent() { this.switchView('view-event'); },
+      goProfile() {
+        if (!this.state.isAuthenticated) { this.toast('Inicia sesión primero', 'info'); return; }
+        this.switchView('view-profile');
+      },
+      goSpecialistsFromPractice() {
+        this.cerrarPractica();
+        this.goSpecialists();
+      },
+
+      switchView(viewId) {
         document.querySelectorAll('.app-view').forEach(v => v.classList.add('hidden'));
         const target = document.getElementById(viewId);
         if (target) target.classList.remove('hidden');
-
+        this.state.currentView = viewId;
         document.querySelectorAll('.nav-item').forEach(item => {
-          if (item.getAttribute('data-view') === viewId) {
-            item.classList.add('active');
-          } else {
-            item.classList.remove('active');
-          }
+          item.classList.toggle('active', item.dataset.view === viewId);
         });
         window.scrollTo({ top: 0, behavior: 'smooth' });
-      },
-
-      goHome() { this.showView('view-home'); },
-      goSantuario() { this.showView('view-santuario'); },
-      goSpecialists() { this.showView('view-specialists'); },
-      goEvent() { this.showView('view-event'); },
-      goProfile() {
-        if (!this.state.isAuthenticated) {
-          this.showToast('Por favor inicia sesión con Google primero', 'warning');
-          return;
-        }
-        this.showView('view-profile');
-      },
-
-      // BARRERA LEGAL
-      checkLegalGate() {
-        if (localStorage.getItem('legal_accepted') !== 'true') {
-          const modal = document.getElementById('modal-legal-gate');
-          if (modal) modal.classList.add('active');
+        // Detener respiración si salimos de práctica
+        if (viewId !== 'view-practice' && this.state.practiceInterval) {
+          clearInterval(this.state.practiceInterval);
+          this.state.practiceInterval = null;
         }
       },
-      aceptarLegal() {
-        localStorage.setItem('legal_accepted', 'true');
-        const modal = document.getElementById('modal-legal-gate');
-        if (modal) modal.classList.remove('active');
-        this.showToast('Términos aceptados correctamente', 'success');
-      },
-      cancelarLegal() {
-        alert('Debes aceptar las condiciones para utilizar Atrévete HealthTech.');
-      },
 
-      // TERMÓMETRO & PRÁCTICAS
-      selectState(key) {
-        this.selectedStateKey = key;
-        document.querySelectorAll('.state-option').forEach(el => {
-          if (el.getAttribute('data-state') === key) {
-            el.classList.add('selected');
-          } else {
-            el.classList.remove('selected');
-          }
-        });
-
+      // ============================================================
+      // SALUDO Y TERMÓMETRO (Home)
+      // ============================================================
+      actualizarSaludo() {
+        const name = this.state.user.name || 'amiga';
+        document.getElementById('greeting-name').textContent = name;
+      },
+      selectState(state) {
+        this.state.selectedState = state;
+        document.querySelectorAll('.state-option').forEach(c => c.classList.remove('selected'));
+        document.querySelector(`.state-option[data-state="${state}"]`).classList.add('selected');
+        const btn = document.getElementById('btn-dynamic-practice');
         const preview = document.getElementById('practice-preview');
-        const text = document.getElementById('preview-text');
-        if (preview && text) {
-          preview.classList.remove('hidden');
-          if (key === 'fight') text.innerHTML = '⚡ <strong>Recomendado:</strong> Respiración Fisiológica (4-2-6) para desacelerar.';
-          if (key === 'freeze') text.innerHTML = '❄️ <strong>Recomendado:</strong> Movimiento Somático Suave para salir de la apatía.';
-          if (key === 'safe') text.innerHTML = '🌱 <strong>Recomendado:</strong> Respiración de la Calma para mantener tu centro.';
-        }
+        const previewText = document.getElementById('preview-text');
+        preview.classList.remove('hidden');
+        const practices = {
+          fight: { text: '⚡ Respiración Fisiológica · 4-2-6', label: 'Acelerada / Ansiosa' },
+          freeze: { text: '❄️ Movimiento Somático Suave · balanceo', label: 'Desconectada / Agotada' },
+          safe: { text: '🌱 Respiración de la Calma · 5 respiraciones', label: 'En Centro / Tranquila' }
+        };
+        const p = practices[state];
+        btn.querySelector('.btn-text').textContent = `🧘 Práctica: ${p.label}`;
+        previewText.textContent = `✨ Recomendación: ${p.text}`;
       },
 
-      irAPractica() {
-        if (!this.selectedStateKey) {
-          this.showToast('Selecciona primero cómo te sientes hoy', 'info');
-          return;
-        }
-        this.iniciarPractica(this.selectedStateKey);
-      },
-
-      iniciarPractica(type) {
-        const sub = document.getElementById('practice-sub');
-        const content = document.getElementById('practice-content');
-
-        if (type === 'fight') {
-          if (sub) sub.textContent = 'Pausa de Desaceleración · Sistema Nervioso Simpático';
-          if (content) content.innerHTML = `
-            <div class="p-4 bg-orange-50 rounded-2xl border border-orange-200">
-              <h4 class="font-bold text-orange-800 text-sm mb-2">⚡ Respiración Fisiológica (3 Minutos)</h4>
-              <p class="text-xs text-orange-900 leading-relaxed mb-3">1. Inhala profundo por la nariz durante 4 segundos.<br>2. Sostén el aire 2 segundos.<br>3. Exhala lentamente por la boca en 6 segundos como si soplaras un pitillo.</p>
-              <div class="p-3 bg-white rounded-xl text-center font-mono text-lg font-bold text-[#E27D60]">Inhala... Sostén... Exhala...</div>
-            </div>
-          `;
-        } else if (type === 'freeze') {
-          if (sub) sub.textContent = 'Reconexión Corporal · Sistema Dorsal Vagal';
-          if (content) content.innerHTML = `
-            <div class="p-4 bg-blue-50 rounded-2xl border border-blue-200">
-              <h4 class="font-bold text-blue-800 text-sm mb-2">❄️ Balanceo Somático (3 Minutos)</h4>
-              <p class="text-xs text-blue-900 leading-relaxed mb-3">1. Coloca ambas plantas de los pies sobre el suelo.<br>2. Comienza a balancear tus hombros suavemente de lado a lado.<br>3. Pon una mano en tu pecho y siente el latido de tu corazón.</p>
-              <div class="p-3 bg-white rounded-xl text-center font-mono text-lg font-bold text-blue-600">Siente el contacto con la tierra...</div>
-            </div>
-          `;
+      // ============================================================
+      // FLUJO DE PRÁCTICA SOMÁTICA (4 PASOS)
+      // ============================================================
+      iniciarFlujoPractica() {
+        if (this.state.selectedState) {
+          this.iniciarFlujoPracticaConEstado(this.state.selectedState);
         } else {
-          if (sub) sub.textContent = 'Anclaje de Seguridad · Ventral Vagal';
-          if (content) content.innerHTML = `
-            <div class="p-4 bg-emerald-50 rounded-2xl border border-emerald-200">
-              <h4 class="font-bold text-emerald-800 text-sm mb-2">🌱 Respiración del Centro (3 Minutos)</h4>
-              <p class="text-xs text-emerald-900 leading-relaxed mb-3">1. Mira a tu alrededor y nombra 3 cosas de color verde.<br>2. Haz 5 respiraciones naturales y profundas.<br>3. Repite en mente: "Aquí y ahora estoy a salvo".</p>
-              <div class="p-3 bg-white rounded-xl text-center font-mono text-lg font-bold text-emerald-600">Estoy presente y en centro.</div>
-            </div>
-          `;
+          this.switchView('view-practice');
+          // Asegurar que solo el paso 0 esté visible
+          this.mostrarPaso(0);
         }
-        this.showView('view-practice');
       },
 
-      finishPractice() {
-        this.showToast('¡Práctica completada! Tu cuerpo te lo agradece 🌿', 'success');
+      iniciarFlujoPracticaConEstado(state) {
+        this.state.selectedState = state;
+        this.state.practiceState = state;
+        this.switchView('view-practice');
+        // Saltar paso 0 (diagnóstico) y mostrar paso 1 (prescripción) directamente
+        this.mostrarPaso(1);
+        this.renderPrescripcion(state);
+      },
+
+      seleccionarEstadoPractica(state) {
+        this.state.practiceState = state;
+        this.mostrarPaso(1);
+        this.renderPrescripcion(state);
+      },
+
+      renderPrescripcion(state) {
+        const container = document.getElementById('prescription-content');
+        const practices = {
+          fight: {
+            title: '⚡ Suspiro Fisiológico + Rastreo Sensorial',
+            desc: '2 inhalaciones por la nariz, 1 exhalación larga por la boca. Activa el nervio vago y desacelera el ritmo cardíaco de inmediato.',
+            time: '3 minutos'
+          },
+          freeze: {
+            title: '❄️ Sacudida Somática + Contacto Físico',
+            desc: 'Pequeños golpeteos suaves (tapping) en brazos y pecho para devolver la propiocepción y "despertar" el cuerpo sin sobrecargarlo.',
+            time: '2 minutos'
+          },
+          safe: {
+            title: '🌱 Anclaje de Mirada (Orientation)',
+            desc: 'Escaneo visual del entorno físico para enviar señales de seguridad al cerebro primitivo.',
+            time: '3 minutos'
+          }
+        };
+        const p = practices[state];
+        container.innerHTML = `
+          <p class="text-lg font-bold text-[#4A5D4E]">${p.title}</p>
+          <p class="text-sm text-[#7A8A7C]">${p.desc}</p>
+          <p class="text-xs text-[#7A8A7C]/60">⏱️ Duración: ${p.time}</p>
+        `;
+        document.getElementById('btn-start-practice').classList.remove('hidden');
+      },
+
+      ejecutarPractica() {
+        this.mostrarPaso(2);
+        this.iniciarRespiraciónGuiada();
+        // Simular duración de práctica (ej. 30 segundos para demo, pero mostramos 2-3 min en UI)
+        const tiempoTotal = 30; // segundos para demo (idealmente 120-180)
+        let tiempoRestante = tiempoTotal;
+        const timerEl = document.getElementById('timer-organic');
+        const instructionEl = document.getElementById('practice-instruction');
+        timerEl.textContent = `⏳ ${tiempoRestante}s restantes`;
+
+        // Ocultar botón de salto después de iniciar, o mantenerlo
+        this.state.practiceInterval = setInterval(() => {
+          tiempoRestante--;
+          if (tiempoRestante <= 0) {
+            clearInterval(this.state.practiceInterval);
+            this.state.practiceInterval = null;
+            timerEl.textContent = '✨ Práctica completada';
+            instructionEl.textContent = 'Has terminado. Tómate un momento para integrar.';
+            document.getElementById('btn-skip-practice').querySelector('.btn-text').textContent = 'Continuar';
+            document.getElementById('btn-skip-practice').onclick = () => this.finalizarPractica();
+          } else {
+            timerEl.textContent = `⏳ ${tiempoRestante}s restantes`;
+            // Cambiar instrucción según la respiración
+            if (this.state.breathState === 0) instructionEl.textContent = 'Inhala profundamente...';
+            else if (this.state.breathState === 1) instructionEl.textContent = 'Sostén la respiración...';
+            else instructionEl.textContent = 'Exhala lentamente...';
+          }
+        }, 1000);
+      },
+
+      iniciarRespiraciónGuiada() {
+        const circle = document.getElementById('breath-circle');
+        if (!circle) return;
+        this.state.breathState = 0;
+        circle.style.transform = 'scale(1.0)';
+        circle.textContent = 'Inhala...';
+        // Cambiar cada 3 segundos (simula ritmo respiratorio)
+        if (this.state.practiceInterval) clearInterval(this.state.practiceInterval);
+        const breathInterval = setInterval(() => {
+          if (this.state.breathState === 0) {
+            circle.style.transform = 'scale(1.4)';
+            circle.textContent = 'Sostén...';
+            this.state.breathState = 1;
+          } else if (this.state.breathState === 1) {
+            circle.style.transform = 'scale(0.8)';
+            circle.textContent = 'Exhala...';
+            this.state.breathState = 2;
+          } else {
+            circle.style.transform = 'scale(1.0)';
+            circle.textContent = 'Inhala...';
+            this.state.breathState = 0;
+          }
+        }, 3000);
+        // Guardar intervalo para limpiar al cambiar de vista
+        if (this.state.practiceInterval) clearInterval(this.state.practiceInterval);
+        this.state.practiceInterval = breathInterval;
+      },
+
+      finalizarPractica() {
+        if (this.state.practiceInterval) {
+          clearInterval(this.state.practiceInterval);
+          this.state.practiceInterval = null;
+        }
+        this.mostrarPaso(3);
+        // Resetear círculo
+        const circle = document.getElementById('breath-circle');
+        if (circle) {
+          circle.style.transform = 'scale(1.0)';
+          circle.textContent = '🌿';
+        }
+        document.getElementById('timer-organic').textContent = 'Práctica completada';
+        document.getElementById('practice-instruction').textContent = '¿Cómo te sientes?';
+      },
+
+      cerrarPractica() {
+        if (this.state.practiceInterval) {
+          clearInterval(this.state.practiceInterval);
+          this.state.practiceInterval = null;
+        }
+        const circle = document.getElementById('breath-circle');
+        if (circle) {
+          circle.style.transform = 'scale(1.0)';
+          circle.textContent = 'Inhala...';
+        }
         this.goHome();
+        this.toast('🌿 Has vuelto a tu día. Recuerda: tu bienestar es tu estado natural.', 'info');
       },
 
-      // CUENTA REGRESIVA EVENTO
+      mostrarPaso(step) {
+        for (let i = 0; i <= 3; i++) {
+          const el = document.getElementById(`practice-step-${i}`);
+          if (el) el.classList.add('hidden');
+        }
+        const target = document.getElementById(`practice-step-${step}`);
+        if (target) target.classList.remove('hidden');
+        // Asegurar que la vista de práctica esté visible
+        const practiceView = document.getElementById('view-practice');
+        if (practiceView) practiceView.classList.remove('hidden');
+        // Si step es 2, iniciar respiración si no está iniciada
+        if (step === 2) {
+          // La respiración se inicia en ejecutarPractica
+        }
+        if (step === 0) {
+          document.getElementById('btn-start-practice').classList.add('hidden');
+        }
+      },
+
+      // ============================================================
+      // ESPECIALISTAS
+      // ============================================================
+      bookSpecialist(name) {
+        if (!this.state.isAuthenticated) { this.toast('Inicia sesión para reservar', 'info'); return; }
+        this.toast(`📅 Solicitud de sesión enviada a ${name}. Te contactaremos en 24h.`, 'success');
+      },
+
+      // ============================================================
+      // EVENTO
+      // ============================================================
+      reserveEvent() {
+        if (!this.state.isAuthenticated) { this.toast('Inicia sesión para reservar', 'info'); return; }
+        localStorage.setItem('has_reserved', 'true');
+        this.state.user.hasReserved = true;
+        this.toast('🎟️ ¡Reserva confirmada! Te esperamos el 26 de septiembre.', 'success');
+        this.syncUI();
+        document.getElementById('prep-somatica').classList.remove('hidden');
+      },
+      validateTicket() {
+        const code = prompt('Ingresa el código de tu entrada:');
+        if (code === 'FUGA2026') {
+          this.toast('✅ Entrada válida. ¡Bienvenida al campamento!', 'success');
+          localStorage.setItem('has_reserved', 'true');
+          this.state.user.hasReserved = true;
+          this.syncUI();
+          document.getElementById('prep-somatica').classList.remove('hidden');
+        } else if (code) {
+          this.toast('❌ Código inválido. Verifica con la organización.', 'error');
+        }
+      },
+      activateFounder() {
+        const code = document.getElementById('founder-code').value.trim();
+        if (code === 'FUNDADORA2026') {
+          localStorage.setItem('founder_status', 'true');
+          this.state.user.founder = true;
+          document.getElementById('founder-status').textContent = '✨ Estatus Fundadora activado. Disfruta de beneficios exclusivos.';
+          document.getElementById('founder-status').className = 'text-[10px] text-[#E27D60] font-semibold';
+          this.toast('👑 ¡Felicidades! Ahora eres miembro Fundadora.', 'success');
+          this.syncUI();
+        } else if (code) {
+          document.getElementById('founder-status').textContent = '❌ Código incorrecto. Intenta de nuevo.';
+          document.getElementById('founder-status').className = 'text-[10px] text-red-500';
+        }
+      },
       startCountdown() {
-        const targetDate = new Date('2026-09-26T08:00:00').getTime();
-
-        const updateTimer = () => {
+        const eventDate = new Date('2026-09-26T00:00:00').getTime();
+        setInterval(() => {
           const now = new Date().getTime();
-          const diff = targetDate - now;
-
+          const diff = eventDate - now;
           if (diff <= 0) {
             document.getElementById('cd-days').textContent = '00';
             document.getElementById('cd-hours').textContent = '00';
@@ -883,158 +1098,142 @@
             document.getElementById('cd-seconds').textContent = '00';
             return;
           }
-
           const days = Math.floor(diff / (1000 * 60 * 60 * 24));
           const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
           const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
           const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-          const elD = document.getElementById('cd-days');
-          const elH = document.getElementById('cd-hours');
-          const elM = document.getElementById('cd-minutes');
-          const elS = document.getElementById('cd-seconds');
-
-          if (elD) elD.textContent = String(days).padStart(2, '0');
-          if (elH) elH.textContent = String(hours).padStart(2, '0');
-          if (elM) elM.textContent = String(minutes).padStart(2, '0');
-          if (elS) elS.textContent = String(seconds).padStart(2, '0');
-        };
-
-        updateTimer();
-        setInterval(updateTimer, 1000);
+          document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
+          document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+          document.getElementById('cd-minutes').textContent = String(minutes).padStart(2, '0');
+          document.getElementById('cd-seconds').textContent = String(seconds).padStart(2, '0');
+        }, 1000);
       },
 
-      // ACCIONES DE EVENTO Y ESPECIALISTAS
-      reserveEvent() {
-        if (!this.state.isAuthenticated) {
-          this.showToast('Inicia sesión con Google para reservar tu cupo', 'warning');
-          return;
-        }
-        this.showToast('Redirigiendo a pasarela de pago (Pago Móvil / Binance)...', 'info');
-      },
-
-      validateTicket() {
-        this.showToast('Escanea el código QR de tu entrada en puerta', 'info');
-      },
-
-      activateFounder() {
-        const code = document.getElementById('founder-code').value.trim();
-        const status = document.getElementById('founder-status');
-
-        if (code.toUpperCase() === 'ATREVETE2026') {
-          this.state.user.founder = true;
-          localStorage.setItem('founder_status', 'true');
-          if (status) {
-            status.textContent = '✨ Estatus Fundadora activado correctamente.';
-            status.className = 'text-[10px] text-emerald-600 font-bold mt-1';
-          }
-          const prep = document.getElementById('prep-somatica');
-          if (prep) prep.classList.remove('hidden');
-          this.showToast('¡Estatus Fundadora Activado!', 'success');
-        } else {
-          if (status) {
-            status.textContent = '❌ Código no válido. Verifica e intenta de nuevo.';
-            status.className = 'text-[10px] text-red-500 font-bold mt-1';
-          }
-        }
-      },
-
-      bookSpecialist(name) {
-        if (!this.state.isAuthenticated) {
-          this.showToast('Debes iniciar sesión para agendar una sesión', 'warning');
-          return;
-        }
-        this.showToast(`Solicitando agenda con ${name}...`, 'success');
-      },
-
+      // ============================================================
+      // PERFIL
+      // ============================================================
       editProfile() {
-        const newBio = prompt('Ingresa tu biografía breve:', this.state.user.bio);
-        if (newBio !== null) {
-          this.state.user.bio = newBio;
-          localStorage.setItem('user_bio', newBio);
-          this.updateAuthUI();
-          this.showToast('Perfil actualizado', 'success');
-        }
+        const name = prompt('Nombre:', this.state.user.name) || this.state.user.name;
+        const phone = prompt('Teléfono:', this.state.user.phone) || '';
+        const birth = prompt('Fecha de nacimiento (DD/MM/AAAA):', this.state.user.birth) || '';
+        const bio = prompt('Biografía:', this.state.user.bio) || '';
+        localStorage.setItem('user_name', name);
+        localStorage.setItem('user_phone', phone);
+        localStorage.setItem('user_birth', birth);
+        localStorage.setItem('user_bio', bio);
+        this.state.user = { ...this.state.user, name, phone, birth, bio };
+        this.syncUI();
+        this.actualizarSaludo();
+        this.toast('✅ Perfil actualizado', 'success');
       },
-
       verFacturacion() {
-        this.showToast('Plataforma conectada con Binance Pay y BDV', 'info');
+        this.toast('💳 Abriendo panel de facturación...', 'info');
+        setTimeout(() => { this.toast('📄 Métodos de pago: Pago Móvil BDV, Binance Pay', 'info'); }, 500);
       },
 
-      // ASISTENTE DE IA
+      // ============================================================
+      // SINCRONIZACIÓN UI
+      // ============================================================
+      syncUI() {
+        const u = this.state.user;
+        const isAuth = this.state.isAuthenticated;
+        const googleBtn = document.getElementById('google-login-btn');
+        if (googleBtn) googleBtn.style.display = isAuth ? 'none' : 'inline-flex';
+        document.getElementById('user-menu').classList.toggle('hidden', !isAuth);
+        if (isAuth) {
+          document.getElementById('header-name').textContent = u.name;
+          const avatar = document.getElementById('header-avatar');
+          if (u.avatar) { avatar.style.backgroundImage = `url('${u.avatar}')`; avatar.textContent = ''; }
+          else { avatar.style.backgroundImage = 'none'; avatar.textContent = u.name.charAt(0).toUpperCase(); }
+        }
+        document.getElementById('profile-name').textContent = u.name || 'Invitada';
+        document.getElementById('profile-email').textContent = u.email || 'correo@ejemplo.com';
+        document.getElementById('profile-bio').textContent = u.bio || 'Sin biografía aún';
+        document.getElementById('profile-phone').textContent = u.phone || 'No registrado';
+        document.getElementById('profile-birth').textContent = u.birth || 'No registrada';
+        document.getElementById('profile-since').textContent = u.since || 'Hoy';
+        document.getElementById('profile-role').textContent = u.role === 'spec' ? '👩‍⚕️ Especialista' : '👤 Usuario';
+        if (u.founder) {
+          document.getElementById('profile-status').textContent = '👑 Fundadora';
+          document.getElementById('profile-status').className = 'text-xs bg-[#E27D60] text-white font-semibold px-3 py-1 rounded-full';
+        } else {
+          document.getElementById('profile-status').textContent = '✅ Verificado';
+          document.getElementById('profile-status').className = 'text-xs bg-emerald-100 text-emerald-800 font-semibold px-3 py-1 rounded-full';
+        }
+        const pAvatar = document.getElementById('profile-avatar');
+        if (u.avatar) { pAvatar.style.backgroundImage = `url('${u.avatar}')`; pAvatar.textContent = ''; }
+        else { pAvatar.style.backgroundImage = 'none'; pAvatar.textContent = (u.name || 'U').charAt(0).toUpperCase(); }
+        if (u.hasReserved) document.getElementById('prep-somatica').classList.remove('hidden');
+        else document.getElementById('prep-somatica').classList.add('hidden');
+        if (u.founder) {
+          document.getElementById('founder-status').textContent = '👑 Estatus Fundadora activo';
+          document.getElementById('founder-status').className = 'text-[10px] text-[#E27D60] font-semibold';
+        }
+        document.querySelectorAll('.nav-item').forEach(item => {
+          item.classList.toggle('active', item.dataset.view === this.state.currentView);
+        });
+        this.actualizarSaludo();
+      },
+
+      // ============================================================
+      // ASISTENTE
+      // ============================================================
       toggleAssistant() {
         const chat = document.getElementById('assistant-chat');
-        const btn = document.getElementById('assistant-toggle');
-        if (chat && btn) {
-          chat.classList.toggle('open');
-          btn.classList.toggle('active');
-        }
+        const toggle = document.getElementById('assistant-toggle');
+        chat.classList.toggle('open');
+        toggle.classList.toggle('active');
+        toggle.innerHTML = chat.classList.contains('open') ? '✕' : '💬';
+        if (chat.classList.contains('open')) document.getElementById('chat-input').focus();
       },
-
-      quickAsk(question) {
-        const input = document.getElementById('chat-input');
-        if (input) {
-          input.value = question;
-          this.sendMessage();
-        }
-      },
-
       sendMessage() {
         const input = document.getElementById('chat-input');
-        const container = document.getElementById('chat-messages');
-        if (!input || !container) return;
-
         const text = input.value.trim();
         if (!text) return;
-
-        // Añadir mensaje usuario
-        const uMsg = document.createElement('div');
-        uMsg.className = 'message user';
-        uMsg.textContent = text;
-        container.appendChild(uMsg);
-
+        this.addMessage(text, 'user');
         input.value = '';
-        container.scrollTop = container.scrollHeight;
-
-        // Respuesta simulada de la IA
         setTimeout(() => {
-          const bMsg = document.createElement('div');
-          bMsg.className = 'message bot';
-
-          const query = text.toLowerCase();
-          if (query.includes('termómetro') || query.includes('funciona')) {
-            bMsg.textContent = '🌡️ El Termómetro evalúa si estás en estado Lucha/Huida (Acelerada), Congelamiento (Agotada) o Ventral Vagal (Centro) para darte la técnica exacta.';
-          } else if (query.includes('gremio') || query.includes('especialista')) {
-            bMsg.textContent = '🛡️ El Gremio es nuestra red de especialistas curadas e idóneas para acompañar tu salud emocional con los más altos estándares.';
-          } else if (query.includes('campamento') || query.includes('evento')) {
-            bMsg.textContent = '⛺ "Mujeres en Fuga" es el 26 de septiembre en Maracay. Tendremos talleres somáticos, conexión y naturaleza.';
-          } else {
-            bMsg.textContent = '🌿 Entiendo. Te sugiero hacer una prueba en el Termómetro de autorregulación o escribir a nuestro soporte.';
-          }
-
-          container.appendChild(bMsg);
-          container.scrollTop = container.scrollHeight;
-        }, 600);
+          const responses = [
+            '🌿 Gracias por tu mensaje. ¿Te gustaría saber más sobre el Termómetro del Sistema Nervioso?',
+            '🧘 Recuerda que las prácticas de 3 minutos son ideales para regular tu estado.',
+            '🛡️ Todos nuestros especialistas están aprobados por el Gremio. Puedes reservar con confianza.',
+            '⛺ El campamento Mujeres en Fuga será una experiencia transformadora. ¡No te lo pierdas!',
+            '✨ ¿Sabías que puedes activar el Estatus Fundadora con el código especial del evento?'
+          ];
+          this.addMessage(responses[Math.floor(Math.random() * responses.length)], 'bot');
+        }, 800);
+      },
+      quickAsk(text) {
+        document.getElementById('chat-input').value = text;
+        this.sendMessage();
+      },
+      addMessage(text, type) {
+        const container = document.getElementById('chat-messages');
+        const div = document.createElement('div');
+        div.className = `message ${type}`;
+        div.textContent = text;
+        container.appendChild(div);
+        container.scrollTop = container.scrollHeight;
       },
 
-      // TOAST NOTIFICATIONS
-      showToast(msg, type = 'info') {
-        const toast = document.getElementById('toast');
-        if (!toast) return;
-
-        toast.className = `toast toast-${type} show`;
-        toast.textContent = msg;
-
-        setTimeout(() => {
-          toast.classList.remove('show');
-        }, 3000);
+      // ============================================================
+      // TOAST
+      // ============================================================
+      toast(message, type = 'success') {
+        const el = document.getElementById('toast');
+        el.className = `toast toast-${type}`;
+        el.textContent = message;
+        el.classList.add('show');
+        clearTimeout(this._toastTimer);
+        this._toastTimer = setTimeout(() => el.classList.remove('show'), 4000);
       }
     };
 
-    // Inicialización al cargar la página
-    document.addEventListener('DOMContentLoaded', () => {
-      App.init();
-    });
+    // ============================================================
+    // INICIALIZACIÓN
+    // ============================================================
+    document.addEventListener('DOMContentLoaded', () => App.init());
+    window.App = App;
   </script>
 </body>
 </html>
