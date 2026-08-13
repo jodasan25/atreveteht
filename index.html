@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Atrévete HealthTech · Sistema Nervioso</title>
+  <!-- Google Identity Services -->
+  <script src="https://accounts.google.com/gsi/client"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     /* ===== BASE ===== */
@@ -56,11 +58,6 @@
       background: transparent; color: #E27D60; border: 1.5px solid #E27D60;
     }
     .btn-outline:hover:not(:disabled) { background: #E27D60; color: #fff; }
-    .btn-google {
-      background: #fff; color: #3C4043; border: 1px solid #DADCE0; gap: 10px;
-    }
-    .btn-google:hover:not(:disabled) { background: #F8F9FA; box-shadow: 0 2px 6px rgba(0,0,0,0.12); }
-    .btn-google svg { width: 20px; height: 20px; flex-shrink: 0; }
     .btn .spinner {
       display: none; width: 20px; height: 20px;
       border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff;
@@ -70,7 +67,7 @@
     .btn.loading .btn-text { display: none; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* ===== TERMÓMETRO INTERACTIVO ===== */
+    /* ===== TERMÓMETRO ===== */
     .state-option {
       padding: 16px; border-radius: 20px; cursor: pointer;
       transition: all 0.2s ease; border: 2px solid transparent;
@@ -86,7 +83,7 @@
     .state-option .label { font-weight: 600; color: #4A5D4E; }
     .state-option .desc { font-size: 0.75rem; color: #7A8A7C; }
 
-    /* ===== SANTUARIO / PRÁCTICAS ===== */
+    /* ===== SANTUARIO ===== */
     .practice-card {
       background: white; border-radius: 24px; padding: 16px;
       border: 1px solid #e5e0db; transition: all 0.2s;
@@ -109,7 +106,7 @@
       letter-spacing: 0.5px; text-transform: uppercase;
     }
 
-    /* ===== NAV INFERIOR HOLÍSTICO ===== */
+    /* ===== NAV INFERIOR ===== */
     .clay-nav {
       background: rgba(253,251,247,0.95); backdrop-filter: blur(12px);
       border-radius: 24px 24px 0 0; padding: 8px 12px 12px;
@@ -217,11 +214,6 @@
     }
     .header-name { font-size: 12px; font-weight: 600; color: #7A8A7C; max-width: 80px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
-    @media (max-width: 400px) {
-      .assistant-chat { width: calc(100vw - 32px); height: 380px; right: 16px; bottom: 160px; }
-      .assistant-toggle { width: 48px; height: 48px; font-size: 20px; bottom: 90px; right: 16px; }
-    }
-
     /* ===== COUNTDOWN ===== */
     .countdown-grid {
       display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
@@ -232,6 +224,26 @@
     }
     .countdown-item .number { font-size: 1.5rem; font-weight: 700; color: #E27D60; }
     .countdown-item .label { font-size: 0.6rem; color: #7A8A7C; text-transform: uppercase; letter-spacing: 0.5px; }
+
+    /* ===== BOTÓN DE GOOGLE PERSONALIZADO ===== */
+    .g_id_signin {
+      display: inline-block;
+    }
+    .g_id_signin > div {
+      width: 100% !important;
+    }
+    .g_id_signin iframe {
+      width: 100% !important;
+    }
+    .google-btn-wrapper {
+      display: flex;
+      justify-content: center;
+      margin: 8px 0;
+    }
+    @media (max-width: 400px) {
+      .assistant-chat { width: calc(100vw - 32px); height: 380px; right: 16px; bottom: 160px; }
+      .assistant-toggle { width: 48px; height: 48px; font-size: 20px; bottom: 90px; right: 16px; }
+    }
   </style>
 </head>
 <body>
@@ -259,23 +271,8 @@
     </div>
   </div>
 
-  <!-- ================= MODAL GOOGLE ================= -->
-  <div id="modal-google" class="modal-overlay">
-    <div class="modal-content text-center space-y-4">
-      <div id="google-avatar" class="w-20 h-20 rounded-full bg-[#E27D60] text-white flex items-center justify-center text-3xl font-bold mx-auto bg-cover bg-center">G</div>
-      <h3 class="text-xl font-bold text-[#4A5D4E]">Confirmar acceso con Google</h3>
-      <p class="text-sm text-[#7A8A7C]/70">Permite que Atrévete HealthTech acceda a tu perfil.</p>
-      <div class="bg-stone-50 rounded-xl p-4 text-left text-sm space-y-1">
-        <p><span class="font-semibold">📧 Correo:</span> <span id="google-email">cargando...</span></p>
-        <p><span class="font-semibold">👤 Nombre:</span> <span id="google-name">cargando...</span></p>
-      </div>
-      <button id="btn-confirm-google" class="btn btn-primary w-full">
-        <span class="btn-text">✅ Continuar</span>
-        <span class="spinner"></span>
-      </button>
-      <button onclick="App.cancelarGoogle()" class="text-sm text-[#7A8A7C]/60 hover:text-[#7A8A7C]">Cancelar</button>
-    </div>
-  </div>
+  <!-- ================= MODAL GOOGLE (ya no se usa con GSI, pero se mantiene por si acaso) ================= -->
+  <div id="modal-google" class="modal-overlay hidden"></div>
 
   <!-- ================= CABECERA ================= -->
   <header class="pt-3 pb-1 px-6 max-w-md mx-auto flex items-center justify-between">
@@ -284,11 +281,8 @@
     </div>
     <div id="auth-buttons" class="flex items-center gap-2">
       <div id="login-btns" class="flex gap-2">
-        <button onclick="App.loginGoogle()" class="btn btn-google text-xs py-1.5 px-3">
-          <svg viewBox="0 0 24 24" width="16" height="16"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
-          <span class="btn-text">Google</span>
-          <span class="spinner"></span>
-        </button>
+        <!-- Botón de Google Identity Services (se renderiza aquí) -->
+        <div id="google-login-container"></div>
       </div>
       <div id="user-menu" class="hidden flex items-center gap-2">
         <div onclick="App.goProfile()" class="header-profile-btn">
@@ -329,7 +323,7 @@
 
   <!-- ================= VISTAS ================= -->
 
-  <!-- ===== 1. HOME / TERMÓMETRO INTERACTIVO ===== -->
+  <!-- ===== 1. HOME / TERMÓMETRO ===== -->
   <main id="view-home" class="app-view max-w-md mx-auto px-5 space-y-5">
     <div class="text-center pt-2">
       <h2 class="text-2xl font-bold text-[#4A5D4E]">🌿 Hola, <span id="greeting-name">amiga</span></h2>
@@ -338,35 +332,29 @@
 
     <div class="clay-card p-5 space-y-4">
       <div id="states-container" class="space-y-3">
-        <!-- Acelerada / Ansiosa -->
         <div class="state-option" data-state="fight" onclick="App.selectState('fight')">
           <span class="icon">⚡</span>
-          <div><div class="label">Acelerada / Ansiosa</div><div class="desc">Lucha o Huida · mente inquieta, corazón rápido</div></div>
+          <div><div class="label">Acelerada / Ansiosa</div><div class="desc">Lucha o Huida · mente inquieta</div></div>
         </div>
-        <!-- Desconectada / Agotada -->
         <div class="state-option" data-state="freeze" onclick="App.selectState('freeze')">
           <span class="icon">❄️</span>
-          <div><div class="label">Desconectada / Agotada</div><div class="desc">Congelamiento · apatía, pesadez, cansancio</div></div>
+          <div><div class="label">Desconectada / Agotada</div><div class="desc">Congelamiento · apatía, pesadez</div></div>
         </div>
-        <!-- En Centro / Tranquila -->
         <div class="state-option" data-state="safe" onclick="App.selectState('safe')">
           <span class="icon">🌱</span>
-          <div><div class="label">En Centro / Tranquila</div><div class="desc">Regulada · calma, conexión, presencia</div></div>
+          <div><div class="label">En Centro / Tranquila</div><div class="desc">Regulada · calma, conexión</div></div>
         </div>
       </div>
 
-      <!-- Botón de práctica dinámico -->
       <button id="btn-dynamic-practice" class="btn btn-primary w-full text-sm" onclick="App.irAPractica()">
         <span class="btn-text">🧘 Regulación Somática</span>
         <span class="spinner"></span>
       </button>
-
       <div id="practice-preview" class="hidden mt-2 p-3 rounded-xl bg-white/80 border border-[#E27D60]/30 text-xs text-[#4A5D4E]">
         <span id="preview-text">Selecciona un estado para ver la práctica recomendada.</span>
       </div>
     </div>
 
-    <!-- Evento destacado -->
     <div class="clay-card p-5 border-l-4 border-[#E27D60]">
       <div class="flex items-center justify-between">
         <div>
@@ -379,19 +367,17 @@
       <button onclick="App.goEvent()" class="btn btn-secondary w-full mt-3 text-sm">Ver detalles y validar entrada</button>
     </div>
 
-    <!-- Acceso a especialistas -->
     <div class="flex justify-center">
       <button onclick="App.goSpecialists()" class="btn btn-outline w-full text-sm">🛡️ Red de Especialistas Curados</button>
     </div>
   </main>
 
-  <!-- ===== 2. SANTUARIO (Prácticas) ===== -->
+  <!-- ===== 2. SANTUARIO ===== -->
   <main id="view-santuario" class="app-view max-w-md mx-auto px-5 space-y-5 hidden">
     <div class="text-center pt-2">
       <h2 class="text-2xl font-bold text-[#4A5D4E]">🌿 Santuario Somático</h2>
       <p class="text-xs text-[#7A8A7C]/70">Prácticas de 3 minutos para regular tu sistema nervioso</p>
     </div>
-
     <div class="space-y-3">
       <div class="practice-card" onclick="App.iniciarPractica('fight')">
         <span class="p-icon">⚡</span>
@@ -406,17 +392,15 @@
         <div><div class="p-title">Respiración de la Calma</div><div class="p-desc">Para centro / tranquilidad · 5 respiraciones</div></div>
       </div>
     </div>
-
     <button onclick="App.goHome()" class="btn btn-secondary w-full text-sm">Volver al Termómetro</button>
   </main>
 
-  <!-- ===== 3. ESPECIALISTAS (Gremio) ===== -->
+  <!-- ===== 3. ESPECIALISTAS ===== -->
   <main id="view-specialists" class="app-view max-w-md mx-auto px-5 space-y-5 hidden">
     <div class="text-center pt-2">
       <h2 class="text-2xl font-bold text-[#4A5D4E]">🛡️ Tu Gremio Clínico</h2>
       <p class="text-xs text-[#7A8A7C]/70">Especialistas curados por Atrévete · Confianza y excelencia</p>
     </div>
-
     <div class="space-y-3">
       <div class="specialist-card">
         <div class="flex items-center gap-3">
@@ -458,36 +442,30 @@
         <button onclick="App.bookSpecialist('Lic. Ana Pérez')" class="btn btn-primary text-xs py-1.5 px-4 mt-2 w-full">Reservar sesión</button>
       </div>
     </div>
-
     <p class="text-center text-[10px] text-[#7A8A7C]/50">* Todos los especialistas han pasado por un riguroso proceso de selección.</p>
     <button onclick="App.goHome()" class="btn btn-secondary w-full text-sm">Volver al Termómetro</button>
   </main>
 
-  <!-- ===== 4. EVENTO (con countdown y preparación somática) ===== -->
+  <!-- ===== 4. EVENTO ===== -->
   <main id="view-event" class="app-view max-w-md mx-auto px-5 space-y-5 hidden">
     <div class="text-center pt-2">
       <h2 class="text-2xl font-bold text-[#4A5D4E]">⛺ Mujeres en Fuga</h2>
       <p class="text-xs text-[#7A8A7C]/70">26 de septiembre · Maracay, Venezuela</p>
     </div>
-
     <div class="clay-card p-5 space-y-4">
       <div class="relative h-32 rounded-2xl overflow-hidden bg-gradient-to-br from-[#E27D60]/20 to-[#F0B7A1]/20 flex items-center justify-center">
         <span class="text-5xl">🏕️</span>
       </div>
-
       <div>
         <h4 class="font-bold text-[#4A5D4E]">Una experiencia inmersiva para reconectar con tu cuerpo</h4>
         <p class="text-xs text-[#7A8A7C] mt-1">Talleres de regulación somática, círculos de mujeres y naturaleza.</p>
       </div>
-
-      <!-- Cuenta regresiva -->
       <div class="countdown-grid" id="countdown-container">
         <div class="countdown-item"><div class="number" id="cd-days">--</div><div class="label">Días</div></div>
         <div class="countdown-item"><div class="number" id="cd-hours">--</div><div class="label">Horas</div></div>
         <div class="countdown-item"><div class="number" id="cd-minutes">--</div><div class="label">Minutos</div></div>
         <div class="countdown-item"><div class="number" id="cd-seconds">--</div><div class="label">Segundos</div></div>
       </div>
-
       <div class="flex justify-between text-sm">
         <span>🎟️ Entradas vendidas: <strong>34/40</strong></span>
         <span class="text-[#E27D60] font-bold">$120 USD</span>
@@ -495,21 +473,16 @@
       <div class="w-full h-2 bg-stone-200 rounded-full overflow-hidden">
         <div class="h-full bg-[#E27D60] rounded-full" style="width:85%"></div>
       </div>
-
-      <!-- Preparación somática (solo si ha reservado) -->
       <div id="prep-somatica" class="hidden bg-stone-50 p-3 rounded-xl text-xs space-y-2">
         <p class="font-semibold text-[#E27D60]">🧘 Preparación Somática para el Campamento</p>
         <p>Día 1: Respiración consciente · <button class="text-[#E27D60] underline" onclick="App.iniciarPractica('safe')">Escuchar audio</button></p>
         <p>Día 2: Movimiento suave · <button class="text-[#E27D60] underline" onclick="App.iniciarPractica('freeze')">Escuchar audio</button></p>
         <p class="text-[10px] text-[#7A8A7C]/60">* Desbloquea una práctica nueva cada día hasta el evento</p>
       </div>
-
       <div class="flex gap-3">
         <button onclick="App.reserveEvent()" class="btn btn-primary flex-1 text-sm">Reservar mi cupo</button>
         <button onclick="App.validateTicket()" class="btn btn-secondary flex-1 text-sm">✅ Validar entrada</button>
       </div>
-
-      <!-- Código de Estatus Fundadora -->
       <div class="border-t border-stone-200 pt-3 mt-2">
         <p class="text-xs font-semibold text-[#E27D60]">✨ ¿Asistente? Ingresa tu código de Estatus Fundadora</p>
         <div class="flex gap-2 mt-1">
@@ -519,11 +492,10 @@
         <p id="founder-status" class="text-[10px] text-[#7A8A7C]/50 mt-1"></p>
       </div>
     </div>
-
     <button onclick="App.goHome()" class="btn btn-secondary w-full text-sm">Volver al Termómetro</button>
   </main>
 
-  <!-- ===== 5. PERFIL (con pagos integrados) ===== -->
+  <!-- ===== 5. PERFIL ===== -->
   <main id="view-profile" class="app-view max-w-md mx-auto px-5 space-y-5 hidden">
     <div class="clay-card p-6 text-center space-y-3">
       <div id="profile-avatar" class="w-24 h-24 rounded-full bg-[#E27D60] text-white flex items-center justify-center text-3xl font-bold mx-auto bg-cover bg-center">US</div>
@@ -535,8 +507,6 @@
         <span id="profile-status" class="text-xs bg-emerald-100 text-emerald-800 font-semibold px-3 py-1 rounded-full">✅ Verificado</span>
       </div>
     </div>
-
-    <!-- Información personal -->
     <div class="clay-card p-5 space-y-3">
       <h4 class="font-bold text-sm text-[#4A5D4E]">📋 Datos personales</h4>
       <div class="space-y-2 text-xs">
@@ -554,8 +524,6 @@
         </div>
       </div>
     </div>
-
-    <!-- Sección de pagos (antes pestaña independiente) -->
     <div class="clay-card p-5 space-y-3">
       <h4 class="font-bold text-sm text-[#4A5D4E]">💳 Facturación y pagos</h4>
       <div class="text-xs space-y-2">
@@ -570,27 +538,24 @@
         <button onclick="App.verFacturacion()" class="btn btn-secondary w-full text-xs py-2">Gestionar métodos de pago</button>
       </div>
     </div>
-
     <button onclick="App.editProfile()" class="btn btn-primary w-full text-sm">✏️ Editar perfil</button>
     <button onclick="App.logout()" class="btn btn-outline w-full text-sm">🚪 Cerrar sesión</button>
     <button onclick="App.goHome()" class="btn btn-secondary w-full text-sm">Volver al Termómetro</button>
   </main>
 
-  <!-- ===== PRÁCTICA (micro-práctica) ===== -->
+  <!-- ===== PRÁCTICA ===== -->
   <main id="view-practice" class="app-view max-w-md mx-auto px-5 space-y-5 hidden">
     <div class="text-center pt-2">
       <h2 class="text-2xl font-bold text-[#4A5D4E]">🧘 Tu práctica de 3 minutos</h2>
       <p id="practice-sub" class="text-xs text-[#7A8A7C]/70">Sigue las instrucciones para regular tu sistema nervioso</p>
     </div>
     <div class="clay-card p-6 space-y-4">
-      <div id="practice-content" class="space-y-3">
-        <!-- Contenido dinámico -->
-      </div>
+      <div id="practice-content" class="space-y-3"></div>
       <button onclick="App.finishPractice()" class="btn btn-primary w-full">✅ Hecho, volver al inicio</button>
     </div>
   </main>
 
-  <!-- ================= NAV INFERIOR HOLÍSTICO ================= -->
+  <!-- ================= NAV INFERIOR ================= -->
   <nav class="clay-nav">
     <div class="flex justify-around items-center">
       <div onclick="App.goHome()" class="nav-item active" data-view="view-home">
@@ -615,8 +580,10 @@
 
   <!-- ================= JAVASCRIPT ================= -->
   <script>
+    // ============================================================
+    // APP - Con autenticación real de Google (GSI)
+    // ============================================================
     const App = {
-      // ===== Estado =====
       state: {
         user: {
           name: localStorage.getItem('user_name') || '',
@@ -636,7 +603,9 @@
         currentView: 'view-home'
       },
 
-      // ===== INICIALIZACIÓN =====
+      // ============================================================
+      // INICIALIZACIÓN
+      // ============================================================
       init() {
         if (!this.state.legalAccepted) {
           document.getElementById('modal-legal-gate').classList.add('active');
@@ -644,10 +613,103 @@
         this.syncUI();
         this.startCountdown();
         this.actualizarSaludo();
-        console.log('🌿 Atrévete HealthTech · Sistema Nervioso');
+        this.initGoogleLogin();
+        console.log('🌿 Atrévete HealthTech · Autenticación real con Google');
       },
 
-      // ===== BARRERA LEGAL =====
+      // ============================================================
+      // GOOGLE IDENTITY SERVICES (GSI)
+      // ============================================================
+      initGoogleLogin() {
+        // Este Client ID es de demostración para localhost
+        // Reemplázalo con el tuyo: https://console.cloud.google.com/apis/credentials
+        const CLIENT_ID = '759730169795-6p7ohp6qqh56msefe2k7t5f7k2p3i9p9.apps.googleusercontent.com';
+        const container = document.getElementById('google-login-container');
+
+        // Renderizar el botón solo si no está autenticado
+        if (!this.state.isAuthenticated) {
+          container.innerHTML = '';
+          const wrapper = document.createElement('div');
+          wrapper.className = 'google-btn-wrapper';
+          const gsiDiv = document.createElement('div');
+          gsiDiv.id = 'g_id_onload';
+          gsiDiv.setAttribute('data-client_id', CLIENT_ID);
+          gsiDiv.setAttribute('data-context', 'signin');
+          gsiDiv.setAttribute('data-ux_mode', 'popup');
+          gsiDiv.setAttribute('data-callback', 'App.handleGoogleCredentialResponse');
+          gsiDiv.setAttribute('data-auto_prompt', 'false');
+          wrapper.appendChild(gsiDiv);
+
+          const signinDiv = document.createElement('div');
+          signinDiv.className = 'g_id_signin';
+          signinDiv.setAttribute('data-type', 'standard');
+          signinDiv.setAttribute('data-shape', 'rectangular');
+          signinDiv.setAttribute('data-theme', 'outline');
+          signinDiv.setAttribute('data-text', 'signin_with');
+          signinDiv.setAttribute('data-size', 'large');
+          signinDiv.setAttribute('data-logo_alignment', 'left');
+          signinDiv.setAttribute('data-width', '280');
+          wrapper.appendChild(signinDiv);
+          container.appendChild(wrapper);
+        } else {
+          container.innerHTML = '';
+        }
+      },
+
+      // Callback de GSI (se llama automáticamente al autenticar)
+      handleGoogleCredentialResponse(response) {
+        // Decodificar el token JWT para obtener los datos del usuario
+        const payload = this.decodeJwtPayload(response.credential);
+        if (!payload) {
+          this.toast('Error al decodificar credencial', 'error');
+          return;
+        }
+        const userData = {
+          name: payload.name || 'Usuario Google',
+          email: payload.email || '',
+          avatar: payload.picture || null,
+          email_verified: payload.email_verified || false
+        };
+        if (!userData.email_verified) {
+          this.toast('El correo no está verificado en Google', 'warning');
+          return;
+        }
+        // Guardar en localStorage y autenticar
+        localStorage.setItem('user_name', userData.name);
+        localStorage.setItem('user_email', userData.email);
+        localStorage.setItem('user_avatar', userData.avatar);
+        localStorage.setItem('user_role', 'user');
+        localStorage.setItem('user_since', new Date().toLocaleDateString('es-ES', { day:'2-digit', month:'long', year:'numeric' }));
+        this.state.user = {
+          ...this.state.user,
+          name: userData.name,
+          email: userData.email,
+          avatar: userData.avatar
+        };
+        this.state.isAuthenticated = true;
+        this.syncUI();
+        this.actualizarSaludo();
+        this.initGoogleLogin(); // Ocultar botón de Google
+        this.toast('✅ ¡Bienvenida a Atrévete HealthTech!', 'success');
+        this.goHome();
+      },
+
+      // Decodificar JWT (parte del payload)
+      decodeJwtPayload(token) {
+        try {
+          const base64Url = token.split('.')[1];
+          const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+          const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
+          return JSON.parse(jsonPayload);
+        } catch (e) {
+          console.error('Error decodificando JWT:', e);
+          return null;
+        }
+      },
+
+      // ============================================================
+      // BARRERA LEGAL
+      // ============================================================
       aceptarLegal() {
         localStorage.setItem('legal_accepted', 'true');
         this.state.legalAccepted = true;
@@ -657,74 +719,41 @@
         document.getElementById('modal-legal-gate').classList.remove('active');
       },
 
-      // ===== AUTENTICACIÓN =====
-      loginGoogle() {
-        if (!this.state.legalAccepted) { this.aceptarLegal(); return; }
-        const name = prompt('👤 Nombre:', 'Ana María Rodríguez');
-        if (!name || name.trim() === '') return;
-        const email = prompt('📧 Correo:', 'ana@gmail.com');
-        if (!email || !email.includes('@')) { this.toast('Correo inválido', 'warning'); return; }
-        const avatar = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(name) + '&background=E27D60&color=fff&size=128';
-        this.state.googleUser = { name: name.trim(), email: email.trim(), avatar };
-        this.mostrarModalGoogle();
-      },
-
-      mostrarModalGoogle() {
-        const u = this.state.googleUser;
-        document.getElementById('google-avatar').style.backgroundImage = `url('${u.avatar}')`;
-        document.getElementById('google-avatar').textContent = '';
-        document.getElementById('google-email').textContent = u.email;
-        document.getElementById('google-name').textContent = u.name;
-        document.getElementById('modal-google').classList.add('active');
-        document.getElementById('btn-confirm-google').onclick = () => this.confirmarGoogle();
-      },
-
-      confirmarGoogle() {
-        const u = this.state.googleUser;
-        localStorage.setItem('user_name', u.name);
-        localStorage.setItem('user_email', u.email);
-        localStorage.setItem('user_role', 'user');
-        localStorage.setItem('user_avatar', u.avatar);
-        localStorage.setItem('user_since', new Date().toLocaleDateString('es-ES', { day:'2-digit', month:'long', year:'numeric' }));
-        this.state.user = { ...this.state.user, name: u.name, email: u.email, avatar: u.avatar };
-        this.state.isAuthenticated = true;
-        document.getElementById('modal-google').classList.remove('active');
-        this.syncUI();
-        this.actualizarSaludo();
-        this.toast('✅ ¡Bienvenida a Atrévete HealthTech!', 'success');
-        this.goHome();
-      },
-
-      cancelarGoogle() {
-        document.getElementById('modal-google').classList.remove('active');
-        this.state.googleUser = null;
-      },
-
+      // ============================================================
+      // LOGOUT
+      // ============================================================
       logout() {
         if (!confirm('¿Cerrar sesión?')) return;
         localStorage.removeItem('user_name');
         localStorage.removeItem('user_email');
-        localStorage.removeItem('user_role');
         localStorage.removeItem('user_avatar');
+        localStorage.removeItem('user_role');
         localStorage.removeItem('user_bio');
         localStorage.removeItem('user_phone');
         localStorage.removeItem('user_birth');
         localStorage.removeItem('has_reserved');
+        // No eliminamos founder_status para que persista si vuelve a iniciar
         this.state.isAuthenticated = false;
         this.state.user = { ...this.state.user, name: '', email: '', avatar: null, hasReserved: false };
         this.syncUI();
         this.actualizarSaludo();
+        this.initGoogleLogin(); // Mostrar botón de Google nuevamente
         this.toast('👋 Sesión cerrada', 'info');
         this.goHome();
       },
 
-      // ===== NAVEGACIÓN =====
+      // ============================================================
+      // NAVEGACIÓN (igual que antes)
+      // ============================================================
       goHome() { this.switchView('view-home'); },
       goSantuario() { this.switchView('view-santuario'); },
       goSpecialists() { this.switchView('view-specialists'); },
       goEvent() { this.switchView('view-event'); },
-      goProfile() { 
-        if (!this.state.isAuthenticated) { this.loginGoogle(); return; }
+      goProfile() {
+        if (!this.state.isAuthenticated) {
+          this.toast('Inicia sesión primero', 'info');
+          return;
+        }
         this.switchView('view-profile');
       },
       irAPractica() {
@@ -746,18 +775,22 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
       },
 
-      // ===== SALUDO PERSONALIZADO =====
+      // ============================================================
+      // SALUDO PERSONALIZADO
+      // ============================================================
       actualizarSaludo() {
         const name = this.state.user.name || 'amiga';
         document.getElementById('greeting-name').textContent = name;
       },
 
-      // ===== TERMÓMETRO INTERACTIVO =====
+      // ============================================================
+      // TERMÓMETRO
+      // ============================================================
       selectState(state) {
         this.state.selectedState = state;
         document.querySelectorAll('.state-option').forEach(c => c.classList.remove('selected'));
         document.querySelector(`.state-option[data-state="${state}"]`).classList.add('selected');
-        
+
         const btn = document.getElementById('btn-dynamic-practice');
         const preview = document.getElementById('practice-preview');
         const previewText = document.getElementById('preview-text');
@@ -773,7 +806,9 @@
         previewText.textContent = `✨ Recomendación: ${p.text}`;
       },
 
-      // ===== PRÁCTICAS =====
+      // ============================================================
+      // PRÁCTICAS
+      // ============================================================
       iniciarPractica(state) {
         const practices = {
           fight: 'Respiración fisiológica: Inhala 4s, sostén 2s, exhala 6s. Repite 6 ciclos.',
@@ -789,14 +824,10 @@
           </div>
           <p class="text-xs text-[#7A8A7C]/70 text-center">⏱️ 3 minutos · sigue el ritmo</p>
         `;
-        this.goSantuario();
-        // Simular duración
+        this.switchView('view-practice');
         setTimeout(() => {
           this.toast('✅ Práctica completada. ¡Tu sistema nervioso te lo agradece!', 'success');
-        }, 180000);
-        setTimeout(() => {
-          this.toast('⏳ Recuerda: la práctica se completa en 3 minutos. Respira y confía.', 'info');
-        }, 3000);
+        }, 3000); // Simulación: 3 segundos para demo
       },
 
       finishPractice() {
@@ -804,15 +835,25 @@
         this.toast('🌿 Has vuelto al inicio. ¿Cómo te sientes ahora?', 'info');
       },
 
-      // ===== ESPECIALISTAS =====
+      // ============================================================
+      // ESPECIALISTAS
+      // ============================================================
       bookSpecialist(name) {
-        if (!this.state.isAuthenticated) { this.loginGoogle(); return; }
+        if (!this.state.isAuthenticated) {
+          this.toast('Inicia sesión para reservar', 'info');
+          return;
+        }
         this.toast(`📅 Solicitud de sesión enviada a ${name}. Te contactaremos en 24h.`, 'success');
       },
 
-      // ===== EVENTO =====
+      // ============================================================
+      // EVENTO
+      // ============================================================
       reserveEvent() {
-        if (!this.state.isAuthenticated) { this.loginGoogle(); return; }
+        if (!this.state.isAuthenticated) {
+          this.toast('Inicia sesión para reservar', 'info');
+          return;
+        }
         localStorage.setItem('has_reserved', 'true');
         this.state.user.hasReserved = true;
         this.toast('🎟️ ¡Reserva confirmada! Te esperamos el 26 de septiembre.', 'success');
@@ -871,7 +912,9 @@
         }, 1000);
       },
 
-      // ===== PERFIL =====
+      // ============================================================
+      // PERFIL
+      // ============================================================
       editProfile() {
         const name = prompt('Nombre:', this.state.user.name) || this.state.user.name;
         const phone = prompt('Teléfono:', this.state.user.phone) || '';
@@ -889,16 +932,18 @@
 
       verFacturacion() {
         this.toast('💳 Abriendo panel de facturación...', 'info');
-        // Simulación
         setTimeout(() => {
           this.toast('📄 Métodos de pago: Pago Móvil BDV, Binance Pay', 'info');
         }, 500);
       },
 
-      // ===== SINCRONIZACIÓN UI =====
+      // ============================================================
+      // SINCRONIZACIÓN UI
+      // ============================================================
       syncUI() {
         const u = this.state.user;
         const isAuth = this.state.isAuthenticated;
+
         // Header
         document.getElementById('login-btns').classList.toggle('hidden', isAuth);
         document.getElementById('user-menu').classList.toggle('hidden', !isAuth);
@@ -913,6 +958,7 @@
             avatar.textContent = u.name.charAt(0).toUpperCase();
           }
         }
+
         // Perfil
         document.getElementById('profile-name').textContent = u.name || 'Invitada';
         document.getElementById('profile-email').textContent = u.email || 'correo@ejemplo.com';
@@ -936,17 +982,18 @@
           pAvatar.style.backgroundImage = 'none';
           pAvatar.textContent = (u.name || 'U').charAt(0).toUpperCase();
         }
+
         // Evento - preparación somática
         if (u.hasReserved) {
           document.getElementById('prep-somatica').classList.remove('hidden');
         } else {
           document.getElementById('prep-somatica').classList.add('hidden');
         }
-        // Founder status en evento
         if (u.founder) {
           document.getElementById('founder-status').textContent = '👑 Estatus Fundadora activo';
           document.getElementById('founder-status').className = 'text-[10px] text-[#E27D60] font-semibold';
         }
+
         // Nav
         document.querySelectorAll('.nav-item').forEach(item => {
           item.classList.toggle('active', item.dataset.view === this.state.currentView);
@@ -954,7 +1001,9 @@
         this.actualizarSaludo();
       },
 
-      // ===== ASISTENTE =====
+      // ============================================================
+      // ASISTENTE
+      // ============================================================
       toggleAssistant() {
         const chat = document.getElementById('assistant-chat');
         const toggle = document.getElementById('assistant-toggle');
@@ -995,7 +1044,9 @@
         container.scrollTop = container.scrollHeight;
       },
 
-      // ===== TOAST =====
+      // ============================================================
+      // TOAST
+      // ============================================================
       toast(message, type = 'success') {
         const el = document.getElementById('toast');
         el.className = `toast toast-${type}`;
