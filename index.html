@@ -4,8 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Atrévete HealthTech · Sistema Nervioso</title>
-  <!-- Google Identity Services -->
-  <script src="https://accounts.google.com/gsi/client"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     /* ===== BASE ===== */
@@ -36,7 +34,7 @@
     }
     .clay-input:focus { border-color: #E27D60; }
 
-    /* ===== BOTONES UNIFICADOS ===== */
+    /* ===== BOTONES ===== */
     .btn {
       display: inline-flex; align-items: center; justify-content: center; gap: 8px;
       padding: 12px 28px; border-radius: 9999px; font-weight: 600;
@@ -58,6 +56,11 @@
       background: transparent; color: #E27D60; border: 1.5px solid #E27D60;
     }
     .btn-outline:hover:not(:disabled) { background: #E27D60; color: #fff; }
+    .btn-google {
+      background: #fff; color: #3C4043; border: 1px solid #DADCE0; gap: 10px;
+    }
+    .btn-google:hover:not(:disabled) { background: #F8F9FA; box-shadow: 0 2px 6px rgba(0,0,0,0.12); }
+    .btn-google svg { width: 20px; height: 20px; flex-shrink: 0; }
     .btn .spinner {
       display: none; width: 20px; height: 20px;
       border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff;
@@ -225,21 +228,31 @@
     .countdown-item .number { font-size: 1.5rem; font-weight: 700; color: #E27D60; }
     .countdown-item .label { font-size: 0.6rem; color: #7A8A7C; text-transform: uppercase; letter-spacing: 0.5px; }
 
-    /* ===== BOTÓN DE GOOGLE PERSONALIZADO ===== */
-    .g_id_signin {
-      display: inline-block;
-    }
-    .g_id_signin > div {
-      width: 100% !important;
-    }
-    .g_id_signin iframe {
-      width: 100% !important;
-    }
-    .google-btn-wrapper {
-      display: flex;
+    /* ===== BOTÓN GOOGLE SIMPLE ===== */
+    .btn-google-simple {
+      display: inline-flex;
+      align-items: center;
       justify-content: center;
-      margin: 8px 0;
+      gap: 10px;
+      background: white;
+      border: 1px solid #DADCE0;
+      border-radius: 9999px;
+      padding: 10px 24px;
+      font-weight: 500;
+      color: #3C4043;
+      transition: all 0.2s;
+      cursor: pointer;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
     }
+    .btn-google-simple:hover {
+      background: #F8F9FA;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+    }
+    .btn-google-simple svg {
+      width: 20px;
+      height: 20px;
+    }
+
     @media (max-width: 400px) {
       .assistant-chat { width: calc(100vw - 32px); height: 380px; right: 16px; bottom: 160px; }
       .assistant-toggle { width: 48px; height: 48px; font-size: 20px; bottom: 90px; right: 16px; }
@@ -271,28 +284,26 @@
     </div>
   </div>
 
-  <!-- ================= MODAL GOOGLE (ya no se usa con GSI, pero se mantiene por si acaso) ================= -->
-  <div id="modal-google" class="modal-overlay hidden"></div>
-
   <!-- ================= CABECERA ================= -->
   <header class="pt-3 pb-1 px-6 max-w-md mx-auto flex items-center justify-between">
     <div class="cursor-pointer" onclick="App.goHome()">
       <img id="app-logo" src="atrevetehtlogo.png" alt="Atrévete" class="h-14 w-auto object-contain">
     </div>
     <div id="auth-buttons" class="flex items-center gap-2">
-      <div id="login-btns" class="flex gap-2">
-        <!-- Botón de Google Identity Services (se renderiza aquí) -->
-        <div id="google-login-container"></div>
+      <!-- Botón de Google (visible solo cuando NO autenticado) -->
+      <div id="login-btn-wrapper">
+        <a id="google-login-btn" href="#" class="btn-google-simple text-sm" style="display: none;">
+          <svg viewBox="0 0 24 24" width="20" height="20"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+          <span>Iniciar sesión con Google</span>
+        </a>
       </div>
+
       <div id="user-menu" class="hidden flex items-center gap-2">
         <div onclick="App.goProfile()" class="header-profile-btn">
           <div id="header-avatar" class="header-avatar">US</div>
           <span id="header-name" class="header-name">Usuario</span>
         </div>
-        <button onclick="App.logout()" class="btn btn-outline text-xs py-1 px-3">
-          <span class="btn-text">Salir</span>
-          <span class="spinner"></span>
-        </button>
+        <button onclick="App.logout()" class="btn btn-outline text-xs py-1 px-3">Salir</button>
       </div>
     </div>
   </header>
@@ -300,7 +311,7 @@
   <!-- ================= TOAST ================= -->
   <div id="toast" class="toast"></div>
 
-  <!-- ================= ASISTENTE VIRTUAL ================= -->
+  <!-- ================= ASISTENTE ================= -->
   <button id="assistant-toggle" class="assistant-toggle" onclick="App.toggleAssistant()">💬</button>
   <div id="assistant-chat" class="assistant-chat">
     <div class="assistant-header">
@@ -323,7 +334,7 @@
 
   <!-- ================= VISTAS ================= -->
 
-  <!-- ===== 1. HOME / TERMÓMETRO ===== -->
+  <!-- HOME -->
   <main id="view-home" class="app-view max-w-md mx-auto px-5 space-y-5">
     <div class="text-center pt-2">
       <h2 class="text-2xl font-bold text-[#4A5D4E]">🌿 Hola, <span id="greeting-name">amiga</span></h2>
@@ -372,7 +383,7 @@
     </div>
   </main>
 
-  <!-- ===== 2. SANTUARIO ===== -->
+  <!-- SANTUARIO -->
   <main id="view-santuario" class="app-view max-w-md mx-auto px-5 space-y-5 hidden">
     <div class="text-center pt-2">
       <h2 class="text-2xl font-bold text-[#4A5D4E]">🌿 Santuario Somático</h2>
@@ -395,7 +406,7 @@
     <button onclick="App.goHome()" class="btn btn-secondary w-full text-sm">Volver al Termómetro</button>
   </main>
 
-  <!-- ===== 3. ESPECIALISTAS ===== -->
+  <!-- ESPECIALISTAS -->
   <main id="view-specialists" class="app-view max-w-md mx-auto px-5 space-y-5 hidden">
     <div class="text-center pt-2">
       <h2 class="text-2xl font-bold text-[#4A5D4E]">🛡️ Tu Gremio Clínico</h2>
@@ -446,7 +457,7 @@
     <button onclick="App.goHome()" class="btn btn-secondary w-full text-sm">Volver al Termómetro</button>
   </main>
 
-  <!-- ===== 4. EVENTO ===== -->
+  <!-- EVENTO -->
   <main id="view-event" class="app-view max-w-md mx-auto px-5 space-y-5 hidden">
     <div class="text-center pt-2">
       <h2 class="text-2xl font-bold text-[#4A5D4E]">⛺ Mujeres en Fuga</h2>
@@ -495,7 +506,7 @@
     <button onclick="App.goHome()" class="btn btn-secondary w-full text-sm">Volver al Termómetro</button>
   </main>
 
-  <!-- ===== 5. PERFIL ===== -->
+  <!-- PERFIL -->
   <main id="view-profile" class="app-view max-w-md mx-auto px-5 space-y-5 hidden">
     <div class="clay-card p-6 text-center space-y-3">
       <div id="profile-avatar" class="w-24 h-24 rounded-full bg-[#E27D60] text-white flex items-center justify-center text-3xl font-bold mx-auto bg-cover bg-center">US</div>
@@ -543,7 +554,7 @@
     <button onclick="App.goHome()" class="btn btn-secondary w-full text-sm">Volver al Termómetro</button>
   </main>
 
-  <!-- ===== PRÁCTICA ===== -->
+  <!-- PRÁCTICA -->
   <main id="view-practice" class="app-view max-w-md mx-auto px-5 space-y-5 hidden">
     <div class="text-center pt-2">
       <h2 class="text-2xl font-bold text-[#4A5D4E]">🧘 Tu práctica de 3 minutos</h2>
@@ -581,7 +592,7 @@
   <!-- ================= JAVASCRIPT ================= -->
   <script>
     // ============================================================
-    // APP - Con autenticación real de Google (GSI)
+    // APP - Autenticación con Google OAuth 2.0 (redirección)
     // ============================================================
     const App = {
       state: {
@@ -613,98 +624,88 @@
         this.syncUI();
         this.startCountdown();
         this.actualizarSaludo();
-        this.initGoogleLogin();
-        console.log('🌿 Atrévete HealthTech · Autenticación real con Google');
-      },
 
-      // ============================================================
-      // GOOGLE IDENTITY SERVICES (GSI)
-      // ============================================================
-      initGoogleLogin() {
-        // Este Client ID es de demostración para localhost
-        // Reemplázalo con el tuyo: https://console.cloud.google.com/apis/credentials
-        const CLIENT_ID = '759730169795-6p7ohp6qqh56msefe2k7t5f7k2p3i9p9.apps.googleusercontent.com';
-        const container = document.getElementById('google-login-container');
+        // Verificar si hay token en la URL (callback de Google)
+        this.handleGoogleCallback();
 
-        // Renderizar el botón solo si no está autenticado
+        // Si no está autenticado, mostrar el botón de Google
         if (!this.state.isAuthenticated) {
-          container.innerHTML = '';
-          const wrapper = document.createElement('div');
-          wrapper.className = 'google-btn-wrapper';
-          const gsiDiv = document.createElement('div');
-          gsiDiv.id = 'g_id_onload';
-          gsiDiv.setAttribute('data-client_id', CLIENT_ID);
-          gsiDiv.setAttribute('data-context', 'signin');
-          gsiDiv.setAttribute('data-ux_mode', 'popup');
-          gsiDiv.setAttribute('data-callback', 'App.handleGoogleCredentialResponse');
-          gsiDiv.setAttribute('data-auto_prompt', 'false');
-          wrapper.appendChild(gsiDiv);
+          this.mostrarBotonGoogle();
+        }
 
-          const signinDiv = document.createElement('div');
-          signinDiv.className = 'g_id_signin';
-          signinDiv.setAttribute('data-type', 'standard');
-          signinDiv.setAttribute('data-shape', 'rectangular');
-          signinDiv.setAttribute('data-theme', 'outline');
-          signinDiv.setAttribute('data-text', 'signin_with');
-          signinDiv.setAttribute('data-size', 'large');
-          signinDiv.setAttribute('data-logo_alignment', 'left');
-          signinDiv.setAttribute('data-width', '280');
-          wrapper.appendChild(signinDiv);
-          container.appendChild(wrapper);
-        } else {
-          container.innerHTML = '';
+        console.log('🌿 Atrévete HealthTech · Autenticación Google OAuth 2.0');
+      },
+
+      // ============================================================
+      // GOOGLE OAUTH 2.0 - REDIRECCIÓN
+      // ============================================================
+      mostrarBotonGoogle() {
+        const btn = document.getElementById('google-login-btn');
+        if (!btn) return;
+
+        // Construir la URL de autorización
+        // REEMPLAZA ESTE CLIENT ID CON EL TUYO
+        const CLIENT_ID = '759730169795-6p7ohp6qqh56msefe2k7t5f7k2p3i9p9.apps.googleusercontent.com';
+        const REDIRECT_URI = window.location.origin + window.location.pathname;
+        const SCOPE = 'email profile';
+        const AUTH_URL = `https://accounts.google.com/o/oauth2/auth?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=${encodeURIComponent(SCOPE)}&prompt=select_account`;
+
+        btn.href = AUTH_URL;
+        btn.style.display = 'inline-flex';
+      },
+
+      handleGoogleCallback() {
+        // Verificar si la URL tiene fragmento con access_token
+        const hash = window.location.hash;
+        if (hash && hash.includes('access_token')) {
+          const params = new URLSearchParams(hash.substring(1));
+          const accessToken = params.get('access_token');
+          if (accessToken) {
+            // Obtener información del usuario con el token
+            fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
+              headers: { Authorization: `Bearer ${accessToken}` }
+            })
+            .then(res => res.json())
+            .then(data => {
+              if (data.id) {
+                const userData = {
+                  name: data.name,
+                  email: data.email,
+                  avatar: data.picture,
+                  email_verified: true
+                };
+                this.autenticarUsuario(userData);
+                // Limpiar el hash de la URL
+                window.history.replaceState(null, '', window.location.pathname);
+              }
+            })
+            .catch(err => {
+              console.error('Error al obtener datos de usuario:', err);
+              this.toast('Error al obtener datos de Google', 'error');
+            });
+          }
         }
       },
 
-      // Callback de GSI (se llama automáticamente al autenticar)
-      handleGoogleCredentialResponse(response) {
-        // Decodificar el token JWT para obtener los datos del usuario
-        const payload = this.decodeJwtPayload(response.credential);
-        if (!payload) {
-          this.toast('Error al decodificar credencial', 'error');
-          return;
-        }
-        const userData = {
-          name: payload.name || 'Usuario Google',
-          email: payload.email || '',
-          avatar: payload.picture || null,
-          email_verified: payload.email_verified || false
-        };
-        if (!userData.email_verified) {
-          this.toast('El correo no está verificado en Google', 'warning');
-          return;
-        }
-        // Guardar en localStorage y autenticar
+      autenticarUsuario(userData) {
         localStorage.setItem('user_name', userData.name);
         localStorage.setItem('user_email', userData.email);
-        localStorage.setItem('user_avatar', userData.avatar);
+        localStorage.setItem('user_avatar', userData.avatar || '');
         localStorage.setItem('user_role', 'user');
         localStorage.setItem('user_since', new Date().toLocaleDateString('es-ES', { day:'2-digit', month:'long', year:'numeric' }));
         this.state.user = {
           ...this.state.user,
           name: userData.name,
           email: userData.email,
-          avatar: userData.avatar
+          avatar: userData.avatar || null
         };
         this.state.isAuthenticated = true;
         this.syncUI();
         this.actualizarSaludo();
-        this.initGoogleLogin(); // Ocultar botón de Google
+        // Ocultar el botón de Google
+        document.getElementById('google-login-btn').style.display = 'none';
         this.toast('✅ ¡Bienvenida a Atrévete HealthTech!', 'success');
         this.goHome();
-      },
-
-      // Decodificar JWT (parte del payload)
-      decodeJwtPayload(token) {
-        try {
-          const base64Url = token.split('.')[1];
-          const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-          const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
-          return JSON.parse(jsonPayload);
-        } catch (e) {
-          console.error('Error decodificando JWT:', e);
-          return null;
-        }
       },
 
       // ============================================================
@@ -714,6 +715,8 @@
         localStorage.setItem('legal_accepted', 'true');
         this.state.legalAccepted = true;
         document.getElementById('modal-legal-gate').classList.remove('active');
+        // Si ya estaba autenticado, no hacer nada; si no, mostrar botón
+        if (!this.state.isAuthenticated) this.mostrarBotonGoogle();
       },
       cancelarLegal() {
         document.getElementById('modal-legal-gate').classList.remove('active');
@@ -732,18 +735,17 @@
         localStorage.removeItem('user_phone');
         localStorage.removeItem('user_birth');
         localStorage.removeItem('has_reserved');
-        // No eliminamos founder_status para que persista si vuelve a iniciar
         this.state.isAuthenticated = false;
         this.state.user = { ...this.state.user, name: '', email: '', avatar: null, hasReserved: false };
         this.syncUI();
         this.actualizarSaludo();
-        this.initGoogleLogin(); // Mostrar botón de Google nuevamente
+        this.mostrarBotonGoogle(); // Volver a mostrar el botón
         this.toast('👋 Sesión cerrada', 'info');
         this.goHome();
       },
 
       // ============================================================
-      // NAVEGACIÓN (igual que antes)
+      // NAVEGACIÓN
       // ============================================================
       goHome() { this.switchView('view-home'); },
       goSantuario() { this.switchView('view-santuario'); },
@@ -776,7 +778,7 @@
       },
 
       // ============================================================
-      // SALUDO PERSONALIZADO
+      // SALUDO
       // ============================================================
       actualizarSaludo() {
         const name = this.state.user.name || 'amiga';
@@ -827,7 +829,7 @@
         this.switchView('view-practice');
         setTimeout(() => {
           this.toast('✅ Práctica completada. ¡Tu sistema nervioso te lo agradece!', 'success');
-        }, 3000); // Simulación: 3 segundos para demo
+        }, 3000);
       },
 
       finishPractice() {
@@ -944,9 +946,15 @@
         const u = this.state.user;
         const isAuth = this.state.isAuthenticated;
 
-        // Header
-        document.getElementById('login-btns').classList.toggle('hidden', isAuth);
+        // Mostrar/ocultar botón de Google
+        const googleBtn = document.getElementById('google-login-btn');
+        if (googleBtn) {
+          googleBtn.style.display = isAuth ? 'none' : 'inline-flex';
+        }
+
+        // Mostrar/ocultar menú de usuario
         document.getElementById('user-menu').classList.toggle('hidden', !isAuth);
+
         if (isAuth) {
           document.getElementById('header-name').textContent = u.name;
           const avatar = document.getElementById('header-avatar');
@@ -983,7 +991,6 @@
           pAvatar.textContent = (u.name || 'U').charAt(0).toUpperCase();
         }
 
-        // Evento - preparación somática
         if (u.hasReserved) {
           document.getElementById('prep-somatica').classList.remove('hidden');
         } else {
@@ -994,7 +1001,6 @@
           document.getElementById('founder-status').className = 'text-[10px] text-[#E27D60] font-semibold';
         }
 
-        // Nav
         document.querySelectorAll('.nav-item').forEach(item => {
           item.classList.toggle('active', item.dataset.view === this.state.currentView);
         });
