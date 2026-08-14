@@ -5,8 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Atrévete HealthTech · Sistema Nervioso</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- 🔥 Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
   <style>
-    /* ===== BASE ===== */
     * { box-sizing: border-box; }
     body {
       background: #F4F1ED;
@@ -16,7 +18,6 @@
     }
     .hidden { display: none !important; }
 
-    /* ===== CLAYMORPHISM ===== */
     .clay-card {
       background: #FDFBF7;
       border-radius: 32px;
@@ -34,7 +35,6 @@
     }
     .clay-input:focus { border-color: #E27D60; }
 
-    /* ===== BOTONES ===== */
     .btn {
       display: inline-flex; align-items: center; justify-content: center; gap: 8px;
       padding: 12px 28px; border-radius: 9999px; font-weight: 600;
@@ -56,19 +56,7 @@
       background: transparent; color: #E27D60; border: 1.5px solid #E27D60;
     }
     .btn-outline:hover:not(:disabled) { background: #E27D60; color: #fff; }
-    
-    .btn-google-simple {
-      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-      background: white; border: 1px solid #DADCE0; border-radius: 9999px;
-      padding: 8px 18px; font-weight: 500; color: #3C4043; transition: all 0.2s;
-      cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.06); text-decoration: none;
-    }
-    .btn-google-simple:hover {
-      background: #F8F9FA; box-shadow: 0 2px 6px rgba(0,0,0,0.12);
-    }
-    .btn-google-simple svg { width: 18px; height: 18px; }
 
-    /* ===== TERMÓMETRO ===== */
     .state-option {
       padding: 16px; border-radius: 20px; cursor: pointer;
       transition: all 0.2s ease; border: 2px solid transparent;
@@ -84,7 +72,6 @@
     .state-option .label { font-weight: 600; color: #4A5D4E; }
     .state-option .desc { font-size: 0.75rem; color: #7A8A7C; }
 
-    /* ===== SANTUARIO ===== */
     .practice-card {
       background: white; border-radius: 24px; padding: 16px;
       border: 1px solid #e5e0db; transition: all 0.2s;
@@ -95,7 +82,6 @@
     .practice-card .p-title { font-weight: 600; color: #4A5D4E; }
     .practice-card .p-desc { font-size: 0.75rem; color: #7A8A7C; }
 
-    /* ===== ESPECIALISTAS ===== */
     .specialist-card {
       background: white; border-radius: 24px; padding: 16px;
       border: 1px solid #e5e0db; transition: all 0.2s;
@@ -107,7 +93,6 @@
       letter-spacing: 0.5px; text-transform: uppercase;
     }
 
-    /* ===== NAV INFERIOR ===== */
     .clay-nav {
       background: rgba(253,251,247,0.95); backdrop-filter: blur(12px);
       border-radius: 24px 24px 0 0; padding: 8px 12px 12px;
@@ -125,7 +110,6 @@
     .nav-item .nav-icon { font-size: 20px; line-height: 1; }
     .nav-item .nav-label { font-size: 9px; font-weight: 600; }
 
-    /* ===== TOAST ===== */
     .toast {
       position: fixed; top: 20px; right: 20px; z-index: 9999;
       padding: 16px 24px; border-radius: 16px; color: white;
@@ -140,7 +124,6 @@
     .toast-info { background: #2196F3; }
     .toast-warning { background: #FF9800; }
 
-    /* ===== MODAL ===== */
     .modal-overlay {
       position: fixed; top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(0,0,0,0.5); backdrop-filter: blur(6px);
@@ -157,47 +140,6 @@
     }
     .modal-overlay.active .modal-content { transform: scale(1) translateY(0); }
 
-    /* ===== ASISTENTE ===== */
-    .assistant-toggle {
-      position: fixed; bottom: 100px; right: 20px; z-index: 999;
-      width: 56px; height: 56px; border-radius: 9999px;
-      background: #E27D60; color: white; border: none;
-      box-shadow: 0 8px 24px rgba(226,125,96,0.4);
-      cursor: pointer; transition: all 0.3s; font-size: 24px;
-    }
-    .assistant-toggle:hover { transform: scale(1.05) translateY(-2px); }
-    .assistant-toggle.active { transform: rotate(90deg); }
-    .assistant-chat {
-      position: fixed; bottom: 170px; right: 20px; z-index: 999;
-      width: 340px; max-width: calc(100vw - 40px); height: 420px;
-      background: white; border-radius: 24px; box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-      display: none; flex-direction: column; overflow: hidden;
-      border: 1px solid rgba(226,125,96,0.1);
-    }
-    .assistant-chat.open { display: flex; }
-    .assistant-header {
-      background: #E27D60; color: white; padding: 14px 18px;
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .assistant-header-title { display: flex; align-items: center; gap: 10px; font-weight: 600; }
-    .assistant-header-title .dot { width: 8px; height: 8px; border-radius: 9999px; background: #4ade80; animation: pulse-dot 1.5s infinite; }
-    @keyframes pulse-dot { 0%,100% { opacity:1; } 50% { opacity:0.5; } }
-    .assistant-close { background: rgba(255,255,255,0.2); border: none; color: white; width: 28px; height: 28px; border-radius: 9999px; cursor: pointer; font-size: 16px; }
-    .assistant-close:hover { background: rgba(255,255,255,0.3); }
-    .assistant-messages { flex:1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 10px; background: #F9F6F0; }
-    .message { max-width: 85%; padding: 10px 14px; border-radius: 16px; font-size: 13px; line-height: 1.5; }
-    .message.bot { background: white; color: #4A5D4E; align-self: flex-start; border-bottom-left-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
-    .message.user { background: #E27D60; color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
-    .assistant-input-area { display: flex; gap: 8px; padding: 12px 16px; background: white; border-top: 1px solid #f0ece8; }
-    .assistant-input-area input { flex:1; padding: 10px 14px; border: 1px solid #e5e0db; border-radius: 9999px; font-size: 13px; outline: none; background: #F9F6F0; }
-    .assistant-input-area input:focus { border-color: #E27D60; }
-    .assistant-input-area button { width: 40px; height: 40px; border-radius: 9999px; background: #E27D60; color: white; border: none; cursor: pointer; font-size: 16px; }
-    .assistant-input-area button:hover { background: #c06a51; }
-    .quick-actions { display: flex; gap: 6px; padding: 8px 16px 4px; flex-wrap: wrap; background: white; }
-    .quick-actions button { padding: 4px 12px; border-radius: 9999px; border: 1px solid #e5e0db; background: white; font-size: 10px; color: #7A8A7C; cursor: pointer; font-weight: 500; }
-    .quick-actions button:hover { border-color: #E27D60; color: #E27D60; background: #FFF8F6; }
-
-    /* ===== HEADER ===== */
     .header-profile-btn {
       display: flex; align-items: center; gap: 8px;
       padding: 4px 12px 4px 4px; border-radius: 9999px;
@@ -215,7 +157,6 @@
     }
     .header-name { font-size: 11px; font-weight: 600; color: #7A8A7C; max-width: 80px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
-    /* ===== COUNTDOWN ===== */
     .countdown-grid {
       display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
     }
@@ -264,10 +205,9 @@
     </div>
     <div id="auth-buttons" class="flex items-center gap-2">
       <div id="login-btn-wrapper">
-        <a id="google-login-btn" href="#" class="btn-google-simple text-xs">
-          <svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
-          <span>Acceder</span>
-        </a>
+        <button onclick="App.showLoginModal()" class="btn btn-primary text-xs py-2 px-4">
+          🔐 Iniciar Sesión
+        </button>
       </div>
       <div id="user-menu" class="hidden flex items-center gap-2">
         <div onclick="App.goProfile()" class="header-profile-btn">
@@ -279,29 +219,72 @@
     </div>
   </header>
 
-  <!-- ================= TOAST ================= -->
-  <div id="toast" class="toast"></div>
+  <!-- ================= MODAL DE LOGIN ================= -->
+  <div id="login-modal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="text-center space-y-4">
+        <h3 class="text-xl font-bold text-[#4A5D4E]">🔐 Iniciar Sesión</h3>
+        <p class="text-xs text-[#7A8A7C]/70">Ingresa tus credenciales para acceder</p>
+        
+        <div class="space-y-3 text-left">
+          <div>
+            <label class="text-xs font-semibold text-[#4A5D4E]">Correo electrónico</label>
+            <input id="login-email" type="email" placeholder="tu@email.com" class="clay-input text-sm">
+          </div>
+          <div>
+            <label class="text-xs font-semibold text-[#4A5D4E]">Contraseña</label>
+            <input id="login-password" type="password" placeholder="********" class="clay-input text-sm" onkeypress="if(event.key==='Enter') App.login()">
+          </div>
+        </div>
 
-  <!-- ================= ASISTENTE ================= -->
-  <button id="assistant-toggle" class="assistant-toggle" onclick="App.toggleAssistant()">💬</button>
-  <div id="assistant-chat" class="assistant-chat">
-    <div class="assistant-header">
-      <div class="assistant-header-title"><span class="dot"></span><span>Asistente Atrévete</span></div>
-      <button class="assistant-close" onclick="App.toggleAssistant()">✕</button>
-    </div>
-    <div class="assistant-messages" id="chat-messages">
-      <div class="message bot">🌿 Hola, soy tu guía de bienestar. ¿En qué puedo acompañarte hoy?</div>
-    </div>
-    <div class="quick-actions">
-      <button onclick="App.quickAsk('¿Cómo funciona el Termómetro?')">🌡️ Termómetro</button>
-      <button onclick="App.quickAsk('¿Qué es el Gremio de Especialistas?')">🛡️ Gremio</button>
-      <button onclick="App.quickAsk('Cuéntame sobre el campamento')">⛺ Evento</button>
-    </div>
-    <div class="assistant-input-area">
-      <input id="chat-input" placeholder="Escribe..." onkeypress="if(event.key==='Enter') App.sendMessage()">
-      <button onclick="App.sendMessage()">➤</button>
+        <button onclick="App.login()" class="btn btn-primary w-full">Iniciar Sesión</button>
+        
+        <div class="border-t border-stone-200 pt-3">
+          <p class="text-xs text-[#7A8A7C]">¿No tienes cuenta? 
+            <button onclick="App.showRegisterModal()" class="text-[#E27D60] font-semibold hover:underline">Regístrate</button>
+          </p>
+          <button onclick="App.closeLoginModal()" class="text-xs text-gray-400 hover:text-gray-600 mt-2">Cancelar</button>
+        </div>
+      </div>
     </div>
   </div>
+
+  <!-- ================= MODAL DE REGISTRO ================= -->
+  <div id="register-modal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="text-center space-y-4">
+        <h3 class="text-xl font-bold text-[#4A5D4E]">📝 Crear Cuenta</h3>
+        <p class="text-xs text-[#7A8A7C]/70">Regístrate para acceder a todas las funciones</p>
+        
+        <div class="space-y-3 text-left">
+          <div>
+            <label class="text-xs font-semibold text-[#4A5D4E]">Nombre completo</label>
+            <input id="register-name" type="text" placeholder="Tu nombre" class="clay-input text-sm">
+          </div>
+          <div>
+            <label class="text-xs font-semibold text-[#4A5D4E]">Correo electrónico</label>
+            <input id="register-email" type="email" placeholder="tu@email.com" class="clay-input text-sm">
+          </div>
+          <div>
+            <label class="text-xs font-semibold text-[#4A5D4E]">Contraseña (mínimo 6 caracteres)</label>
+            <input id="register-password" type="password" placeholder="********" class="clay-input text-sm" onkeypress="if(event.key==='Enter') App.register()">
+          </div>
+        </div>
+
+        <button onclick="App.register()" class="btn btn-primary w-full">Registrarse</button>
+        
+        <div class="border-t border-stone-200 pt-3">
+          <p class="text-xs text-[#7A8A7C]">¿Ya tienes cuenta? 
+            <button onclick="App.showLoginModal()" class="text-[#E27D60] font-semibold hover:underline">Inicia Sesión</button>
+          </p>
+          <button onclick="App.closeRegisterModal()" class="text-xs text-gray-400 hover:text-gray-600 mt-2">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= TOAST ================= -->
+  <div id="toast" class="toast"></div>
 
   <!-- ================= VISTAS ================= -->
 
@@ -546,15 +529,27 @@
 
   <!-- ================= JAVASCRIPT ================= -->
   <script>
-    // 🔥 ID DE CLIENTE CORRECTO (según la captura)
-    const GOOGLE_CLIENT_ID = '524608419437-Zinc4hca8uw29m0o3tih50t4otcumio.apps.googleusercontent.com';
-    const App = {
-      // ⚠️ IMPORTANTE: Este redirect_uri se calcula automáticamente a partir de la URL actual.
-      // Debes asegurarte de que ESTA URL exacta esté registrada en la consola de Google Cloud
-      // en la sección "URIs de redireccionamiento autorizados".
-      // Para GitHub Pages, agrega: https://jodasan25.github.io/atreveteht/index.html
-      REDIRECT_URI: window.location.origin + window.location.pathname,
+    // ======================================================================
+    // 🔥 CONFIGURACIÓN DE FIREBASE
+    // 👇 CAMBIA ESTOS VALORES POR LOS TUYOS (desde Firebase Console)
+    // ======================================================================
+    const firebaseConfig = {
+      apiKey: "AIzaSyXXXXXXXXXXXXXXXXXXXXXXXXX",
+      authDomain: "tu-proyecto.firebaseapp.com",
+      projectId: "tu-proyecto",
+      storageBucket: "tu-proyecto.appspot.com",
+      messagingSenderId: "123456789",
+      appId: "1:123456789:web:abcdef123456"
+    };
 
+    // Inicializar Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    // ======================================================================
+    // APP PRINCIPAL
+    // ======================================================================
+    const App = {
       selectedStateKey: null,
 
       state: {
@@ -573,8 +568,23 @@
       },
 
       init() {
-        this.handleOAuthCallback();
-        this.setupGoogleAuthButton();
+        // Escuchar cambios en autenticación
+        auth.onAuthStateChanged(user => {
+          if (user) {
+            // Usuario autenticado
+            this.setUserSession({
+              name: user.displayName || user.email?.split('@')[0] || 'Usuario',
+              email: user.email,
+              avatar: user.photoURL || null
+            });
+          } else {
+            // Usuario no autenticado
+            if (this.state.isAuthenticated) {
+              this.logout();
+            }
+          }
+        });
+
         this.checkLegalGate();
         this.updateAuthUI();
         this.startCountdown();
@@ -585,40 +595,122 @@
         }
       },
 
-      handleOAuthCallback() {
-        const hash = window.location.hash;
-        if (hash.includes('access_token=')) {
-          const params = new URLSearchParams(hash.replace('#', '?'));
-          const accessToken = params.get('access_token');
+      // ========== AUTENTICACIÓN ==========
+      showLoginModal() {
+        document.getElementById('login-modal').classList.add('active');
+        document.getElementById('login-email').focus();
+      },
 
-          if (accessToken) {
-            fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
-              headers: { Authorization: `Bearer ${accessToken}` }
-            })
-            .then(res => res.json())
-            .then(data => {
-              this.setUserSession({
-                name: data.name,
-                email: data.email,
-                avatar: data.picture
-              });
-              this.showToast(`¡Bienvenida/o, ${data.given_name || data.name}!`, 'success');
-              window.history.replaceState(null, null, window.location.pathname);
-            })
-            .catch(err => {
-              console.error('Error OAuth:', err);
-              this.showToast('Error al autenticar con Google', 'error');
-            });
+      closeLoginModal() {
+        document.getElementById('login-modal').classList.remove('active');
+      },
+
+      showRegisterModal() {
+        this.closeLoginModal();
+        document.getElementById('register-modal').classList.add('active');
+        document.getElementById('register-name').focus();
+      },
+
+      closeRegisterModal() {
+        document.getElementById('register-modal').classList.remove('active');
+      },
+
+      async login() {
+        const email = document.getElementById('login-email').value.trim();
+        const password = document.getElementById('login-password').value.trim();
+
+        if (!email || !password) {
+          this.showToast('Por favor, completa todos los campos', 'warning');
+          return;
+        }
+
+        try {
+          this.showToast('Iniciando sesión...', 'info');
+          const userCredential = await auth.signInWithEmailAndPassword(email, password);
+          const user = userCredential.user;
+          
+          this.setUserSession({
+            name: user.displayName || user.email?.split('@')[0] || 'Usuario',
+            email: user.email,
+            avatar: user.photoURL || null
+          });
+
+          this.closeLoginModal();
+          this.showToast(`¡Bienvenida/o, ${user.displayName || 'Usuario'}!`, 'success');
+          this.goHome();
+        } catch (error) {
+          console.error('Error de login:', error);
+          let mensaje = 'Error al iniciar sesión. ';
+          switch (error.code) {
+            case 'auth/user-not-found':
+              mensaje += 'Usuario no encontrado. Verifica tu correo.';
+              break;
+            case 'auth/wrong-password':
+              mensaje += 'Contraseña incorrecta.';
+              break;
+            case 'auth/invalid-email':
+              mensaje += 'Correo inválido.';
+              break;
+            case 'auth/too-many-requests':
+              mensaje += 'Demasiados intentos. Intenta más tarde.';
+              break;
+            default:
+              mensaje += error.message;
           }
+          this.showToast(mensaje, 'error');
         }
       },
 
-      setupGoogleAuthButton() {
-        const btn = document.getElementById('google-login-btn');
-        if (!btn) return;
-        const scope = 'openid profile email';
-        const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${encodeURIComponent(GOOGLE_CLIENT_ID)}&redirect_uri=${encodeURIComponent(this.REDIRECT_URI)}&response_type=token&scope=${encodeURIComponent(scope)}`;
-        btn.href = authUrl;
+      async register() {
+        const name = document.getElementById('register-name').value.trim();
+        const email = document.getElementById('register-email').value.trim();
+        const password = document.getElementById('register-password').value.trim();
+
+        if (!name || !email || !password) {
+          this.showToast('Por favor, completa todos los campos', 'warning');
+          return;
+        }
+
+        if (password.length < 6) {
+          this.showToast('La contraseña debe tener al menos 6 caracteres', 'warning');
+          return;
+        }
+
+        try {
+          this.showToast('Creando cuenta...', 'info');
+          const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+          const user = userCredential.user;
+
+          // Actualizar el nombre del usuario
+          await user.updateProfile({ displayName: name });
+
+          this.setUserSession({
+            name: name,
+            email: user.email,
+            avatar: user.photoURL || null
+          });
+
+          this.closeRegisterModal();
+          this.showToast(`¡Cuenta creada! Bienvenida/o ${name}`, 'success');
+          this.goHome();
+        } catch (error) {
+          console.error('Error de registro:', error);
+          let mensaje = 'Error al registrarse. ';
+          switch (error.code) {
+            case 'auth/email-already-in-use':
+              mensaje += 'Este correo ya está registrado.';
+              break;
+            case 'auth/invalid-email':
+              mensaje += 'Correo inválido.';
+              break;
+            case 'auth/weak-password':
+              mensaje += 'La contraseña debe tener al menos 6 caracteres.';
+              break;
+            default:
+              mensaje += error.message;
+          }
+          this.showToast(mensaje, 'error');
+        }
       },
 
       setUserSession(userData) {
@@ -634,7 +726,13 @@
         this.updateAuthUI();
       },
 
-      logout() {
+      async logout() {
+        try {
+          await auth.signOut();
+        } catch (error) {
+          console.error('Error al cerrar sesión:', error);
+        }
+
         const legal = localStorage.getItem('legal_accepted');
         localStorage.clear();
         if (legal) localStorage.setItem('legal_accepted', legal);
@@ -650,6 +748,7 @@
         this.showToast('Sesión cerrada correctamente', 'info');
       },
 
+      // ========== UI ==========
       updateAuthUI() {
         const loginBtnWrapper = document.getElementById('login-btn-wrapper');
         const userMenu = document.getElementById('user-menu');
@@ -700,6 +799,7 @@
         }
       },
 
+      // ========== NAVEGACIÓN ==========
       showView(viewId) {
         document.querySelectorAll('.app-view').forEach(v => v.classList.add('hidden'));
         const target = document.getElementById(viewId);
@@ -721,12 +821,14 @@
       goEvent() { this.showView('view-event'); },
       goProfile() {
         if (!this.state.isAuthenticated) {
-          this.showToast('Inicia sesión con Google primero', 'warning');
+          this.showToast('Inicia sesión primero', 'warning');
+          this.showLoginModal();
           return;
         }
         this.showView('view-profile');
       },
 
+      // ========== LEGAL ==========
       checkLegalGate() {
         if (localStorage.getItem('legal_accepted') !== 'true') {
           const modal = document.getElementById('modal-legal-gate');
@@ -743,6 +845,7 @@
         alert('Debes aceptar las condiciones para utilizar Atrévete HealthTech.');
       },
 
+      // ========== TERMÓMETRO ==========
       selectState(key) {
         this.selectedStateKey = key;
         document.querySelectorAll('.state-option').forEach(el => {
@@ -771,6 +874,7 @@
         this.iniciarPractica(this.selectedStateKey);
       },
 
+      // ========== PRÁCTICAS ==========
       iniciarPractica(type) {
         const sub = document.getElementById('practice-sub');
         const content = document.getElementById('practice-content');
@@ -811,6 +915,7 @@
         this.goHome();
       },
 
+      // ========== COUNTDOWN ==========
       startCountdown() {
         const targetDate = new Date('2026-09-26T08:00:00').getTime();
         const updateTimer = () => {
@@ -833,9 +938,11 @@
         setInterval(updateTimer, 1000);
       },
 
+      // ========== EVENTO ==========
       reserveEvent() {
         if (!this.state.isAuthenticated) {
-          this.showToast('Inicia sesión con Google para reservar tu cupo', 'warning');
+          this.showToast('Inicia sesión para reservar tu cupo', 'warning');
+          this.showLoginModal();
           return;
         }
         this.showToast('Redirigiendo a pasarela de pago...', 'info');
@@ -867,14 +974,17 @@
         }
       },
 
+      // ========== ESPECIALISTAS ==========
       bookSpecialist(name) {
         if (!this.state.isAuthenticated) {
           this.showToast('Debes iniciar sesión para agendar una sesión', 'warning');
+          this.showLoginModal();
           return;
         }
         this.showToast(`Solicitando agenda con ${name}...`, 'success');
       },
 
+      // ========== PERFIL ==========
       editProfile() {
         const newBio = prompt('Ingresa tu biografía breve:', this.state.user.bio);
         if (newBio !== null) {
@@ -885,59 +995,7 @@
         }
       },
 
-      toggleAssistant() {
-        const chat = document.getElementById('assistant-chat');
-        const btn = document.getElementById('assistant-toggle');
-        if (chat && btn) {
-          chat.classList.toggle('open');
-          btn.classList.toggle('active');
-        }
-      },
-
-      quickAsk(question) {
-        const input = document.getElementById('chat-input');
-        if (input) {
-          input.value = question;
-          this.sendMessage();
-        }
-      },
-
-      sendMessage() {
-        const input = document.getElementById('chat-input');
-        const container = document.getElementById('chat-messages');
-        if (!input || !container) return;
-
-        const text = input.value.trim();
-        if (!text) return;
-
-        const uMsg = document.createElement('div');
-        uMsg.className = 'message user';
-        uMsg.textContent = text;
-        container.appendChild(uMsg);
-
-        input.value = '';
-        container.scrollTop = container.scrollHeight;
-
-        setTimeout(() => {
-          const bMsg = document.createElement('div');
-          bMsg.className = 'message bot';
-          const query = text.toLowerCase();
-
-          if (query.includes('termómetro')) {
-            bMsg.textContent = '🌡️ El Termómetro identifica tu estado fisiológico para indicarte la técnica exacta de autorregulación.';
-          } else if (query.includes('gremio') || query.includes('especialista')) {
-            bMsg.textContent = '🛡️ El Gremio reúne a profesionales clínicas seleccionadas para acompañamiento personalizado.';
-          } else if (query.includes('campamento') || query.includes('evento')) {
-            bMsg.textContent = '⛺ "Mujeres en Fuga" se realizará el 26 de septiembre en Maracay con talleres de autorregulación somática.';
-          } else {
-            bMsg.textContent = '🌿 Entiendo. Te sugiero probar una técnica en el Termómetro o contactarnos directamente.';
-          }
-
-          container.appendChild(bMsg);
-          container.scrollTop = container.scrollHeight;
-        }, 600);
-      },
-
+      // ========== TOAST ==========
       showToast(msg, type = 'info') {
         const toast = document.getElementById('toast');
         if (!toast) return;
@@ -947,6 +1005,7 @@
       }
     };
 
+    // ========== INICIALIZAR ==========
     document.addEventListener('DOMContentLoaded', () => {
       App.init();
     });
