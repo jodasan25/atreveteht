@@ -546,11 +546,13 @@
 
   <!-- ================= JAVASCRIPT ================= -->
   <script>
-    const GOOGLE_CLIENT_ID = '524608419437-2jnc4hcq8uuv29m0o3tih50t4otcumio.apps.googleusercontent.com';
+    // 🔥 ID DE CLIENTE CORRECTO (según la captura)
+    const GOOGLE_CLIENT_ID = '524608419437-Zinc4hca8uw29m0o3tih50t4otcumio.apps.googleusercontent.com';
 
     const App = {
-      // 🔽 CAMBIA ESTA LÍNEA por la URL exacta que estás usando (debe coincidir con la registrada en Google)
-      REDIRECT_URI: window.location.origin + window.location.pathname, // ← dinámico, pero puedes fijarla
+      // El redirect_uri se calcula dinámicamente a partir de la URL actual.
+      // Asegúrate de que en la consola de Google Cloud esté registrada exactamente la URL que ves en el navegador.
+      REDIRECT_URI: window.location.origin + window.location.pathname,
 
       selectedStateKey: null,
 
