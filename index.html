@@ -547,11 +547,13 @@
   <!-- ================= JAVASCRIPT ================= -->
   <script>
     // 🔥 ID DE CLIENTE CORRECTO (según la captura)
-    const GOOGLE_CLIENT_ID = '524608419437-2jnc4hcq8uuv29m0o3tih50t4otcumio.apps.googleusercontent.com';
+    const GOOGLE_CLIENT_ID = '524608419437-Zinc4hca8uw29m0o3tih50t4otcumio.apps.googleusercontent.com';
 
     const App = {
-      // El redirect_uri se calcula dinámicamente a partir de la URL actual.
-      // Asegúrate de que en la consola de Google Cloud esté registrada exactamente la URL que ves en el navegador.
+      // ⚠️ IMPORTANTE: Este redirect_uri se calcula automáticamente a partir de la URL actual.
+      // Debes asegurarte de que ESTA URL exacta esté registrada en la consola de Google Cloud
+      // en la sección "URIs de redireccionamiento autorizados".
+      // Para GitHub Pages, agrega: https://jodasan25.github.io/atreveteht/index.html
       REDIRECT_URI: window.location.origin + window.location.pathname,
 
       selectedStateKey: null,
