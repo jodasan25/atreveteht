@@ -177,7 +177,7 @@
     .assistant-chat.open { display: flex; }
     .assistant-header {
       background: #E27D60; color: white; padding: 14px 18px;
-      display: flex; justify-between: space-between; align-items: center;
+      display: flex; justify-content: space-between; align-items: center;
     }
     .assistant-header-title { display: flex; align-items: center; gap: 10px; font-weight: 600; }
     .assistant-header-title .dot { width: 8px; height: 8px; border-radius: 9999px; background: #4ade80; animation: pulse-dot 1.5s infinite; }
@@ -548,7 +548,8 @@
 
   <!-- ================= JAVASCRIPT ================= -->
   <script>
-   const GOOGLE_CLIENT_ID = 524608419437-2jnc4hcq8uuv29m0o3tih50t4otcumio.apps.googleusercontent.com
+    // 🔥 CORRECCIÓN: el cliente ID ahora es una cadena de texto con comillas
+    const GOOGLE_CLIENT_ID = '524608419437-2jnc4hcq8uuv29m0o3tih50t4otcumio.apps.googleusercontent.com';
 
     const App = {
       selectedStateKey: null,
@@ -632,7 +633,11 @@
       },
 
       logout() {
+        // Conservamos la aceptación legal para no mostrar el modal cada vez
+        const legal = localStorage.getItem('legal_accepted');
         localStorage.clear();
+        if (legal) localStorage.setItem('legal_accepted', legal);
+
         this.state.isAuthenticated = false;
         this.state.user = {
           name: '', email: '', role: 'usuario', bio: '', phone: '', birth: '',
